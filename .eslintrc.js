@@ -60,7 +60,7 @@ module.exports = {
 			"property",
 		],
 		"indent": [
-			"error",
+			"warn",
 			"tab",
 		],
 		"implicit-arrow-linebreak": [
@@ -112,6 +112,18 @@ module.exports = {
 		"quotes": [
 			"error",
 			"double",
+		],
+		"vue/html-indent": [
+			"error",
+			"tab",
+			{
+				"attribute": 1,
+				"baseIndent": 1,
+				"closeBracket": 0,
+				"alignAttributesVertically": true,
+				"ignores": [
+				]
+		  },
 		]
 	},
 	overrides: [
