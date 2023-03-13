@@ -170,9 +170,40 @@ module.exports = {
 			"error",
 			"always",
 		],
+		"vue/no-useless-v-bind": [
+			"error",
+			{
+				"ignoreIncludesComment": false,
+				"ignoreStringEscape": false
+			},
+		],
 		"vue/padding-line-between-blocks": [
 			"error",
 			"always",
+		],
+		/**
+		 * @dev Cannot uncomment until eslint-plugin-vue v9.9+
+		* "vue/padding-line-between-tags": [
+		* 	"error",
+		* 	
+		* 	{
+		* 		"blankLine": "always",
+		* 		"prev": "*",
+		* 		"next": "*" 
+		* 	},
+		* ],
+		* "vue/padding-lines-in-component-definition": [
+		* 	"error",
+		* 	{
+		* 		"betweenOptions": "always"			
+		* 	},
+		* ],
+		*/
+		"vue/require-direct-export": [
+			"error",
+			{
+				"disallowFunctionalComponentFunction": false
+		  },
 		],
 		"vue/script-indent": [
 			"error",
