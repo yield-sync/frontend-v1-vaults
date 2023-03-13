@@ -24,7 +24,11 @@ module.exports = {
 			"error",
 			"never",
 		],
-		"arrow-parens": [
+		"arrow-body-style": [
+			"error",
+			"always",
+		]
+		, "arrow-parens": [
 			"error",
 			"always",
 		],
@@ -42,7 +46,7 @@ module.exports = {
 			"error",
 			{
 				"arrays": "always",
-				"objects": "never",
+				"objects": "ignore",
 				"imports": "never",
 				"exports": "never",
 				"functions": "never"
@@ -275,8 +279,10 @@ module.exports = {
 		"vue/v-for-delimiter-style": [
 			"error",
 			"in",
+		],
+		"@typescript-eslint/no-empty-function": [
+			"warn",
 		]
-		  
 	},
 	overrides: [
 		{
