@@ -113,6 +113,10 @@ module.exports = {
 			"error",
 			"double",
 		],
+		"vue/component-definition-name-casing": [
+			"error",
+			"PascalCase",
+		],
 		"vue/html-indent": [
 			"error",
 			"tab",
@@ -124,17 +128,68 @@ module.exports = {
 				"ignores": [
 				]
 		  },
+		],
+		"vue/html-self-closing": [
+			"error",
+			{
+				html: {
+					normal: "never", void: "always"
+				},
+				"svg": "always",
+				"math": "always"
+		  },
+		],
+		"vue/html-quotes": [
+			"error",
+			"double",
+			{
+				"avoidEscape": false 
+			}, 
+		],
+		"vue/max-attributes-per-line": [
+			"error",
+			{
+				"singleline": {
+					"max": 3
+				},      
+				"multiline": {
+					"max": 3
+				}
+		  },
+		],
+		"vue/multiline-html-element-content-newline": [
+			"error",
+			{
+				"ignoreWhenEmpty": true,
+				"ignores": [
+				],
+				"allowEmptyLines": true
+			},
+		],
+		"vue/script-indent": [
+			"error",
+			"tab",
+			{
+				"baseIndent": 1,
+				"switchCase": 1,
+				"ignores": [
+				]
+		  },
 		]
 	},
 	overrides: [
 		{
-			files: [
+			"files": [
 				"**/__tests__/*.{j,t}s?(x)",
 				"**/tests/unit/**/*.spec.{j,t}s?(x)",
+				"*.vue",
 			],
-			env: {
+			"env": {
 				jest: true
+			},
+			"rules": {
+			  "indent": "off"
 			}
-		},
+		  },
 	]
 }
