@@ -166,6 +166,14 @@ module.exports = {
 				"allowEmptyLines": true
 			},
 		],
+		"vue/mustache-interpolation-spacing": [
+			"error",
+			"always",
+		],
+		"vue/padding-line-between-blocks": [
+			"error",
+			"always",
+		],
 		"vue/script-indent": [
 			"error",
 			"tab",
