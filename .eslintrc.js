@@ -113,6 +113,31 @@ module.exports = {
 			"error",
 			"double",
 		],
+		"vue/array-bracket-newline": [
+			"error",
+			"always",
+		],
+		"vue/array-bracket-spacing": [
+			"error",
+			"never",
+		],
+		"vue/comma-dangle": [
+			"error",
+			{
+				"arrays": "always",
+				"objects": "never",
+				"imports": "never",
+				"exports": "never",
+				"functions": "never"
+			},
+		],
+		"vue/comma-spacing": [
+			"error",
+			{
+				"before": false,
+				"after": true 
+			},
+		],
 		"vue/component-definition-name-casing": [
 			"error",
 			"PascalCase",
@@ -145,6 +170,37 @@ module.exports = {
 			{
 				"avoidEscape": false 
 			}, 
+		],
+		"vue/key-spacing": [
+			"error",
+			{
+				"afterColon": true,
+				"beforeColon": false 
+			},
+		],
+		"vue/keyword-spacing": [
+			"error",
+			{
+				"before": true 
+			},
+		],
+		"vue/max-len": [
+			"error",
+			{
+				"code": 120,
+				"comments": 120,
+				"template": 120,
+				"tabWidth": 4,
+				"ignoreComments": false,
+				"ignoreHTMLAttributeValues": false,
+				"ignoreHTMLTextContents": false,
+				"ignorePattern": "",
+				"ignoreRegExpLiterals": false,
+				"ignoreStrings": false,
+				"ignoreTrailingComments": false,
+				"ignoreTemplateLiterals": false,
+				"ignoreUrls": false
+			},
 		],
 		"vue/max-attributes-per-line": [
 			"error",
@@ -205,6 +261,7 @@ module.exports = {
 				"disallowFunctionalComponentFunction": false
 		  },
 		],
+		"vue/require-name-property": 1,
 		"vue/script-indent": [
 			"error",
 			"tab",
@@ -214,7 +271,12 @@ module.exports = {
 				"ignores": [
 				]
 		  },
+		],
+		"vue/v-for-delimiter-style": [
+			"error",
+			"in",
 		]
+		  
 	},
 	overrides: [
 		{
