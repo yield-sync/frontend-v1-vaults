@@ -280,6 +280,10 @@ module.exports = {
 			"error",
 			"in",
 		],
+		semi: [
+			"error",
+			"always",
+		],
 		"@typescript-eslint/no-empty-function": [
 			"warn",
 		]
@@ -299,4 +303,4 @@ module.exports = {
 			}
 		  },
 	]
-}
+};

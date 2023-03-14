@@ -50,7 +50,7 @@
 				recovered: "",
 
 				error: ""
-			}
+			};
 		},
 
 		methods: {
@@ -88,5 +88,5 @@
 				);
 			}
 		}
-	}
+	};
 </script>

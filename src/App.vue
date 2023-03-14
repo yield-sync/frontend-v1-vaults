@@ -64,7 +64,7 @@
 				this.$store.state.address = accounts[0];
 			}
 		},
-	}
+	};
 </script>
 
 <style lang="scss">

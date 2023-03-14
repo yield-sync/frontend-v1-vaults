@@ -14,7 +14,7 @@
 		{
 			return {
 				aboutHeader: "About Yield Sync"
-			}
+			};
 		}
-	}
+	};
 </script>

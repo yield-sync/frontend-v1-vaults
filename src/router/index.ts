@@ -1,5 +1,5 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
-import HomeView from "../views/HomeView.vue"
+import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
+import HomeView from "../views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "about",
 		component: () => 
 		{
-			return import("../views/AboutView.vue")
+			return import("../views/AboutView.vue");
 		}
 	},
 	{
@@ -20,14 +20,14 @@ const routes: Array<RouteRecordRaw> = [
 		name: "sign-message",
 		component: () => 
 		{
-			return import("../views/SignMessageView.vue")
+			return import("../views/SignMessageView.vue");
 		}
 	},
-]
+];
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes
-})
+});
 
-export default router
+export default router;
