@@ -1,0 +1,18 @@
+// [BOOTSTRAP-OVERRIDES]
+$theme-colors: (
+	"primary": #4fce8e,
+	"secondary": #333333,
+	"dark": black,
+	"light": rgb(219, 219, 219),
+	"black": black,
+	"white": white,
+);
+
+
+// [IMPORT]
+@import 'bootstrap/scss/bootstrap.scss';
+//@import 'bootstrap-vue/src/index.scss';
+
+
+// [CONTAINER]
+@media (min-width: 1600px) { .container { max-width: 1500px; } }

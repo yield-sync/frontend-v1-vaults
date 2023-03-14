@@ -1,5 +1,5 @@
 <template>
-	<div class="about">
+	<div class="container">
 		<h1>
 			{{ this.aboutHeader }}
 		</h1>

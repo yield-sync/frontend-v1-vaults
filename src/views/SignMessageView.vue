@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<div style="margin-bottom: 36px;">
 			<h2>Data to be Signed</h2>
 			<input v-model="data" type="text" style="margin-bottom: 10px;"/>

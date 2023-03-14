@@ -1,15 +1,28 @@
 <template>
 	<nav>
-		<div style="margin-bottom: 36px;">
-			<h2>Connect Wallet</h2>
-			<button v-if="!$store.state.connected" @click="this.connectWallet()">Connect Wallet</button>
-			<button v-if="$store.state.connected" @click="this.disconnectWallet()">Disconnect Wallet</button>
-			<h1 v-if="$store.state.connected">{{ this.$store.state.address }}</h1>
-			<h4>{{ error }}</h4>
+		<div class="container" style="margin-bottom: 36px;">
+			<div class="row">
+				<div class="col-6">
+					<h6 v-if="$store.state.connected">{{ this.$store.state.address }}</h6>
+				</div>
+				<div class="col-6 bg-warning">
+					<div class="w-100 text-right">
+						<button v-if="!$store.state.connected" @click="this.connectWallet()" class="ml-auto">
+							Connect Wallet
+						</button>
+						<button v-if="$store.state.connected" @click="this.disconnectWallet()" class="ml-auto">
+							Disconnect Wallet
+						</button>
+					</div>
+				</div>
+
+				<div class="col-12 text-center">
+					<router-link to="/">Home</router-link> |
+					<router-link to="/about">About</router-link> |
+					<router-link to="/sign-message">Sign Message</router-link>
+				</div>
+			</div>
 		</div>
-		<router-link to="/">Home</router-link> |
-		<router-link to="/about">About</router-link> |
-		<router-link to="/sign-message">Sign Message</router-link>
 	</nav>
 
 	<router-view />
@@ -68,12 +81,15 @@
 </script>
 
 <style lang="scss">
-	#app {
-		font-family: Avenir, Helvetica, Arial, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
-		color: #2c3e50;
+	@import 'src/assets/styles/bootstrap-override.scss';
+
+	button {
+		@extend .btn;
+		@extend .btn-primary;
+	}
+
+	input {
+		@extend .form-control;
 	}
 
 	nav {
@@ -84,8 +100,12 @@
 			color: #2c3e50;
 
 			&.router-link-exact-active {
-				color: #42b983;
+				@extend .text-primary;
 			}
 		}
+	}
+
+	body {
+		@extend .bg-light;
 	}
 </style>
