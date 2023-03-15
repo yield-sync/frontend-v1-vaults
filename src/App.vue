@@ -1,31 +1,39 @@
 <template>
-	<nav>
-		<div class="container" style="margin-bottom: 36px;">
-			<div class="row">
-				<div class="col-6">
+	<div>
+		<VApp class="container" style="margin-bottom: 36px;">
+			<VToolbar app >
+				<div>
 					<h6 v-if="$store.state.connected">{{ this.$store.state.address }}</h6>
 				</div>
-				<div class="">
-					<div class="w-100 text-right">
-						<button v-if="!$store.state.connected" @click="this.connectWallet()" class="ml-auto">
+				<div>
+					<div>
+						<VBtn v-if="!$store.state.connected" @click="this.connectWallet()" class="ml-auto">
 							Connect Wallet
-						</button>
-						<button v-if="$store.state.connected" @click="this.disconnectWallet()" class="ml-auto">
+						</VBtn>
+						<VBtn v-if="$store.state.connected" @click="this.disconnectWallet()" class="ml-auto">
 							Disconnect Wallet
-						</button>
+						</VBtn>
 					</div>
 				</div>
 
 				<div class="col-12 text-center">
-					<router-link to="/">Home</router-link> |
-					<router-link to="/about">About</router-link> |
-					<router-link to="/sign-message">Sign Message</router-link>
+					<RouterLink to="/">
+						<VBtn>Home</VBtn>
+					</RouterLink>
+					<RounterLink to="/about">
+						<VBtn>About</VBtn>
+					</RounterLink>
+					<RounterLink to="/sign-message">
+						<VBtn>Sign Message</VBtn>
+					</RounterLink>
 				</div>
-			</div>
-		</div>
-	</nav>
+			</VToolbar>
 
-	<router-view />
+			<VContent>
+				<RouterView />
+			</VContent>
+		</VApp>
+	</div>
 </template>
 
 <script>

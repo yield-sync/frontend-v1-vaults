@@ -146,6 +146,15 @@ module.exports = {
 			"error",
 			"PascalCase",
 		],
+		"vue/component-name-in-template-casing": [
+			"error",
+			"PascalCase",
+			{
+				"registeredComponentsOnly": false,
+				"ignores": [
+				]
+		  },
+		],
 		"vue/html-indent": [
 			"error",
 			"tab",

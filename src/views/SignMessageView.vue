@@ -1,10 +1,10 @@
 <template>
-	<div class="container">
+	<VContent>
 		<div style="margin-bottom: 36px;">
 			<h2>Data to be Signed</h2>
 			<input v-model="data" type="text" style="margin-bottom: 10px;"/>
 
-			<button @click="this.signMessage()">Sign Data</button>
+			<VBtn @click="this.signMessage()">Sign Data</VBtn>
 
 			<h4>Signed Data: {{ signedData }}</h4>
 		</div>
@@ -22,12 +22,12 @@
 			<input v-model="inputSignedData" type="text" style="margin-bottom: 10px;"/>
 			<br/>
 
-			<button @click="this.recoverMessage()">Recover</button>
+			<VBtn @click="this.recoverMessage()">Recover</VBtn>
 
 			<h3>Recovered</h3>
 			<h3>{{ recovered }}</h3>
 		</div>
-	</div>
+	</VContent>
 </template>
 
 <script>
