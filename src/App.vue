@@ -5,7 +5,7 @@
 				<div class="col-6">
 					<h6 v-if="$store.state.connected">{{ this.$store.state.address }}</h6>
 				</div>
-				<div class="col-6 bg-warning">
+				<div class="">
 					<div class="w-100 text-right">
 						<button v-if="!$store.state.connected" @click="this.connectWallet()" class="ml-auto">
 							Connect Wallet
@@ -81,31 +81,5 @@
 </script>
 
 <style lang="scss">
-	@import 'src/assets/styles/bootstrap-override.scss';
 
-	button {
-		@extend .btn;
-		@extend .btn-primary;
-	}
-
-	input {
-		@extend .form-control;
-	}
-
-	nav {
-		padding: 30px;
-
-		a {
-			font-weight: bold;
-			color: #2c3e50;
-
-			&.router-link-exact-active {
-				@extend .text-primary;
-			}
-		}
-	}
-
-	body {
-		@extend .bg-light;
-	}
 </style>
