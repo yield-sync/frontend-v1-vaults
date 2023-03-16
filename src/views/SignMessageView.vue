@@ -1,33 +1,26 @@
 <template>
-	<VContent>
-		<div style="margin-bottom: 36px;">
-			<h2>Data to be Signed</h2>
-			<input v-model="data" type="text" style="margin-bottom: 10px;"/>
+	<VContainer class="py-16">
+		<VRow>
+			<VCol cols="6" class="mx-auto">
+				<VCard>
+					<VCardTitle><h1>SIGN DATA</h1></VCardTitle>
 
-			<VBtn @click="this.signMessage()">Sign Data</VBtn>
+					<VCardItem>
+						<VTextField v-model="inputData" type="text" label="Data to be signed"/>
 
-			<h4>Signed Data: {{ signedData }}</h4>
-		</div>
+						<VBtn @click="this.signMessage()" color="primary" class="w-100 mb-6">Sign Data</VBtn>
 
-		<hr/>
+						<VTextField v-model="inputSignedData" type="text" label="Signed Data" />
 
-		<div style="margin-bottom: 36px;">
-			<h2>Recover Message</h2>
+						<VBtn @click="this.recoverMessage()" color="primary" class="w-100 mb-6">Recover</VBtn>
 
-			<h3>Data</h3>
-			<input v-model="inputData" type="text" style="margin-bottom: 10px;"/>
-			<br/>
-
-			<h3>Signed Data</h3>
-			<input v-model="inputSignedData" type="text" style="margin-bottom: 10px;"/>
-			<br/>
-
-			<VBtn @click="this.recoverMessage()">Recover</VBtn>
-
-			<h3>Recovered</h3>
-			<h3>{{ recovered }}</h3>
-		</div>
-	</VContent>
+						<h3>Recovered</h3>
+						<p>{{ recovered }}</p>
+					</VCardItem>
+				</VCard>
+			</VCol>
+		</VRow>
+	</VContainer>
 </template>
 
 <script>
@@ -40,9 +33,6 @@
 		{
 			return {
 				web3: new Web3(window.ethereum),
-
-				data: "",
-				signedData: "",
 
 				inputData: "",
 				inputSignedData: "",
@@ -57,9 +47,9 @@
 			async signMessage()
 			{
 				this.web3.eth.personal.sign(
-					this.web3.utils.utf8ToHex(this.data),
+					this.web3.utils.utf8ToHex(this.inputData),
 					window.ethereum.selectedAddress,
-					(error, signedData) =>
+					(error, inputSignedData) =>
 					{
 						if (error)
 						{
@@ -68,7 +58,7 @@
 						}
 						else
 						{
-							this.signedData = signedData;
+							this.inputSignedData = inputSignedData;
 						}
 					}
 				);
@@ -76,7 +66,6 @@
 
 			async recoverMessage()
 			{
-				//ecrecover([], v, r, s)
 				this.web3.eth.personal.ecRecover(
 					this.inputData,
 					this.inputSignedData

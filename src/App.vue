@@ -1,39 +1,59 @@
 <template>
-	<div>
+	<VSheet>
 		<VApp class="container" style="margin-bottom: 36px;">
-			<VToolbar app >
-				<div>
-					<h6 v-if="$store.state.connected">{{ this.$store.state.address }}</h6>
-				</div>
-				<div>
-					<div>
-						<VBtn v-if="!$store.state.connected" @click="this.connectWallet()" class="ml-auto">
-							Connect Wallet
-						</VBtn>
-						<VBtn v-if="$store.state.connected" @click="this.disconnectWallet()" class="ml-auto">
-							Disconnect Wallet
-						</VBtn>
-					</div>
-				</div>
+			<VSheet color="primary">
+				<VContainer>
+					<VRow>
+						<VCol
+							cols="6"
+							class="text-left"
+						>
+							<RouterLink to="/" class="mr-2 text-decoration-none text-white">
+								<VBtn variant="primary">
+									Home
+								</VBtn>
+							</RouterLink>
+							<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
+								<VBtn variant="primary">
+									About
+								</VBtn>
+							</RouterLink>
+							<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-white">
+								<VBtn variant="primary">
+									Sign Message
+								</VBtn>
+							</RouterLink>
+						</VCol>
 
-				<div class="col-12 text-center">
-					<RouterLink to="/">
-						<VBtn>Home</VBtn>
-					</RouterLink>
-					<RounterLink to="/about">
-						<VBtn>About</VBtn>
-					</RounterLink>
-					<RounterLink to="/sign-message">
-						<VBtn>Sign Message</VBtn>
-					</RounterLink>
-				</div>
-			</VToolbar>
+						<VCol cols="6" class="text-right">
+							<VBtn
+								v-if="!$store.state.connected"
+								@click="this.connectWallet()"
+								variant="outlined"
+								color="flat"
+								class="rounded-pill"
+							>
+								Connected {{ this.$store.state.address }}
+							</VBtn>
+							<VBtn
+								v-if="$store.state.connected"
+								@click="this.disconnectWallet()"
+								variant="outlined"
+								color="flat"
+								class="rounded-pill"
+							>
+								Disconnect Wallet
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VContainer>
+			</VSheet>
 
 			<VContent>
 				<RouterView />
 			</VContent>
 		</VApp>
-	</div>
+	</VSheet>
 </template>
 
 <script>

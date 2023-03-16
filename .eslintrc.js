@@ -155,8 +155,20 @@ module.exports = {
 				]
 		  },
 		],
-		"vue/html-indent": [
+		"vue/component-tags-order": [
 			"error",
+			{
+				"order": [
+					[
+						"script",
+						"template", 
+					],
+					"style", 
+				]
+		  },
+		],
+		"vue/html-indent": [
+			"warn",
 			"tab",
 			{
 				"attribute": 1,
@@ -171,7 +183,8 @@ module.exports = {
 			"error",
 			{
 				html: {
-					normal: "never", void: "always"
+					normal: "never",
+					void: "always"
 				},
 				"svg": "always",
 				"math": "always"
@@ -219,10 +232,10 @@ module.exports = {
 			"error",
 			{
 				"singleline": {
-					"max": 3
+					"max": 4
 				},      
 				"multiline": {
-					"max": 3
+					"max": 5
 				}
 		  },
 		],
@@ -245,6 +258,9 @@ module.exports = {
 				"ignoreIncludesComment": false,
 				"ignoreStringEscape": false
 			},
+		],
+		"vue/no-spaces-around-equal-signs-in-attribute": [
+			"error",
 		],
 		"vue/padding-line-between-blocks": [
 			"error",

@@ -1,9 +1,7 @@
 <template>
-	<div class="container">
-		<h1>
-			{{ this.aboutHeader }}
-		</h1>
-	</div>
+	<VContainer>
+		<h1 class="text-center">{{ this.header }}</h1>
+	</VContainer>
 </template>
 
 <script>
@@ -13,7 +11,7 @@
 		data()
 		{
 			return {
-				aboutHeader: "About Yield Sync"
+				header: "About"
 			};
 		}
 	};

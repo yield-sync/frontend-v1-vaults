@@ -1,6 +1,7 @@
 <template>
-	<div class="container">
-	</div>
+	<VContainer>
+		<h1 class="text-center">App</h1>
+	</VContainer>
 </template>
 
 <script lang="ts">
