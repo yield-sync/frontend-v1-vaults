@@ -19,10 +19,8 @@
 					</RouterLink>
 				</VCol>
 
-				<VCol
-					cols="4"
-				>
-					<h3 class="text-center text-white">Yield Sync</h3>
+				<VCol cols="4">
+					<h1 class="text-center text-white">Yield Sync</h1>
 				</VCol>
 
 				<VCol cols="4" class="text-right">
