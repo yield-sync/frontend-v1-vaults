@@ -153,7 +153,7 @@ module.exports = {
 				"registeredComponentsOnly": false,
 				"ignores": [
 				]
-		  },
+			},
 		],
 		"vue/component-tags-order": [
 			"error",
@@ -165,7 +165,7 @@ module.exports = {
 					],
 					"style", 
 				]
-		  },
+			},
 		],
 		"vue/html-indent": [
 			"warn",
@@ -177,7 +177,7 @@ module.exports = {
 				"alignAttributesVertically": true,
 				"ignores": [
 				]
-		  },
+			},
 		],
 		"vue/html-self-closing": [
 			"error",
@@ -188,7 +188,7 @@ module.exports = {
 				},
 				"svg": "always",
 				"math": "always"
-		  },
+			},
 		],
 		"vue/html-quotes": [
 			"error",
@@ -237,7 +237,7 @@ module.exports = {
 				"multiline": {
 					"max": 5
 				}
-		  },
+			},
 		],
 		"vue/multiline-html-element-content-newline": [
 			"error",
@@ -288,7 +288,7 @@ module.exports = {
 			"error",
 			{
 				"disallowFunctionalComponentFunction": false
-		  },
+			},
 		],
 		"vue/require-name-property": 1,
 		"vue/script-indent": [
@@ -299,7 +299,7 @@ module.exports = {
 				"switchCase": 1,
 				"ignores": [
 				]
-		  },
+			},
 		],
 		"vue/v-for-delimiter-style": [
 			"error",
@@ -324,8 +324,8 @@ module.exports = {
 				jest: true
 			},
 			"rules": {
-			  "indent": "off"
+				"indent": "off"
 			}
-		  },
+		},
 	]
 };
