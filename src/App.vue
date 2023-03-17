@@ -1,96 +1,66 @@
 <template>
-	<VSheet>
-		<VApp class="container" style="margin-bottom: 36px;">
-			<VSheet color="primary">
-				<VContainer>
-					<VRow>
-						<VCol
-							cols="6"
-							class="text-left"
-						>
-							<RouterLink to="/" class="mr-2 text-decoration-none text-white">
-								<VBtn variant="primary">
-									Home
-								</VBtn>
-							</RouterLink>
-							<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
-								<VBtn variant="primary">
-									About
-								</VBtn>
-							</RouterLink>
-							<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-white">
-								<VBtn variant="primary">
-									Sign Message
-								</VBtn>
-							</RouterLink>
-						</VCol>
+	<div class="bg-primary">
+		<CNav/>
 
-						<VCol cols="6" class="text-right">
-							<VBtn
-								v-if="!$store.state.connected"
-								@click="this.connectWallet()"
-								variant="outlined"
-								color="flat"
-								class="rounded-pill"
-							>
-								Connected {{ this.$store.state.address }}
-							</VBtn>
-							<VBtn
-								v-if="$store.state.connected"
-								@click="this.disconnectWallet()"
-								variant="outlined"
-								color="flat"
-								class="rounded-pill"
-							>
-								Disconnect Wallet
-							</VBtn>
-						</VCol>
-					</VRow>
-				</VContainer>
-			</VSheet>
+		<VContent>
+			<RouterView />
+		</VContent>
 
-			<VContent>
-				<RouterView />
-			</VContent>
-		</VApp>
-	</VSheet>
+		<VSheet color="dark" class="py-6" style="height: 600px;">
+			<VContainer class="">
+				<VRow>
+					<VCol
+						cols="12"
+						sm="6"
+						md="4"
+						class="text-center"
+					>
+						<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
+							<VBtn variant="primary">
+								About
+							</VBtn>
+						</RouterLink>
+					</VCol>
+
+					<VCol
+						cols="12"
+						sm="6"
+						md="4"
+						class="text-center"
+					>
+						<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
+							<VBtn variant="primary">
+								About
+							</VBtn>
+						</RouterLink>
+					</VCol>
+
+					<VCol
+						cols="12"
+						sm="6"
+						md="4"
+						class="text-center"
+					>
+						<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
+							<VBtn variant="primary">
+								About
+							</VBtn>
+						</RouterLink>
+					</VCol>
+				</VRow>
+			</VContainer>
+		</VSheet>
+	</div>
 </template>
 
 <script>
+	import CNav from "./components/CNav.vue";
 
 	export default {
 		name: "App",
 
-		methods: {
-			async connectWallet()
-			{
-				console.log("Connecting wallet..");
-
-				if (typeof window.ethereum !== "undefined")
-				{
-					window.ethereum.request({
-						method: "eth_requestAccounts"
-					})
-						.then((accounts) =>
-						{
-							this.$store.state.connected = true;
-							this.$store.state.address = accounts[0];
-
-							console.log("Connected!");
-						})
-					;
-				}
-				else
-				{
-					this.$store.state.error = "No ethereum deteceted";
-				}
-			},
-
-			async disconnectWallet()
-			{
-				this.$store.state.connected = false;
-				this.$store.state.address = "";
-			}
+		components: {
+			CNav
 		},
 
 		async created()

@@ -1,6 +1,12 @@
 <template>
 	<VContainer>
-		<h1 class="text-center">App</h1>
+		<VRow>
+			<VCol cols="12" style="min-height: 300px;">
+				<VSheets>
+					<VBtn>Go to vaults</VBtn>
+				</VSheets>
+			</VCol>
+		</VRow>
 	</VContainer>
 </template>
 
@@ -8,7 +14,7 @@
 	import {defineComponent} from "vue";
 
 	export default defineComponent({
-		name: "HomeView",
+		name: "DashboardView",
 		components: {
 		}
 	});

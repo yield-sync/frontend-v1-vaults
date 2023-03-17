@@ -3,12 +3,12 @@
 		<VRow>
 			<VCol cols="6" class="mx-auto">
 				<VCard>
-					<VCardTitle><h1>SIGN DATA</h1></VCardTitle>
+					<VCardTitle><h1 class="h3">Sign Data</h1></VCardTitle>
 
 					<VCardItem>
 						<VTextField v-model="inputData" type="text" label="Data to be signed"/>
 
-						<VBtn @click="this.signMessage()" color="primary" class="w-100 mb-6">Sign Data</VBtn>
+						<VBtn @click="this.signMessage()" color="primary" class="w-100 mb-6">Sign</VBtn>
 
 						<VTextField v-model="inputSignedData" type="text" label="Signed Data" />
 
