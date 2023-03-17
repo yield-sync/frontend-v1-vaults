@@ -2,9 +2,13 @@ import {createStore} from "vuex";
 
 export default createStore({
 	state: {
-		address: "",
+		accounts: [
+		],
 		connected: false,
 		error: "",
+
+		vaults: [
+		],
 	},
 	getters: {
 	},

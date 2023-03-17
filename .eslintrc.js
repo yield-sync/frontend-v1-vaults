@@ -27,8 +27,8 @@ module.exports = {
 		"arrow-body-style": [
 			"error",
 			"always",
-		]
-		, "arrow-parens": [
+		],
+		"arrow-parens": [
 			"error",
 			"always",
 		],
@@ -114,12 +114,13 @@ module.exports = {
 			},
 		],
 		"quotes": [
-			"error",
+			"warn",
 			"double",
 		],
 		"vue/array-bracket-newline": [
-			"error",
-			"always",
+			"warn",
+			{ "minItems": 1 },
+			
 		],
 		"vue/array-bracket-spacing": [
 			"error",

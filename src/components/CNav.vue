@@ -33,7 +33,7 @@
 						color="white"
 						class="rounded-pill"
 					>
-						Connected {{ this.$store.state.address }}
+						Connected {{ this.$store.state.accounts[0] }}
 					</VBtn>
 					<VBtn
 						v-if="$store.state.connected"
@@ -64,13 +64,21 @@
 					window.ethereum.request({
 						method: "eth_requestAccounts"
 					})
-						.then((accounts) =>
-						{
-							this.$store.state.connected = true;
-							this.$store.state.address = accounts[0];
+						.then(
+							(accounts) =>
+							{
+								this.$store.state.connected = true;
+								this.$store.state.accounts = accounts;
 
-							console.log("Connected!");
-						})
+								console.log("Connected!");
+							}
+						)
+						.catch(
+							(e) =>
+							{
+								this.$store.error = e;
+							}
+						)
 					;
 				}
 				else
