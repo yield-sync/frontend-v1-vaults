@@ -6,13 +6,13 @@
 					cols="4"
 					class="text-left"
 				>
-					<RouterLink to="/" class="mr-2 text-decoration-none text-white">
+					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
 						<VBtn variant="primary">
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
-					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-white">
+					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
 						<VBtn variant="primary">
 							Sign Message
 						</VBtn>
@@ -20,24 +20,33 @@
 				</VCol>
 
 				<VCol cols="4">
-					<h1 class="text-center text-white">Yield Sync</h1>
+					<h1
+						class="text-center text-dark text-uppercase"
+						style="letter-spacing: 4px;"
+					>
+						Yield Sync
+					</h1>
 				</VCol>
 
 				<VCol cols="4" class="text-right">
+					<h6 class="my-3">
+						<span class="text-primary">.</span>
+						{{ this.$store.state.accounts[0] }}
+					</h6>
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="this.connectWallet()"
 						variant="outlined"
-						color="white"
+						color="dark"
 						class="rounded-pill"
 					>
-						Connected {{ this.$store.state.accounts[0] }}
+						Connect
 					</VBtn>
 					<VBtn
 						v-if="$store.state.connected"
 						@click="this.disconnectWallet()"
 						variant="outlined"
-						color="white"
+						color="dark"
 						class="rounded-pill"
 					>
 						Disconnect
@@ -88,7 +97,8 @@
 			async disconnectWallet()
 			{
 				this.$store.state.connected = false;
-				this.$store.state.address = "";
+				this.$store.state.accounts = [
+				];
 			}
 		},
 	};

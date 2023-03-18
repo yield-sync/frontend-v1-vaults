@@ -31,7 +31,7 @@
 			if (accounts && accounts.length > 0)
 			{
 				this.$store.state.connected = true;
-				this.$store.state.address = accounts[0];
+				this.$store.state.accounts = accounts;
 			}
 		},
 	};

@@ -37,4 +37,4 @@ const vuetify = createVuetify({
 });
 
 
-createApp(App).use(store).use(router).use(vuetify).mount("#app");
+createApp(App).provide("$store", store).use(store).use(router).use(vuetify).mount("#app");
