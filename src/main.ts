@@ -28,7 +28,7 @@ const vuetify = createVuetify({
 					secondary: "#03DAC6",
 					success: "#4CAF50",
 					surface: "#FFFFFF",
-					warning: "#FB8C00",
+					warning: "#e36144",
 					white: "#FFFFFF"
 				}
 			}

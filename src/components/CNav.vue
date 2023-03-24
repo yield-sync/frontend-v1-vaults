@@ -31,11 +31,11 @@
 				<VCol cols="4" class="text-right">
 					<h6 class="my-3">
 						<span class="text-primary">.</span>
-						{{ this.$store.state.accounts[0] }}
+						{{ $store.state.accounts[0] }}
 					</h6>
 					<VBtn
 						v-if="!$store.state.connected"
-						@click="this.connectWallet()"
+						@click="connectWallet()"
 						variant="outlined"
 						color="dark"
 						class="rounded-pill"
@@ -44,9 +44,8 @@
 					</VBtn>
 					<VBtn
 						v-if="$store.state.connected"
-						@click="this.disconnectWallet()"
-						variant="outlined"
-						color="dark"
+						@click="disconnectWallet()"
+						color="warning"
 						class="rounded-pill"
 					>
 						Disconnect
@@ -59,6 +58,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+
 	export default defineComponent({
 		name: "CNav",
 
@@ -79,7 +79,7 @@
 						method: "eth_requestAccounts"
 					})
 						.then(
-							(accounts: any) =>
+							(accounts: Array<string>) =>
 							{
 								this.$store.state.connected = true;
 								this.$store.state.accounts = accounts;
@@ -88,9 +88,9 @@
 							}
 						)
 						.catch(
-							(e: any) =>
+							(e: string) =>
 							{
-								this.$store.error = e;
+								this.$store.state.error = e;
 							}
 						)
 					;

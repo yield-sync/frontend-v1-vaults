@@ -11,10 +11,12 @@
 </template>
 
 <script lang="ts">
+	import { defineComponent } from "vue";
+
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
 
-	export default {
+	export default defineComponent({
 		name: "App",
 
 		components: {
@@ -22,17 +24,34 @@
 			CFooter
 		},
 
-		async created()
+		created()
 		{
-			const accounts = await window.ethereum.request({
+			window.ethereum.request({
 				method: "eth_accounts"
-			});
+			})
+				.then(
+					(accounts: Array<string>) =>
+					{
+						if (accounts.length > 0)
+						{
+							console.log(`MetaMask is connected with account: ${accounts[0]}`);
 
-			if (accounts && accounts.length > 0)
-			{
-				this.$store.state.connected = true;
-				this.$store.state.accounts = accounts;
-			}
+							this.$store.state.connected = true;
+							this.$store.state.accounts = accounts;
+						}
+						else
+						{
+							console.log("MetaMask is not connected");
+						}
+					}
+				)
+				.catch(
+					(error: string) =>
+					{
+						console.log(`Error checking MetaMask connection: ${error}`);
+					}
+				)
+			;
 		},
-	};
+	});
 </script>

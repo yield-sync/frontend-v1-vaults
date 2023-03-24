@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
 declare global {
-	interface Window{
+	interface Window {
 		ethereum?: any
 	}
 }
