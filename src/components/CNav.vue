@@ -7,13 +7,13 @@
 					class="text-left"
 				>
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="primary">
+						<VBtn >
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="primary">
+						<VBtn>
 							Sign Message
 						</VBtn>
 					</RouterLink>
@@ -57,9 +57,15 @@
 	</VSheet>
 </template>
 
-<script>
+<script lang="ts">
 	export default {
 		name: "CNav",
+
+		data() 
+		{
+			return {
+			};
+		},
 
 		methods: {
 			async connectWallet()
@@ -72,7 +78,7 @@
 						method: "eth_requestAccounts"
 					})
 						.then(
-							(accounts) =>
+							(accounts: any) =>
 							{
 								this.$store.state.connected = true;
 								this.$store.state.accounts = accounts;
@@ -81,7 +87,7 @@
 							}
 						)
 						.catch(
-							(e) =>
+							(e: any) =>
 							{
 								this.$store.error = e;
 							}

@@ -2,15 +2,15 @@
 	<div class="bg-primary">
 		<CNav/>
 
-		<VContent>
+		<div>
 			<RouterView />
-		</VContent>
+		</div>
 
 		<CFooter />
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
 
@@ -36,7 +36,3 @@
 		},
 	};
 </script>
-
-<style lang="scss">
-
-</style>
