@@ -31,13 +31,19 @@
 				<VCol cols="4" class="text-right">
 					<h6 class="my-3">
 						<span class="text-primary">.</span>
-						{{ $store.state.accounts[0] }}
+						{{
+							$store.state.accounts[0] ?
+								$store.state.accounts[0].substring(0, 4) +
+								"..." +
+								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
+								:
+								""
+						}}
 					</h6>
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="connectWallet()"
-						variant="outlined"
-						color="dark"
+						color="success"
 						class="rounded-pill"
 					>
 						Connect
@@ -107,6 +113,11 @@
 				this.$store.state.accounts = [
 				];
 			}
+		},
+
+		created() {
+			console.log("nav loaded");
+
 		},
 	});
 </script>

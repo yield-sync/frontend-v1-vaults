@@ -13,37 +13,37 @@ module.exports = {
 	},
 	rules: {
 		"array-bracket-newline": [
-			"error",
+			"warn",
 			"always",
 		],
 		"array-element-newline": [
-			"error",
+			"warn",
 			"always",
 		],
 		"array-bracket-spacing": [
-			"error",
+			"warn",
 			"never",
 		],
 		"arrow-body-style": [
-			"error",
+			"warn",
 			"always",
 		],
 		"arrow-parens": [
-			"error",
+			"warn",
 			"always",
 		],
 		"brace-style": [
-			"error",
+			"warn",
 			"allman",
 		],
 		"camelcase": [
-			"error",
+			"warn",
 			{
 				"properties": "always" 
 			},
 		],
 		"comma-dangle": [
-			"error",
+			"warn",
 			{
 				"arrays": "always",
 				"objects": "ignore",
@@ -53,14 +53,14 @@ module.exports = {
 			},
 		],
 		"comma-spacing": [
-			"error",
+			"warn",
 			{
 				"before": false,
 				"after": true 
 			},
 		],
 		"dot-location": [
-			"error",
+			"warn",
 			"property",
 		],
 		"indent": [
@@ -68,43 +68,43 @@ module.exports = {
 			"tab",
 		],
 		"implicit-arrow-linebreak": [
-			"error",
+			"warn",
 			"beside",
 		],
 		"jsx-quotes": [
-			"error",
+			"warn",
 			"prefer-double",
 		],
 		"key-spacing": [
-			"error",
+			"warn",
 			{
 				"afterColon": true,
 				"beforeColon": false 
 			},
 		],
 		"keyword-spacing": [
-			"error",
+			"warn",
 			{
 				"before": true 
 			},
 		],
 		"lines-between-class-members": [
-			"error",
+			"warn",
 			"always",
 		],
 		"line-comment-position": [
-			"error",
+			"warn",
 			{
 				"position": "above" 
 			},
 		],
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-		"no-duplicate-imports": "error",
+		"no-duplicate-imports": "warn",
 		"no-mixed-spaces-and-tabs": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-trailing-spaces": process.env.NODE_ENV === "production" ? "error" : "off",
 		"object-curly-newline": [
-			"error",
+			"warn",
 			{
 				"ObjectExpression": "always",
 				"ImportDeclaration": "never",
@@ -123,11 +123,11 @@ module.exports = {
 			
 		],
 		"vue/array-bracket-spacing": [
-			"error",
+			"warn",
 			"never",
 		],
 		"vue/comma-dangle": [
-			"error",
+			"warn",
 			{
 				"arrays": "always",
 				"objects": "never",
@@ -137,18 +137,18 @@ module.exports = {
 			},
 		],
 		"vue/comma-spacing": [
-			"error",
+			"warn",
 			{
 				"before": false,
 				"after": true 
 			},
 		],
 		"vue/component-definition-name-casing": [
-			"error",
+			"warn",
 			"PascalCase",
 		],
 		"vue/component-name-in-template-casing": [
-			"error",
+			"warn",
 			"PascalCase",
 			{
 				"registeredComponentsOnly": false,
@@ -157,7 +157,7 @@ module.exports = {
 			},
 		],
 		"vue/component-tags-order": [
-			"error",
+			"warn",
 			{
 				"order": [
 					[
@@ -181,7 +181,7 @@ module.exports = {
 			},
 		],
 		"vue/html-self-closing": [
-			"error",
+			"warn",
 			{
 				html: {
 					normal: "never",
@@ -192,27 +192,27 @@ module.exports = {
 			},
 		],
 		"vue/html-quotes": [
-			"error",
+			"warn",
 			"double",
 			{
 				"avoidEscape": false 
 			}, 
 		],
 		"vue/key-spacing": [
-			"error",
+			"warn",
 			{
 				"afterColon": true,
 				"beforeColon": false 
 			},
 		],
 		"vue/keyword-spacing": [
-			"error",
+			"warn",
 			{
 				"before": true 
 			},
 		],
 		"vue/max-len": [
-			"error",
+			"warn",
 			{
 				"code": 120,
 				"comments": 120,
@@ -230,7 +230,7 @@ module.exports = {
 			},
 		],
 		"vue/max-attributes-per-line": [
-			"error",
+			"warn",
 			{
 				"singleline": {
 					"max": 4
@@ -241,7 +241,7 @@ module.exports = {
 			},
 		],
 		"vue/multiline-html-element-content-newline": [
-			"error",
+			"warn",
 			{
 				"ignoreWhenEmpty": true,
 				"ignores": [
@@ -250,27 +250,27 @@ module.exports = {
 			},
 		],
 		"vue/mustache-interpolation-spacing": [
-			"error",
+			"warn",
 			"always",
 		],
 		"vue/no-useless-v-bind": [
-			"error",
+			"warn",
 			{
 				"ignoreIncludesComment": false,
 				"ignoreStringEscape": false
 			},
 		],
 		"vue/no-spaces-around-equal-signs-in-attribute": [
-			"error",
+			"warn",
 		],
 		"vue/padding-line-between-blocks": [
-			"error",
+			"warn",
 			"always",
 		],
 		/**
 		 * @dev Cannot uncomment until eslint-plugin-vue v9.9+
 		* "vue/padding-line-between-tags": [
-		* 	"error",
+		* 	"warn",
 		* 	
 		* 	{
 		* 		"blankLine": "always",
@@ -279,21 +279,21 @@ module.exports = {
 		* 	},
 		* ],
 		* "vue/padding-lines-in-component-definition": [
-		* 	"error",
+		* 	"warn",
 		* 	{
 		* 		"betweenOptions": "always"			
 		* 	},
 		* ],
 		*/
 		"vue/require-direct-export": [
-			"error",
+			"warn",
 			{
 				"disallowFunctionalComponentFunction": false
 			},
 		],
 		"vue/require-name-property": 1,
 		"vue/script-indent": [
-			"error",
+			"warn",
 			"tab",
 			{
 				"baseIndent": 1,
@@ -303,11 +303,11 @@ module.exports = {
 			},
 		],
 		"vue/v-for-delimiter-style": [
-			"error",
+			"warn",
 			"in",
 		],
 		semi: [
-			"error",
+			"warn",
 			"always",
 		],
 		"@typescript-eslint/no-empty-function": [

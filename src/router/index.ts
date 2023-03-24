@@ -1,11 +1,13 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
-import DashboardView from "../views/DashboardView.vue";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: "/",
 		name: "dashboard",
-		component: DashboardView
+		component: () =>
+		{
+			return import("../views/DashboardView.vue");
+		}
 	},
 	{
 		path: "/about",

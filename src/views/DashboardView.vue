@@ -30,7 +30,7 @@
 
 		async created()
 		{
-			if (typeof window.ethereum !== "undefined" && this.$store.state.accounts.length <= 1)
+			if (typeof window.ethereum !== "undefined" && this.$store.state.accounts.length > 0)
 			{
 				const web3 = new Web3(window.ethereum);
 

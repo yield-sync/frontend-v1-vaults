@@ -2,9 +2,7 @@
 	<div class="bg-primary">
 		<CNav/>
 
-		<div>
-			<RouterView />
-		</div>
+		<RouterView v-if="!loading" />
 
 		<CFooter />
 	</div>
@@ -22,6 +20,13 @@
 		components: {
 			CNav,
 			CFooter
+		},
+
+		data()
+		{
+			return {
+				loading: true
+			};
 		},
 
 		created()
@@ -48,10 +53,14 @@
 				.catch(
 					(error: string) =>
 					{
-						console.log(`Error checking MetaMask connection: ${error}`);
+						console.log(`MetaMask connection error: ${error}`);
 					}
 				)
 			;
+		},
+
+		mounted() {
+			this.loading = false;
 		},
 	});
 </script>
