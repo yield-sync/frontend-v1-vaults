@@ -61,7 +61,7 @@
 	export default {
 		name: "CNav",
 
-		data() 
+		data()
 		{
 			return {
 			};
