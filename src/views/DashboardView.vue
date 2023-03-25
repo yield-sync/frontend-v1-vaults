@@ -104,11 +104,7 @@
 				// [erc20]
 				for (let i = 0; i < ethContracts.erc20.length; i++)
 				{
-					const erc20ContractAddress = ethContracts.erc20[i];
-
-					const contract = new web3.eth.Contract(abiER20 as AbiItem[], erc20ContractAddress);
-
-					console.log("Connected Address:", this.$store.state.accounts[0]);
+					const contract = new web3.eth.Contract(abiER20 as AbiItem[], ethContracts.erc20[i]);
 
 					this.erc20Balances.push(
 						{
@@ -122,17 +118,11 @@
 				// [erc721]
 				for (let i = 0; i < ethContracts.erc721.length; i++)
 				{
-					const erc721ContractAddress = ethContracts.erc721[i];
-
-					const contract = new web3.eth.Contract(abiERC721 as AbiItem[], erc721ContractAddress);
+					const contract = new web3.eth.Contract(abiERC721 as AbiItem[], ethContracts.erc721[i]);
 					const contractMetadata = new web3.eth.Contract(
 						abiERC721Metadata as AbiItem[],
-						erc721ContractAddress
+						ethContracts.erc721[i]
 					);
-
-					abiERC721Metadata;
-
-					console.log("Connected Address:", this.$store.state.accounts[0]);
 
 					this.erc721Balances.push(
 						{
