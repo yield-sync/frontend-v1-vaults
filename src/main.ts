@@ -25,10 +25,10 @@ const vuetify = createVuetify({
 					info: "#2196F3",
 					light: "#f2f2f2",
 					primary: "#95dba2",
+					"primary-light": "#b6f2c1",
 					secondary: "#03DAC6",
 					success: "#4CAF50",
-					surface: "#FFFFFF",
-					warning: "#de2323",
+					warning: "#ffd1d1",
 					white: "#FFFFFF"
 				}
 			}

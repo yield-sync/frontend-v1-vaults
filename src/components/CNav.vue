@@ -7,13 +7,13 @@
 					class="text-left"
 				>
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn >
+						<VBtn color="primary-light">
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
-						<VBtn>
+						<VBtn color="primary-light">
 							Sign Message
 						</VBtn>
 					</RouterLink>
@@ -32,7 +32,7 @@
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="connectWallet()"
-						color="success"
+						color="primary-light"
 						class="rounded-pill"
 					>
 						Connect
@@ -116,7 +116,7 @@
 			}
 		},
 
-		created() 
+		created()
 		{
 			console.log("nav loaded");
 

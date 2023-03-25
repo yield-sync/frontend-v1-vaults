@@ -2,7 +2,7 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="12" md="6">
-				<VCard class="mb-3 px-6 py-6">
+				<VCard color="primary-light" class="mb-3 px-6 py-6">
 					<VRow class="">
 						<VCol cols="12">
 							<h3>ERC 20 Tokens</h3>
@@ -32,7 +32,7 @@
 			</VCol>
 
 			<VCol cols="12" md="6">
-				<VCard class="mb-3 px-6 py-6">
+				<VCard color="primary-light" class="mb-3 px-6 py-6">
 					<VRow class="">
 						<VCol cols="12">
 							<h3>ERC 721 Tokens (NFTs)</h3>
