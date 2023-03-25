@@ -47,7 +47,7 @@
 						erc721ContractAddress
 					);
 
-					abiERC721Metadata
+					abiERC721Metadata;
 
 					console.log("Connected Address:", this.$store.state.accounts[0]);
 

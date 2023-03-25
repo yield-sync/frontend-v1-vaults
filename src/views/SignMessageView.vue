@@ -8,11 +8,11 @@
 					<VCardItem>
 						<VTextField v-model="inputData" type="text" label="Data to be signed"/>
 
-						<VBtn @click="this.signMessage()" color="primary" class="w-100 mb-6">Sign</VBtn>
+						<VBtn @click="signMessage()" color="primary" class="w-100 mb-6">Sign</VBtn>
 
 						<VTextField v-model="inputSignedData" type="text" label="Signed Data" />
 
-						<VBtn @click="this.recoverMessage()" color="primary" class="w-100 mb-6">Recover</VBtn>
+						<VBtn @click="recoverMessage()" color="primary" class="w-100 mb-6">Recover</VBtn>
 
 						<h3>Recovered</h3>
 						<p>{{ recovered }}</p>
@@ -24,9 +24,10 @@
 </template>
 
 <script>
+	import { defineComponent } from "vue";
 	import Web3 from "web3";
 
-	export default {
+	export default defineComponent({
 		name: "SignMessage",
 
 		data()
@@ -48,12 +49,11 @@
 			{
 				this.web3.eth.personal.sign(
 					this.web3.utils.utf8ToHex(this.inputData),
-					window.ethereum.selectedAddress,
-					(error, inputSignedData) =>
-					{
+					this.$store.state.accounts[0],
+					undefined,
+					(error, inputSignedData) => {
 						if (error)
 						{
-							console.error(error);
 							this.error = error;
 						}
 						else
@@ -77,5 +77,5 @@
 				);
 			}
 		}
-	};
+	});
 </script>
