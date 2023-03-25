@@ -2,10 +2,10 @@ import { createApp } from "vue";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import "./assets/styles/variables.scss";
 import "vuetify/styles";
 
 import App from "./App.vue";
+import "./assets/styles/variables.scss";
 import router from "./router";
 import store from "./store";
 

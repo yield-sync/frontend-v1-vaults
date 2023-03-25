@@ -29,17 +29,6 @@
 				</VCol>
 
 				<VCol cols="4" class="text-right">
-					<h6 class="my-3">
-						<span class="text-primary">.</span>
-						{{
-							$store.state.accounts[0] ?
-								$store.state.accounts[0].substring(0, 4) +
-								"..." +
-								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
-								:
-								""
-						}}
-					</h6>
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="connectWallet()"
@@ -56,6 +45,18 @@
 					>
 						Disconnect
 					</VBtn>
+
+					<h6 class="my-3">
+						<span class="text-primary">.</span>
+						{{
+							$store.state.accounts[0] ?
+								$store.state.accounts[0].substring(0, 4) +
+								"..." +
+								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
+								:
+								""
+						}}
+					</h6>
 				</VCol>
 			</VRow>
 		</VContainer>
@@ -115,7 +116,8 @@
 			}
 		},
 
-		created() {
+		created() 
+		{
 			console.log("nav loaded");
 
 		},

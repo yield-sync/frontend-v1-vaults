@@ -59,7 +59,8 @@
 			;
 		},
 
-		mounted() {
+		mounted() 
+		{
 			this.loading = false;
 		},
 	});
