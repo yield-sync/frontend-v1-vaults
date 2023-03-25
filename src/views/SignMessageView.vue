@@ -3,19 +3,32 @@
 		<VRow>
 			<VCol cols="6" class="mx-auto">
 				<VCard>
-					<VCardTitle><h1 class="h3">Sign Data</h1></VCardTitle>
+					<VCardItem>
+						<VCardTitle>
+							Sign Data
+						</VCardTitle>
+					</VCardItem>
 
 					<VCardItem>
 						<VTextField v-model="inputData" type="text" label="Data to be signed"/>
 
 						<VBtn @click="signMessage()" color="primary" class="w-100 mb-6">Sign</VBtn>
+					</VCardItem>
 
+					<VCardItem>
 						<VTextField v-model="inputSignedData" type="text" label="Signed Data" />
 
 						<VBtn @click="recoverMessage()" color="primary" class="w-100 mb-6">Recover</VBtn>
+					</VCardItem>
 
-						<h3>Recovered</h3>
-						<p>{{ recovered }}</p>
+					<VCardItem>
+						<VCardTitle>
+							Recovered
+						</VCardTitle>
+
+						<VCardSubtitle>
+							<p>{{ recovered }}</p>
+						</VCardSubtitle>
 					</VCardItem>
 				</VCard>
 			</VCol>
@@ -51,7 +64,8 @@
 					this.web3.utils.utf8ToHex(this.inputData),
 					this.$store.state.accounts[0],
 					undefined,
-					(error, inputSignedData) => {
+					(error, inputSignedData) =>
+					{
 						if (error)
 						{
 							this.error = error;
