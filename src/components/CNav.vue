@@ -9,7 +9,7 @@
 						</VBtn>
 					</RouterLink>
 
-					<RouterLink to="/balances" class="mr-2 text-decoration-none text-dark">
+					<RouterLink :to="`/balances/${$store.state.accounts[0]}`" class="mr-2 text-decoration-none text-dark">
 						<VBtn color="primary-light">
 							Balances
 						</VBtn>
@@ -63,7 +63,12 @@
 				</VCol>
 
 				<VCol cols="12">
-					<VTextField v-model="$store.state.alchemyApiKey" type="text" label="Insert Alchemy API Key Here"/>
+					<VTextField
+						v-model="$store.state.alchemyApiKey"
+						@change="updateLocalStorage()"
+						type="text"
+						label="Insert Alchemy API Key Here"
+					/>
 				</VCol>
 			</VRow>
 		</VContainer>
@@ -120,6 +125,10 @@
 				this.$store.state.connected = false;
 				this.$store.state.accounts = [
 				];
+			},
+
+			updateLocalStorage() {
+				localStorage.alchemyApiKey = this.$store.state.alchemyApiKey
 			}
 		},
 

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: "/balances",
+		path: "/balances/:address",
 		name: "balances",
 		component: () =>
 		{

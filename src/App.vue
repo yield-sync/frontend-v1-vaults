@@ -57,9 +57,14 @@
 					}
 				)
 			;
+
+			if (localStorage.alchemyApiKey)
+			{
+				this.$store.state.alchemyApiKey = localStorage.alchemyApiKey;
+			}
 		},
 
-		mounted() 
+		mounted()
 		{
 			this.loading = false;
 		},

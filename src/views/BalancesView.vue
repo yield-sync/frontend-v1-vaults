@@ -1,16 +1,6 @@
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="12" sm="8" md="9" lg="10">
-				<VTextField v-model="addressToCheckBalancesOf" type="text" label="Address to check balances of.."/>
-			</VCol>
-
-			<VCol cols="12" sm="4" md="3" lg="2">
-				<VBtn class="w-100" @click="getBalances()">
-					View Balances
-				</VBtn>
-			</VCol>
-
 			<VCol cols="12">
 				<VCard color="primary-light" class="mb-3 px-6 py-6">
 					<VRow class="">
@@ -90,7 +80,7 @@
 		data()
 		{
 			return {
-				addressToCheckBalancesOf: "",
+				addressToCheckBalancesOf: this.$route.params.address as string,
 				erc20Balances: [
 				] as {
 					name: string,
@@ -101,7 +91,7 @@
 				] as {
 					name: string,
 					symbol: string,
-					balance: number
+					balance: number|string
 				}[],
 			};
 		},
@@ -109,33 +99,53 @@
 		methods: {
 			async getBalances()
 			{
-				this.erc20Balances = [];
+				const web3 = new Web3(window.ethereum);
 
-				const data: any = await alchemyGetBalances(
-					this.$store.state.alchemyApiKey,
-					this.addressToCheckBalancesOf
-				);
-
-				for (let i = 0; i < data.tokenBalances.length; i++)
+				if (web3.utils.isAddress(this.addressToCheckBalancesOf))
 				{
-					const tB = data.tokenBalances[i];
+					this.erc20Balances = [
+					];
 
-					if (tB.tokenBalance != "0x0000000000000000000000000000000000000000000000000000000000000000")
+					const data: any = await alchemyGetBalances(
+						this.$store.state.alchemyApiKey,
+						this.addressToCheckBalancesOf
+					);
+
+					for (let i = 0; i < data.tokenBalances.length; i++)
 					{
-						const web3 = new Web3(window.ethereum);
+						const tB = data.tokenBalances[i];
 
-						const contract = new web3.eth.Contract(abiER20 as AbiItem[], tB.contractAddress);
+						if (tB.tokenBalance != "0x0000000000000000000000000000000000000000000000000000000000000000")
+						{
 
-						this.erc20Balances.push(
-							{
-								name: await contract.methods.name().call(),
-								symbol: await contract.methods.symbol().call(),
-								balance: parseInt(tB.tokenBalance) * Math.pow(10, -18)
-							}
-						);
+							const contract = new web3.eth.Contract(abiER20 as AbiItem[], tB.contractAddress);
+
+							this.erc20Balances.push(
+								{
+									name: await contract.methods.name().call(),
+									symbol: await contract.methods.symbol().call(),
+									balance: parseInt(tB.tokenBalance) * Math.pow(10, -18)
+								}
+							);
+						}
 					}
 				}
 			}
+		},
+
+		async created()
+		{
+			await this.getBalances();
+
+			// watch the params of the route to fetch the data again
+			this.$watch(
+				() => this.$route.params,
+				async () => {
+					await this.getBalances();
+				},
+				// fetch the data when the view is created and the data is already being observed
+				{ immediate: true }
+			)
 		},
 	});
 </script>
