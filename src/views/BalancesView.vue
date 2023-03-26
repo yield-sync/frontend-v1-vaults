@@ -106,8 +106,10 @@
 					this.erc20Balances = [
 					];
 
+					// eslint-disable-next-line
 					const data: any = await alchemyGetBalances(
 						this.$store.state.alchemyApiKey,
+						await web3.eth.net.getId(),
 						this.addressToCheckBalancesOf
 					);
 
@@ -139,17 +141,17 @@
 
 			// watch the params of the route to fetch the data again
 			this.$watch(
-				() => 
+				() =>
 				{
 					return this.$route.params;
 				},
-				async () => 
+				async () =>
 				{
 					await this.getBalances();
 				},
 				// fetch the data when the view is created and the data is already being observed
 				{
-					immediate: true 
+					immediate: true
 				}
 			);
 		},

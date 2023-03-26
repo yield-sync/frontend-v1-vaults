@@ -53,9 +53,8 @@
 				<VCol cols="12">
 					<VTextField
 						v-model="$store.state.alchemyApiKey"
-						@change="updateLocalStorage()"
-						type="text"
 						label="Insert Alchemy API Key Here"
+						variant="outlined"
 					/>
 				</VCol>
 			</VRow>

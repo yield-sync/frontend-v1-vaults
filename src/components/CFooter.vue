@@ -8,7 +8,10 @@
 					md="4"
 					class="text-center"
 				>
-					<RouterLink :to="`/balances/${$store.state.accounts[0]}`" class="mr-2 text-decoration-none text-dark">
+					<RouterLink
+						:to="`/balances/${$store.state.accounts[0]}`"
+						class="mr-2 text-decoration-none text-dark"
+					>
 						<VBtn color="dark" class="w-100 mb-3">
 							My Balances
 						</VBtn>
