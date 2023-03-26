@@ -38,7 +38,6 @@
 
 <script>
 	import { defineComponent } from "vue";
-	import Web3 from "web3";
 
 	export default defineComponent({
 		name: "SignMessage",
@@ -46,8 +45,6 @@
 		data()
 		{
 			return {
-				web3: new Web3(window.ethereum),
-
 				inputData: "",
 				inputSignedData: "",
 
@@ -60,8 +57,8 @@
 		methods: {
 			async signMessage()
 			{
-				this.web3.eth.personal.sign(
-					this.web3.utils.utf8ToHex(this.inputData),
+				this.$store.state.web3.eth.personal.sign(
+					this.$store.state.web3.utils.utf8ToHex(this.inputData),
 					this.$store.state.accounts[0],
 					undefined,
 					(error, inputSignedData) =>
@@ -80,7 +77,7 @@
 
 			async recoverMessage()
 			{
-				this.web3.eth.personal.ecRecover(
+				this.$store.state.web3.eth.personal.ecRecover(
 					this.inputData,
 					this.inputSignedData
 				).then(

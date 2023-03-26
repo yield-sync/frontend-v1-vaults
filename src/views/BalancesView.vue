@@ -66,7 +66,6 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import Web3 from "web3";
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../abi/erc20";
@@ -99,9 +98,7 @@
 		methods: {
 			async getBalances()
 			{
-				const web3 = new Web3(window.ethereum);
-
-				if (web3.utils.isAddress(this.addressToCheckBalancesOf))
+				if (this.$store.state.web3.utils.isAddress(this.addressToCheckBalancesOf))
 				{
 					this.erc20Balances = [
 					];
@@ -109,7 +106,7 @@
 					// eslint-disable-next-line
 					const data: any = await alchemyGetBalances(
 						this.$store.state.alchemyApiKey,
-						await web3.eth.net.getId(),
+						await this.$store.state.web3.eth.net.getId(),
 						this.addressToCheckBalancesOf
 					);
 
@@ -120,7 +117,10 @@
 						if (tB.tokenBalance != "0x0000000000000000000000000000000000000000000000000000000000000000")
 						{
 
-							const contract = new web3.eth.Contract(abiER20 as AbiItem[], tB.contractAddress);
+							const contract = new this.$store.state.web3.eth.Contract(
+								abiER20 as AbiItem[],
+								tB.contractAddress
+							);
 
 							this.erc20Balances.push(
 								{
