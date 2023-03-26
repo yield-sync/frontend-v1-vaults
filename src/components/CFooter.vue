@@ -7,7 +7,13 @@
 					sm="6"
 					md="4"
 					class="text-center"
-				/>
+				>
+					<RouterLink :to="`/balances/${$store.state.accounts[0]}`" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="dark" class="w-100 mb-3">
+							My Balances
+						</VBtn>
+					</RouterLink>
+				</VCol>
 
 				<VCol
 					cols="12"
@@ -15,9 +21,9 @@
 					md="4"
 					class="text-center"
 				>
-					<RouterLink to="/about" class="mr-2 text-decoration-none">
-						<VBtn color="dark">
-							About
+					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="dark" class="w-100 mb-3">
+							Sign Message
 						</VBtn>
 					</RouterLink>
 				</VCol>

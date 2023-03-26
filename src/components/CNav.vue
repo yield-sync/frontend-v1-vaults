@@ -8,18 +8,6 @@
 							Dashboard
 						</VBtn>
 					</RouterLink>
-
-					<RouterLink :to="`/balances/${$store.state.accounts[0]}`" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
-							Balances
-						</VBtn>
-					</RouterLink>
-
-					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
-							Sign Message
-						</VBtn>
-					</RouterLink>
 				</VCol>
 
 				<VCol cols="4">
@@ -127,8 +115,9 @@
 				];
 			},
 
-			updateLocalStorage() {
-				localStorage.alchemyApiKey = this.$store.state.alchemyApiKey
+			updateLocalStorage()
+			{
+				localStorage.alchemyApiKey = this.$store.state.alchemyApiKey;
 			}
 		},
 
