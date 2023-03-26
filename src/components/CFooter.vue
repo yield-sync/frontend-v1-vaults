@@ -15,8 +15,8 @@
 					md="4"
 					class="text-center"
 				>
-					<RouterLink to="/about" class="mr-2 text-decoration-none text-white">
-						<VBtn>
+					<RouterLink to="/about" class="mr-2 text-decoration-none">
+						<VBtn color="dark">
 							About
 						</VBtn>
 					</RouterLink>

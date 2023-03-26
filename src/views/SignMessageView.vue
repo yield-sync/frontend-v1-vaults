@@ -2,7 +2,7 @@
 	<VContainer class="py-16">
 		<VRow>
 			<VCol cols="6" class="mx-auto">
-				<VCard>
+				<VCard color="primary-light">
 					<VCardItem>
 						<VCardTitle>
 							Sign Data

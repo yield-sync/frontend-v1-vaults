@@ -9,6 +9,8 @@ export default createStore({
 
 		vaults: [
 		],
+
+		alchemyApiKey: "",
 	},
 	getters: {
 	},

@@ -11,8 +11,8 @@
   "dependencies": {
     "@metamask/providers": "^10.2.1",
     "@vue/compat": "^3.2.47",
+    "alchemy-sdk": "^2.6.2",
     "core-js": "^3.8.3",
-    "ethers": "^6.1.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuetify": "^3.1.8",

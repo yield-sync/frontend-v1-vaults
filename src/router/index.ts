@@ -2,6 +2,14 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
 	{
+		path: "/balances",
+		name: "balances",
+		component: () =>
+		{
+			return import("../views/BalancesView.vue");
+		}
+	},
+	{
 		path: "/",
 		name: "dashboard",
 		component: () =>

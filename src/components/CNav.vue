@@ -2,13 +2,16 @@
 	<VSheet color="primary">
 		<VContainer>
 			<VRow>
-				<VCol
-					cols="4"
-					class="text-left"
-				>
+				<VCol cols="4" class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
 						<VBtn color="primary-light">
 							Dashboard
+						</VBtn>
+					</RouterLink>
+
+					<RouterLink to="/balances" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="primary-light">
+							Balances
 						</VBtn>
 					</RouterLink>
 
@@ -57,6 +60,10 @@
 								""
 						}}
 					</h6>
+				</VCol>
+
+				<VCol cols="12">
+					<VTextField v-model="$store.state.alchemyApiKey" type="text" label="Insert Alchemy API Key Here"/>
 				</VCol>
 			</VRow>
 		</VContainer>
