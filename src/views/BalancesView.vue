@@ -84,13 +84,13 @@
 				] as {
 					name: string,
 					symbol: string,
-					balance: number|string
+					balance: number | string
 				}[],
 				erc721Balances: [
 				] as {
 					name: string,
 					symbol: string,
-					balance: number|string
+					balance: number | string
 				}[],
 			};
 		},
