@@ -74,15 +74,16 @@
 			return {
 				network: () =>
 				{
-					switch (this.$store.state.network ) {
+					switch (this.$store.state.network)
+					{
 						case 1:
-							return "mainnet"
+							return "mainnet";
 
 						case 5:
-							return "goerli"
+							return "goerli";
 
 						default:
-							return 0
+							return 0;
 					}
 				}
 			};

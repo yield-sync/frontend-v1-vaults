@@ -66,17 +66,18 @@
 
 			const network = () =>
 			{
-				switch (this.$store.state.network ) {
+				switch (this.$store.state.network) 
+				{
 					case 1:
-						return "mainnet"
+						return "mainnet";
 
 					case 5:
-						return "goerli"
+						return "goerli";
 
 					default:
-						return 0
+						return 0;
 				}
-			}
+			};
 
 			const yieldSyncV1VaultFactoryContract = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1VaultFactory as AbiItem[],
