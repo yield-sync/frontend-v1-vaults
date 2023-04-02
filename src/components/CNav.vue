@@ -8,6 +8,7 @@
 							Dashboard
 						</VBtn>
 					</RouterLink>
+					<h6 class="my-3">Network: {{ network() }}</h6>
 				</VCol>
 
 				<VCol cols="4">
@@ -71,6 +72,19 @@
 		data()
 		{
 			return {
+				network: () =>
+				{
+					switch (this.$store.state.network ) {
+						case 1:
+							return "mainnet"
+
+						case 5:
+							return "goerli"
+
+						default:
+							return 0
+					}
+				}
 			};
 		},
 

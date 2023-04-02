@@ -10,9 +10,12 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { AbiItem } from "web3-utils";
 
+	import YieldSyncV1VaultFactory from "./abi/YieldSyncV1VaultFactory";
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
+
 
 	export default defineComponent({
 		name: "App",
@@ -29,8 +32,11 @@
 			};
 		},
 
-		created()
+		async created()
 		{
+			this.$store.state.network = await this.$store.state.web3.eth.net.getId();
+
+			// Connected account
 			window.ethereum.request({
 				method: "eth_accounts"
 			})
@@ -57,6 +63,33 @@
 					}
 				)
 			;
+
+			const network = () =>
+			{
+				switch (this.$store.state.network ) {
+					case 1:
+						return "mainnet"
+
+					case 5:
+						return "goerli"
+
+					default:
+						return 0
+				}
+			}
+
+			const yieldSyncV1VaultFactoryContract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1VaultFactory as AbiItem[],
+				this.$store.state.variables.address[network()].yieldSyncV1VaultFactory
+			);
+
+			this.$store.state.contract.yieldSyncGovernance = await yieldSyncV1VaultFactoryContract
+				.methods.YieldSyncGovernance().call()
+			;
+			this.$store.state.contract.yieldSyncV1VaultRecord = await yieldSyncV1VaultFactoryContract
+				.methods.YieldSyncV1VaultRecord().call()
+			;
+
 
 			if (localStorage.alchemyApiKey)
 			{

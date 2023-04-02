@@ -1,9 +1,20 @@
 import {createStore} from "vuex";
 import Web3 from "web3";
 
+import variables from "../variables";
+
+
+const web3 = window.ethereum ? new Web3(window.ethereum) : undefined;
+
+
 export default createStore({
 	state: {
-		web3: window.ethereum ? new Web3(window.ethereum) : undefined,
+		variables,
+
+		web3: web3,
+
+		network: 0,
+
 		accounts: [
 		],
 
@@ -14,6 +25,13 @@ export default createStore({
 		],
 
 		alchemyApiKey: "",
+
+		isAdmin: false,
+
+		contract: {
+			yieldSyncGovernance: undefined,
+			yieldSyncV1VaultRecord: undefined,
+		}
 	},
 	getters: {
 	},
