@@ -2,25 +2,39 @@
 	<VSheet color="primary">
 		<VContainer>
 			<VRow>
-				<VCol cols="4" class="text-left">
-					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
-							Dashboard
-						</VBtn>
-					</RouterLink>
-					<h6 class="my-3">Network: {{ network() }}</h6>
-				</VCol>
-
-				<VCol cols="4">
+				<VCol cols="12" md="8">
 					<h1
-						class="text-center text-dark text-uppercase"
+						class="text-dark text-uppercase"
 						style="letter-spacing: 4px;"
 					>
 						Yield Sync
 					</h1>
 				</VCol>
 
-				<VCol cols="4" class="text-right">
+				<VCol cols="12" md="4">
+					<VTextField
+						v-model="$store.state.alchemyApiKey"
+						label="Insert Alchemy API Key Here"
+						variant="outlined"
+						hide-details
+					/>
+				</VCol>
+
+				<VCol cols="12" md="8" class="text-left">
+					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="primary-light">
+							Dashboard
+						</VBtn>
+					</RouterLink>
+
+					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="primary-light">
+							Governance
+						</VBtn>
+					</RouterLink>
+				</VCol>
+
+				<VCol cols="12" md="4" class="text-right">
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="connectWallet()"
@@ -38,7 +52,7 @@
 						Disconnect
 					</VBtn>
 
-					<h6 class="my-3">
+					<h5 class="my-3">
 						<span class="text-primary">.</span>
 						{{
 							$store.state.accounts[0] ?
@@ -47,16 +61,8 @@
 								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
 								:
 								""
-						}}
-					</h6>
-				</VCol>
-
-				<VCol cols="12">
-					<VTextField
-						v-model="$store.state.alchemyApiKey"
-						label="Insert Alchemy API Key Here"
-						variant="outlined"
-					/>
+						}} : {{ network() }}
+					</h5>
 				</VCol>
 			</VRow>
 		</VContainer>

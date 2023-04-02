@@ -1,7 +1,14 @@
 <template>
 	<VContainer>
-		<h5>Total Admin Count: {{ roleCount }}</h5>
-		<h5>Wallet is Admin: {{ isAdmin }}</h5>
+		<VRow>
+			<VCol cols="12">
+				<h2 class="text-center">Governance</h2>
+			</VCol>
+			<VCol cols="12">
+				<h5>Total Admin Count: {{ roleCount }}</h5>
+				<h5>Wallet is Admin: {{ isAdmin }}</h5>
+			</VCol>
+		</VRow>
 	</VContainer>
 </template>
 

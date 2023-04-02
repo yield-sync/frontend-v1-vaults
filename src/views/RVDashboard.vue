@@ -4,7 +4,7 @@
 			<VCol cols="12">
 				<h2 class="text-center">Dashboard</h2>
 			</VCol>
-			<VCol>
+			<VCol class="text-center">
 				<RouterLink to="/governance">
 					<VBtn>Governance</VBtn>
 				</RouterLink>
