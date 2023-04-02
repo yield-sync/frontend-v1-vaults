@@ -1,18 +1,26 @@
 <template>
 	<div class="bg-primary">
+		<!-- Top Navigation -->
 		<CNav/>
 
-		<RouterView v-if="!$store.state.loading && $store.state.connected && !$store.state.error" />
-
-		<VContainer v-else class="py-12">
-			<!-- Loading -->
-			<h2 v-if="$store.state.loading" class="text-center">Loading..</h2>
-			<!-- !Connected -->
-			<h2  v-if="!$store.state.connected" class="text-center">Wallet not connected</h2>
-			<!-- Error -->
-			<h2  v-if="$store.state.error" class="text-center">{{ $store.state.error }}</h2>
+		<!-- Loading -->
+		<VContainer v-if="$store.state.loading && $store.state.error === ''" class="py-12">
+			<h2  class="text-center">Loading..</h2>
 		</VContainer>
 
+		<RouterView v-if="!$store.state.loading && $store.state.connected && $store.state.error === ''" />
+
+		<!-- !Connected -->
+		<VContainer v-if="!$store.state.connected && $store.state.error === ''" class="py-12">
+			<h2 class="text-center">Wallet not connected</h2>
+		</VContainer>
+
+		<!-- Error -->
+		<VContainer v-if="$store.state.error" class="py-12">
+			<h2 class="text-center">{{ $store.state.error }}</h2>
+		</VContainer>
+
+		<!-- Bottom Navigation -->
 		<CFooter />
 	</div>
 </template>
@@ -37,6 +45,14 @@
 
 		async created()
 		{
+			if (!window.ethereum) {
+				this.$store.state.error = "No wallet found, please install one.";
+				return;
+			}
+
+			console.log("r");
+
+
 			this.$store.state.network = await this.$store.state.web3.eth.net.getId();
 
 			// Connected account
@@ -52,10 +68,6 @@
 
 							this.$store.state.connected = true;
 							this.$store.state.accounts = accounts;
-						}
-						else
-						{
-							console.log("MetaMask is not connected");
 						}
 					}
 				)

@@ -1,11 +1,10 @@
 <template>
 	<VContainer>
 		<VRow>
+			<VCol cols="12">
+				<h2 class="text-center">Dashboard</h2>
+			</VCol>
 			<VCol>
-				<h4>Admin: {{ $store.state.isAdmin }}</h4>
-				<h4>yieldSyncGovernance: {{ $store.state.contract.yieldSyncGovernance }}</h4>
-				<h4>yieldSyncV1VaultRecord: {{ $store.state.contract.yieldSyncV1VaultRecord }}</h4>
-
 				<RouterLink to="/governance">
 					<VBtn>Governance</VBtn>
 				</RouterLink>
