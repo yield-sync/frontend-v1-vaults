@@ -7,14 +7,26 @@
 					sm="6"
 					md="4"
 					class="text-center"
+				/>
+
+				<VCol
+					cols="12"
+					sm="6"
+					md="4"
+					class="text-center"
 				>
 					<RouterLink
 						:to="`/balances/${$store.state.accounts[0]}`"
-						class="mr-2 text-decoration-none text-dark"
+						class="mr-2 text-decoration-none"
 					>
-						<VBtn color="dark" class="w-100 mb-3">
-							My Balances
-						</VBtn>
+						<h4>Balances</h4>
+					</RouterLink>
+
+					<RouterLink
+						to="/sign-message"
+						class="mr-2 text-decoration-none"
+					>
+						<h4>Sign Message</h4>
 					</RouterLink>
 				</VCol>
 
@@ -24,19 +36,13 @@
 					md="4"
 					class="text-center"
 				>
-					<RouterLink to="/sign-message" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="dark" class="w-100 mb-3">
-							Sign Message
-						</VBtn>
+					<RouterLink
+						to="/governance"
+						class="mr-2 text-decoration-none"
+					>
+						<h4>Governance</h4>
 					</RouterLink>
 				</VCol>
-
-				<VCol
-					cols="12"
-					sm="6"
-					md="4"
-					class="text-center"
-				/>
 			</VRow>
 		</VContainer>
 	</VSheet>

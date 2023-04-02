@@ -19,6 +19,7 @@ export default createStore({
 		],
 
 		connected: false,
+		loading: true,
 		error: "",
 
 		vaults: [
@@ -30,6 +31,7 @@ export default createStore({
 
 		contract: {
 			yieldSyncGovernance: undefined,
+			yieldSyncV1VaultFactory: undefined,
 			yieldSyncV1VaultRecord: undefined,
 		}
 	},

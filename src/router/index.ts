@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "balances",
 		component: () =>
 		{
-			return import("../views/BalancesView.vue");
+			return import("../views/RVBalances.vue");
 		}
 	},
 	{
@@ -14,7 +14,15 @@ const routes: Array<RouteRecordRaw> = [
 		name: "dashboard",
 		component: () =>
 		{
-			return import("../views/DashboardView.vue");
+			return import("../views/RVDashboard.vue");
+		}
+	},
+	{
+		path: "/governance",
+		name: "governance",
+		component: () =>
+		{
+			return import("../views/RVGovernance.vue");
 		}
 	},
 	{
@@ -22,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
 		name: "sign-message",
 		component: () =>
 		{
-			return import("../views/SignMessageView.vue");
+			return import("../views/RVSignMessage.vue");
 		}
 	},
 ];
