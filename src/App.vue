@@ -8,8 +8,6 @@
 			<h2  class="text-center">Loading..</h2>
 		</VContainer>
 
-		<RouterView v-if="!$store.state.loading && $store.state.connected && $store.state.error === ''" />
-
 		<!-- !Connected -->
 		<VContainer v-if="!$store.state.connected && $store.state.error === ''" class="py-12">
 			<h2 class="text-center">Wallet not connected</h2>
@@ -19,6 +17,9 @@
 		<VContainer v-if="$store.state.error" class="py-12">
 			<h2 class="text-center">{{ $store.state.error }}</h2>
 		</VContainer>
+
+		<!-- Router -->
+		<RouterView v-if="!$store.state.loading && $store.state.connected && $store.state.error === ''" />
 
 		<!-- Bottom Navigation -->
 		<CFooter />
@@ -47,6 +48,7 @@
 		{
 			if (!window.ethereum) {
 				this.$store.state.error = "No wallet found, please install one.";
+				this.$store.state.loading = false;
 				return;
 			}
 
