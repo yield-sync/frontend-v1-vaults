@@ -1,10 +1,10 @@
 <template>
 	<div class="bg-white">
 		<!-- Top Navigation -->
-		<CNav/>
+		<CNav />
 
 		<!-- Loading -->
-		<VContainer v-if="$store.state.loading && $store.state.error === ''" class="py-12">
+		<VContainer v-if="$store.state.loading" class="py-12">
 			<h2  class="text-center">Loading..</h2>
 		</VContainer>
 
@@ -49,9 +49,6 @@
 				this.$store.state.error = "No wallet found, please install one.";
 				return;
 			}
-
-			console.log("r");
-
 
 			this.$store.state.network = await this.$store.state.web3.eth.net.getId();
 
