@@ -4,25 +4,28 @@
 			<VCol cols="12">
 				<h2 class="text-center">Governance</h2>
 			</VCol>
+
 			<VCol cols="12">
-				<h5>Total Admin Count: {{ roleCount }}</h5>
 				<h5>Wallet is Admin: {{ isAdmin }}</h5>
+				<h5>DEFAULT_ADMIN_ROLE: {{ adminRole }}</h5>
+				<h5>DEFAULT_ADMIN_ROLE Admin: {{ roleAdmin }}</h5>
+				<h5>Role Member Count: {{ roleMemberCount }}</h5>
 			</VCol>
+
 			<VCol cols="12">
-				<VTextField
-					v-model="getRoleAdmin.role"
-					label="Get Role Admin of role.."
-					variant="outlined"
-					hide-details
-				/>
-				<VBtn color="primary" class="my-3 w-100">Get Role Admin</VBtn>
+				<h3>Members</h3>
+				<ul>
+					<li v-for="(m, i) in members" :key="i">
+						<h4>{{ m }}</h4>
+					</li>
+				</ul>
 			</VCol>
 		</VRow>
 	</VContainer>
 </template>
 
 <script lang="ts">
-	import { defineComponent } from "vue";
+import { defineComponent } from "vue";
 
 	export default defineComponent({
 		name: "RVGovernance",
@@ -31,28 +34,45 @@
 		{
 			return {
 				adminRole: undefined,
-				roleCount: 0,
+				roleMemberCount: 0,
+				roleAdmin: "",
+				members: [] as string[],
 
 				isAdmin: false,
-
-				getRoleAdmin: {
-					role: ""
-				},
 			};
+		},
+
+		methods: {
 		},
 
 		async created()
 		{
 			this.adminRole = await this.$store.state.contract.yieldSyncGovernance.methods.DEFAULT_ADMIN_ROLE().call();
 
-			this.roleCount = await this.$store.state.contract.yieldSyncGovernance.methods.getRoleMemberCount(
+			this.roleAdmin = await this.$store.state.contract.yieldSyncGovernance.methods.getRoleAdmin(
 				this.adminRole
 			).call();
 
-			this.isAdmin = await this.$store.state.contract.yieldSyncGovernance.methods.hasRole(
-				this.adminRole,
-				this.$store.state.accounts[0]
+			this.roleMemberCount = await this.$store.state.contract.yieldSyncGovernance.methods.getRoleMemberCount(
+				this.adminRole
 			).call();
+
+			for (let i = 0; i < this.roleMemberCount; i++)
+			{
+				const member = await this.$store.state.contract.yieldSyncGovernance.methods.getRoleMember(
+					this.adminRole,
+					i,
+				).call()
+
+				this.members.push(member);
+
+				console.log();
+				if (member.toUpperCase() === this.$store.state.accounts[0].toUpperCase())
+				{
+
+					this.isAdmin = true
+				}
+			}
 		}
 	});
 </script>
