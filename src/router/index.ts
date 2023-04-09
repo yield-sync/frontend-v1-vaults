@@ -33,6 +33,14 @@ const routes: Array<RouteRecordRaw> = [
 			return import("../views/RVSignMessage.vue");
 		}
 	},
+	{
+		path: "/v1-vaults",
+		name: "v1-vaults",
+		component: () =>
+		{
+			return import("../views/RVV1Vaults.vue");
+		}
+	},
 ];
 
 const router = createRouter({
