@@ -8,6 +8,15 @@
 				<h5>Total Admin Count: {{ roleCount }}</h5>
 				<h5>Wallet is Admin: {{ isAdmin }}</h5>
 			</VCol>
+			<VCol cols="12">
+				<VTextField
+					v-model="getRoleAdmin.role"
+					label="Get Role Admin of role.."
+					variant="outlined"
+					hide-details
+				/>
+				<VBtn color="primary" class="my-3 w-100">Get Role Admin</VBtn>
+			</VCol>
 		</VRow>
 	</VContainer>
 </template>
@@ -25,6 +34,10 @@
 				roleCount: 0,
 
 				isAdmin: false,
+
+				getRoleAdmin: {
+					role: ""
+				},
 			};
 		},
 
