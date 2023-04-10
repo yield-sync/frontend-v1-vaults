@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+	import { defineComponent } from "vue";
 
 	export default defineComponent({
 		name: "RVGovernance",
@@ -36,7 +36,8 @@ import { defineComponent } from "vue";
 				adminRole: undefined,
 				roleMemberCount: 0,
 				roleAdmin: "",
-				members: [] as string[],
+				members: [
+				] as string[],
 
 				isAdmin: false,
 			};
@@ -61,8 +62,8 @@ import { defineComponent } from "vue";
 			{
 				const member = await this.$store.state.contract.yieldSyncGovernance.methods.getRoleMember(
 					this.adminRole,
-					i,
-				).call()
+					i
+				).call();
 
 				this.members.push(member);
 
@@ -70,7 +71,7 @@ import { defineComponent } from "vue";
 				if (member.toUpperCase() === this.$store.state.accounts[0].toUpperCase())
 				{
 
-					this.isAdmin = true
+					this.isAdmin = true;
 				}
 			}
 		}

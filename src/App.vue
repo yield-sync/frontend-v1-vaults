@@ -47,7 +47,8 @@
 
 		async created()
 		{
-			if (!window.ethereum) {
+			if (!window.ethereum) 
+			{
 				this.$store.state.error = "No wallet found, please install one.";
 				this.$store.state.loading = false;
 				return;
