@@ -2,7 +2,7 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="12">
-				<h2 class="text-center text-uppercase">V1 Vaults</h2>
+				<h2 class="text-center text-uppercase text-primary">V1 Vaults</h2>
 			</VCol>
 
 			<VCol cols="12">
@@ -21,41 +21,71 @@
 				<div class="mb-4 px-3 py-3 border">
 					<h5>Admins</h5>
 
-					<div
-						v-for="(a, i) in deployParams.admins" :key="i"
+					<VRow
+						v-for="(m, i) in deployParams.admins" :key="i"
 						class="mb-3"
 					>
-						<VRow>
-							<VCol>
-								<h5 class="my-2">{{ a }}</h5>
-							</VCol>
-							<VCol>
-								<VBtn color="warning" size="small" variant="outlined" class="w-100">Remove</VBtn>
-							</VCol>
-						</VRow>
-					</div>
+						<VCol md="10">
+							<h5 class="my-2">{{ m }}</h5>
+						</VCol>
+						<VCol>
+							<VBtn
+								color="warning"
+								size="small"
+								class="w-100"
+								@click="removeAdmin(i)"
+							>✕</VBtn>
+						</VCol>
+					</VRow>
 
-					<VBtn color="success" class="w-100" size="small">+ Admin</VBtn>
+					<VRow>
+						<VCol md="10">
+							<VTextField v-model="addAdminField" label="Address" variant="outlined" />
+						</VCol>
+						<VCol>
+							<VBtn
+								color="success"
+								class="w-100 my-3"
+								size="small"
+								@click="addAdmin()"
+							>+</VBtn>
+						</VCol>
+					</VRow>
 				</div>
 
 				<div class="mb-4 px-3 py-3 border">
 					<h5>Members</h5>
 
-					<div
+					<VRow
 						v-for="(m, i) in deployParams.members" :key="i"
 						class="mb-3"
 					>
-						<VRow>
-							<VCol>
-								<h5 class="my-2">{{ m }}</h5>
-							</VCol>
-							<VCol>
-								<VBtn color="warning" size="small" variant="outlined" class="w-100">Remove</VBtn>
-							</VCol>
-						</VRow>
-					</div>
+						<VCol md="10">
+							<h5 class="my-2">{{ m }}</h5>
+						</VCol>
+						<VCol>
+							<VBtn
+								color="warning"
+								size="small"
+								class="w-100"
+								@click="removeMember(i)"
+							>✕</VBtn>
+						</VCol>
+					</VRow>
 
-					<VBtn color="success" class="w-100" size="small">+ Memver</VBtn>
+					<VRow>
+						<VCol md="10">
+							<VTextField v-model="addMemberField" label="Address" variant="outlined" />
+						</VCol>
+						<VCol>
+							<VBtn
+								color="success"
+								class="w-100 my-3"
+								size="small"
+								@click="addMember()"
+							>+</VBtn>
+						</VCol>
+					</VRow>
 				</div>
 			</VCol>
 
@@ -67,6 +97,7 @@
 					variant="outlined"
 					hide-details
 					class="mb-3"
+					size="small"
 				/>
 
 				<VTextField
@@ -121,6 +152,9 @@
 				v1Vaults: [
 				],
 
+				addAdminField: "",
+				addMemberField: "",
+
 				deployParams: {
 					admins: [
 						this.$store.state.accounts[0],
@@ -157,6 +191,40 @@
 				catch (e)
 				{
 					console.error(e);
+				}
+			},
+
+			addAdmin()
+			{
+				if (this.$store.state.web3.utils.isAddress(this.addAdminField))
+				{
+					this.deployParams.admins.push(this.addAdminField);
+					this.addAdminField = ""
+				}
+			},
+
+			removeAdmin(i: number)
+			{
+				if (i > -1)
+				{
+					this.deployParams.admins.splice(i, 1);
+				}
+			},
+
+			addMember()
+			{
+				if (this.$store.state.web3.utils.isAddress(this.addMemberField))
+				{
+					this.deployParams.members.push(this.addMemberField);
+					this.addMemberField = ""
+				}
+			},
+
+			removeMember(i: number)
+			{
+				if (i > -1)
+				{
+					this.deployParams.members.splice(i, 1);
 				}
 			}
 		},
