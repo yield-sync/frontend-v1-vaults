@@ -6,10 +6,10 @@
 			</VCol>
 
 			<VCol cols="12">
-				<h5>Wallet is Admin: {{ isAdmin }}</h5>
-				<h5>DEFAULT_ADMIN_ROLE: {{ adminRole }}</h5>
-				<h5>DEFAULT_ADMIN_ROLE Admin: {{ roleAdmin }}</h5>
-				<h5>Role Member Count: {{ roleMemberCount }}</h5>
+				<h6 class="text-center">Wallet is Admin: {{ isAdmin }}</h6>
+				<h6 class="text-center">DEFAULT_ADMIN_ROLE: {{ adminRole }}</h6>
+				<h6 class="text-center">DEFAULT_ADMIN_ROLE Admin: {{ roleAdmin }}</h6>
+				<h6 class="text-center">Role Member Count: {{ roleMemberCount }}</h6>
 			</VCol>
 
 			<VCol cols="12">

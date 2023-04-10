@@ -32,6 +32,12 @@
 							Governance
 						</VBtn>
 					</RouterLink>
+
+					<RouterLink to="/v1-vaults" class="mr-2 text-decoration-none text-dark">
+						<VBtn color="primary-light">
+							V1 Vaults
+						</VBtn>
+					</RouterLink>
 				</VCol>
 
 				<VCol cols="12" md="4" class="text-right">

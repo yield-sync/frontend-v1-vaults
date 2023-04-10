@@ -32,6 +32,7 @@
 
 	import YieldSyncGovernance from "./abi/YieldSyncGovernance";
 	import YieldSyncV1VaultFactory from "./abi/YieldSyncV1VaultFactory";
+	import YieldSyncV1VaultRecord from "./abi/YieldSyncV1VaultRecord";
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
 
@@ -105,8 +106,11 @@
 				this.$store.state.variables.address[network()].yieldSyncV1VaultFactory
 			);
 
-			this.$store.state.contract.yieldSyncV1VaultRecord = await this.$store.state.contract.yieldSyncV1VaultFactory
-				.methods.YieldSyncV1VaultRecord().call();
+			// Record
+			this.$store.state.contract.yieldSyncV1VaultRecord = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1VaultRecord as AbiItem[],
+				this.$store.state.variables.address[network()].yieldSyncV1VaultRecord
+			);
 
 			if (localStorage.alchemyApiKey)
 			{

@@ -1,7 +1,9 @@
 export default {
 	address: {
 		mainnet: {
-			yieldSyncV1VaultFactory: ""
+			yieldSyncGovernance: "",
+			yieldSyncV1VaultFactory: "",
+			yieldSyncV1VaultRecord: ""
 		},
 
 		goerli: {
