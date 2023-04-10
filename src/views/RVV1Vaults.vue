@@ -2,16 +2,58 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="12">
-				<h2 class="text-center">V1 Vaults</h2>
+				<h2 class="text-center text-uppercase">V1 Vaults</h2>
 			</VCol>
 
-			<VCol cols="12">
+			<VCol cols="12" md="6">
+				<h3 class="mb-3 text-center text-uppercase">V1 Vault Memberships</h3>
+
+				<h5 class="text-center">{{ v1Vaults }}</h5>
+
 				<h6 class="text-center">Record Contract: {{ record }}</h6>
 			</VCol>
-			<VCol cols="12">
-				{{ v1Vaults }}
 
-				<VBtn @click="w_deployYieldSyncV1Vault()">Deploy a Vault</VBtn>
+			<VCol cols="12" md="6">
+				<h3 class="mb-3 text-center text-uppercase">Deploy a Vault</h3>
+				<VTextField
+					v-model="deployParams.signatureManager"
+					type="text"
+					label="Signature Manager"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+				/>
+
+				<VTextField
+					v-model="deployParams.againstVoteCountRequired"
+					type="number"
+					label="Against Vote Count"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+				/>
+
+				<VTextField
+					v-model="deployParams.forVoteCountRequired"
+					type="number"
+					label="For Vote Count"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+				/>
+
+				<VTextField
+					v-model="deployParams.withdrawalDelaySeconds"
+					type="number"
+					label="Withdrawal Delay (Seconds)"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+				/>
+
+				<VBtn color="primary" class="w-100 mb-3" @click="w_deployYieldSyncV1Vault()">
+					Deploy
+				</VBtn>
 			</VCol>
 		</VRow>
 	</VContainer>
