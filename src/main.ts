@@ -11,7 +11,9 @@ import store from "./store";
 
 
 const vuetify = createVuetify({
-	components,
+	components: {
+		...components
+	},
 	directives,
 	theme: {
 		defaultTheme: "myCustomLightTheme",
@@ -21,9 +23,9 @@ const vuetify = createVuetify({
 				colors: {
 					dark: "#1c261e",
 					info: "#2196F3",
-					light: "#f2f2f2",
-					primary: "#9bbfa3",
-					"primary-light": "#acbfb0",
+					light: "#e6e6e6",
+					primary: "#00f58f",
+					"primary-light": "#75ffc5",
 					secondary: "#03DAC6",
 					success: "#4CAF50",
 					warning: "#f55742",

@@ -22,19 +22,19 @@
 
 				<VCol cols="12" md="8" class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
+						<VBtn color="dark">
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
+						<VBtn color="dark">
 							Governance
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/v1-vaults" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="primary-light">
+						<VBtn color="dark">
 							V1 Vaults
 						</VBtn>
 					</RouterLink>
@@ -46,6 +46,7 @@
 						@click="connectWallet()"
 						color="primary-light"
 						class="rounded-pill"
+						style="box-shadow: none;"
 					>
 						Connect
 					</VBtn>
@@ -54,6 +55,7 @@
 						@click="disconnectWallet()"
 						color="warning"
 						class="rounded-pill"
+						style="box-shadow: none;"
 					>
 						Disconnect
 					</VBtn>
