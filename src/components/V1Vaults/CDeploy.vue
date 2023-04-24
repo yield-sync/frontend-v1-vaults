@@ -68,6 +68,7 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
+								variant="tonal"
 								color="warning"
 								size="small"
 								class="w-100"
@@ -84,6 +85,7 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
+								variant="tonal"
 								color="success"
 								class="w-100 my-3"
 								size="small"
@@ -110,6 +112,7 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
+								variant="tonal"
 								color="warning"
 								size="small"
 								class="w-100"
@@ -126,6 +129,7 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
+								variant="tonal"
 								color="success"
 								class="w-100 my-3"
 								size="small"
@@ -140,7 +144,7 @@
 
 			<VCol cols="12">
 				<h6>{{ deploymentFee }}</h6>
-				<VBtn color="primary" class="w-100 mb-3" @click="deployYieldSyncV1Vault()">
+				<VBtn color="primary" class="mx-auto" @click="deployYieldSyncV1Vault()">
 					Deploy
 				</VBtn>
 			</VCol>

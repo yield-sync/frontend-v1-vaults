@@ -11,7 +11,7 @@
 			</VContainer>
 		</VCol>
 
-		<VCol cols="9" md="11" lg="10" class="bg-white">
+		<VCol cols="9" md="11" lg="10" class="bg-light">
 			<CMember v-if="currentTab == 'member'" />
 
 			<CDeploy v-if="currentTab == 'deploy'" />
