@@ -144,7 +144,7 @@
 
 			<VCol cols="12">
 				<h6>{{ deploymentFee }}</h6>
-				<VBtn color="primary" class="mx-auto" @click="deployYieldSyncV1Vault()">
+				<VBtn color="primary" class="w-100" @click="deployYieldSyncV1Vault()">
 					Deploy
 				</VBtn>
 			</VCol>
