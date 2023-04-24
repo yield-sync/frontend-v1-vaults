@@ -2,10 +2,10 @@
 	<VRow>
 		<VCol cols="3" md="1" lg="2" class="bg-light">
 			<VContainer>
-				<VBtn color="dark" class="w-100 mb-3 no-box-shadow" @click="currentTab = 'member'">
+				<VBtn color="dark" variant="tonal" class="w-100 mb-3 no-box-shadow" @click="currentTab = 'member'">
 					Member
 				</VBtn>
-				<VBtn color="dark" class="w-100 mb-3 no-box-shadow" @click="currentTab = 'deploy'">
+				<VBtn color="dark" variant="tonal" class="w-100 mb-3 no-box-shadow" @click="currentTab = 'deploy'">
 					Deploy
 				</VBtn>
 			</VContainer>

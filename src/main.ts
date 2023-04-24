@@ -24,11 +24,11 @@ const vuetify = createVuetify({
 					dark: "#1c261e",
 					info: "#2196F3",
 					light: "#e6e6e6",
-					primary: "#00f58f",
+					primary: "#56733d",
 					"primary-light": "#75ffc5",
 					secondary: "#03DAC6",
 					success: "#4CAF50",
-					warning: "#f55742",
+					warning: "#ff0000",
 					white: "#FFFFFF"
 				}
 			}

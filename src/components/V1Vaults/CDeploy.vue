@@ -19,7 +19,7 @@
 			</VCol>
 
 			<!-- Against -->
-			<VCol cols=12 md="4">
+			<VCol cols="12" md="4">
 				<VTextField
 					v-model="deployParams.againstVoteCountRequired"
 					type="number"
@@ -31,7 +31,7 @@
 			</VCol>
 
 			<!-- For -->
-			<VCol cols=12 md="4">
+			<VCol cols="12" md="4">
 				<VTextField
 					v-model="deployParams.forVoteCountRequired"
 					type="number"
@@ -43,7 +43,7 @@
 			</VCol>
 
 			<!-- Withdrawal Delay -->
-			<VCol cols=12 md="4">
+			<VCol cols="12" md="4">
 				<VTextField
 					v-model="deployParams.withdrawalDelaySeconds"
 					type="number"
@@ -55,7 +55,7 @@
 			</VCol>
 
 			<!-- Admins -->
-			<VCol cols=12 md="6">
+			<VCol cols="12" md="6">
 				<div class="mb-4 px-3 py-3 border">
 					<h5>Admins</h5>
 
@@ -97,7 +97,7 @@
 			</VCol>
 
 			<!-- Members -->
-			<VCol cols=12 md="6">
+			<VCol cols="12" md="6">
 				<div class="mb-4 px-3 py-3 border">
 					<h5>Members</h5>
 

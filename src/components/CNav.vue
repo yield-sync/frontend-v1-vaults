@@ -4,7 +4,7 @@
 			<VRow>
 				<VCol cols="12" md="8">
 					<h1
-						class="text-dark text-uppercase"
+						class="text-light text-uppercase"
 						style="letter-spacing: 4px;"
 					>
 						Yield Sync
@@ -22,19 +22,19 @@
 
 				<VCol cols="12" md="8" class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="dark">
+						<VBtn variant="tonal" color="light">
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="dark">
+						<VBtn variant="tonal" color="light">
 							Governance
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/v1-vaults" class="mr-2 text-decoration-none text-dark">
-						<VBtn color="dark">
+						<VBtn variant="tonal" color="light">
 							V1 Vaults
 						</VBtn>
 					</RouterLink>
@@ -44,18 +44,18 @@
 					<VBtn
 						v-if="!$store.state.connected"
 						@click="connectWallet()"
-						color="primary-light"
+						color="light"
+						variant="tonal"
 						class="rounded-pill"
-						style="box-shadow: none;"
 					>
 						Connect
 					</VBtn>
 					<VBtn
 						v-if="$store.state.connected"
 						@click="disconnectWallet()"
-						color="warning"
+						color="light"
+						variant="tonal"
 						class="rounded-pill"
-						style="box-shadow: none;"
 					>
 						Disconnect
 					</VBtn>
