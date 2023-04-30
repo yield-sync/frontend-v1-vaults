@@ -17,6 +17,7 @@
 						label="Insert Alchemy API Key Here"
 						variant="outlined"
 						hide-details
+						@change="updateLocalStorage()"
 					/>
 				</VCol>
 

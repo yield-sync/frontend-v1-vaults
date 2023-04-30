@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: "/v1-vault",
+		path: "/v1-vault/:address",
 		name: "v1-vault",
 		component: () =>
 		{
@@ -47,6 +47,14 @@ const routes: Array<RouteRecordRaw> = [
 		component: () =>
 		{
 			return import("../views/RVV1Vaults.vue");
+		}
+	},
+	{
+		path: "/:pathMatch(.*)*",
+		name: "not-found",
+		component: () =>
+		{
+			return import("../views/NotFound.vue");
 		}
 	},
 ];
