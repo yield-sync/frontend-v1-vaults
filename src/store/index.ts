@@ -13,7 +13,8 @@ export default createStore({
 
 		web3: web3,
 
-		network: 0,
+		chainName: "",
+		chainid: 0,
 
 		accounts: [
 		],

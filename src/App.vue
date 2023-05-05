@@ -45,16 +45,34 @@
 			CFooter
 		},
 
+		methods: {
+			getChainName: (chainid: number) => {
+				switch (chainid)
+				{
+					case 1:
+						return "mainnet";
+
+					case 5:
+						return "goerli";
+
+					case 11155111:
+						return "sepolia"
+					default:
+						return "?";
+				}
+			}
+		},
+
 		async created()
 		{
-			if (!window.ethereum) 
+			if (!window.ethereum)
 			{
 				this.$store.state.error = "No wallet found, please install one.";
 				this.$store.state.loading = false;
-				return;
 			}
 
-			this.$store.state.network = await this.$store.state.web3.eth.net.getId();
+			this.$store.state.chainid = await this.$store.state.web3.eth.net.getId();
+			this.$store.state.chainName = this.getChainName(this.$store.state.chainid);
 
 			// Connected account
 			window.ethereum.request({
@@ -80,37 +98,22 @@
 				)
 			;
 
-			const network = () =>
-			{
-				switch (this.$store.state.network)
-				{
-					case 1:
-						return "mainnet";
-
-					case 5:
-						return "goerli";
-
-					default:
-						return 0;
-				}
-			};
-
 			// Governance
 			this.$store.state.contract.yieldSyncGovernance = new this.$store.state.web3.eth.Contract(
 				YieldSyncGovernance as AbiItem[],
-				this.$store.state.variables.address[network()].yieldSyncGovernance
+				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncGovernance
 			);
 
 			// Factory
 			this.$store.state.contract.yieldSyncV1VaultFactory = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1VaultFactory as AbiItem[],
-				this.$store.state.variables.address[network()].yieldSyncV1VaultFactory
+				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncV1VaultFactory
 			);
 
 			// Record
 			this.$store.state.contract.yieldSyncV1VaultRecord = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1VaultRecord as AbiItem[],
-				this.$store.state.variables.address[network()].yieldSyncV1VaultRecord
+				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncV1VaultRecord
 			);
 
 			if (localStorage.alchemyApiKey)

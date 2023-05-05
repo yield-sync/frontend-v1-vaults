@@ -70,7 +70,7 @@
 								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
 								:
 								""
-						}} : {{ network() }}
+						}} : {{ $store.state.chainName }}
 					</h5>
 				</VCol>
 			</VRow>
@@ -87,20 +87,6 @@
 		data()
 		{
 			return {
-				network: () =>
-				{
-					switch (this.$store.state.network)
-					{
-						case 1:
-							return "mainnet";
-
-						case 5:
-							return "goerli";
-
-						default:
-							return 0;
-					}
-				}
 			};
 		},
 
