@@ -24,10 +24,10 @@
 
 		async created()
 		{
-			this.record = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.YieldSyncV1VaultRecord()
+			this.record = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.YieldSyncV1VaultAccessControl()
 				.call();
 
-			this.v1Vaults = await this.$store.state.contract.yieldSyncV1VaultRecord.methods.member_yieldSyncV1Vaults(
+			this.v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods.member_yieldSyncV1Vaults(
 				this.$store.state.accounts[0]
 			).call();
 		},

@@ -225,7 +225,7 @@
     },
     {
       "inputs": [],
-      "name": "YieldSyncV1VaultRecord",
+      "name": "YieldSyncV1VaultAccessControl",
       "outputs": [
         {
           "internalType": "address",

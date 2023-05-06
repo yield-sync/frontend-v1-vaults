@@ -1,22 +1,46 @@
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="12">
-				<h2 class="text-center">Governance</h2>
+			<VCol cols="11">
+				<h2 class="text-center">Yield Sync Governance</h2>
+			</VCol>
+			<VCol cols="1">
+				<a
+					:href="`https://${$store.state.chainName}.etherscan.io/address/${governanceAddress}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<VBtn variant="tonal" size="sm" class="w-100">
+						🔗
+					</VBtn>
+				</a>
+			</VCol>
+
+			<VCol cols="12" xl="5">
+				<h4 class="text-primary">DEFAULT_ADMIN_ROLE</h4>
+				<h5>{{ adminRole }}</h5>
+			</VCol>
+
+			<VCol cols="12" xl="5">
+				<h4 class="text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
+				<h5>{{ roleAdmin }}</h5>
+			</VCol>
+
+			<VCol cols="12" xl="2">
+				<h4 class="text-primary">Role Member Count</h4>
+				<h5>{{ roleMemberCount }}</h5>
 			</VCol>
 
 			<VCol cols="12">
-				<h6 class="text-center">Wallet is Admin: {{ isAdmin }}</h6>
-				<h6 class="text-center">DEFAULT_ADMIN_ROLE: {{ adminRole }}</h6>
-				<h6 class="text-center">DEFAULT_ADMIN_ROLE Admin: {{ roleAdmin }}</h6>
-				<h6 class="text-center">Role Member Count: {{ roleMemberCount }}</h6>
+				<h4 class="text-primary">Wallet is Admin</h4>
+				<h5>{{ isAdmin }}</h5>
 			</VCol>
 
 			<VCol cols="12">
-				<h3>Members</h3>
+				<h4 class="text-primary">Members</h4>
 				<ul>
 					<li v-for="(m, i) in members" :key="i">
-						<h4>{{ m }}</h4>
+						<h5>{{ m }}</h5>
 					</li>
 				</ul>
 			</VCol>
@@ -33,6 +57,7 @@
 		data()
 		{
 			return {
+				governanceAddress: this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance,
 				adminRole: undefined,
 				roleMemberCount: 0,
 				roleAdmin: "",

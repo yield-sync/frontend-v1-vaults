@@ -32,7 +32,7 @@
 
 	import YieldSyncGovernance from "./abi/YieldSyncGovernance";
 	import YieldSyncV1VaultFactory from "./abi/YieldSyncV1VaultFactory";
-	import YieldSyncV1VaultRecord from "./abi/YieldSyncV1VaultRecord";
+	import YieldSyncV1VaultAccessControl from "./abi/YieldSyncV1VaultAccessControl";
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
 
@@ -65,63 +65,67 @@
 
 		async created()
 		{
-			if (!window.ethereum)
-			{
-				this.$store.state.error = "No wallet found, please install one.";
-				this.$store.state.loading = false;
-			}
+			try {
+				if (!window.ethereum)
+				{
+					this.$store.state.error = "No wallet found, please install one.";
+					this.$store.state.loading = false;
+				}
 
-			this.$store.state.chainid = await this.$store.state.web3.eth.net.getId();
-			this.$store.state.chainName = this.getChainName(this.$store.state.chainid);
+				this.$store.state.chainid = await this.$store.state.web3.eth.net.getId();
+				this.$store.state.chainName = this.getChainName(this.$store.state.chainid);
 
-			// Connected account
-			window.ethereum.request({
-				method: "eth_accounts"
-			})
-				.then(
-					(accounts: Array<string>) =>
-					{
-						if (accounts.length > 0)
+				// Connected account
+				window.ethereum.request({
+					method: "eth_accounts"
+				})
+					.then(
+						(accounts: Array<string>) =>
 						{
-							console.log(`MetaMask is connected with account: ${accounts[0]}`);
+							if (accounts.length > 0)
+							{
+								console.log(`MetaMask is connected with account: ${accounts[0]}`);
 
-							this.$store.state.connected = true;
-							this.$store.state.accounts = accounts;
+								this.$store.state.connected = true;
+								this.$store.state.accounts = accounts;
+							}
 						}
-					}
-				)
-				.catch(
-					(error: string) =>
-					{
-						this.$store.state.error = error;
-					}
-				)
-			;
+					)
+					.catch(
+						(error: string) =>
+						{
+							this.$store.state.error = error;
+						}
+					)
+				;
 
-			// Governance
-			this.$store.state.contract.yieldSyncGovernance = new this.$store.state.web3.eth.Contract(
-				YieldSyncGovernance as AbiItem[],
-				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncGovernance
-			);
+				// Governance
+				this.$store.state.contract.yieldSyncGovernance = new this.$store.state.web3.eth.Contract(
+					YieldSyncGovernance as AbiItem[],
+					this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance
+				);
 
-			// Factory
-			this.$store.state.contract.yieldSyncV1VaultFactory = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1VaultFactory as AbiItem[],
-				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncV1VaultFactory
-			);
+				// Factory
+				this.$store.state.contract.yieldSyncV1VaultFactory = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1VaultFactory as AbiItem[],
+					this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultFactory
+				);
 
-			// Record
-			this.$store.state.contract.yieldSyncV1VaultRecord = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1VaultRecord as AbiItem[],
-				this.$store.state.variables.address[this.$store.state.chainid].yieldSyncV1VaultRecord
-			);
+				// Record
+				this.$store.state.contract.yieldSyncV1VaultAccessControl = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1VaultAccessControl as AbiItem[],
+					this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultAccessControl
+				);
 
-			if (localStorage.alchemyApiKey)
-			{
-				this.$store.state.alchemyApiKey = localStorage.alchemyApiKey;
+				if (localStorage.alchemyApiKey)
+				{
+					this.$store.state.alchemyApiKey = localStorage.alchemyApiKey;
+				}
+
+				this.$store.state.loading = false;
+			} catch (e) {
+				this.$store.state.error = e;
 			}
-
-			this.$store.state.loading = false;
 		},
 	});
 </script>

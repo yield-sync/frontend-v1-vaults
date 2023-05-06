@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "IYieldSyncV1VaultRecord",
-  "sourceName": "contracts/interface/IYieldSyncV1VaultRecord.sol",
+  "contractName": "IYieldSyncV1VaultAccessControl",
+  "sourceName": "contracts/interface/IYieldSyncV1VaultAccessControl.sol",
   "abi": [
     {
       "inputs": [

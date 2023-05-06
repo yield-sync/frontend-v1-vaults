@@ -1,7 +1,7 @@
 import {createStore} from "vuex";
 import Web3 from "web3";
 
-import variables from "../variables";
+import config from "../config";
 
 
 const web3 = window.ethereum ? new Web3(window.ethereum) : undefined;
@@ -9,7 +9,7 @@ const web3 = window.ethereum ? new Web3(window.ethereum) : undefined;
 
 export default createStore({
 	state: {
-		variables,
+		config,
 
 		web3: web3,
 
@@ -33,7 +33,7 @@ export default createStore({
 		contract: {
 			yieldSyncGovernance: undefined,
 			yieldSyncV1VaultFactory: undefined,
-			yieldSyncV1VaultRecord: undefined,
+			yieldSyncV1VaultAccessControl: undefined,
 		}
 	},
 	getters: {
