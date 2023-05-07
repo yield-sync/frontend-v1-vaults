@@ -23,19 +23,19 @@
 
 				<VCol cols="12" md="8" class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="tonal" color="light">
+						<VBtn variant="plain" color="light">
 							Dashboard
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="tonal" color="light">
+						<VBtn variant="plain" color="light">
 							Governance
 						</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/v1-vaults" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="tonal" color="light">
+						<VBtn variant="plain" color="light">
 							V1 Vaults
 						</VBtn>
 					</RouterLink>
