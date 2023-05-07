@@ -46,7 +46,7 @@
 		},
 
 		methods: {
-			getChainName: (chainid: number) => 
+			getChainName: (chainid: number) =>
 			{
 				switch (chainid)
 				{
@@ -66,7 +66,7 @@
 
 		async created()
 		{
-			try 
+			try
 			{
 				if (!window.ethereum)
 				{
@@ -76,6 +76,9 @@
 
 				this.$store.state.chainid = await this.$store.state.web3.eth.net.getId();
 				this.$store.state.chainName = this.getChainName(this.$store.state.chainid);
+				this.$store.state.etherscanDomainStart = this.$store.state.chainName !== "mainnet" ?
+					this.$store.state.chainName : "www"
+				;
 
 				// Connected account
 				window.ethereum.request({
@@ -126,7 +129,7 @@
 
 				this.$store.state.loading = false;
 			}
-			catch (e) 
+			catch (e)
 			{
 				this.$store.state.error = e;
 			}

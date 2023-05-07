@@ -6,7 +6,7 @@
 			</VCol>
 			<VCol cols="1">
 				<a
-					:href="`https://${urlscope}.etherscan.io/address/${governanceAddress}`"
+					:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${governanceAddress}`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -56,7 +56,6 @@
 		{
 			return {
 				governanceAddress: this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance,
-				urlscope: this.$store.state.chainName == "mainnet" ? "www" : this.$store.state.chainName,
 				adminRole: undefined,
 				roleMemberCount: 0,
 				roleAdmin: "",

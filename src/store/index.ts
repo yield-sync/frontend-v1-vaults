@@ -15,6 +15,7 @@ export default createStore({
 
 		chainName: "",
 		chainid: 0,
+		etherscanDomainStart: "www",
 
 		accounts: [
 		],
