@@ -75,7 +75,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+					<VBtn variant="flat" size="sm" class="w-100">🔗</VBtn>
 				</a>
 			</VCol>
 		</VRow>
