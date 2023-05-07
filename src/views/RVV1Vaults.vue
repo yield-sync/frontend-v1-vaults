@@ -1,7 +1,7 @@
 <template>
 	<VRow>
-		<VCol cols="3" md="1" lg="2" class="bg-light">
-			<VContainer>
+		<VCol cols="3" md="1" lg="2">
+			<VContainer class="bg-light h-100">
 				<VBtn
 					color="dark"
 					variant="tonal"
@@ -31,7 +31,7 @@
 			</VContainer>
 		</VCol>
 
-		<VCol cols="9" md="11" lg="10" class="bg-white">
+		<VCol cols="9" md="11" lg="10" class="">
 			<CMember v-if="currentTab == 'member'" />
 
 			<CAdmin v-if="currentTab == 'admin'" />
