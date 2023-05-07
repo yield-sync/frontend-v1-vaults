@@ -46,7 +46,8 @@
 		},
 
 		methods: {
-			getChainName: (chainid: number) => {
+			getChainName: (chainid: number) => 
+			{
 				switch (chainid)
 				{
 					case 1:
@@ -56,7 +57,7 @@
 						return "goerli";
 
 					case 11155111:
-						return "sepolia"
+						return "sepolia";
 					default:
 						return "?";
 				}
@@ -65,7 +66,8 @@
 
 		async created()
 		{
-			try {
+			try 
+			{
 				if (!window.ethereum)
 				{
 					this.$store.state.error = "No wallet found, please install one.";
@@ -123,7 +125,9 @@
 				}
 
 				this.$store.state.loading = false;
-			} catch (e) {
+			}
+			catch (e) 
+			{
 				this.$store.state.error = e;
 			}
 		},

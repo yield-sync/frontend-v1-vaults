@@ -151,17 +151,23 @@
 								tB.contractAddress
 							);
 
-							let n = "N.A."
-							try {
-								n = await contract.methods.name().call()
-							} catch (e) {
+							let n = "N.A.";
+							try 
+							{
+								n = await contract.methods.name().call();
+							}
+							catch (e) 
+							{
 								console.log(e);
 							}
 
-							let s = "N.A."
-							try {
-								s = await contract.methods.symbol().call()
-							} catch (e) {
+							let s = "N.A.";
+							try 
+							{
+								s = await contract.methods.symbol().call();
+							}
+							catch (e) 
+							{
 								console.log(e);
 							}
 
