@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<h3 class="mb-3 text-center text-uppercase">Membership in V1 Vault</h3>
+		<h3 class="mb-3 text-center text-uppercase">Admin of V1 Vault</h3>
 		<h5 class="text-center">{{ v1Vaults }}</h5>
 		<h6 class="text-center">Access Control Contract: {{ record }}</h6>
 	</VContainer>
@@ -28,7 +28,7 @@
 				.YieldSyncV1VaultAccessControl().call();
 
 			this.v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-				.member_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
+				.admin_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
 		},
 	});
 </script>

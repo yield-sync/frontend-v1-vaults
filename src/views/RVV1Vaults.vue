@@ -34,6 +34,8 @@
 		<VCol cols="9" md="11" lg="10" class="bg-white">
 			<CMember v-if="currentTab == 'member'" />
 
+			<CAdmin v-if="currentTab == 'admin'" />
+
 			<CDeploy v-if="currentTab == 'deploy'" />
 		</VCol>
 	</VRow>
@@ -42,6 +44,7 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import CDeploy from "@/components/V1Vaults/CDeploy.vue";
+	import CAdmin from "@/components/V1Vaults/CAdmin.vue";
 	import CMember from "@/components/V1Vaults/CMember.vue";
 
 	export default defineComponent({
@@ -56,6 +59,7 @@
 
 		components: {
 			CDeploy,
+			CAdmin,
 			CMember
 		},
 	});
