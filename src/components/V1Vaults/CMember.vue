@@ -20,46 +20,56 @@
 
 		<VRow>
 			<VCol cols="2">
-				<h4 class="text-primary" style="word-wrap: break-word;">Address</h4>
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">Address</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-primary" style="word-wrap: break-word;">For Vote Required</h4>
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">View</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-primary" style="word-wrap: break-word;">Against Vote Required</h4>
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">For Votes Required</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-primary" style="word-wrap: break-word;">Withdrawal Delay Seconds</h4>
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">Against Votes Required</h4>
 			</VCol>
 
-			<VCol cols="4">
-				<h4 class="text-primary" style="word-wrap: break-word;">Etherscan</h4>
+			<VCol cols="2">
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">Withdrawal Delay (Sec)</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<h4 class="text-center text-primary" style="word-wrap: break-word;">Etherscan</h4>
 			</VCol>
 		</VRow>
 
-		<VRow v-for="(v, i) in v1Vaults" :key="i">
+		<VRow v-for="(v, i) in v1Vaults" :key="i" class="mb-3 border">
 			<VCol cols="2">
-				<h5 style="word-wrap: break-word;">
+				<h5 class="text-center" style="word-wrap: break-word;">
 					{{ v.address.substring(0, 4) + "..." + v.address.substring(v.address.length - 4) }}
 				</h5>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 style="word-wrap: break-word;">{{ v.forVoteCountRequired }}</h5>
+				<RouterLink to="/">
+					<VBtn variant="flat" size="sm" class="w-100">View</VBtn>
+				</RouterLink>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 style="word-wrap: break-word;">{{ v.againstVoteCountRequired }}</h5>
+				<h5 class="text-center" style="word-wrap: break-word;">{{ v.forVoteCountRequired }}</h5>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h5>
+				<h5 class="text-center" style="word-wrap: break-word;">{{ v.againstVoteCountRequired }}</h5>
 			</VCol>
 
-			<VCol cols="4">
+			<VCol cols="2">
+				<h5 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h5>
+			</VCol>
+
+			<VCol cols="2">
 				<a
 					:href="`https://${d}.etherscan.io/address/${v.address}#readContract`"
 					target="_blank"
@@ -104,7 +114,7 @@
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
 				.member_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
 
-			for (let i = 0; i < v1Vaults.length; i++) 
+			for (let i = 0; i < v1Vaults.length; i++)
 			{
 				const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 					YieldSyncV1Vault as AbiItem[],
