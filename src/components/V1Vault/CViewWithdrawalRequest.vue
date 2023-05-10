@@ -1,4 +1,5 @@
 <template>
+<VCard color="light" class="mb-3 px-6 py-6">
 	<h3 class="text-center text-primary">Open Withdrawal Requests</h3>
 
 	<VContainer>
@@ -92,6 +93,7 @@
 			</VCol>
 		</VRow>
 	</VContainer>
+</VCard>
 </template>
 
 <script lang="ts">

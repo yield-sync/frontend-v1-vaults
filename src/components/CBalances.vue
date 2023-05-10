@@ -1,94 +1,88 @@
 <template>
-	<VRow>
-		<VCol cols="12">
-			<VCard color="light" class="mb-3 px-6 py-6">
-				<VRow>
-					<VCol cols="12">
-						<h3>ERC 20 Tokens</h3>
-					</VCol>
-				</VRow>
-				<VRow>
-					<VCol cols="4">
-						<h4 class="text-primary">Symbol</h4>
-						<h5 class="text-primary">Name</h5>
-					</VCol>
+	<VCard color="light" class="mb-6 px-6 py-6">
+		<VRow>
+			<VCol cols="12">
+				<h3>ERC 20 Tokens</h3>
+			</VCol>
+		</VRow>
+		<VRow>
+			<VCol cols="4">
+				<h4 class="text-primary">Symbol</h4>
+				<h5 class="text-primary">Name</h5>
+			</VCol>
 
-					<VCol cols="6">
-						<h4 class="text-primary">Balance</h4>
-					</VCol>
+			<VCol cols="6">
+				<h4 class="text-primary">Balance</h4>
+			</VCol>
 
-					<VCol cols="2">
-						<h4 class="text-primary">Etherscan</h4>
-					</VCol>
-				</VRow>
+			<VCol cols="2">
+				<h4 class="text-primary">Etherscan</h4>
+			</VCol>
+		</VRow>
 
-				<VRow v-for="(erc20, i) in erc20Balances" :key="i">
-					<VCol cols="4">
-						<h4>{{ erc20.symbol }}</h4>
-						<h5>{{ erc20.name }}</h5>
-					</VCol>
+		<VRow v-for="(erc20, i) in erc20Balances" :key="i">
+			<VCol cols="4">
+				<h4>{{ erc20.symbol }}</h4>
+				<h5>{{ erc20.name }}</h5>
+			</VCol>
 
-					<VCol sm="6">
-						<h4>{{ erc20.balance }}</h4>
-					</VCol>
+			<VCol sm="6">
+				<h4>{{ erc20.balance }}</h4>
+			</VCol>
 
-					<VCol sm="2">
-						<a
-							:href="`https://etherscan.io/address/${erc20.contract}`"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
-						</a>
-					</VCol>
-				</VRow>
-			</VCard>
-		</VCol>
+			<VCol sm="2">
+				<a
+					:href="`https://etherscan.io/address/${erc20.contract}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+				</a>
+			</VCol>
+		</VRow>
+	</VCard>
 
-		<VCol cols="12">
-			<VCard color="light" class="mb-3 px-6 py-6">
-				<VRow>
-					<VCol cols="12">
-						<h3>ERC 721 Tokens (NFTs)</h3>
-					</VCol>
-				</VRow>
-				<VRow>
-					<VCol cols="4">
-						<h4 class="text-primary">Symbol</h4>
-						<h5 class="text-primary">Name</h5>
-					</VCol>
+	<VCard color="light" class="mb-3 px-6 py-6">
+		<VRow>
+			<VCol cols="12">
+				<h3>ERC 721 Tokens (NFTs)</h3>
+			</VCol>
+		</VRow>
+		<VRow>
+			<VCol cols="4">
+				<h4 class="text-primary">Symbol</h4>
+				<h5 class="text-primary">Name</h5>
+			</VCol>
 
-					<VCol cols="6">
-						<h4 class="text-primary">Balance</h4>
-					</VCol>
+			<VCol cols="6">
+				<h4 class="text-primary">Balance</h4>
+			</VCol>
 
-					<VCol cols="2">
-						<h4 class="text-primary">Etherscan</h4>
-					</VCol>
-				</VRow>
-				<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
-					<VCol cols="4">
-						<h4>{{ erc721.name }}</h4>
-						<h5>{{ erc721.symbol }}</h5>
-					</VCol>
+			<VCol cols="2">
+				<h4 class="text-primary">Etherscan</h4>
+			</VCol>
+		</VRow>
+		<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
+			<VCol cols="4">
+				<h4>{{ erc721.name }}</h4>
+				<h5>{{ erc721.symbol }}</h5>
+			</VCol>
 
-					<VCol cols="6">
-						<h4>{{ erc721.balance }}</h4>
-					</VCol>
+			<VCol cols="6">
+				<h4>{{ erc721.balance }}</h4>
+			</VCol>
 
-					<VCol sm="2">
-						<a
-							:href="`https://etherscan.io/address/${erc721.contract}`"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
-						</a>
-					</VCol>
-				</VRow>
-			</VCard>
-		</VCol>
-	</VRow>
+			<VCol sm="2">
+				<a
+					:href="`https://etherscan.io/address/${erc721.contract}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+				</a>
+			</VCol>
+		</VRow>
+	</VCard>
 </template>
 
 <script lang="ts">

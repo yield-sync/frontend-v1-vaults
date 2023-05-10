@@ -35,7 +35,7 @@
 
 			<VCol cols="2">
 				<RouterLink :to="`/v1-vault/${v.address}`">
-					<VBtn variant="flat" size="sm" class="w-100">View</VBtn>
+					<VBtn variant="tonal" size="sm" class="w-100">View</VBtn>
 				</RouterLink>
 			</VCol>
 
@@ -57,7 +57,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="flat" size="sm" class="w-100">🔗</VBtn>
+					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
 				</a>
 			</VCol>
 		</VRow>

@@ -1,51 +1,53 @@
 <template>
 	<VContainer>
-		<VRow>
-			<VCol cols="4" />
+		<VCard color="light" class="mb-3 px-6 py-6">
+			<VRow>
+				<VCol cols="4" />
 
-			<VCol cols="4">
-				<h3 class="mb-3 text-center text-uppercase text-primary">Yield Sync Governance</h3>
-			</VCol>
+				<VCol cols="4">
+					<h3 class="mb-3 text-center text-uppercase text-primary">Yield Sync Governance</h3>
+				</VCol>
 
-			<VCol cols="4" class="text-right">
-				<a
-					:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${governanceAddress}`"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<VBtn variant="plain" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
-				</a>
-			</VCol>
+				<VCol cols="4" class="text-right">
+					<a
+						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${governanceAddress}`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<VBtn variant="plain" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
+					</a>
+				</VCol>
 
-			<VCol cols="12" xl="5">
-				<h4 class="text-primary">DEFAULT_ADMIN_ROLE</h4>
-				<h5>{{ adminRole }}</h5>
-			</VCol>
+				<VCol cols="12" xl="5">
+					<h4 class="text-primary">DEFAULT_ADMIN_ROLE</h4>
+					<h5>{{ adminRole }}</h5>
+				</VCol>
 
-			<VCol cols="12" xl="5">
-				<h4 class="text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
-				<h5>{{ roleAdmin }}</h5>
-			</VCol>
+				<VCol cols="12" xl="5">
+					<h4 class="text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
+					<h5>{{ roleAdmin }}</h5>
+				</VCol>
 
-			<VCol cols="12" xl="2">
-				<h4 class="text-primary">Role Member Count</h4>
-				<h5>{{ roleMemberCount }}</h5>
-			</VCol>
+				<VCol cols="12" xl="2">
+					<h4 class="text-primary">Role Member Count</h4>
+					<h5>{{ roleMemberCount }}</h5>
+				</VCol>
 
-			<VCol cols="12">
-				<h4 class="text-primary">Wallet is Admin</h4>
-				<h5>{{ isAdmin }}</h5>
-			</VCol>
+				<VCol cols="12">
+					<h4 class="text-primary">Wallet is Admin</h4>
+					<h5>{{ isAdmin }}</h5>
+				</VCol>
 
-			<VCol cols="12">
-				<h4 class="text-primary">Members</h4>
-				<ul>
-					<li v-for="(m, i) in members" :key="i">
-						<h5>{{ m }}</h5>
-					</li>
-				</ul>
-			</VCol>
-		</VRow>
+				<VCol cols="12">
+					<h4 class="text-primary">Members</h4>
+					<ul>
+						<li v-for="(m, i) in members" :key="i">
+							<h5>{{ m }}</h5>
+						</li>
+					</ul>
+				</VCol>
+			</VRow>
+		</VCard>
 	</VContainer>
 </template>
 
