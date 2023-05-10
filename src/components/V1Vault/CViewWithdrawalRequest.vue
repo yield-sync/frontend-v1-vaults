@@ -1,8 +1,96 @@
-<template lang="">
+<template>
+	<h3 class="text-center text-primary">Open Withdrawal Requests</h3>
+
 	<VContainer>
-		<div v-for="(w, i) in detailedWithdrawalRequests" :key="i">
-			{{ w }}
-		</div>
+		<VRow>
+			<VCol cols="1">
+				<h5 class="text-primary">For Vote Count</h5>
+			</VCol>
+
+			<VCol cols="1">
+				<h5 class="text-primary">Against Vote Count</h5>
+			</VCol>
+
+			<VCol cols="2">
+				<h5 class="text-primary">Amount</h5>
+			</VCol>
+
+			<VCol cols="2">
+				<h5 class="text-primary">Token</h5>
+			</VCol>
+
+			<VCol cols="1">
+				<h5 class="text-primary">Token Symbol</h5>
+			</VCol>
+
+			<VCol cols="1">
+				<h5 class="text-primary">Token Contract</h5>
+			</VCol>
+
+			<VCol cols="1">
+				<h5 class="text-primary">To</h5>
+			</VCol>
+
+			<VCol cols="3">
+				<h5 class="text-primary">Voted Members</h5>
+			</VCol>
+		</VRow>
+
+		<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
+			<VCol cols="1">
+				<h6>{{ w.forVoteCount }}</h6>
+			</VCol>
+
+			<VCol cols="1">
+				<h6>{{ w.againstVoteCount }}</h6>
+			</VCol>
+
+			<VCol cols="2">
+				<h6>{{ w.amount }}</h6>
+			</VCol>
+
+			<VCol cols="2">
+				<h6>
+					{{ w.token }}
+				</h6>
+			</VCol>
+
+			<VCol cols="1">
+				<h6>
+					{{ w.tokenSymbol }}
+				</h6>
+			</VCol>
+
+			<VCol cols="1">
+				<a
+					:href="`https://etherscan.io/address/${w.tokenAddress}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<h6>
+						{{
+							w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(w.tokenAddress.length - 4)
+						}}
+					</h6>
+				</a>
+			</VCol>
+
+			<VCol cols="1">
+				<a
+					:href="`https://etherscan.io/address/${w.to}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<h6>
+						{{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
+					</h6>
+				</a>
+			</VCol>
+
+			<VCol cols="3">
+				<h6>{{ w.votedMembers }}</h6>
+			</VCol>
+		</VRow>
 	</VContainer>
 </template>
 
@@ -10,9 +98,12 @@
 	import { defineComponent } from "vue";
 	import { AbiItem } from "web3-utils";
 
+	import abiER20 from "../../abi/erc20";
 	import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
+		name: "CViewWithdrawalRequest",
+
 		props: {
 			vaultAddress: {
 				required: true,
@@ -20,10 +111,13 @@
 			}
 		},
 
-		data() {
+		data()
+		{
 			return {
-				idsOfOpenWithdrawalRequests: [],
-				detailedWithdrawalRequests: [] as {
+				idsOfOpenWithdrawalRequests: [
+				],
+				detailedWithdrawalRequests: [
+				] as {
 					againstVoteCount: string
 					amount: string
 					creator: string
@@ -33,13 +127,16 @@
 					latestRelevantApproveVoteTime: string
 					to: string
 					token: string
+					tokenSymbol: string
+					tokenAddress: string
 					tokenId: string
 					votedMembers: string[]
 				}[]
-			}
+			};
 		},
 
-		async created() {
+		async created()
+		{
 			const contract = new this.$store.state.web3.eth.Contract(
 				yieldSyncV1VaultABI as AbiItem[],
 				this.vaultAddress
@@ -47,10 +144,30 @@
 
 			this.idsOfOpenWithdrawalRequests = await contract.methods.idsOfOpenWithdrawalRequests().call();
 
-			for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++) {
+			for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++)
+			{
 				const wr = await contract.methods.withdrawalRequestId_withdralRequest(
 					this.idsOfOpenWithdrawalRequests[i]
 				).call();
+
+				// Get token details
+				const erc20Contract = new this.$store.state.web3.eth.Contract(
+					abiER20 as AbiItem[],
+					wr.token
+				);
+
+				let name = "N.A.";
+				let symbol = "N.A.";
+
+				try
+				{
+					name = await erc20Contract.methods.name().call();
+					symbol = await erc20Contract.methods.symbol().call();
+				}
+				catch (e)
+				{
+					console.log(e);
+				}
 
 				this.detailedWithdrawalRequests.push({
 					againstVoteCount: wr.againstVoteCount,
@@ -61,7 +178,9 @@
 					forVoteCount: wr.forVoteCount,
 					latestRelevantApproveVoteTime: wr.latestRelevantApproveVoteTime,
 					to: wr.to,
-					token: wr.token,
+					token: name,
+					tokenSymbol: symbol,
+					tokenAddress: wr.token,
 					tokenId: wr.tokenId,
 					votedMembers: wr.votedMembers
 				});
@@ -69,5 +188,5 @@
 			}
 
 		},
-	})
+	});
 </script>
