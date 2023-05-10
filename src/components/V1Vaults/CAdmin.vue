@@ -59,7 +59,7 @@
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
 				.admin_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
 
-				for (let i = 0; i < v1Vaults.length; i++)
+			for (let i = 0; i < v1Vaults.length; i++)
 			{
 				const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 					YieldSyncV1Vault as AbiItem[],

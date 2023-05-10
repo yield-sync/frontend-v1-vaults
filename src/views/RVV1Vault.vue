@@ -21,10 +21,26 @@
 		</VCol>
 
 		<VCol cols="9" class="bg-white">
-			<VContainer class="">
-				<h2 class="text-center">Vault</h2>
-				<h5>Balances</h5>
-			</VContainer>
+			<CBalances :address="v" />
 		</VCol>
 	</VRow>
 </template>
+
+<script lang="ts">
+	import CBalances from "../components/CBalances.vue";
+	import { defineComponent } from "vue";
+
+	export default defineComponent({
+		name: "RVV1Vault",
+
+		data()
+		{
+			return {
+				v: this.$route.params.address as string
+			};
+		},
+		components: {
+			CBalances
+		}
+	});
+</script>

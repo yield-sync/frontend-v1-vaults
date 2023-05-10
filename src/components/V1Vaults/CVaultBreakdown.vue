@@ -34,7 +34,7 @@
 			</VCol>
 
 			<VCol cols="2">
-				<RouterLink to="/">
+				<RouterLink :to="`/v1-vault/${v.address}`">
 					<VBtn variant="flat" size="sm" class="w-100">View</VBtn>
 				</RouterLink>
 			</VCol>

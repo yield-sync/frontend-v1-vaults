@@ -85,8 +85,6 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../abi/erc20";
-	//import abiERC721 from "../abi/erc721";
-	//import abiERC721Metadata from "../abi/erc721Metadata";
 	import alchemyGetBalances from "../alchemy/getBalances";
 
 	export default defineComponent({
@@ -152,21 +150,21 @@
 							);
 
 							let n = "N.A.";
-							try 
+							try
 							{
 								n = await contract.methods.name().call();
 							}
-							catch (e) 
+							catch (e)
 							{
 								console.log(e);
 							}
 
 							let s = "N.A.";
-							try 
+							try
 							{
 								s = await contract.methods.symbol().call();
 							}
-							catch (e) 
+							catch (e)
 							{
 								console.log(e);
 							}
