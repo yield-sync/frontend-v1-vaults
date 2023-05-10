@@ -2,12 +2,12 @@
 	<VRow>
 		<VCol cols="12">
 			<VCard color="light" class="mb-3 px-6 py-6">
-				<VRow class="">
+				<VRow>
 					<VCol cols="12">
 						<h3>ERC 20 Tokens</h3>
 					</VCol>
 				</VRow>
-				<VRow class="">
+				<VRow>
 					<VCol cols="4">
 						<h4 class="text-primary">Symbol</h4>
 						<h5 class="text-primary">Name</h5>
@@ -22,7 +22,7 @@
 					</VCol>
 				</VRow>
 
-				<VRow v-for="(erc20, i) in erc20Balances" :key="i" class="">
+				<VRow v-for="(erc20, i) in erc20Balances" :key="i">
 					<VCol cols="4">
 						<h4>{{ erc20.symbol }}</h4>
 						<h5>{{ erc20.name }}</h5>
@@ -47,12 +47,12 @@
 
 		<VCol cols="12">
 			<VCard color="light" class="mb-3 px-6 py-6">
-				<VRow class="">
+				<VRow>
 					<VCol cols="12">
 						<h3>ERC 721 Tokens (NFTs)</h3>
 					</VCol>
 				</VRow>
-				<VRow class="">
+				<VRow>
 					<VCol cols="4">
 						<h4 class="text-primary">Symbol</h4>
 						<h5 class="text-primary">Name</h5>
@@ -136,13 +136,9 @@
 					this.erc20Balances = [
 					];
 
-					console.log("address:", this.address);
-					console.log("net:", await this.$store.state.web3.eth.net.getId());
-
 					// eslint-disable-next-line
 					const data: any = await alchemyGetBalances(
 						this.$store.state.alchemyApiKey,
-						await this.$store.state.web3.eth.net.getId(),
 						this.address
 					);
 

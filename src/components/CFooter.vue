@@ -1,6 +1,6 @@
 <template>
 	<VSheet color="dark" class="py-6" style="height: 600px;">
-		<VContainer class="">
+		<VContainer>
 			<VRow>
 				<VCol
 					cols="12"

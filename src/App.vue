@@ -46,9 +46,9 @@
 		},
 
 		methods: {
-			getChainName: (chainid: number) =>
+			getChainName: (chainId: number) =>
 			{
-				switch (chainid)
+				switch (chainId)
 				{
 					case 1:
 						return "mainnet";
@@ -58,6 +58,7 @@
 
 					case 11155111:
 						return "sepolia";
+
 					default:
 						return "?";
 				}
@@ -74,8 +75,8 @@
 					this.$store.state.loading = false;
 				}
 
-				this.$store.state.chainid = await this.$store.state.web3.eth.net.getId();
-				this.$store.state.chainName = this.getChainName(this.$store.state.chainid);
+				this.$store.state.chainId = await this.$store.state.web3.eth.net.getId();
+				this.$store.state.chainName = this.getChainName(this.$store.state.chainId);
 				this.$store.state.etherscanDomainStart = this.$store.state.chainName !== "mainnet" ?
 					this.$store.state.chainName : "www"
 				;

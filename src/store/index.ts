@@ -14,7 +14,7 @@ export default createStore({
 		web3: web3,
 
 		chainName: "",
-		chainid: 0,
+		chainId: 0,
 		etherscanDomainStart: "www",
 
 		accounts: [

@@ -31,7 +31,7 @@
 			</VContainer>
 		</VCol>
 
-		<VCol cols="9" md="11" lg="10" class="">
+		<VCol cols="9" md="11" lg="10">
 			<CMember v-if="currentTab == 'member'" />
 
 			<CAdmin v-if="currentTab == 'admin'" />
