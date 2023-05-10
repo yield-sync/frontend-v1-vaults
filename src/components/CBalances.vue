@@ -9,7 +9,7 @@
 						</VCol>
 					</VRow>
 					<VRow class="">
-						<VCol cols="5">
+						<VCol cols="4">
 							<h4 class="text-primary">Symbol</h4>
 							<h5 class="text-primary">Name</h5>
 						</VCol>
@@ -18,12 +18,13 @@
 							<h4 class="text-primary">Balance</h4>
 						</VCol>
 
-						<VCol cols="1">
+						<VCol cols="2">
 							<h4 class="text-primary">Etherscan</h4>
 						</VCol>
 					</VRow>
+
 					<VRow v-for="(erc20, i) in erc20Balances" :key="i" class="">
-						<VCol cols="5">
+						<VCol cols="4">
 							<h4>{{ erc20.symbol }}</h4>
 							<h5>{{ erc20.name }}</h5>
 						</VCol>
@@ -32,15 +33,13 @@
 							<h4>{{ erc20.balance }}</h4>
 						</VCol>
 
-						<VCol sm="1">
+						<VCol sm="2">
 							<a
 								:href="`https://etherscan.io/address/${erc20.contract}`"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								<VBtn variant="tonal" size="sm" class="w-100">
-									🔗
-								</VBtn>
+								<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
 							</a>
 						</VCol>
 					</VRow>
@@ -54,24 +53,38 @@
 							<h3>ERC 721 Tokens (NFTs)</h3>
 						</VCol>
 					</VRow>
-					<VRow class="border border-primary">
-						<VCol cols="6">
-							<h4>Symbol</h4>
-							<h5>Name</h5>
+					<VRow class="">
+						<VCol cols="4">
+							<h4 class="text-primary">Symbol</h4>
+							<h5 class="text-primary">Name</h5>
 						</VCol>
 
 						<VCol cols="6">
-							<h4>Balance</h4>
+							<h4 class="text-primary">Balance</h4>
+						</VCol>
+
+						<VCol cols="2">
+							<h4 class="text-primary">Etherscan</h4>
 						</VCol>
 					</VRow>
 					<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
-						<VCol cols="6">
+						<VCol cols="4">
 							<h4>{{ erc721.name }}</h4>
 							<h5>{{ erc721.symbol }}</h5>
 						</VCol>
 
 						<VCol cols="6">
 							<h4>{{ erc721.balance }}</h4>
+						</VCol>
+
+						<VCol sm="2">
+							<a
+								:href="`https://etherscan.io/address/${erc721.contract}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+							</a>
 						</VCol>
 					</VRow>
 				</VCard>
