@@ -1,8 +1,20 @@
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="12">
-				<h3 class="mb-3 text-center text-uppercase">Deploy a Vault</h3>
+			<VCol cols="4" />
+
+			<VCol cols="4">
+				<h3 class="mb-3 text-center text-uppercase text-primary">Deploy a Vault</h3>
+			</VCol>
+
+			<VCol cols="4" class="text-right">
+				<a
+					:href="`https://${d}.etherscan.io/address/${factory}#readContract`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<VBtn variant="plain" size="sm"><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
+				</a>
 			</VCol>
 
 			<!-- Sig Manager -->
@@ -163,6 +175,9 @@
 		data()
 		{
 			return {
+				factory: this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultFactory,
+				d: this.$store.state.etherscanDomainStart,
+
 				addAdminField: "",
 				addMemberField: "",
 

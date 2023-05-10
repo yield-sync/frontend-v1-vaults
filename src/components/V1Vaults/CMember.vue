@@ -7,13 +7,13 @@
 				<h3 class="mb-3 text-center text-uppercase text-primary">Membership in V1 Vault</h3>
 			</VCol>
 
-			<VCol cols="4">
+			<VCol cols="4" class="text-right">
 				<a
-					:href="`https://${d}.etherscan.io/address/${record}#readContract`"
+					:href="`https://${d}.etherscan.io/address/${accessControl}#readContract`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<h6 class="text-right">Access Control Contract</h6>
+					<VBtn variant="plain" size="sm"><h6>🔗 Access Control Contract</h6></VBtn>
 				</a>
 			</VCol>
 		</VRow>
@@ -32,10 +32,10 @@
 	export default defineComponent({
 		name: "RVGovernance",
 
-		data() 
+		data()
 		{
 			return {
-				record: "",
+				accessControl: "",
 				v1Vaults: [
 				] as Array<{
 					address: string;
@@ -48,18 +48,18 @@
 		},
 
 		components: {
-			CVaultBreakdown 
+			CVaultBreakdown
 		},
 
-		async created() 
+		async created()
 		{
-			this.record = await this.$store.state.contract.yieldSyncV1VaultFactory.methods
+			this.accessControl = await this.$store.state.contract.yieldSyncV1VaultFactory.methods
 				.YieldSyncV1VaultAccessControl().call();
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
 				.member_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
 
-			for (let i = 0; i < v1Vaults.length; i++) 
+			for (let i = 0; i < v1Vaults.length; i++)
 			{
 				const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 					YieldSyncV1Vault as AbiItem[],

@@ -1,19 +1,19 @@
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="1" />
+			<VCol cols="4" />
 
-			<VCol cols="10">
+			<VCol cols="4">
 				<h3 class="mb-3 text-center text-uppercase text-primary">Yield Sync Governance</h3>
 			</VCol>
 
-			<VCol cols="1">
+			<VCol cols="4" class="text-right">
 				<a
 					:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${governanceAddress}`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="plain" size="sm" class="w-100">🔗</VBtn>
+					<VBtn variant="plain" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
 				</a>
 			</VCol>
 

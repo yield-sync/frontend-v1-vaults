@@ -26,7 +26,7 @@
 			</VCol>
 		</VRow>
 
-		<VRow v-for="(v, i) in v1Vaults" :key="i" class="mb-3 border">
+		<VRow v-for="(v, i) in v1Vaults" :key="i" class="mb-3">
 			<VCol cols="2">
 				<h5 class="text-center" style="word-wrap: break-word;">
 					{{ v.address.substring(0, 4) + "..." + v.address.substring(v.address.length - 4) }}

@@ -1,5 +1,7 @@
 <template>
-	<CBalances :address="addressToCheckBalancesOf" />
+	<VContainer>
+		<CBalances :address="addressToCheckBalancesOf" />
+	</VContainer>
 </template>
 
 <script lang="ts">

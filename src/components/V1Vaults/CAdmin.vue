@@ -7,13 +7,13 @@
 				<h3 class="mb-3 text-center text-uppercase">Admin of V1 Vault</h3>
 			</VCol>
 
-			<VCol cols="4">
+			<VCol cols="4" class="text-right">
 				<a
-					:href="`https://${d}.etherscan.io/address/${record}#readContract`"
+					:href="`https://${d}.etherscan.io/address/${accessControl}#readContract`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<h6 class="text-right">Access Control Contract</h6>
+					<VBtn variant="plain" size="sm"><h6>🔗 Access Control Contract</h6></VBtn>
 				</a>
 			</VCol>
 		</VRow>
@@ -35,7 +35,7 @@
 		data()
 		{
 			return {
-				record: "",
+				accessControl: "",
 				v1Vaults: [
 				] as Array<{
 					address: string;
@@ -53,7 +53,7 @@
 
 		async created()
 		{
-			this.record = await this.$store.state.contract.yieldSyncV1VaultFactory.methods
+			this.accessControl = await this.$store.state.contract.yieldSyncV1VaultFactory.methods
 				.YieldSyncV1VaultAccessControl().call();
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
