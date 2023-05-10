@@ -51,7 +51,7 @@
 
 					<VCol cols="4" class="text-right">
 						<a
-							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${v}`"
+							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${v1VaultAddress}`"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
