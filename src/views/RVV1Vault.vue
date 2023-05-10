@@ -51,7 +51,7 @@
 
 					<VCol cols="4" class="text-right">
 						<a
-							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${v1VaultAddress}`"
+							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -60,9 +60,9 @@
 					</VCol>
 				</VRow>
 
-				<CBalances v-if="tab == 'overview'" :address="v1VaultAddress" />
+				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 
-				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :v1VaultAddress="v1VaultAddress" />
+				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :vaultAddress="vaultAddress" />
 			</VContainer>
 		</VCol>
 	</VRow>
@@ -81,7 +81,7 @@
 		{
 			return {
 				tab: "overview",
-				v1VaultAddress: this.$route.params.address as string
+				vaultAddress: this.$route.params.address as string
 			};
 		},
 
