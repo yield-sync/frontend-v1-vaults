@@ -86,12 +86,10 @@
 				</VRow>
 
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
-
 				<CAdmins v-if="tab == 'admins'" :address="vaultAddress" />
-
 				<CMembers v-if="tab == 'members'" :address="vaultAddress" />
-
 				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :vaultAddress="vaultAddress" />
+				<CCreateWithdrawalRequest v-if="tab == 'create-wr'" :vaultAddress="vaultAddress" />
 			</VContainer>
 		</VCol>
 	</VRow>
@@ -104,6 +102,7 @@
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
 	import CViewWithdrawalRequest from "../components/V1Vault/CViewWithdrawalRequest.vue";
+	import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
 
 	export default defineComponent({
 		name: "RVV1Vault",
@@ -120,7 +119,8 @@
 			CBalances,
 			CAdmins,
 			CMembers,
-			CViewWithdrawalRequest
+			CViewWithdrawalRequest,
+			CCreateWithdrawalRequest
 		}
 	});
 </script>

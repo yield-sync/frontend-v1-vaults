@@ -30,7 +30,7 @@ const vuetify = createVuetify({
 					success: "#4CAF50",
 					warning: "#ff0000",
 					white: "#FFFFFF"
-				}
+				},
 			}
 		}
 	}
