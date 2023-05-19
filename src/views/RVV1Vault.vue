@@ -15,6 +15,23 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
+					@click="tab = 'admins'"
+				>
+					Admins
+				</VBtn>
+				<VBtn
+					color="dark"
+					variant="tonal"
+					class="w-100 mb-3 no-box-shadow"
+					@click="tab = 'members'"
+				>
+					Members
+				</VBtn>
+
+				<VBtn
+					color="dark"
+					variant="tonal"
+					class="w-100 mb-3 no-box-shadow"
 					@click="tab = 'view-wr'"
 				>
 					View Withdrawal Request
@@ -43,7 +60,15 @@
 		<VCol cols="9" class="bg-white">
 			<VContainer>
 				<VRow>
-					<VCol cols="4" />
+					<VCol cols="4">
+						<a
+							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<h6 class="word-wrap">{{ vaultAddress }}</h6>
+						</a>
+					</VCol>
 
 					<VCol cols="4">
 						<h3 class="mb-3 text-center text-uppercase text-primary">V1 Vault</h3>
@@ -62,6 +87,10 @@
 
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 
+				<CAdmins v-if="tab == 'admins'" :address="vaultAddress" />
+
+				<CMembers v-if="tab == 'members'" :address="vaultAddress" />
+
 				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :vaultAddress="vaultAddress" />
 			</VContainer>
 		</VCol>
@@ -72,6 +101,8 @@
 	import { defineComponent } from "vue";
 
 	import CBalances from "../components/CBalances.vue";
+	import CAdmins from "../components/V1Vault/CAdmins.vue";
+	import CMembers from "../components/V1Vault/CMembers.vue";
 	import CViewWithdrawalRequest from "../components/V1Vault/CViewWithdrawalRequest.vue";
 
 	export default defineComponent({
@@ -87,6 +118,8 @@
 
 		components: {
 			CBalances,
+			CAdmins,
+			CMembers,
 			CViewWithdrawalRequest
 		}
 	});
