@@ -24,18 +24,9 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'view-wr'"
+					@click="tab = 'wr'"
 				>
-					View Withdrawal Request
-				</VBtn>
-
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'create-wr'"
-				>
-					Create Withdrawal Request
+					Withdrawal Request
 				</VBtn>
 
 				<VBtn
@@ -81,13 +72,16 @@
 
 					<VCol cols="4" class="text-right"/>
 				</VRow>
-
-				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
-				<CAdmins v-if="tab == 'admins-and-members'" :address="vaultAddress" />
-				<CMembers v-if="tab == 'admins-and-members'" :address="vaultAddress" />
-				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :vaultAddress="vaultAddress" />
-				<CCreateWithdrawalRequest v-if="tab == 'create-wr'" :vaultAddress="vaultAddress" />
 			</VContainer>
+
+			<VContainer>
+				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
+			</VContainer>
+
+			<CAdmins v-if="tab == 'admins-and-members'" :address="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :address="vaultAddress" />
+			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
+			<CCreateWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
 		</VCol>
 	</VRow>
 </template>
@@ -127,7 +121,7 @@
 			CCreateWithdrawalRequest
 		},
 
-		async created() 
+		async created()
 		{
 			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

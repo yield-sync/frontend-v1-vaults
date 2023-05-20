@@ -1,8 +1,8 @@
 <template>
-	<VCard color="light" class="mb-3 px-6 py-6">
-		<h3 class="text-center text-primary">Open Withdrawal Requests</h3>
+	<VContainer>
+		<VCard color="light" class="mb-3 px-6 py-6">
+			<h3 class="text-center text-primary">Open Withdrawal Requests</h3>
 
-		<VContainer>
 			<VRow>
 				<VCol cols="1">
 					<h5 class="text-primary">For Vote Count</h5>
@@ -94,8 +94,8 @@
 					<h6>{{ w.votedMembers }}</h6>
 				</VCol>
 			</VRow>
-		</VContainer>
-	</VCard>
+		</VCard>
+	</VContainer>
 </template>
 
 <script lang="ts">

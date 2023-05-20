@@ -1,19 +1,19 @@
 <template>
-	<VRow>
-		<VCol cols="12">
-			<VCard color="light" class="mb-6 px-6 py-6">
-				<div v-for="(a, i) in members" :key="i" class="">
-					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<VBtn variant="plain" size="sm">🔗 {{ a }}</VBtn>
-					</a>
-				</div>
-			</VCard>
-		</VCol>
-	</VRow>
+	<VContainer>
+		<VCard color="light" class="mb-6 px-6 py-6">
+			<h4 class="text-center text-primary">Members</h4>
+
+			<div v-for="(a, i) in members" :key="i" class="">
+				<a
+					:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<VBtn variant="plain" size="sm">🔗 {{ a }}</VBtn>
+				</a>
+			</div>
+		</VCard>
+	</VContainer>
 </template>
 
 <script lang="ts">

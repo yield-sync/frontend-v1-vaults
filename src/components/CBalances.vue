@@ -2,7 +2,7 @@
 	<VCard color="light" class="mb-6 px-6 py-6">
 		<VRow>
 			<VCol cols="12">
-				<h3>ERC 20 Tokens</h3>
+				<h4 class="text-center text-primary">ERC 20 Tokens</h4>
 			</VCol>
 		</VRow>
 		<VRow>
@@ -45,7 +45,7 @@
 	<VCard color="light" class="mb-3 px-6 py-6">
 		<VRow>
 			<VCol cols="12">
-				<h3>ERC 721 Tokens (NFTs)</h3>
+				<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>
 			</VCol>
 		</VRow>
 		<VRow>
