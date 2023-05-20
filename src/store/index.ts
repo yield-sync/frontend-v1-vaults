@@ -15,7 +15,7 @@ export default createStore({
 
 		config: config as any,
 
-		web3: window.ethereum ? new Web3(window.ethereum) : undefined as any | undefined,
+		web3: window.ethereum ? new Web3(window.ethereum) : undefined as undefined | any,
 
 		chainName: "" as string,
 		chainId: 0 as number,
@@ -36,29 +36,29 @@ export default createStore({
 		alchemyApiKey: "" as string,
 		isAdmin: false as boolean,
 		contract: {
-			yieldSyncGovernance: undefined,
-			yieldSyncV1VaultFactory: undefined,
-			yieldSyncV1VaultAccessControl: undefined,
+			yieldSyncGovernance: undefined as undefined | any,
+			yieldSyncV1VaultFactory: undefined as undefined | any,
+			yieldSyncV1VaultAccessControl: undefined as undefined | any,
 		} as any
 	},
 
 	mutations: {
-		setLoading(state, e)
+		setError(state, e: string)
 		{
-			state.loading = e;
+			state.error = e;
 		},
 
-		setError(state, l)
+		setLoading(state, l: boolean)
 		{
-			state.error = l;
+			state.loading = l;
 		},
 
-		setChainId(state, id)
+		setChainId(state, id: number)
 		{
 			state.chainId = id;
 		},
 
-		setChainName(state, chainId)
+		setChainName(state, chainId: number)
 		{
 			switch (chainId)
 			{
@@ -80,7 +80,7 @@ export default createStore({
 			}
 		},
 
-		setEtherscanDomainStart(state, etherscanDomainStart)
+		setEtherscanDomainStart(state, etherscanDomainStart: string)
 		{
 			state.etherscanDomainStart = etherscanDomainStart;
 		},
