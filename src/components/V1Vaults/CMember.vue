@@ -38,8 +38,7 @@
 		{
 			return {
 				accessControl: "",
-				v1Vaults: [
-				] as Array<{
+				v1Vaults: new Set() as Set<{
 					address: string;
 					againstVoteCountRequired: number;
 					forVoteCountRequired: number;
@@ -68,7 +67,7 @@
 					v1Vaults[i]
 				);
 
-				this.v1Vaults.push({
+				this.v1Vaults.add({
 					address: v1Vaults[i],
 					againstVoteCountRequired: await yieldSyncV1Vault.methods.againstVoteCountRequired().call(),
 					forVoteCountRequired: await yieldSyncV1Vault.methods.forVoteCountRequired().call(),

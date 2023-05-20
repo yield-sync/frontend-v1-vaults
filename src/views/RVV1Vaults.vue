@@ -1,44 +1,11 @@
 <template>
-	<VRow>
-		<VCol cols="3" md="1" lg="2">
-			<VContainer class="bg-light h-100">
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="currentTab = 'member'"
-				>
-					Member
-				</VBtn>
+	<div>
+		<CMember />
 
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="currentTab = 'admin'"
-				>
-					Admin
-				</VBtn>
+		<CAdmin />
 
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="currentTab = 'deploy'"
-				>
-					Deploy
-				</VBtn>
-			</VContainer>
-		</VCol>
-
-		<VCol cols="9" md="11" lg="10">
-			<CMember v-if="currentTab == 'member'" />
-
-			<CAdmin v-if="currentTab == 'admin'" />
-
-			<CDeploy v-if="currentTab == 'deploy'" />
-		</VCol>
-	</VRow>
+		<CDeploy />
+	</div>
 </template>
 
 <script lang="ts">
@@ -53,7 +20,7 @@
 		data()
 		{
 			return {
-				currentTab: "member"
+				currentTab: "member",
 			};
 		},
 

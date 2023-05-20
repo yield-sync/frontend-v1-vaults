@@ -74,7 +74,7 @@
 			v1Vaults: {
 				required: true,
 				type: Object as PropType<
-					Array<{
+					Set<{
 						address: string,
 						againstVoteCountRequired: number,
 						forVoteCountRequired: number,

@@ -28,14 +28,9 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import { AbiItem } from "web3-utils";
 
-	import YieldSyncGovernance from "./abi/YieldSyncGovernance";
-	import YieldSyncV1VaultFactory from "./abi/YieldSyncV1VaultFactory";
-	import YieldSyncV1VaultAccessControl from "./abi/YieldSyncV1VaultAccessControl";
 	import CFooter from "./components/CFooter.vue";
 	import CNav from "./components/CNav.vue";
-
 
 	export default defineComponent({
 		name: "App",
@@ -106,22 +101,13 @@
 				;
 
 				// Governance
-				this.$store.state.contract.yieldSyncGovernance = new this.$store.state.web3.eth.Contract(
-					YieldSyncGovernance as AbiItem[],
-					this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance
-				);
+				this.$store.dispatch("generateYieldSyncGovernance");
 
 				// Factory
-				this.$store.state.contract.yieldSyncV1VaultFactory = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1VaultFactory as AbiItem[],
-					this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultFactory
-				);
+				this.$store.dispatch("generateYieldSyncV1VaultFactory");
 
-				// Record
-				this.$store.state.contract.yieldSyncV1VaultAccessControl = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1VaultAccessControl as AbiItem[],
-					this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultAccessControl
-				);
+				// Access Control
+				this.$store.dispatch("generateYieldSyncV1AccessControl");
 
 				if (localStorage.alchemyApiKey)
 				{

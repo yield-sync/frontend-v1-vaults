@@ -15,17 +15,9 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'admins'"
+					@click="tab = 'admins-and-members'"
 				>
-					Admins
-				</VBtn>
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'members'"
-				>
-					Members
+					Admins & Members
 				</VBtn>
 
 				<VBtn
@@ -83,11 +75,15 @@
 							<VBtn variant="plain" size="sm"><h6>🔗 V1 Vault Contract</h6></VBtn>
 						</a>
 					</VCol>
+
+					<VCol cols="4" class="text-right">
+
+					</VCol>
 				</VRow>
 
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
-				<CAdmins v-if="tab == 'admins'" :address="vaultAddress" />
-				<CMembers v-if="tab == 'members'" :address="vaultAddress" />
+				<CAdmins v-if="tab == 'admins-and-members'" :address="vaultAddress" />
+				<CMembers v-if="tab == 'admins-and-members'" :address="vaultAddress" />
 				<CViewWithdrawalRequest v-if="tab == 'view-wr'" :vaultAddress="vaultAddress" />
 				<CCreateWithdrawalRequest v-if="tab == 'create-wr'" :vaultAddress="vaultAddress" />
 			</VContainer>
