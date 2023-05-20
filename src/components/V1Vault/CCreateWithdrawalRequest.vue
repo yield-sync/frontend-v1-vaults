@@ -77,6 +77,7 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import { AbiItem } from "web3-utils";
+	import { Contract } from "web3-eth-contract";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
@@ -93,7 +94,7 @@
 		data()
 		{
 			return {
-				yieldSyncV1Vault: undefined as any | undefined,
+				yieldSyncV1Vault: undefined as undefined | Contract,
 				withdrawalRequest: {
 					for: "Ether",
 					to: "",
@@ -107,18 +108,21 @@
 		methods: {
 			async createWR()
 			{
-				await this.yieldSyncV1Vault.methods.createWithdrawalRequest(
-					this.withdrawalRequest.for == "ERC 20" ? true : false,
-					this.withdrawalRequest.for == "ERC 721" ? true : false,
-					this.withdrawalRequest.to,
-					this.withdrawalRequest.token ?
-						this.withdrawalRequest.token : "0x0000000000000000000000000000000000000000"
-					,
-					this.withdrawalRequest.amount,
-					this.withdrawalRequest.tokenId
-				).send({
-					from: this.$store.state.wallet.accounts[0]
-				});
+				if (this.yieldSyncV1Vault) 
+				{
+					await this.yieldSyncV1Vault.methods.createWithdrawalRequest(
+						this.withdrawalRequest.for == "ERC 20" ? true : false,
+						this.withdrawalRequest.for == "ERC 721" ? true : false,
+						this.withdrawalRequest.to,
+						this.withdrawalRequest.token ?
+							this.withdrawalRequest.token : "0x0000000000000000000000000000000000000000"
+						,
+						this.withdrawalRequest.amount,
+						this.withdrawalRequest.tokenId
+					).send({
+						from: this.$store.state.wallet.accounts[0]
+					});
+				}
 			}
 		},
 

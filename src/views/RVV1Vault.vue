@@ -127,7 +127,8 @@
 			CCreateWithdrawalRequest
 		},
 
-		async created() {
+		async created() 
+		{
 			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],
 				this.vaultAddress

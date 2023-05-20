@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
+import { Contract } from "web3-eth-contract";
 
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
@@ -13,8 +14,10 @@ export default createStore({
 		loading: true as boolean,
 		error: "" as string,
 
+		// eslint-disable-next-line
 		config: config as any,
 
+		// eslint-disable-next-line
 		web3: window.ethereum ? new Web3(window.ethereum) : undefined as undefined | any,
 
 		chainName: "" as string,
@@ -27,19 +30,16 @@ export default createStore({
 			],
 		} as {
 			connected: boolean,
-			accounts: any[]
+			accounts: string[]
 		},
-
-		vaults: [
-		] as any,
 
 		alchemyApiKey: "" as string,
 		isAdmin: false as boolean,
 		contract: {
-			yieldSyncGovernance: undefined as undefined | any,
-			yieldSyncV1VaultFactory: undefined as undefined | any,
-			yieldSyncV1VaultAccessControl: undefined as undefined | any,
-		} as any,
+			yieldSyncGovernance: undefined as undefined | Contract,
+			yieldSyncV1VaultFactory: undefined as undefined | Contract,
+			yieldSyncV1VaultAccessControl: undefined as undefined | Contract,
+		},
 	},
 
 	mutations: {
@@ -85,17 +85,17 @@ export default createStore({
 			state.etherscanDomainStart = etherscanDomainStart;
 		},
 
-		setYieldSyncGovernance(state, contract)
+		setYieldSyncGovernance(state, contract: Contract)
 		{
 			state.contract.yieldSyncGovernance = contract;
 		},
 
-		setYieldSyncV1VaultFactory(state, contract)
+		setYieldSyncV1VaultFactory(state, contract: Contract)
 		{
 			state.contract.yieldSyncV1VaultFactory = contract;
 		},
 
-		setYieldSyncV1VaultAccessControl(state, contract)
+		setYieldSyncV1VaultAccessControl(state, contract: Contract)
 		{
 			state.contract.yieldSyncV1VaultAccessControl = contract;
 		},
