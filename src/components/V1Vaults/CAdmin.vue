@@ -19,15 +19,17 @@
 				</VCol>
 			</VRow>
 
-			<CVaultBreakdown :v1Vaults="$store.state.adminshipYieldSyncV1VaultVaults" />
+			<CVaultBreakdown :v1Vaults="adminshipYieldSyncV1VaultVaults" />
 		</VCard>
 	</VContainer>
 </template>
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { AbiItem } from "web3-utils";
 
 	import CVaultBreakdown from "./CVaultBreakdown.vue";
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
 		name: "RVGovernance",
@@ -35,8 +37,19 @@
 		data()
 		{
 			return {
-				accessControl: "",
-				etherscanDomainStart: this.$store.state.etherscanDomainStart
+				accessControl: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1VaultAccessControl,
+
+				etherscanDomainStart: this.$store.state.etherscanDomainStart,
+
+				adminshipYieldSyncV1VaultVaults: [
+				] as {
+					address: string;
+					againstVoteCountRequired: number;
+					forVoteCountRequired: number;
+					withdrawalDelaySeconds: number;
+				}[],
 			};
 		},
 
@@ -46,7 +59,24 @@
 
 		async created()
 		{
-			await this.$store.dispatch("generateAdminshipVaults");
+			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
+				.admin_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call()
+			;
+
+			for (let i = 0; i < v1Vaults.length; i++)
+			{
+				const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					v1Vaults[i]
+				);
+
+				this.adminshipYieldSyncV1VaultVaults.push({
+					address: v1Vaults[i],
+					againstVoteCountRequired: await yieldSyncV1Vault.methods.againstVoteCountRequired().call(),
+					forVoteCountRequired: await yieldSyncV1Vault.methods.forVoteCountRequired().call(),
+					withdrawalDelaySeconds: await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call(),
+				});
+			}
 		},
 	});
 </script>

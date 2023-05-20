@@ -4,7 +4,6 @@ import { AbiItem } from "web3-utils";
 
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
-import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
 import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl";
 
@@ -40,27 +39,7 @@ export default createStore({
 			yieldSyncGovernance: undefined as undefined | any,
 			yieldSyncV1VaultFactory: undefined as undefined | any,
 			yieldSyncV1VaultAccessControl: undefined as undefined | any,
-			adminshipYieldSyncV1VaultVaults: [
-			] as any[],
-			membershipYieldSyncV1VaultVaults: [
-			] as any[]
 		} as any,
-
-		adminshipYieldSyncV1VaultVaults: [
-		] as {
-			address: string;
-			againstVoteCountRequired: number;
-			forVoteCountRequired: number;
-			withdrawalDelaySeconds: number;
-		}[],
-
-		membershipYieldSyncV1VaultVaults: [
-		] as {
-			address: string;
-			againstVoteCountRequired: number;
-			forVoteCountRequired: number;
-			withdrawalDelaySeconds: number;
-		}[],
 	},
 
 	mutations: {
@@ -120,26 +99,6 @@ export default createStore({
 		{
 			state.contract.yieldSyncV1VaultAccessControl = contract;
 		},
-
-		setContractAdminshipYieldSyncV1VaultVaults(state, contract)
-		{
-			state.contract.adminshipYieldSyncV1VaultVaults.push(contract);
-		},
-
-		setContractMembershipYieldSyncV1VaultVaults(state, contract)
-		{
-			state.contract.membershipYieldSyncV1VaultVaults.push(contract);
-		},
-
-		setAdminshipYieldSyncV1VaultVaults(state, contract)
-		{
-			state.adminshipYieldSyncV1VaultVaults.push(contract);
-		},
-
-		setMembershipYieldSyncV1VaultVaults(state, contract)
-		{
-			state.membershipYieldSyncV1VaultVaults.push(contract);
-		},
 	},
 
 	actions: {
@@ -176,48 +135,6 @@ export default createStore({
 					state.config.address[state.chainName].yieldSyncV1VaultAccessControl
 				)
 			);
-		},
-
-		generateMembershipVaults: async ({ commit, state }) =>
-		{
-			const v1Vaults = await state.contract.yieldSyncV1VaultAccessControl.methods.member_yieldSyncV1Vaults(
-				state.wallet.accounts[0]
-			).call();
-
-			for (let i = 0; i < v1Vaults.length; i++)
-			{
-				const yieldSyncV1Vault = new state.web3.eth.Contract(YieldSyncV1Vault as AbiItem[], v1Vaults[i]);
-
-				commit("setContractMembershipYieldSyncV1VaultVaults", yieldSyncV1Vault);
-
-				commit("setMembershipYieldSyncV1VaultVaults", {
-					address: v1Vaults[i],
-					againstVoteCountRequired: await yieldSyncV1Vault.methods.againstVoteCountRequired().call(),
-					forVoteCountRequired: await yieldSyncV1Vault.methods.forVoteCountRequired().call(),
-					withdrawalDelaySeconds: await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call(),
-				});
-			}
-		},
-
-		generateAdminshipVaults: async ({ commit, state }) =>
-		{
-			const v1Vaults = await state.contract.yieldSyncV1VaultAccessControl.methods.admin_yieldSyncV1Vaults(
-				state.wallet.accounts[0]
-			).call();
-
-			for (let i = 0; i < v1Vaults.length; i++)
-			{
-				const yieldSyncV1Vault = new state.web3.eth.Contract(YieldSyncV1Vault as AbiItem[], v1Vaults[i]);
-
-				commit("setContractAdminshipYieldSyncV1VaultVaults", yieldSyncV1Vault);
-
-				commit("setAdminshipYieldSyncV1VaultVaults", {
-					address: v1Vaults[i],
-					againstVoteCountRequired: await yieldSyncV1Vault.methods.againstVoteCountRequired().call(),
-					forVoteCountRequired: await yieldSyncV1Vault.methods.forVoteCountRequired().call(),
-					withdrawalDelaySeconds: await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call(),
-				});
-			}
 		},
 	},
 

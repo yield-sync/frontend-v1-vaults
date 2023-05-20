@@ -74,12 +74,12 @@
 			v1Vaults: {
 				required: true,
 				type: Object as PropType<
-					Set<{
+					{
 						address: string,
 						againstVoteCountRequired: number,
 						forVoteCountRequired: number,
 						withdrawalDelaySeconds: number,
-					}>
+					}[]
 				>
 			}
 		},
