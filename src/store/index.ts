@@ -7,8 +7,12 @@ import YieldSyncGovernance from "../abi/YieldSyncGovernance";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
 import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl";
 
+
 export default createStore({
 	state: {
+		loading: true as boolean,
+		error: "" as string,
+
 		config: config as any,
 
 		web3: window.ethereum ? new Web3(window.ethereum) : undefined as any | undefined,
@@ -17,12 +21,14 @@ export default createStore({
 		chainId: 0 as number,
 		etherscanDomainStart: "www" as string,
 
-		accounts: [
-		] as any,
-
-		connected: false as boolean,
-		loading: true as boolean,
-		error: "" as string,
+		wallet: {
+			connected: false,
+			accounts: [
+			],
+		} as {
+			connected: boolean,
+			accounts: any[]
+		},
 
 		vaults: [
 		] as any,
@@ -37,22 +43,75 @@ export default createStore({
 	},
 
 	mutations: {
-		setYieldSyncGovernance(state, contract) {
-			state.contract.yieldSyncGovernance = contract
+		setLoading(state, e)
+		{
+			state.loading = e;
 		},
 
-		setYieldSyncV1VaultFactory(state, contract) {
-			state.contract.yieldSyncV1VaultFactory = contract
+		setError(state, l)
+		{
+			state.error = l;
 		},
 
-		setYieldSyncV1VaultAccessControl(state, contract) {
-			state.contract.yieldSyncV1VaultAccessControl = contract
+		setChainId(state, id)
+		{
+			state.chainId = id;
+		},
+
+		setChainName(state, chainId)
+		{
+			switch (chainId)
+			{
+			case 1:
+				state.chainName = "mainnet";
+				break;
+
+			case 5:
+				state.chainName = "goerli";
+				break;
+
+			case 11155111:
+				state.chainName = "sepolia";
+				break;
+
+			default:
+				state.chainName = "?";
+				break;
+			}
+		},
+
+		setEtherscanDomainStart(state, etherscanDomainStart)
+		{
+			state.etherscanDomainStart = etherscanDomainStart;
+		},
+
+		setYieldSyncGovernance(state, contract)
+		{
+			state.contract.yieldSyncGovernance = contract;
+		},
+
+		setYieldSyncV1VaultFactory(state, contract)
+		{
+			state.contract.yieldSyncV1VaultFactory = contract;
+		},
+
+		setYieldSyncV1VaultAccessControl(state, contract)
+		{
+			state.contract.yieldSyncV1VaultAccessControl = contract;
 		},
 	},
 
 	actions: {
-		// Governance
-		generateYieldSyncGovernance: async ({ commit, state }) => {
+		generateChainRelatedData: async ({ commit, state }) =>
+		{
+			commit("setChainId", await state.web3.eth.net.getId());
+			commit("setChainName", await state.web3.eth.net.getId());
+			commit("setEtherscanDomainStart", state.chainName !== "mainnet" ? state.chainName : "www");
+		},
+
+		generateYieldSyncContracts: async ({ commit, state }) =>
+		{
+			// Governance
 			commit(
 				"setYieldSyncGovernance",
 				new state.web3.eth.Contract(
@@ -60,10 +119,7 @@ export default createStore({
 					state.config.address[state.chainName].yieldSyncGovernance
 				)
 			);
-		},
-
-		// Factory
-		generateYieldSyncV1VaultFactory: async ({ commit, state }) => {
+			// Factory
 			commit(
 				"setYieldSyncV1VaultFactory",
 				new state.web3.eth.Contract(
@@ -71,10 +127,7 @@ export default createStore({
 					state.config.address[state.chainName].yieldSyncV1VaultFactory
 				)
 			);
-		},
-
-		// Access Control
-		generateYieldSyncV1AccessControl: async ({ commit, state }) => {
+			// Access Control
 			commit(
 				"setYieldSyncV1VaultAccessControl",
 				new state.web3.eth.Contract(

@@ -16,7 +16,7 @@
 					class="text-center"
 				>
 					<RouterLink
-						:to="`/balances/${$store.state.accounts[0]}`"
+						:to="`/balances/${$store.state.wallet.accounts[0]}`"
 						class="mr-2 text-decoration-none"
 					>
 						<h4>Balances</h4>

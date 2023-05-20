@@ -9,7 +9,7 @@
 		</VContainer>
 
 		<!-- !Connected -->
-		<VContainer v-if="!$store.state.connected && $store.state.error === ''" class="py-12">
+		<VContainer v-if="!$store.state.wallet.connected && $store.state.error === ''" class="py-12">
 			<h2 class="text-center">Wallet not connected</h2>
 		</VContainer>
 
@@ -19,7 +19,7 @@
 		</VContainer>
 
 		<!-- Router -->
-		<RouterView v-if="!$store.state.loading && $store.state.connected && $store.state.error === ''" />
+		<RouterView v-if="!$store.state.loading && $store.state.wallet.connected && $store.state.error === ''" />
 
 		<!-- Bottom Navigation -->
 		<CFooter />
@@ -40,41 +40,19 @@
 			CFooter
 		},
 
-		methods: {
-			getChainName: (chainId: number) =>
-			{
-				switch (chainId)
-				{
-					case 1:
-						return "mainnet";
-
-					case 5:
-						return "goerli";
-
-					case 11155111:
-						return "sepolia";
-
-					default:
-						return "?";
-				}
-			}
-		},
-
 		async created()
 		{
 			try
 			{
 				if (!window.ethereum)
 				{
-					this.$store.state.error = "No wallet found, please install one.";
-					this.$store.state.loading = false;
+					await this.$store.commit("setError", "No wallet found, please install one.");
+					await this.$store.commit("setLoading", false);
+					return;
 				}
 
-				this.$store.state.chainId = await this.$store.state.web3.eth.net.getId();
-				this.$store.state.chainName = this.getChainName(this.$store.state.chainId);
-				this.$store.state.etherscanDomainStart = this.$store.state.chainName !== "mainnet" ?
-					this.$store.state.chainName : "www"
-				;
+				// Governance
+				await this.$store.dispatch("generateChainRelatedData");
 
 				// Connected account
 				window.ethereum.request({
@@ -87,8 +65,8 @@
 							{
 								console.log(`MetaMask is connected with account: ${accounts[0]}`);
 
-								this.$store.state.connected = true;
-								this.$store.state.accounts = accounts;
+								this.$store.state.wallet.connected = true;
+								this.$store.state.wallet.accounts = accounts;
 							}
 						}
 					)
@@ -100,14 +78,8 @@
 					)
 				;
 
-				// Governance
-				this.$store.dispatch("generateYieldSyncGovernance");
-
-				// Factory
-				this.$store.dispatch("generateYieldSyncV1VaultFactory");
-
-				// Access Control
-				this.$store.dispatch("generateYieldSyncV1AccessControl");
+				// Yield Sync Contracts
+				await this.$store.dispatch("generateYieldSyncContracts");
 
 				if (localStorage.alchemyApiKey)
 				{

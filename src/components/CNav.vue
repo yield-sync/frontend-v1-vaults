@@ -43,7 +43,7 @@
 
 				<VCol cols="12" md="4" class="text-right">
 					<VBtn
-						v-if="!$store.state.connected"
+						v-if="!$store.state.wallet.connected"
 						@click="connectWallet()"
 						color="light"
 						variant="tonal"
@@ -52,7 +52,7 @@
 						Connect
 					</VBtn>
 					<VBtn
-						v-if="$store.state.connected"
+						v-if="$store.state.wallet.connected"
 						@click="disconnectWallet()"
 						color="light"
 						variant="tonal"
@@ -64,10 +64,10 @@
 					<h5 class="my-3">
 						<span class="text-primary">.</span>
 						{{
-							$store.state.accounts[0] ?
-								$store.state.accounts[0].substring(0, 4) +
+							$store.state.wallet.accounts[0] ?
+								$store.state.wallet.accounts[0].substring(0, 4) +
 								"..." +
-								$store.state.accounts[0].substring($store.state.accounts[0].length - 4)
+								$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
 								:
 								""
 						}} : {{ $store.state.chainName }}
@@ -103,8 +103,8 @@
 						.then(
 							(accounts: Array<string>) =>
 							{
-								this.$store.state.connected = true;
-								this.$store.state.accounts = accounts;
+								this.$store.state.wallet.connected = true;
+								this.$store.state.wallet.accounts = accounts;
 
 								console.log("Connected!");
 							}
@@ -125,8 +125,8 @@
 
 			async disconnectWallet()
 			{
-				this.$store.state.connected = false;
-				this.$store.state.accounts = [
+				this.$store.state.wallet.connected = false;
+				this.$store.state.wallet.accounts = [
 				];
 			},
 

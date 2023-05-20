@@ -76,9 +76,7 @@
 						</a>
 					</VCol>
 
-					<VCol cols="4" class="text-right">
-
-					</VCol>
+					<VCol cols="4" class="text-right"/>
 				</VRow>
 
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />

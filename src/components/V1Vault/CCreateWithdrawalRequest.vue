@@ -117,7 +117,7 @@
 					this.withdrawalRequest.amount,
 					this.withdrawalRequest.tokenId
 				).send({
-					from: this.$store.state.accounts[0]
+					from: this.$store.state.wallet.accounts[0]
 				});
 			}
 		},

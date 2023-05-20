@@ -59,7 +59,7 @@
 			{
 				this.$store.state.web3.eth.personal.sign(
 					this.$store.state.web3.utils.utf8ToHex(this.inputData),
-					this.$store.state.accounts[0],
+					this.$store.state.wallet.accounts[0],
 					undefined,
 					(error, inputSignedData) =>
 					{

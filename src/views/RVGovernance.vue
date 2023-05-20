@@ -96,7 +96,7 @@
 				this.members.push(member);
 
 				console.log();
-				if (member.toUpperCase() === this.$store.state.accounts[0].toUpperCase())
+				if (member.toUpperCase() === this.$store.state.wallet.accounts[0].toUpperCase())
 				{
 
 					this.isAdmin = true;

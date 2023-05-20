@@ -187,10 +187,10 @@
 
 				deployParams: {
 					admins: [
-						this.$store.state.accounts[0],
+						this.$store.state.wallet.accounts[0],
 					] as string[],
 					members: [
-						this.$store.state.accounts[0],
+						this.$store.state.wallet.accounts[0],
 					] as string[],
 					signatureManager: ethers.ZeroAddress as string,
 					useDefaultSignatureManager: false as boolean,
@@ -215,7 +215,7 @@
 						this.deployParams.forVoteCountRequired,
 						this.deployParams.withdrawalDelaySeconds
 					).send({
-						from: this.$store.state.accounts[0]
+						from: this.$store.state.wallet.accounts[0]
 					});
 				}
 				catch (e)

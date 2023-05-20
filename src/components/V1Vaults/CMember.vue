@@ -58,7 +58,7 @@
 				.YieldSyncV1VaultAccessControl().call();
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-				.member_yieldSyncV1Vaults(this.$store.state.accounts[0]).call();
+				.member_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call();
 
 			for (let i = 0; i < v1Vaults.length; i++)
 			{
