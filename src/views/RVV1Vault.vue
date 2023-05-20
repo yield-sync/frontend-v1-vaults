@@ -53,13 +53,9 @@
 			<VContainer>
 				<VRow>
 					<VCol cols="4">
-						<a
-							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<h6 class="word-wrap">{{ vaultAddress }}</h6>
-						</a>
+						<h6>Against Vote Count Required: {{ vault.againstVoteCountRequired }}</h6>
+						<h6>For Vote Count Required: {{ vault.forVoteCountRequired }}</h6>
+						<h6>Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h6>
 					</VCol>
 
 					<VCol cols="4">
@@ -67,6 +63,13 @@
 					</VCol>
 
 					<VCol cols="4" class="text-right">
+						<a
+							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<h6 class="word-wrap">{{ vaultAddress }}</h6>
+						</a>
 						<a
 							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 							target="_blank"
@@ -91,7 +94,9 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { AbiItem } from "web3-utils";
 
+	import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
 	import CBalances from "../components/CBalances.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
@@ -105,7 +110,12 @@
 		{
 			return {
 				tab: "overview",
-				vaultAddress: this.$route.params.address as string
+				vaultAddress: this.$route.params.address as string,
+				vault: {
+					againstVoteCountRequired: 0,
+					forVoteCountRequired: 0,
+					withdrawalDelaySeconds: 0,
+				}
 			};
 		},
 
@@ -115,6 +125,17 @@
 			CMembers,
 			CViewWithdrawalRequest,
 			CCreateWithdrawalRequest
-		}
+		},
+
+		async created() {
+			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1Vault as AbiItem[],
+				this.vaultAddress
+			);
+
+			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
+			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
+			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
+		},
 	});
 </script>
