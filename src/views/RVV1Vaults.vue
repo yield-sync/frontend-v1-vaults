@@ -1,8 +1,8 @@
 <template>
 	<VContainer>
-		<CMember class="mb-8" />
+		<CMemberships class="mb-8" />
 
-		<CAdmin class="mb-8" />
+		<CAdminships class="mb-8" />
 
 		<CDeploy class="mb-8" />
 	</VContainer>
@@ -11,8 +11,8 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import CDeploy from "@/components/V1Vaults/CDeploy.vue";
-	import CAdmin from "@/components/V1Vaults/CAdmin.vue";
-	import CMember from "@/components/V1Vaults/CMember.vue";
+	import CAdminships from "@/components/V1Vaults/CAdminships.vue";
+	import CMemberships from "@/components/V1Vaults/CMemberships.vue";
 
 	export default defineComponent({
 		name: "RVGovernance",
@@ -26,8 +26,8 @@
 
 		components: {
 			CDeploy,
-			CAdmin,
-			CMember
+			CAdminships,
+			CMemberships
 		},
 	});
 </script>

@@ -3,15 +3,21 @@
 		<VCard color="light" class="mb-6 px-6 py-6">
 			<h4 class="text-center text-primary">Members</h4>
 
-			<div v-for="(a, i) in members" :key="i" class="">
-				<a
-					:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<VBtn variant="plain" size="sm">🔗 {{ a }}</VBtn>
-				</a>
-			</div>
+			<VRow v-for="(a, i) in members" :key="i" class="">
+				<VCol md="10" lg="10">
+					<a
+						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<VBtn variant="plain" size="sm" class="word-wrap">🔗 {{ a }}</VBtn>
+					</a>
+				</VCol>
+
+				<VCol v-if="asAdmin" md="2" lg="2">
+					<VBtn color="danger" class="w-100">Remove</VBtn>
+				</VCol>
+			</VRow>
 		</VCard>
 	</VContainer>
 </template>
@@ -23,6 +29,11 @@
 		name: "CMembers",
 
 		props: {
+			asAdmin: {
+				type: Boolean,
+				default: false
+			},
+
 			address: {
 				type: String,
 				required: true

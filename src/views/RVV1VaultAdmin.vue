@@ -29,24 +29,6 @@
 				>
 					Withdrawal Request
 				</VBtn>
-
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'vote-wr'"
-				>
-					Vote on Withdrawal Request
-				</VBtn>
-
-				<VBtn
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'settings'"
-				>
-					Settings
-				</VBtn>
 			</VContainer>
 		</VCol>
 
@@ -88,11 +70,8 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 			</VContainer>
 
-			<CMembers v-if="tab == 'admins-and-members'" :address="vaultAddress" />
-			<CAdmins v-if="tab == 'admins-and-members'" :address="vaultAddress" />
-			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
-			<CCreateWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
-			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :asAdmin="true" :address="vaultAddress" />
+			<CAdmins v-if="tab == 'admins-and-members'" :asAdmin="true" :address="vaultAddress" />
 		</VCol>
 	</VRow>
 </template>
@@ -105,9 +84,6 @@
 	import CBalances from "../components/CBalances.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
-	import CViewWithdrawalRequest from "../components/V1Vault/CViewWithdrawalRequest.vue";
-	import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
-	import CSettings from "../components/V1Vault/CSettings.vue";
 
 	export default defineComponent({
 		name: "RVV1Vault",
@@ -129,9 +105,6 @@
 			CBalances,
 			CAdmins,
 			CMembers,
-			CViewWithdrawalRequest,
-			CCreateWithdrawalRequest,
-			CSettings,
 		},
 
 		async created()
