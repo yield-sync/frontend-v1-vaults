@@ -1,7 +1,8 @@
 <template>
 	<VRow>
-		<VCol cols="3" class="bg-light">
+		<VCol cols="3" class="bg-warning">
 			<VContainer>
+				<h1 class="mb-3 text-center text-uppercase text-light">Admin</h1>
 				<VBtn
 					color="dark"
 					variant="tonal"

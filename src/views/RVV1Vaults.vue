@@ -1,11 +1,11 @@
 <template>
-	<div>
-		<CMember />
+	<VContainer>
+		<CMember class="mb-8" />
 
-		<CAdmin />
+		<CAdmin class="mb-8" />
 
-		<CDeploy />
-	</div>
+		<CDeploy class="mb-8" />
+	</VContainer>
 </template>
 
 <script lang="ts">
