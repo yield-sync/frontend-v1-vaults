@@ -101,6 +101,7 @@
 					this.error = "Invalid address";
 					return;
 				}
+
 				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
 					YieldSyncV1Vault as AbiItem[],
 					this.v1VaultAddress
@@ -108,20 +109,20 @@
 
 				v1Vault.methods.addAdmin(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("receipt", function (receipt: TransactionReceipt)
+				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
-					console.log("r", receipt);
-				})
-				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					console.log("receipt:", receipt);
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
-					console.log(confirmationNumber, "Updating Admin data..");
+					console.log(`confirmation #${confirmationNumber}`, receipt);
 
 					await this.getAdmins();
 
 					this.tobeAdded = "";
-				})
-				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
 				{
+					console.log("Error receipt:", receipt);
+
 					this.error = String(error);
 				});
 			},
@@ -140,20 +141,22 @@
 
 				v1Vault.methods.removeAdmin(admin).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("receipt", function(receipt: TransactionReceipt)
+				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
-					console.log("r", receipt);
+					console.log("receipt:", receipt);
 				})
-				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(confirmationNumber, "Updating Admin data..");
+					.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`confirmation #${confirmationNumber}`, receipt);
 
-					await this.getAdmins();
-				})
-				.on("error", async (error: Error, receipt: TransactionReceipt) =>
-				{
-					this.error = String(error);
-				});
+						await this.getAdmins();
+					})
+					.on("error", async (error: Error, receipt: TransactionReceipt) =>
+					{
+						console.log("Error receipt:", receipt);
+
+						this.error = String(error);
+					});
 			},
 		},
 

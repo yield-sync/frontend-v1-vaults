@@ -107,20 +107,20 @@
 
 				v1Vault.methods.addMember(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("receipt", function (receipt: TransactionReceipt)
+				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
-					console.log("r", receipt);
-				})
-				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					console.log("receipt:", receipt);
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
-					console.log(confirmationNumber, "Updating Admin data..");
+					console.log(`confirmation #${confirmationNumber}`, receipt);
 
 					await this.getMembers();
 
 					this.tobeAdded = "";
-				})
-				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
 				{
+					console.log("Error receipt:", receipt);
+
 					this.error = String(error);
 				});
 			},
@@ -139,20 +139,22 @@
 
 				v1Vault.methods.removeMember(member).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("receipt", function(receipt: TransactionReceipt)
+				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
-					console.log("r", receipt);
+					console.log("receipt:", receipt);
 				})
-				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(confirmationNumber, "Updating Admin data..");
+					.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`confirmation #${confirmationNumber}`, receipt);
 
-					await this.getMembers();
-				})
-				.on("error", async (error: Error, receipt: TransactionReceipt) =>
-				{
-					this.error = String(error);
-				});
+						await this.getMembers();
+					})
+					.on("error", async (error: Error, receipt: TransactionReceipt) =>
+					{
+						console.log("Error receipt:", receipt);
+
+						this.error = String(error);
+					});
 			},
 		},
 
