@@ -15,7 +15,7 @@
 				</VCol>
 
 				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn color="danger" class="w-100">Remove</VBtn>
+					<VBtn color="danger" class="w-100" @click="removeAdmin(a)">Remove</VBtn>
 				</VCol>
 			</VRow>
 		</VCard>
@@ -24,6 +24,10 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
+
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
 		name: "CAdmins",
@@ -34,7 +38,7 @@
 				default: false
 			},
 
-			address: {
+			v1VaultAddress: {
 				type: String,
 				required: true
 			}
@@ -51,15 +55,32 @@
 		methods: {
 			async getAdmins()
 			{
-				if (!this.$store.state.web3.utils.isAddress(this.address))
+				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
 					return;
 				}
 
 				this.admins = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1Vault_admins(this.address).call()
+					.yieldSyncV1Vault_admins(this.v1VaultAddress).call()
 				;
-			}
+			},
+
+			async removeAdmin(admin: string) 
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
+				{
+					return;
+				}
+
+				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.v1VaultAddress
+				);
+
+				v1Vault.methods.removeAdmin(admin).send({
+					from: this.$store.state.wallet.accounts[0] 
+				});
+			},
 		},
 
 		async created()

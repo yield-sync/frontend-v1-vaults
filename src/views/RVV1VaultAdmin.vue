@@ -70,8 +70,8 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 			</VContainer>
 
-			<CMembers v-if="tab == 'admins-and-members'" :asAdmin="true" :address="vaultAddress" />
-			<CAdmins v-if="tab == 'admins-and-members'" :asAdmin="true" :address="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :asAdmin="true" :v1VaultAddress="vaultAddress" />
+			<CAdmins v-if="tab == 'admins-and-members'" :asAdmin="true" :v1VaultAddress="vaultAddress" />
 		</VCol>
 	</VRow>
 </template>

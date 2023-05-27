@@ -4,7 +4,9 @@
 			color="primary"
 			class="w-100"
 			@click="renounceMembership()"
-		>Renounce Membership</VBtn>
+		>
+			Renounce Membership
+		</VBtn>
 
 		<h6 v-if="error">{{ error }}</h6>
 	</VContainer>
@@ -27,24 +29,28 @@
 			}
 		},
 
-		data() {
+		data()
+		{
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
-				error: "" as any
+				error: "" as string
 			};
 		},
 
 		methods: {
-			async renounceMembership() {
+			async renounceMembership()
+			{
 				if (this.yieldSyncV1Vault)
 				{
-					try {
+					try
+					{
 						await this.yieldSyncV1Vault.methods.renounceMembership().send({
 							from: this.$store.state.wallet.accounts[0]
 						});
 					}
-					catch (e) {
-						this.error = e;
+					catch (e)
+					{
+						this.error = String(e);
 					}
 				}
 			}
@@ -57,5 +63,5 @@
 				this.vaultAddress
 			);
 		}
-	})
+	});
 </script>

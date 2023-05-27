@@ -34,7 +34,7 @@
 				default: false
 			},
 
-			address: {
+			v1VaultAddress: {
 				type: String,
 				required: true
 			}
@@ -51,13 +51,13 @@
 		methods: {
 			async getMembers()
 			{
-				if (!this.$store.state.web3.utils.isAddress(this.address))
+				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
 					return;
 				}
 
 				this.members = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1Vault_members(this.address).call()
+					.yieldSyncV1Vault_members(this.v1VaultAddress).call()
 				;
 			}
 		},

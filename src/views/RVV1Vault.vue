@@ -87,8 +87,8 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 			</VContainer>
 
-			<CMembers v-if="tab == 'admins-and-members'" :address="vaultAddress" />
-			<CAdmins v-if="tab == 'admins-and-members'" :address="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" />
+			<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" />
 			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
 			<CCreateWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
 			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" />
