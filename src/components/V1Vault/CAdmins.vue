@@ -117,6 +117,8 @@
 					console.log(confirmationNumber, "Updating Admin data..");
 
 					await this.getAdmins();
+
+					this.tobeAdded = "";
 				})
 				.on("error", async (error: Error, receipt: TransactionReceipt) =>
 				{
