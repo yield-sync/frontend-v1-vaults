@@ -84,7 +84,7 @@
 		methods: {
 			copy(a: string)
 			{
-				navigator.clipboard.writeText(a)
+				navigator.clipboard.writeText(a);
 			},
 
 			async getAdmins()
@@ -166,22 +166,22 @@
 				{
 					console.log("receipt:", receipt);
 				})
-				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
+					.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					await this.getAdmins();
+						await this.getAdmins();
 
-					this.removing = false;
-				})
-				.on("error", async (error: Error, receipt: TransactionReceipt) =>
-				{
-					console.log("Error receipt:", receipt);
+						this.removing = false;
+					})
+					.on("error", async (error: Error, receipt: TransactionReceipt) =>
+					{
+						console.log("Error receipt:", receipt);
 
-					this.error = String(error);
+						this.error = String(error);
 
-					this.removing = false;
-				});
+						this.removing = false;
+					});
 			},
 		},
 

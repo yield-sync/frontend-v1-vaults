@@ -84,7 +84,7 @@
 		methods: {
 			copy(a: string)
 			{
-				navigator.clipboard.writeText(a)
+				navigator.clipboard.writeText(a);
 			},
 
 			async getMembers(): Promise<void>

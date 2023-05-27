@@ -1,10 +1,32 @@
 <template>
 	<VContainer>
-		<CMemberships class="mb-8" />
+		<VCard>
+			<VTabs
+				v-model="tab"
+				bg-color="primary"
+				align-tabs="center"
+			>
+				<VTab value="m">V1 Vault Memberships</VTab>
+				<VTab value="a">V1 Vault Adminships</VTab>
+				<VTab value="d">Deploy a Vault</VTab>
+			</VTabs>
 
-		<CAdminships class="mb-8" />
+			<VCardText>
+				<VWindow v-model="tab">
+					<VWindowItem variant="light" value="m" >
+						<CMemberships class="mb-8" />
+					</VWindowItem>
 
-		<CDeploy class="mb-8" />
+					<VWindowItem value="a">
+						<CAdminships class="mb-8" />
+					</VWindowItem>
+
+					<VWindowItem value="d">
+						<CDeploy class="mb-8" />
+					</VWindowItem>
+				</VWindow>
+			</VCardText>
+		</VCard>
 	</VContainer>
 </template>
 
@@ -20,6 +42,7 @@
 		data()
 		{
 			return {
+				tab: "m",
 				currentTab: "member",
 			};
 		},
