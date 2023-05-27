@@ -21,7 +21,7 @@
 				</VCol>
 			</VRow>
 
-			<VRow>
+			<VRow v-if="asAdmin">
 				<VCol md="10" lg="10">
 					<VTextField
 					v-model="tobeAdded"
@@ -69,7 +69,6 @@
 			return {
 				members: [
 				] as string[],
-
 				tobeAdded: "" as string,
 				error: "" as string
 			};

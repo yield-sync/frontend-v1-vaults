@@ -1,7 +1,9 @@
 <template>
 	<VContainer>
 		<VCard color="light" class="mb-6 px-6 py-6">
-			<h4 class="text-center text-primary">Admins</h4>
+			<VCardTitle>
+				<h4 class="text-primary">Admins</h4>
+			</VCardTitle>
 
 			<VRow v-for="(a, i) in admins" :key="i" class="">
 				<VCol md="10" lg="10">
@@ -16,6 +18,24 @@
 
 				<VCol v-if="asAdmin" md="2" lg="2">
 					<VBtn color="danger" class="w-100" @click="removeAdmin(a)">Remove</VBtn>
+				</VCol>
+			</VRow>
+
+			<VRow v-if="asAdmin">
+				<VCol md="10" lg="10">
+					<VTextField
+					v-model="tobeAdded"
+					label="Address to be added as a member"
+					variant="outlined"
+					hide-details
+					/>
+				</VCol>
+				<VCol md="2" lg="2">
+					<VBtn color="success" class="w-100" @click="addAdmin()">Add</VBtn>
+				</VCol>
+
+				<VCol cols="12">
+					<h6 class="text-danger">{{ error }}</h6>
 				</VCol>
 			</VRow>
 		</VCard>
@@ -48,7 +68,9 @@
 		{
 			return {
 				admins: [
-				]
+				] as string[],
+				tobeAdded: "" as string,
+				error: "" as string
 			};
 		},
 
@@ -65,7 +87,29 @@
 				;
 			},
 
-			async removeAdmin(admin: string) 
+			async addAdmin(): Promise<void>
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
+				{
+					return;
+				}
+
+				if (!this.$store.state.web3.utils.isAddress(this.tobeAdded))
+				{
+					this.error = "Invalid address";
+					return;
+				}
+				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.v1VaultAddress
+				);
+
+				v1Vault.methods.addAdmin(this.tobeAdded).send({
+					from: this.$store.state.wallet.accounts[0]
+				});
+			},
+
+			async removeAdmin(admin: string): Promise<void>
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
@@ -78,7 +122,7 @@
 				);
 
 				v1Vault.methods.removeAdmin(admin).send({
-					from: this.$store.state.wallet.accounts[0] 
+					from: this.$store.state.wallet.accounts[0]
 				});
 			},
 		},
