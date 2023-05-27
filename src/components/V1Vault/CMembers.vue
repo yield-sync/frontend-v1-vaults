@@ -44,6 +44,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
@@ -106,6 +107,19 @@
 
 				v1Vault.methods.addMember(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("receipt", function (receipt: TransactionReceipt)
+				{
+					console.log("r", receipt);
+				})
+				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(confirmationNumber, "Updating Admin data..");
+
+					await this.getMembers();
+				})
+				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					this.error = String(error);
 				});
 			},
 
@@ -123,6 +137,19 @@
 
 				v1Vault.methods.removeMember(member).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("receipt", function(receipt: TransactionReceipt)
+				{
+					console.log("r", receipt);
+				})
+				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(confirmationNumber, "Updating Admin data..");
+
+					await this.getMembers();
+				})
+				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					this.error = String(error);
 				});
 			},
 		},

@@ -44,9 +44,9 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
-	import { TransactionReceipt } from 'web3-core';
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
