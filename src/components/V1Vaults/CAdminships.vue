@@ -52,7 +52,7 @@
 			</VCol>
 
 			<VCol cols="2">
-				<RouterLink :to="`/v1-vault-admin/${v.address}`">
+				<RouterLink :to="`/v1-vault/${v.address}?admin=true`">
 					<VBtn variant="tonal" size="sm" class="w-100">View</VBtn>
 				</RouterLink>
 			</VCol>

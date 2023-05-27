@@ -1,7 +1,9 @@
 <template>
 	<VRow>
-		<VCol cols="3" class="bg-light">
+		<VCol cols="3" :class="asAdmin ? 'bg-warning' : 'bg-light'">
 			<VContainer>
+				<h3 class="text-center mb-3 text-uppercase">{{ asAdmin ? 'Admin' : 'Member' }}</h3>
+
 				<VBtn
 					color="dark"
 					variant="tonal"
@@ -30,6 +32,7 @@
 				</VBtn>
 
 				<VBtn
+					v-if="!asAdmin"
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
@@ -39,6 +42,7 @@
 				</VBtn>
 
 				<VBtn
+					v-if="!asAdmin"
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
@@ -87,8 +91,8 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 			</VContainer>
 
-			<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" />
-			<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :asAdmin="asAdmin" :v1VaultAddress="vaultAddress" />
+			<CAdmins v-if="tab == 'admins-and-members'" :asAdmin="asAdmin" :v1VaultAddress="vaultAddress" />
 			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
 			<CCreateWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
 			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" />
@@ -114,6 +118,7 @@
 		data()
 		{
 			return {
+				asAdmin: false,
 				tab: "overview",
 				vaultAddress: this.$route.params.address as string,
 				vault: {
@@ -135,6 +140,15 @@
 
 		async created()
 		{
+			console.log(typeof this.$route.query.admin);
+
+			if (this.$route.query.admin && this.$route.query.admin == "true")
+			{
+				console.log("111");
+
+				this.asAdmin = true;
+			}
+
 			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],
 				this.vaultAddress
