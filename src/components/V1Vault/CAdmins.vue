@@ -24,10 +24,10 @@
 			<VRow v-if="asAdmin">
 				<VCol md="10" lg="10">
 					<VTextField
-					v-model="tobeAdded"
-					label="Address to be added as a member"
-					variant="outlined"
-					hide-details
+						v-model="tobeAdded"
+						label="Address to be added as a member"
+						variant="outlined"
+						hide-details
 					/>
 				</VCol>
 				<VCol md="2" lg="2">
@@ -46,6 +46,7 @@
 	import { defineComponent } from "vue";
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
+	import { TransactionReceipt } from 'web3-core';
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
@@ -77,6 +78,7 @@
 		methods: {
 			async getAdmins()
 			{
+
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
 					return;
@@ -106,6 +108,19 @@
 
 				v1Vault.methods.addAdmin(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("receipt", function (receipt: TransactionReceipt)
+				{
+					console.log("r", receipt);
+				})
+				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(confirmationNumber, "Updating Admin data..");
+
+					await this.getAdmins();
+				})
+				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					this.error = String(error);
 				});
 			},
 
@@ -123,6 +138,19 @@
 
 				v1Vault.methods.removeAdmin(admin).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("receipt", function(receipt: TransactionReceipt)
+				{
+					console.log("r", receipt);
+				})
+				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(confirmationNumber, "Updating Admin data..");
+
+					await this.getAdmins();
+				})
+				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					this.error = String(error);
 				});
 			},
 		},

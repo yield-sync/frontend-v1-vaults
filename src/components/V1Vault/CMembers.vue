@@ -24,10 +24,10 @@
 			<VRow v-if="asAdmin">
 				<VCol md="10" lg="10">
 					<VTextField
-					v-model="tobeAdded"
-					label="Address to be added as a member"
-					variant="outlined"
-					hide-details
+						v-model="tobeAdded"
+						label="Address to be added as a member"
+						variant="outlined"
+						hide-details
 					/>
 				</VCol>
 				<VCol md="2" lg="2">

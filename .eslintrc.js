@@ -310,6 +310,9 @@ module.exports = {
 			"warn",
 			"always",
 		],
+		"@typescript-eslint/ban-types": [
+			"warn"
+		],
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/no-empty-function": [
 			"warn",
