@@ -6,7 +6,7 @@
 			</VCardTitle>
 
 			<VRow v-for="(a, i) in admins" :key="i" class="">
-				<VCol md="10" lg="10">
+				<VCol md="9" lg="9">
 					<a
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
 						target="_blank"
@@ -16,8 +16,12 @@
 					</a>
 				</VCol>
 
+				<VCol md="1" lg="1">
+					<VBtn class="w-100" variant="tonal" @click="copy(a)">📋</VBtn>
+				</VCol>
+
 				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn color="danger" class="w-100" @click="removeAdmin(a)">Remove</VBtn>
+					<VBtn :disabled="removing" color="danger" class="w-100" @click="removeAdmin(a)">Remove</VBtn>
 				</VCol>
 			</VRow>
 
@@ -25,13 +29,13 @@
 				<VCol md="10" lg="10">
 					<VTextField
 						v-model="tobeAdded"
-						label="Address to be added as a member"
+						label="Address to be added as an Admin"
 						variant="outlined"
 						hide-details
 					/>
 				</VCol>
 				<VCol md="2" lg="2">
-					<VBtn color="success" class="w-100" @click="addAdmin()">Add</VBtn>
+					<VBtn :disabled="adding" color="success" class="w-100" @click="addAdmin()">Add</VBtn>
 				</VCol>
 
 				<VCol cols="12">
@@ -68,6 +72,8 @@
 		data()
 		{
 			return {
+				adding: false as boolean,
+				removing: false as boolean,
 				admins: [
 				] as string[],
 				tobeAdded: "" as string,
@@ -76,6 +82,11 @@
 		},
 
 		methods: {
+			copy(a: string)
+			{
+				navigator.clipboard.writeText(a)
+			},
+
 			async getAdmins()
 			{
 
@@ -109,21 +120,28 @@
 
 				v1Vault.methods.addAdmin(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async (receipt: TransactionReceipt) =>
+				{
+					this.adding = true;
 				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
 					console.log("receipt:", receipt);
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
-					console.log(`confirmation #${confirmationNumber}`, receipt);
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
 
 					await this.getAdmins();
 
 					this.tobeAdded = "";
+
+					this.adding = false;
 				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
 				{
 					console.log("Error receipt:", receipt);
 
 					this.error = String(error);
+
+					this.adding = false;
 				});
 			},
 
@@ -141,22 +159,29 @@
 
 				v1Vault.methods.removeAdmin(admin).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async (receipt: TransactionReceipt) =>
+				{
+					this.removing = true;
 				}).on("receipt", async (receipt: TransactionReceipt) =>
 				{
 					console.log("receipt:", receipt);
 				})
-					.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-					{
-						console.log(`confirmation #${confirmationNumber}`, receipt);
+				.on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						await this.getAdmins();
-					})
-					.on("error", async (error: Error, receipt: TransactionReceipt) =>
-					{
-						console.log("Error receipt:", receipt);
+					await this.getAdmins();
 
-						this.error = String(error);
-					});
+					this.removing = false;
+				})
+				.on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					console.log("Error receipt:", receipt);
+
+					this.error = String(error);
+
+					this.removing = false;
+				});
 			},
 		},
 

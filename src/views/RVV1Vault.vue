@@ -91,11 +91,11 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 			</VContainer>
 
-			<CMembers v-if="tab == 'admins-and-members'" :asAdmin="asAdmin" :v1VaultAddress="vaultAddress" />
-			<CAdmins v-if="tab == 'admins-and-members'" :asAdmin="asAdmin" :v1VaultAddress="vaultAddress" />
-			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
-			<CCreateWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" />
-			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" />
+			<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+			<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin" />
+			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
+			<CCreateWithdrawalRequest v-if="tab == 'wr' && !asAdmin" :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
 		</VCol>
 	</VRow>
 </template>
@@ -144,8 +144,6 @@
 
 			if (this.$route.query.admin && this.$route.query.admin == "true")
 			{
-				console.log("111");
-
 				this.asAdmin = true;
 			}
 
