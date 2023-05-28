@@ -3,12 +3,14 @@
 		<VContainer>
 			<VRow>
 				<VCol cols="12" md="8">
-					<h1
-						class="text-light text-uppercase"
-						style="letter-spacing: 4px;"
-					>
-						Yield Sync
-					</h1>
+					<RouterLink to="/" style="letter-spacing: 4px; text-decoration: none !important">
+						<h1
+							class="text-light text-uppercase"
+							style="letter-spacing: 4px;"
+						>
+							Yield Sync
+						</h1>
+					</RouterLink>
 				</VCol>
 
 				<VCol cols="12" md="4">
