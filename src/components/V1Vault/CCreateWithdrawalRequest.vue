@@ -98,11 +98,11 @@
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				withdrawalRequest: {
-					for: "Ether",
-					to: "",
-					token: "",
-					amount: 0,
-					tokenId: 0,
+					for: "Ether" as string,
+					to: "" as string,
+					token: "" as string,
+					amount: 0 as number,
+					tokenId: 0 as number,
 				}
 			};
 		},

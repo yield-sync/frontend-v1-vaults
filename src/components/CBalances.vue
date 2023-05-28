@@ -1,4 +1,9 @@
 <template>
+	<VCard class="mx-auto mb-6 px-6 py-6" style="max-width: 600px;">
+		<h4 class="text-center text-primary">Eth Balance</h4>
+		<h5 class="text-center">{{ ethBalance * 10 ** -18 }}</h5>
+	</VCard>
+
 	<VCard class="mb-6 px-6 py-6">
 		<VRow>
 			<VCol cols="12">
@@ -105,6 +110,7 @@
 		data()
 		{
 			return {
+				ethBalance: 0,
 				erc20Balances: [
 				] as {
 					name: string,
@@ -127,6 +133,8 @@
 			{
 				if (this.$store.state.web3.utils.isAddress(this.address))
 				{
+					this.ethBalance = await this.$store.state.web3.eth.getBalance(this.address);
+
 					this.erc20Balances = [
 					];
 
