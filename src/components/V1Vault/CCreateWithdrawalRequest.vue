@@ -1,82 +1,78 @@
 <template>
 	<VContainer>
-		<VCard class="mb-3 px-6 py-6">
-			<h3 class="text-center text-primary">Create Withdrawal Requests</h3>
-
-			<VRow>
-				<VCol cols="12" class="">
-					<VRadioGroup v-model="withdrawalRequest.for" :label="'For: ' + withdrawalRequest.for " inline>
-						<VRadio
-							label="Ether"
-							value="Ether"
-							color="primary"
-						/>
-						<VRadio
-							label="ERC 20"
-							value="ERC 20"
-						/>
-						<VRadio
-							label="ERC 721"
-							value="ERC 721"
-						/>
-					</VRadioGroup>
-				</VCol>
-
-				<VCol cols="8" class="">
-					<VTextField
-						:disabled="withdrawalRequest.for == 'Ether'"
-						v-model="withdrawalRequest.token"
-						type="text"
-						label="ERC Token Address"
-						variant="outlined"
-						hide-details
-						class="mb-3"
-						size="small"
+		<VRow>
+			<VCol cols="12" class="">
+				<VRadioGroup v-model="withdrawalRequest.for" :label="'For: ' + withdrawalRequest.for " inline>
+					<VRadio
+						label="Ether"
+						value="Ether"
+						color="primary"
 					/>
-				</VCol>
-
-				<VCol cols="4" class="">
-					<VTextField
-						:disabled="withdrawalRequest.for != 'ERC 721'"
-						v-model="withdrawalRequest.tokenId"
-						type="number"
-						label="Token Id"
-						variant="outlined"
-						hide-details
-						class="mb-3"
-						size="small"
+					<VRadio
+						label="ERC 20"
+						value="ERC 20"
 					/>
-				</VCol>
-
-				<VCol cols="8" class="">
-					<VTextField
-						v-model="withdrawalRequest.to"
-						type="text"
-						label="To Address"
-						variant="outlined"
-						hide-details
-						class="mb-3"
-						size="small"
+					<VRadio
+						label="ERC 721"
+						value="ERC 721"
 					/>
-				</VCol>
+				</VRadioGroup>
+			</VCol>
 
-				<VCol cols="4" class="">
-					<VTextField
-						v-model="withdrawalRequest.amount"
-						type="number"
-						label="Amount"
-						variant="outlined"
-						hide-details
-						class="mb-3"
-						size="small"
-					/>
-				</VCol>
+			<VCol cols="8" class="">
+				<VTextField
+					:disabled="withdrawalRequest.for == 'Ether'"
+					v-model="withdrawalRequest.token"
+					type="text"
+					label="ERC Token Address"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+					size="small"
+				/>
+			</VCol>
 
-				<VCol cols="12" class="">
-					<VBtn color="primary" class="w-100" @click="createWR()">Create Withdrawal Request</VBtn>
-				</VCol>
-			</VRow>
-		</VCard>
+			<VCol cols="4" class="">
+				<VTextField
+					:disabled="withdrawalRequest.for != 'ERC 721'"
+					v-model="withdrawalRequest.tokenId"
+					type="number"
+					label="Token Id"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+					size="small"
+				/>
+			</VCol>
+
+			<VCol cols="8" class="">
+				<VTextField
+					v-model="withdrawalRequest.to"
+					type="text"
+					label="To Address"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+					size="small"
+				/>
+			</VCol>
+
+			<VCol cols="4" class="">
+				<VTextField
+					v-model="withdrawalRequest.amount"
+					type="number"
+					label="Amount"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+					size="small"
+				/>
+			</VCol>
+
+			<VCol cols="12" class="">
+				<VBtn color="primary" class="w-100" @click="createWR()">Create Withdrawal Request</VBtn>
+			</VCol>
+		</VRow>
 	</VContainer>
 </template>
 

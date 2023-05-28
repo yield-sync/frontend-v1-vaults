@@ -89,8 +89,31 @@
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
 				<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin"  />
 				<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin" />
-				<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
-				<CCreateWithdrawalRequest v-if="tab == 'wr' && !asAdmin" :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+
+				<VCard v-if="tab == 'wr'">
+					<VTabs
+						v-model="wrtab"
+						bg-color="primary"
+						color="light-green-lighten-5"
+						fixed-tabs
+					>
+						<VTab value="o">Open WithdrawalRequests</VTab>
+						<VTab v-if="!asAdmin" value="c">Create WithdrawalRequest</VTab>
+					</VTabs>
+
+					<VCardText variant="light">
+						<VWindow v-model="wrtab">
+							<VWindowItem value="o">
+								<CViewWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
+							</VWindowItem>
+
+							<VWindowItem value="c">
+								<CCreateWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+							</VWindowItem>
+						</VWindow>
+					</VCardText>
+				</VCard>
+
 				<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
 			</VContainer>
 		</VCol>
@@ -115,6 +138,7 @@
 		data()
 		{
 			return {
+				wrtab: "o",
 				asAdmin: false,
 				tab: "overview",
 				vaultAddress: this.$route.params.address as string,

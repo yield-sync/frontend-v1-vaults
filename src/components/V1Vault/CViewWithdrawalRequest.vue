@@ -1,100 +1,108 @@
 <template>
 	<VContainer>
-		<VCard class="mb-3 px-6 py-6">
-			<h3 class="text-center text-primary">Open Withdrawal Requests</h3>
+		<VRow>
+			<VCol cols="1">
+				<h5 class="text-primary">For Vote Count</h5>
+			</VCol>
 
-			<VRow>
-				<VCol cols="1">
-					<h5 class="text-primary">For Vote Count</h5>
-				</VCol>
+			<VCol cols="1">
+				<h5 class="text-primary">Against Vote Count</h5>
+			</VCol>
 
-				<VCol cols="1">
-					<h5 class="text-primary">Against Vote Count</h5>
-				</VCol>
+			<VCol cols="2">
+				<h5 class="text-primary">Amount</h5>
+			</VCol>
 
-				<VCol cols="2">
-					<h5 class="text-primary">Amount</h5>
-				</VCol>
+			<VCol cols="2">
+				<h5 class="text-primary">Token</h5>
+			</VCol>
 
-				<VCol cols="2">
-					<h5 class="text-primary">Token</h5>
-				</VCol>
+			<VCol cols="1">
+				<h5 class="text-primary">Token Symbol</h5>
+			</VCol>
 
-				<VCol cols="1">
-					<h5 class="text-primary">Token Symbol</h5>
-				</VCol>
+			<VCol cols="1">
+				<h5 class="text-primary">Token Contract</h5>
+			</VCol>
 
-				<VCol cols="1">
-					<h5 class="text-primary">Token Contract</h5>
-				</VCol>
+			<VCol cols="1">
+				<h5 class="text-primary">To</h5>
+			</VCol>
 
-				<VCol cols="1">
-					<h5 class="text-primary">To</h5>
-				</VCol>
+			<VCol cols="2">
+				<h5 class="text-primary">Voted Members</h5>
+			</VCol>
 
-				<VCol cols="3">
-					<h5 class="text-primary">Voted Members</h5>
-				</VCol>
-			</VRow>
+			<VCol cols="1">
+				<h5 class="text-primary">Expand</h5>
+			</VCol>
+		</VRow>
 
-			<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
-				<VCol cols="1">
-					<h6>{{ w.forVoteCount }}</h6>
-				</VCol>
+		<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
+			<VCol cols="1">
+				<h6>{{ w.forVoteCount }}</h6>
+			</VCol>
 
-				<VCol cols="1">
-					<h6>{{ w.againstVoteCount }}</h6>
-				</VCol>
+			<VCol cols="1">
+				<h6>{{ w.againstVoteCount }}</h6>
+			</VCol>
 
-				<VCol cols="2">
-					<h6>{{ w.amount }}</h6>
-				</VCol>
+			<VCol cols="2">
+				<h6>{{ w.amount }}</h6>
+			</VCol>
 
-				<VCol cols="2">
+			<VCol cols="2">
+				<h6>
+					{{ w.token }}
+				</h6>
+			</VCol>
+
+			<VCol cols="1">
+				<h6>
+					{{ w.tokenSymbol }}
+				</h6>
+			</VCol>
+
+			<VCol cols="1">
+				<a
+					:href="`https://etherscan.io/address/${w.tokenAddress}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<h6>
-						{{ w.token }}
+						{{
+							w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(
+								w.tokenAddress.length - 4
+							)
+						}}
 					</h6>
-				</VCol>
+				</a>
+			</VCol>
 
-				<VCol cols="1">
+			<VCol cols="1">
+				<a
+					:href="`https://etherscan.io/address/${w.to}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<h6>
-						{{ w.tokenSymbol }}
+						{{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
 					</h6>
-				</VCol>
+				</a>
+			</VCol>
 
-				<VCol cols="1">
-					<a
-						:href="`https://etherscan.io/address/${w.tokenAddress}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<h6>
-							{{
-								w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(
-									w.tokenAddress.length - 4
-								)
-							}}
-						</h6>
-					</a>
-				</VCol>
+			<VCol cols="2">
+				<h6>{{ w.votedMembers }}</h6>
+			</VCol>
 
-				<VCol cols="1">
-					<a
-						:href="`https://etherscan.io/address/${w.to}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<h6>
-							{{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
-						</h6>
-					</a>
-				</VCol>
+			<VCol cols="1">
+				<VBtn variant="tonal" color="primary" @click="opened[i] = !opened[i]">Expand</VBtn>
+			</VCol>
 
-				<VCol cols="3">
-					<h6>{{ w.votedMembers }}</h6>
-				</VCol>
-			</VRow>
-		</VCard>
+			<VCol v-if="opened[i]" cols="12">
+				{{ w }}
+			</VCol>
+		</VRow>
 	</VContainer>
 </template>
 
@@ -118,6 +126,9 @@
 		data()
 		{
 			return {
+				opened: {} as {
+					[key: string]: boolean
+				},
 				idsOfOpenWithdrawalRequests: [
 				],
 				detailedWithdrawalRequests: [
