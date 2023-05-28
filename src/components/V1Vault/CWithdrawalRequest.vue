@@ -111,13 +111,23 @@
 					</VCol>
 
 					<VCol cols="4">
-						<VBtn color="success" class="w-100" @click="voteOnWithdrawalRequest(w.id, true)">
+						<VBtn
+							:disabled="voting"
+							color="success"
+							class="w-100"
+							@click="voteOnWithdrawalRequest(w.id, true)"
+						>
 							Vote For
 						</VBtn>
 					</VCol>
 
 					<VCol cols="4">
-						<VBtn color="danger" class="w-100" @click="voteOnWithdrawalRequest(w.id, false)">
+						<VBtn
+							:disabled="voting"
+							color="danger"
+							class="w-100"
+							@click="voteOnWithdrawalRequest(w.id, false)"
+						>
 							Vote Against
 						</VBtn>
 					</VCol>
@@ -126,7 +136,7 @@
 						<VBtn
 							:disabled="
 								parseInt(w.forVoteCount) < forVoteCountRequired &&
-								parseInt(w.againstVoteCount) < againstVoteCountRequired
+									parseInt(w.againstVoteCount) < againstVoteCountRequired
 							"
 							color="primary"
 							class="w-100"
@@ -142,142 +152,185 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { Contract } from "web3-eth-contract";
-import { AbiItem } from "web3-utils";
+	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
 
-import abiER20 from "../../abi/erc20";
-import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
+	import abiER20 from "../../abi/erc20";
+	import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
 
-export default defineComponent({
-	name: "CWithdrawalRequest",
+	export default defineComponent({
+		name: "CWithdrawalRequest",
 
-	props: {
-		vaultAddress: {
-			required: true,
-			type: String
-		}
-	},
+		props: {
+			vaultAddress: {
+				required: true,
+				type: String
+			}
+		},
 
-	data() {
-		return {
-			yieldSyncV1Vault: undefined as undefined | Contract,
-			againstVoteCountRequired: 0 as number,
-			forVoteCountRequired: 0 as number,
-			opened: {} as {
-				[key: string]: boolean
+		data()
+		{
+			return {
+				voting: false,
+				yieldSyncV1Vault: undefined as undefined | Contract,
+				againstVoteCountRequired: 0 as number,
+				forVoteCountRequired: 0 as number,
+				opened: {
+				} as {
+					[key: string]: boolean
+				},
+				idsOfOpenWithdrawalRequests: [
+				],
+				detailedWithdrawalRequests: [
+				] as {
+					id: number
+					againstVoteCount: string
+					amount: string
+					creator: string
+					forERC20: boolean
+					forERC721: boolean
+					forVoteCount: string
+					latestRelevantApproveVoteTime: string
+					to: string
+					token: string
+					tokenSymbol: string
+					tokenAddress: string
+					tokenId: string
+					votedMembers: string[]
+				}[],
+
+				error: "" as string
+			};
+		},
+
+		methods: {
+			async getWithdrawalRequestData()
+			{
+				if (!this.yieldSyncV1Vault)
+				{
+					return;
+				}
+
+				this.detailedWithdrawalRequests = [];
+
+				this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired().call();
+
+				this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
+
+				this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests().call();
+
+				for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++)
+				{
+					const wr = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
+						this.idsOfOpenWithdrawalRequests[i]
+					).call();
+
+					// Get token details
+					const erc20Contract = new this.$store.state.web3.eth.Contract(
+						abiER20 as AbiItem[],
+						wr.token
+					);
+
+					let name = "N.A.";
+					let symbol = "N.A.";
+
+					try
+					{
+						name = await erc20Contract.methods.name().call();
+						symbol = await erc20Contract.methods.symbol().call();
+					}
+					catch (e)
+					{
+						console.log(e);
+					}
+
+					// Create a new Date object using the JavaScript timestamp
+					const date = new Date(wr.latestRelevantApproveVoteTime * 1000);
+
+					// Get the individual components of the date and time
+					const year = date.getFullYear();
+					const month = date.getMonth() + 1;
+					const day = date.getDate();
+					const hours = date.getHours();
+					const minutes = date.getMinutes();
+					const seconds = date.getSeconds();
+
+					this.detailedWithdrawalRequests.push({
+						id: this.idsOfOpenWithdrawalRequests[i],
+						againstVoteCount: wr.againstVoteCount,
+						amount: wr.amount,
+						creator: wr.creator,
+						forERC20: wr.forERC20,
+						forERC721: wr.forERC721,
+						forVoteCount: wr.forVoteCount,
+						latestRelevantApproveVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+						to: wr.to,
+						token: !wr.forERC20 && !wr.forERC721 ? "Ether" : name,
+						tokenSymbol: !wr.forERC20 && !wr.forERC721 ? "ETH" : symbol,
+						tokenAddress: wr.token,
+						tokenId: wr.tokenId,
+						votedMembers: wr.votedMembers
+					});
+				}
 			},
-			idsOfOpenWithdrawalRequests: [
-			],
-			detailedWithdrawalRequests: [
-			] as {
-				id: number
-				againstVoteCount: string
-				amount: string
-				creator: string
-				forERC20: boolean
-				forERC721: boolean
-				forVoteCount: string
-				latestRelevantApproveVoteTime: string
-				to: string
-				token: string
-				tokenSymbol: string
-				tokenAddress: string
-				tokenId: string
-				votedMembers: string[]
-			}[]
-		};
-	},
 
-	methods: {
-		async processWithdrawalRequest(wId: number) {
-			if (!this.yieldSyncV1Vault) {
-				return
-			}
+			async processWithdrawalRequest(wId: number)
+			{
+				if (!this.yieldSyncV1Vault)
+				{
+					return;
+				}
 
-			await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
-				from: this.$store.state.wallet.accounts[0]
-			});
+				await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
+					from: this.$store.state.wallet.accounts[0]
+				});
+			},
+
+			async voteOnWithdrawalRequest(wId: number, vote: boolean)
+			{
+				if (!this.yieldSyncV1Vault)
+				{
+					return;
+				}
+
+				await this.yieldSyncV1Vault.methods.voteOnWithdrawalRequest(
+					wId, vote
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async () =>
+				{
+					this.voting = true;
+				}).on("receipt", async (receipt: TransactionReceipt) =>
+				{
+					console.log("receipt:", receipt);
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					await this.getWithdrawalRequestData();
+
+					this.voting = false;
+				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					console.log("Error receipt:", receipt);
+
+					this.error = String(error);
+
+					this.voting = false;
+				});
+			},
 		},
 
-		async voteOnWithdrawalRequest(wId: number, vote: boolean) {
-			if (!this.yieldSyncV1Vault) {
-				return
-			}
-
-			await this.yieldSyncV1Vault.methods.voteOnWithdrawalRequest(
-				wId, vote
-			).send({
-				from: this.$store.state.wallet.accounts[0]
-			});
-		},
-	},
-
-	async created() {
-		this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-			yieldSyncV1VaultABI as AbiItem[],
-			this.vaultAddress
-		);
-
-		if (!this.yieldSyncV1Vault) {
-			return
-		}
-
-		this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired().call();
-		this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
-
-		this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests().call();
-
-		for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++) {
-			const wr = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
-				this.idsOfOpenWithdrawalRequests[i]
-			).call();
-
-			// Get token details
-			const erc20Contract = new this.$store.state.web3.eth.Contract(
-				abiER20 as AbiItem[],
-				wr.token
+		async created()
+		{
+			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+				yieldSyncV1VaultABI as AbiItem[],
+				this.vaultAddress
 			);
 
-			let name = "N.A.";
-			let symbol = "N.A.";
-
-			try {
-				name = await erc20Contract.methods.name().call();
-				symbol = await erc20Contract.methods.symbol().call();
-			}
-			catch (e) {
-				console.log(e);
-			}
-
-			// Create a new Date object using the JavaScript timestamp
-			const date = new Date(wr.latestRelevantApproveVoteTime * 1000);
-
-			// Get the individual components of the date and time
-			const year = date.getFullYear();
-			const month = date.getMonth() + 1;
-			const day = date.getDate();
-			const hours = date.getHours();
-			const minutes = date.getMinutes();
-			const seconds = date.getSeconds();
-
-			this.detailedWithdrawalRequests.push({
-				id: this.idsOfOpenWithdrawalRequests[i],
-				againstVoteCount: wr.againstVoteCount,
-				amount: wr.amount,
-				creator: wr.creator,
-				forERC20: wr.forERC20,
-				forERC721: wr.forERC721,
-				forVoteCount: wr.forVoteCount,
-				latestRelevantApproveVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-				to: wr.to,
-				token: !wr.forERC20 && !wr.forERC721 ? "Ether" : name,
-				tokenSymbol: !wr.forERC20 && !wr.forERC721 ? "ETH" : symbol,
-				tokenAddress: wr.token,
-				tokenId: wr.tokenId,
-				votedMembers: wr.votedMembers
-			});
-		}
-	},
-});
+			await this.getWithdrawalRequestData();
+		},
+	});
 </script>
