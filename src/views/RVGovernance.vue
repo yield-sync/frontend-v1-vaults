@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<VCard color="light" class="mb-3 px-6 py-6">
+		<VCard class="mb-3 px-6 py-6">
 			<VRow>
 				<VCol cols="4" />
 

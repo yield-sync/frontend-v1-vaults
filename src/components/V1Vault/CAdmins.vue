@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<VCard color="light" class="mb-6 px-6 py-6">
+		<VCard class="mb-6 px-6 py-6">
 			<VCardTitle>
 				<h4 class="text-primary">Admins</h4>
 			</VCardTitle>

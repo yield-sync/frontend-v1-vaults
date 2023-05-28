@@ -1,7 +1,7 @@
 <template>
 	<VRow>
-		<VCol cols="3" :class="asAdmin ? 'bg-warning' : 'bg-light'">
-			<VContainer>
+		<VCol cols="3">
+			<VContainer class="h-100">
 				<h3 class="text-center mb-3 text-uppercase">{{ asAdmin ? 'Admin' : 'Member' }}</h3>
 
 				<VBtn
@@ -53,7 +53,7 @@
 			</VContainer>
 		</VCol>
 
-		<VCol cols="9" class="bg-white">
+		<VCol cols="9">
 			<VContainer>
 				<VRow>
 					<VCol cols="4">
@@ -85,17 +85,14 @@
 
 					<VCol cols="4" class="text-right"/>
 				</VRow>
-			</VContainer>
 
-			<VContainer>
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
+				<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+				<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin" />
+				<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
+				<CCreateWithdrawalRequest v-if="tab == 'wr' && !asAdmin" :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+				<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
 			</VContainer>
-
-			<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin"  />
-			<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin" />
-			<CViewWithdrawalRequest v-if="tab == 'wr'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
-			<CCreateWithdrawalRequest v-if="tab == 'wr' && !asAdmin" :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
-			<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
 		</VCol>
 	</VRow>
 </template>

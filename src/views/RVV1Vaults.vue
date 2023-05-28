@@ -4,16 +4,17 @@
 			<VTabs
 				v-model="tab"
 				bg-color="primary"
-				align-tabs="center"
+				color="light-green-lighten-5"
+				fixed-tabs
 			>
 				<VTab value="m">V1 Vault Memberships</VTab>
 				<VTab value="a">V1 Vault Adminships</VTab>
 				<VTab value="d">Deploy a Vault</VTab>
 			</VTabs>
 
-			<VCardText>
+			<VCardText variant="light">
 				<VWindow v-model="tab">
-					<VWindowItem variant="light" value="m" >
+					<VWindowItem value="m" >
 						<CMemberships class="mb-8" />
 					</VWindowItem>
 

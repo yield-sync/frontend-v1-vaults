@@ -1,5 +1,5 @@
 <template>
-	<VCard color="light" class="mb-6 px-6 py-6">
+	<VCard class="mb-6 px-6 py-6">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 20 Tokens</h4>
@@ -42,7 +42,7 @@
 		</VRow>
 	</VCard>
 
-	<VCard color="light" class="mb-3 px-6 py-6">
+	<VCard class="mb-3 px-6 py-6">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>

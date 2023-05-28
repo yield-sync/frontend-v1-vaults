@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<VCard color="light" class="mb-3 px-6 py-6">
+		<VCard class="mb-3 px-6 py-6">
 			<h3 class="text-center text-primary">Create Withdrawal Requests</h3>
 
 			<VRow>
