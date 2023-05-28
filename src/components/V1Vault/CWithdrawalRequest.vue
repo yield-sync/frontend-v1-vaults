@@ -106,6 +106,10 @@
 						<h4 class="text-dark">{{ w.to }}</h4>
 					</VCol>
 
+					<VCol cols="12">
+						<h6>{{ w.votedMembers }}</h6>
+					</VCol>
+
 					<VCol cols="4">
 						<VBtn color="success" class="w-100" @click="voteOnWithdrawalRequest(w.id, true)">
 							Vote For
@@ -119,16 +123,12 @@
 					</VCol>
 
 					<VCol cols="4">
-						<h6>{{ w.votedMembers }}</h6>
-					</VCol>
-
-					<VCol cols="12">
 						<VBtn
 							:disabled="
-								parseInt(w.forVoteCount) >= forVoteCountRequired ||
-								parseInt(w.againstVoteCount) >= againstVoteCountRequired
+								parseInt(w.forVoteCount) < forVoteCountRequired &&
+								parseInt(w.againstVoteCount) < againstVoteCountRequired
 							"
-							color="success"
+							color="primary"
 							class="w-100"
 							@click="processWithdrawalRequest(w.id)"
 						>
@@ -150,7 +150,7 @@ import abiER20 from "../../abi/erc20";
 import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
 
 export default defineComponent({
-	name: "CViewWithdrawalRequest",
+	name: "CWithdrawalRequest",
 
 	props: {
 		vaultAddress: {
@@ -195,7 +195,7 @@ export default defineComponent({
 				return
 			}
 
-			this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
+			await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
 				from: this.$store.state.wallet.accounts[0]
 			});
 		},
@@ -205,7 +205,7 @@ export default defineComponent({
 				return
 			}
 
-			this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.voteOnWithdrawalRequest(
+			await this.yieldSyncV1Vault.methods.voteOnWithdrawalRequest(
 				wId, vote
 			).send({
 				from: this.$store.state.wallet.accounts[0]

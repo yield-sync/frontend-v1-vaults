@@ -2,7 +2,7 @@
 	<VRow>
 		<VCol cols="3">
 			<VContainer class="h-100">
-				<h3 class="text-center mb-3 text-uppercase">{{ asAdmin ? 'Admin' : 'Member' }}</h3>
+				<h2 class="mb-3 text-uppercase">{{ $route.query.admin == "true" ? 'Admin' : 'Member' }}</h2>
 
 				<VBtn
 					color="dark"
@@ -32,17 +32,7 @@
 				</VBtn>
 
 				<VBtn
-					v-if="!asAdmin"
-					color="dark"
-					variant="tonal"
-					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'vote-wr'"
-				>
-					Vote on Withdrawal Request
-				</VBtn>
-
-				<VBtn
-					v-if="!asAdmin"
+					v-if="$route.query.admin !== 'true'"
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
@@ -50,6 +40,27 @@
 				>
 					Settings
 				</VBtn>
+
+				<RouterLink v-if="$route.query.admin !== 'true'" :to="`/v1-vault/${vaultAddress}?admin=true`">
+					<VBtn
+
+						color="warning"
+						variant="flat"
+						class="w-100 mb-3 no-box-shadow"
+					>
+						Switch as Admin
+					</VBtn>
+				</RouterLink>
+
+				<RouterLink v-else :to="`/v1-vault/${vaultAddress}`">
+					<VBtn
+						color="primary"
+						variant="flat"
+						class="w-100 mb-3 no-box-shadow"
+					>
+						Switch as Member
+					</VBtn>
+				</RouterLink>
 			</VContainer>
 		</VCol>
 
@@ -87,8 +98,8 @@
 				</VRow>
 
 				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
-				<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin"  />
-				<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="asAdmin" />
+				<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'"  />
+				<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
 
 				<VCard v-if="tab == 'wr'">
 					<VTabs
@@ -98,23 +109,23 @@
 						fixed-tabs
 					>
 						<VTab value="o">Open WithdrawalRequests</VTab>
-						<VTab v-if="!asAdmin" value="c">Create WithdrawalRequest</VTab>
+						<VTab v-if="$route.query.admin !== 'true'" value="c">Create WithdrawalRequest</VTab>
 					</VTabs>
 
 					<VCardText variant="light">
 						<VWindow v-model="wrtab">
 							<VWindowItem value="o">
-								<CViewWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
+								<CWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
 							</VWindowItem>
 
 							<VWindowItem value="c">
-								<CCreateWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="asAdmin"  />
+								<CCreateWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'"  />
 							</VWindowItem>
 						</VWindow>
 					</VCardText>
 				</VCard>
 
-				<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="asAdmin" />
+				<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
 			</VContainer>
 		</VCol>
 	</VRow>
@@ -128,7 +139,7 @@
 	import CBalances from "../components/CBalances.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
-	import CViewWithdrawalRequest from "../components/V1Vault/CViewWithdrawalRequest.vue";
+	import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
 	import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
 	import CSettings from "../components/V1Vault/CSettings.vue";
 
@@ -154,16 +165,14 @@
 			CBalances,
 			CAdmins,
 			CMembers,
-			CViewWithdrawalRequest,
+			CWithdrawalRequest,
 			CCreateWithdrawalRequest,
 			CSettings,
 		},
 
 		async created()
 		{
-			console.log(typeof this.$route.query.admin);
-
-			if (this.$route.query.admin && this.$route.query.admin == "true")
+			if (this.$route.query.admin == "true")
 			{
 				this.asAdmin = true;
 			}

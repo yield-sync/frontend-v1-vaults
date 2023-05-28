@@ -119,7 +119,7 @@
 						this.withdrawalRequest.token ?
 							this.withdrawalRequest.token : "0x0000000000000000000000000000000000000000"
 						,
-						this.withdrawalRequest.amount,
+						BigInt(this.withdrawalRequest.amount * 10**18),
 						this.withdrawalRequest.tokenId
 					).send({
 						from: this.$store.state.wallet.accounts[0]
