@@ -16,8 +16,12 @@
 				<h5 class="text-primary">Name</h5>
 			</VCol>
 
-			<VCol cols="6">
+			<VCol cols="4">
 				<h4 class="text-primary">Balance</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<h4 class="text-primary">Copy</h4>
 			</VCol>
 
 			<VCol cols="2">
@@ -31,8 +35,12 @@
 				<h5>{{ erc20.name }}</h5>
 			</VCol>
 
-			<VCol sm="6">
+			<VCol sm="4">
 				<h4>{{ erc20.balance }}</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<VBtn class="w-100" variant="tonal" @click="copy(`${erc20.contract}`)">📋</VBtn>
 			</VCol>
 
 			<VCol sm="2">
@@ -41,7 +49,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+					<VBtn variant="tonal" class="w-100">🔗</VBtn>
 				</a>
 			</VCol>
 		</VRow>
@@ -59,8 +67,12 @@
 				<h5 class="text-primary">Name</h5>
 			</VCol>
 
-			<VCol cols="6">
+			<VCol cols="4">
 				<h4 class="text-primary">Balance</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<h4 class="text-primary">Copy</h4>
 			</VCol>
 
 			<VCol cols="2">
@@ -73,8 +85,12 @@
 				<h5>{{ erc721.symbol }}</h5>
 			</VCol>
 
-			<VCol cols="6">
+			<VCol sm="4">
 				<h4>{{ erc721.balance }}</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<VBtn class="w-100" variant="tonal" @click="copy(`${erc721.contract}`)">📋</VBtn>
 			</VCol>
 
 			<VCol sm="2">
@@ -83,7 +99,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+					<VBtn variant="tonal" class="w-100">🔗</VBtn>
 				</a>
 			</VCol>
 		</VRow>
@@ -129,6 +145,11 @@
 		},
 
 		methods: {
+			copy(a: string)
+			{
+				navigator.clipboard.writeText(a);
+			},
+
 			async getBalances()
 			{
 				if (this.$store.state.web3.utils.isAddress(this.address))
