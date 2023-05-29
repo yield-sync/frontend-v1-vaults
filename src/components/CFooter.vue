@@ -45,7 +45,15 @@
 					sm="6"
 					md="4"
 					class="text-center"
-				/>
+				>
+					<a
+						:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}#readContract`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<VBtn variant="plain" color="light" class="w-100">🔗 Access Control Contract</VBtn>
+					</a>
+				</VCol>
 			</VRow>
 		</VContainer>
 	</VSheet>
@@ -56,5 +64,13 @@
 
 	export default defineComponent({
 		name: "CFooter",
+		data() {
+			return {
+				etherscanDomainStart: this.$store.state.etherscanDomainStart,
+				accessControl: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1VaultAccessControl,
+			}
+		},
 	});
 </script>

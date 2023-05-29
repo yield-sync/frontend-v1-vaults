@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
 
+@import 'vuetify/_styles.scss';
+
 * {
 	font-family: 'Chakra Petch', sans-serif !important;
 	letter-spacing: 2px;
@@ -11,4 +13,16 @@ h1 {
 
 .word-wrap {
 	word-wrap: break-word;
+}
+
+.text-decoration-none {
+	text-decoration: none !important;
+}
+
+.vault {
+	&:hover {
+		@extend .bg-light-green-lighten-4;
+	}
+
+	@extend .bg-light-green-lighten-5;
 }

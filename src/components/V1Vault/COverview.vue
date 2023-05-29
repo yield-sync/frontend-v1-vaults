@@ -1,10 +1,10 @@
 <template>
-	<VCard class="mx-auto mb-6 px-6 py-6" style="max-width: 600px;">
+	<VCard class="mx-auto mb-6 px-6 py-6 elevation-0" style="max-width: 600px;">
 		<h4 class="text-center text-primary">Eth Balance</h4>
 		<h5 class="text-center">{{ ethBalance * 10 ** -18 }}</h5>
 	</VCard>
 
-	<VCard class="mb-6 px-6 py-6">
+	<VCard class="mb-6 px-6 py-6 elevation-0">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 20 Tokens</h4>
@@ -68,7 +68,7 @@
 		</VRow>
 	</VCard>
 
-	<VCard class="mb-3 px-6 py-6">
+	<VCard class="mb-3 px-6 py-6 elevation-0">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>

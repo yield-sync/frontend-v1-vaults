@@ -44,8 +44,8 @@
 				<RouterLink v-if="$route.query.admin !== 'true'" :to="`/v1-vault/${vaultAddress}?admin=true`">
 					<VBtn
 
-						color="warning"
-						variant="flat"
+						color="primary"
+						variant="outlined"
 						class="w-100 mb-3 no-box-shadow"
 					>
 						Switch as Admin
@@ -55,7 +55,7 @@
 				<RouterLink v-else :to="`/v1-vault/${vaultAddress}`">
 					<VBtn
 						color="primary"
-						variant="flat"
+						variant="outlined"
 						class="w-100 mb-3 no-box-shadow"
 					>
 						Switch as Member

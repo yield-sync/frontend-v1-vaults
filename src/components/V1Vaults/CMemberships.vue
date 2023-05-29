@@ -1,61 +1,51 @@
 <template>
-	<VRow>
-		<VCol cols="12" class="text-right">
-			<a
-				:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}#readContract`"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<VBtn variant="plain" size="sm"><h6>🔗 Access Control Contract</h6></VBtn>
-			</a>
+	<VRow class="mt-6 mb-12">
+		<VCol cols="12" md="4">
+			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Vault Address</h2>
+		</VCol>
+
+		<VCol cols="12" md="4" class="d-none d-md-block">
+			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">For : Against</h2>
+		</VCol>
+
+		<VCol cols="12" md="4" class="d-none d-md-block">
+			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Delay</h2>
 		</VCol>
 	</VRow>
 
-	<VRow>
-		<VCol cols="12" md="6">
-			<h2 class="text-center text-primary" style="word-wrap: break-word;">Vault Address</h2>
-		</VCol>
+	<RouterLink
+		v-for="(v, i) in membershipYieldSyncV1VaultVaults"
+		:key="i"
+		:to="`/v1-vault/${v.address}?admin=true`"
+		class="text-decoration-none"
+	>
+		<div class="py-6 mb-6 rounded-xl vault">
+			<VRow>
+				<VCol cols="12" md="4">
+					<h3 class="text-decoration-none text-center">
+						{{
+							v.address ?
+							v.address.substring(0, 4) +
+							"..." +
+							v.address.substring($store.state.wallet.accounts[0].length - 4)
+							:
+							""
+						}}
+					</h3>
+				</VCol>
 
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<h2 class="text-center text-primary" style="word-wrap: break-word;">For : Against</h2>
-		</VCol>
+				<VCol cols="12" md="4" class="d-none d-md-block">
+					<h3 class="text-center" style="word-wrap: break-word;">
+						{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
+					</h3>
+				</VCol>
 
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<h2 class="text-center text-primary" style="word-wrap: break-word;">Withdrawal Delay (Sec)</h2>
-		</VCol>
-
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<h2 class="text-center text-primary" style="word-wrap: break-word;">Etherscan</h2>
-		</VCol>
-	</VRow>
-
-	<VRow v-for="(v, i) in membershipYieldSyncV1VaultVaults" :key="i" class="mb-3">
-		<VCol cols="12" md="6">
-			<RouterLink :to="`/v1-vault/${v.address}?admin=true`">
-				<VBtn variant="tonal" color="primary" class="w-100">{{ v.address }}</VBtn>
-			</RouterLink>
-		</VCol>
-
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<h3 class="text-center" style="word-wrap: break-word;">
-				{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
-			</h3>
-		</VCol>
-
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<h3 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h3>
-		</VCol>
-
-		<VCol cols="12" md="2" class="d-none d-md-block">
-			<a
-				:href="`https://${etherscanDomainStart}.etherscan.io/address/${v.address}#readContract`"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<VBtn variant="tonal" class="w-100">🔗</VBtn>
-			</a>
-		</VCol>
-	</VRow>
+				<VCol cols="12" md="4" class="d-none d-md-block">
+					<h3 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}s</h3>
+				</VCol>
+			</VRow>
+		</div>
+	</RouterLink>
 </template>
 
 <script lang="ts">

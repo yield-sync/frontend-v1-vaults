@@ -1,37 +1,51 @@
 <template>
 	<VContainer class="py-16">
-		<VRow
-			bg-color="primary"
-			color="dark"
-			fixed-tabs
-			class="mb-3"
-		>
-			<VCol>
-				<VBtn :color="tab == 'm' ? 'primary' : 'white'" class="w-100 elevation-0" @click="tab = 'm'">
-					<h3>V1 Vault Memberships</h3>
-				</VBtn>
-			</VCol>
+		<div class="w-100 mx-auto" style="max-width: 800px;">
+			<VRow
+				bg-color="primary"
+				color="dark"
+				fixed-tabs
+				class="mb-3"
+			>
+				<VCol cols="4">
+					<VBtn
+						:color="tab == 'm' ? 'primary text-white' : 'white text-primary'"
+						class="w-100 rounded-pill elevation-0"
+						@click="tab = 'm'"
+					>
+						<h3>V1 Vault Memberships</h3>
+					</VBtn>
+				</VCol>
 
-			<VCol>
-				<VBtn :color="tab == 'a' ? 'primary' : 'white'" class="w-100 elevation-0" @click="tab = 'a'">
-					<h3>V1 Vault Adminships</h3>
-				</VBtn>
-			</VCol>
+				<VCol cols="4">
+					<VBtn
+						:color="tab == 'a' ? 'primary text-white' : 'white text-primary'"
+						class="w-100 rounded-pill elevation-0"
+						@click="tab = 'a'"
+					>
+						<h3>V1 Vault Adminships</h3>
+					</VBtn>
+				</VCol>
 
-			<VCol>
-				<VBtn :color="tab == 'd' ? 'primary' : 'white'" class="w-100 elevation-0" @click="tab = 'd'">
-					<h3>Deploy a Vault</h3>
-				</VBtn>
-			</VCol>
-		</VRow>
+				<VCol cols="4">
+					<VBtn
+						:color="tab == 'd' ? 'primary text-white' : 'white text-primary'"
+						class="w-100 rounded-pill elevation-0"
+						@click="tab = 'd'"
+					>
+						<h3>Deploy a Vault</h3>
+					</VBtn>
+				</VCol>
+			</VRow>
 
-		<VCard class="elevation-0">
-			<VCardText>
-				<CMemberships v-if="tab == 'm'" />
-				<CAdminships v-if="tab == 'a'" />
-				<CDeploy v-if="tab == 'd'" />
-			</VCardText>
-		</VCard>
+			<VCard class="rounded-xl elevation-0">
+				<VCardText>
+					<CMemberships v-if="tab == 'm'" />
+					<CAdminships v-if="tab == 'a'" />
+					<CDeploy v-if="tab == 'd'" />
+				</VCardText>
+			</VCard>
+		</div>
 	</VContainer>
 </template>
 
