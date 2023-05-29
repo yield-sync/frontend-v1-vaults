@@ -112,7 +112,7 @@
 
 					<VCol cols="4">
 						<VBtn
-							:disabled="voting"
+							:disabled="voting[w.id]"
 							color="success"
 							class="w-100"
 							@click="voteOnWithdrawalRequest(w.id, true)"
@@ -123,7 +123,7 @@
 
 					<VCol cols="4">
 						<VBtn
-							:disabled="voting"
+							:disabled="voting[w.id]"
 							color="danger"
 							class="w-100"
 							@click="voteOnWithdrawalRequest(w.id, false)"
@@ -139,7 +139,7 @@
 									parseInt(w.forVoteCount) < forVoteCountRequired &&
 									parseInt(w.againstVoteCount) < againstVoteCountRequired
 								) ||
-								processing
+									processing[w.id]
 							"
 							color="primary"
 							class="w-100"
@@ -180,8 +180,14 @@
 		data()
 		{
 			return {
-				voting: false,
-				processing: false,
+				voting: {
+				} as {
+					[key: string]: boolean
+				},
+				processing: {
+				} as {
+					[key: string]: boolean
+				},
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				againstVoteCountRequired: 0 as number,
 				forVoteCountRequired: 0 as number,
@@ -221,13 +227,15 @@
 					return;
 				}
 
-				this.detailedWithdrawalRequests = [];
+				this.detailedWithdrawalRequests = [
+				];
 
 				this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired().call();
 
 				this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
 
-				this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests().call();
+				this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests()
+				.call();
 
 				for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++)
 				{
@@ -295,19 +303,23 @@
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
-					this.processing = true;
+					this.processing[wId] = true;
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					this.processing = false;
-				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
-				{
-					console.log("Error receipt:", receipt);
+					if (confirmationNumber == 0)
+					{
+						this.processing[wId] = false;
 
+						await this.getWithdrawalRequestData();
+					}
+
+				}).on("error", async (error: Error) =>
+				{
 					this.error = String(error);
 
-					this.processing = false;
+					this.processing[wId] = false;
 				});
 			},
 
@@ -324,21 +336,21 @@
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
-					this.voting = true;
+					this.voting[wId] = true;
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);
+					if (confirmationNumber == 0)
+					{
+						await this.getWithdrawalRequestData();
 
-					await this.getWithdrawalRequestData();
-
-					this.voting = false;
-				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+						this.voting[wId] = false;
+					}
+				}).on("error", async (error: Error) =>
 				{
-					console.log("Error receipt:", receipt);
-
 					this.error = String(error);
 
-					this.voting = false;
+					this.voting[wId] = false;
 				});
 			},
 		},

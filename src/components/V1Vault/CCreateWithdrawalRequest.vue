@@ -74,7 +74,9 @@
 					:disabled="creating"
 					color="primary"
 					class="w-100" @click="createWR()"
-				>Create Withdrawal Request</VBtn>
+				>
+					Create Withdrawal Request
+				</VBtn>
 				<h6 v-if="error" class="text-danger">{{ error }}</h6>
 			</VCol>
 		</VRow>
@@ -145,10 +147,8 @@
 						}
 
 						this.creating = false;
-					}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+					}).on("error", async (error: Error) =>
 					{
-						console.log("Error receipt:", receipt);
-
 						this.error = String(error);
 
 						this.creating = false;

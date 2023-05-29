@@ -217,21 +217,23 @@
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on("sent", async () =>
-				{
-					this.deploying = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
+					{
+						this.deploying = true;
+					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					this.deploying = false;
-				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
-				{
-					console.log("Error receipt:", receipt);
+						if (confirmationNumber == 0)
+						{
+							this.deploying = false;
 
-					this.error = String(error);
+						}
+					}).on("error", async (error: Error) =>
+					{
+						this.error = String(error);
 
-					this.deploying = false;
-				});
+						this.deploying = false;
+					});
 				}
 				catch (e)
 				{

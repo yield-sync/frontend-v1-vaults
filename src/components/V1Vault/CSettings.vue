@@ -56,11 +56,12 @@
 						{
 							console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-							this.processing = false;
-						}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+							if (confirmationNumber == 0)
+							{
+								this.processing = false;
+							}
+						}).on("error", async (error: Error) =>
 						{
-							console.log("Error receipt:", receipt);
-
 							this.error = String(error);
 
 							this.processing = false;
