@@ -50,7 +50,9 @@
 							$store.state.pages.RVV1Vault.wrTab = 'c';
 							$store.state.pages.RVV1Vault.withdrawalRequestKey++
 						"
-					>↗️</VBtn>
+					>
+						↗️
+					</VBtn>
 				</RouterLink>
 			</VCol>
 

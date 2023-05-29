@@ -1,12 +1,6 @@
 <template>
 	<VRow>
-		<VCol cols="4" />
-
-		<VCol cols="4">
-			<h3 class="mb-3 text-center text-uppercase text-primary">Deploy a Vault</h3>
-		</VCol>
-
-		<VCol cols="4" class="text-right">
+		<VCol cols="12" class="text-right">
 			<a
 				:href="`https://${d}.etherscan.io/address/${factory}#readContract`"
 				target="_blank"
@@ -154,8 +148,8 @@
 		</VCol>
 
 		<VCol cols="12">
-			<h6>{{ deploymentFee }}</h6>
-			<VBtn color="primary" class="w-100" :disabled="deploying" @click="deployYieldSyncV1Vault()">
+			<h6>Deployment Fee: {{ deploymentFee }}</h6>
+			<VBtn color="primary" class="w-100 elevation-0" :disabled="deploying" @click="deployYieldSyncV1Vault()">
 				Deploy
 			</VBtn>
 		</VCol>

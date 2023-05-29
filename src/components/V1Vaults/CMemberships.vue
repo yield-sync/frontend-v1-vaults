@@ -1,12 +1,6 @@
 <template>
 	<VRow>
-		<VCol cols="4" />
-
-		<VCol cols="4">
-			<h3 class="mb-3 text-center text-uppercase text-primary">Membership in V1 Vault</h3>
-		</VCol>
-
-		<VCol cols="4" class="text-right">
+		<VCol cols="12" class="text-right">
 			<a
 				:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}#readContract`"
 				target="_blank"
@@ -17,14 +11,57 @@
 		</VCol>
 	</VRow>
 
-	<CVaultBreakdown :v1Vaults="membershipYieldSyncV1VaultVaults" />
+	<VRow>
+		<VCol cols="12" md="6">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Vault Address</h2>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">For : Against</h2>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Withdrawal Delay (Sec)</h2>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Etherscan</h2>
+		</VCol>
+	</VRow>
+
+	<VRow v-for="(v, i) in membershipYieldSyncV1VaultVaults" :key="i" class="mb-3">
+		<VCol cols="12" md="6">
+			<RouterLink :to="`/v1-vault/${v.address}?admin=true`">
+				<VBtn variant="tonal" color="primary" class="w-100">{{ v.address }}</VBtn>
+			</RouterLink>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h3 class="text-center" style="word-wrap: break-word;">
+				{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
+			</h3>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h3 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h3>
+		</VCol>
+
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<a
+				:href="`https://${etherscanDomainStart}.etherscan.io/address/${v.address}#readContract`"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<VBtn variant="tonal" class="w-100">🔗</VBtn>
+			</a>
+		</VCol>
+	</VRow>
 </template>
 
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import { AbiItem } from "web3-utils";
 
-	import CVaultBreakdown from "./CVaultBreakdown.vue";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
@@ -47,10 +84,6 @@
 					withdrawalDelaySeconds: number;
 				}[],
 			};
-		},
-
-		components: {
-			CVaultBreakdown
 		},
 
 		async created()

@@ -1,12 +1,6 @@
 <template>
 	<VRow>
-		<VCol cols="4" />
-
-		<VCol cols="4">
-			<h3 class="mb-3 text-center text-uppercase text-primary">Admin of V1 Vault</h3>
-		</VCol>
-
-		<VCol cols="4" class="text-right">
+		<VCol cols="12" class="text-right">
 			<a
 				:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}#readContract`"
 				target="_blank"
@@ -18,63 +12,47 @@
 	</VRow>
 
 	<VRow>
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">Address</h4>
+		<VCol cols="12" md="6">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Vault Address</h2>
 		</VCol>
 
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">View</h4>
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">For : Against</h2>
 		</VCol>
 
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">For Votes Required</h4>
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Withdrawal Delay (Sec)</h2>
 		</VCol>
 
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">Against Votes Required</h4>
-		</VCol>
-
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">Withdrawal Delay (Sec)</h4>
-		</VCol>
-
-		<VCol cols="2">
-			<h4 class="text-center text-primary" style="word-wrap: break-word;">Etherscan</h4>
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h2 class="text-center text-primary" style="word-wrap: break-word;">Etherscan</h2>
 		</VCol>
 	</VRow>
 
 	<VRow v-for="(v, i) in adminshipYieldSyncV1VaultVaults" :key="i" class="mb-3">
-		<VCol cols="2">
-			<h5 class="text-center" style="word-wrap: break-word;">
-				{{ v.address.substring(0, 4) + "..." + v.address.substring(v.address.length - 4) }}
-			</h5>
-		</VCol>
-
-		<VCol cols="2">
+		<VCol cols="12" md="6">
 			<RouterLink :to="`/v1-vault/${v.address}?admin=true`">
-				<VBtn variant="tonal" size="sm" class="w-100">View</VBtn>
+				<VBtn variant="tonal" color="primary" class="w-100">{{ v.address }}</VBtn>
 			</RouterLink>
 		</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center" style="word-wrap: break-word;">{{ v.forVoteCountRequired }}</h5>
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h3 class="text-center" style="word-wrap: break-word;">
+				{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
+			</h3>
 		</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center" style="word-wrap: break-word;">{{ v.againstVoteCountRequired }}</h5>
+		<VCol cols="12" md="2" class="d-none d-md-block">
+			<h3 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h3>
 		</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}</h5>
-		</VCol>
-
-		<VCol cols="2">
+		<VCol cols="12" md="2" class="d-none d-md-block">
 			<a
 				:href="`https://${etherscanDomainStart}.etherscan.io/address/${v.address}#readContract`"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<VBtn variant="tonal" size="sm" class="w-100">🔗</VBtn>
+				<VBtn variant="tonal" class="w-100">🔗</VBtn>
 			</a>
 		</VCol>
 	</VRow>
