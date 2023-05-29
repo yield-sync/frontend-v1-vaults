@@ -42,14 +42,6 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: "/v1-vaults",
-		name: "v1-vaults",
-		component: () =>
-		{
-			return import("../views/RVV1Vaults.vue");
-		}
-	},
-	{
 		path: "/:pathMatch(.*)*",
 		name: "not-found",
 		component: () =>
