@@ -159,6 +159,12 @@
 
 		async created()
 		{
+			if (this.$route.query.erc20Address)
+			{
+				this.withdrawalRequest.for = "ERC 20";
+				this.withdrawalRequest.token = String(this.$route.query.erc20Address);
+			}
+
 			// Governance
 			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

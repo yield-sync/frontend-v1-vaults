@@ -97,7 +97,7 @@
 					<VCol cols="4" class="text-right"/>
 				</VRow>
 
-				<CBalances v-if="$store.state.pages.RVV1Vault.tab == 'overview'" :address="vaultAddress" />
+				<COverview v-if="$store.state.pages.RVV1Vault.tab == 'overview'" :address="vaultAddress" />
 				<CMembers
 					v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
 					:v1VaultAddress="vaultAddress"
@@ -155,7 +155,7 @@
 	import { AbiItem } from "web3-utils";
 
 	import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
-	import CBalances from "../components/CBalances.vue";
+	import COverview from "../components/V1Vault/COverview.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
 	import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
@@ -179,7 +179,7 @@
 		},
 
 		components: {
-			CBalances,
+			COverview,
 			CAdmins,
 			CMembers,
 			CWithdrawalRequest,
