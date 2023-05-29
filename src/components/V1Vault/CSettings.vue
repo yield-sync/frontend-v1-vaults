@@ -1,6 +1,7 @@
 <template>
 	<VContainer>
 		<VBtn
+			:disabled="processing"
 			color="primary"
 			class="w-100"
 			@click="renounceMembership()"
@@ -15,6 +16,7 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import { AbiItem } from "web3-utils";
+	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
@@ -32,6 +34,7 @@
 		data()
 		{
 			return {
+				processing: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				error: "" as string
 			};
@@ -46,6 +49,21 @@
 					{
 						await this.yieldSyncV1Vault.methods.renounceMembership().send({
 							from: this.$store.state.wallet.accounts[0]
+						}).on("sent", async () =>
+						{
+							this.processing = true;
+						}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+						{
+							console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+							this.processing = false;
+						}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+						{
+							console.log("Error receipt:", receipt);
+
+							this.error = String(error);
+
+							this.processing = false;
 						});
 					}
 					catch (e)

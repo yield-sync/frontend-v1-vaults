@@ -155,7 +155,7 @@
 
 		<VCol cols="12">
 			<h6>{{ deploymentFee }}</h6>
-			<VBtn color="primary" class="w-100" @click="deployYieldSyncV1Vault()">
+			<VBtn color="primary" class="w-100" :disabled="deploying" @click="deployYieldSyncV1Vault()">
 				Deploy
 			</VBtn>
 		</VCol>
@@ -163,8 +163,9 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from "vue";
 	import { ethers } from "ethers";
+	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
 
 
 	export default defineComponent({
@@ -173,6 +174,7 @@
 		data()
 		{
 			return {
+				deploying: false,
 				factory: this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultFactory,
 				d: this.$store.state.etherscanDomainStart,
 
@@ -194,6 +196,8 @@
 					forVoteCountRequired: 1 as number | undefined,
 					withdrawalDelaySeconds: 0 as number | undefined
 				},
+
+				error: ""
 			};
 		},
 
@@ -212,7 +216,22 @@
 						this.deployParams.withdrawalDelaySeconds
 					).send({
 						from: this.$store.state.wallet.accounts[0]
-					});
+					}).on("sent", async () =>
+				{
+					this.deploying = true;
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					this.deploying = false;
+				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					console.log("Error receipt:", receipt);
+
+					this.error = String(error);
+
+					this.deploying = false;
+				});
 				}
 				catch (e)
 				{
