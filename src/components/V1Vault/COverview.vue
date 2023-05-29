@@ -1,15 +1,16 @@
 <template>
 	<VRow>
-		<VCol cols="6">
-			<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
+		<VCol cols="12" lg="6">
+			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
+				<h4 class="mb-3 text-primary">{{ address }}</h4>
 				<h6>Against Vote Count Required: {{ vault.againstVoteCountRequired }}</h6>
 				<h6>For Vote Count Required: {{ vault.forVoteCountRequired }}</h6>
 				<h6>Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h6>
 			</VCard>
 		</VCol>
 
-		<VCol cols="6">
-			<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
+		<VCol cols="12" lg="6">
+			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 				<VRow>
 					<VCol cols="6">
 						<h4 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h4>
@@ -34,121 +35,123 @@
 				</VRow>
 			</VCard>
 		</VCol>
+
+		<VCol cols="12">
+			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
+				<VRow>
+					<VCol cols="12">
+						<h4 class="text-center text-primary">ERC 20 Tokens</h4>
+					</VCol>
+				</VRow>
+				<VRow>
+					<VCol cols="4">
+						<h4 class="text-primary">Symbol</h4>
+						<h5 class="text-primary">Name</h5>
+					</VCol>
+
+					<VCol cols="4">
+						<h4 class="text-primary">Balance</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<h4 class="text-primary">Withdrawal Reqest</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<h4 class="text-primary">Etherscan</h4>
+					</VCol>
+				</VRow>
+
+				<VRow v-for="(erc20, i) in erc20Balances" :key="i">
+					<VCol cols="4">
+						<h4>{{ erc20.symbol }}</h4>
+						<h5>{{ erc20.name }}</h5>
+					</VCol>
+
+					<VCol sm="4">
+						<h4>{{ erc20.balance }}</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<RouterLink :to="`/v1-vault/${address}?erc20Address=${erc20.contract}`">
+							<VBtn
+								class="w-100 rounded-xl"
+								color="success"
+								variant="tonal"
+								@click="
+									$store.state.pages.RVV1Vault.tab = 'wr';
+									$store.state.pages.RVV1Vault.wrTab = 'c';
+									$store.state.pages.RVV1Vault.withdrawalRequestKey++
+								"
+							>
+								↗️ Transfer Out
+							</VBtn>
+						</RouterLink>
+					</VCol>
+
+					<VCol sm="2">
+						<a
+							:href="`https://etherscan.io/address/${erc20.contract}`"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<VBtn variant="tonal" class="w-100 rounded-xl">🔗</VBtn>
+						</a>
+					</VCol>
+				</VRow>
+			</VCard>
+
+			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
+				<VRow>
+					<VCol cols="12">
+						<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>
+					</VCol>
+				</VRow>
+				<VRow>
+					<VCol cols="4">
+						<h4 class="text-primary">Symbol</h4>
+						<h5 class="text-primary">Name</h5>
+					</VCol>
+
+					<VCol cols="4">
+						<h4 class="text-primary">Balance</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<h4 class="text-primary">Copy</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<h4 class="text-primary">Etherscan</h4>
+					</VCol>
+				</VRow>
+				<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
+					<VCol cols="4">
+						<h4>{{ erc721.name }}</h4>
+						<h5>{{ erc721.symbol }}</h5>
+					</VCol>
+
+					<VCol sm="4">
+						<h4>{{ erc721.balance }}</h4>
+					</VCol>
+
+					<VCol cols="2">
+						<VBtn class="w-100" variant="tonal">📋</VBtn>
+					</VCol>
+
+					<VCol sm="2">
+						<a
+							:href="`https://etherscan.io/address/${erc721.contract}`"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<VBtn variant="tonal" class="w-100">🔗</VBtn>
+						</a>
+					</VCol>
+				</VRow>
+			</VCard>
+		</VCol>
 	</VRow>
-
-	<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
-		<VRow>
-			<VCol cols="12">
-				<h4 class="text-center text-primary">ERC 20 Tokens</h4>
-			</VCol>
-		</VRow>
-		<VRow>
-			<VCol cols="4">
-				<h4 class="text-primary">Symbol</h4>
-				<h5 class="text-primary">Name</h5>
-			</VCol>
-
-			<VCol cols="4">
-				<h4 class="text-primary">Balance</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<h4 class="text-primary">Withdrawal Reqest</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<h4 class="text-primary">Etherscan</h4>
-			</VCol>
-		</VRow>
-
-		<VRow v-for="(erc20, i) in erc20Balances" :key="i">
-			<VCol cols="4">
-				<h4>{{ erc20.symbol }}</h4>
-				<h5>{{ erc20.name }}</h5>
-			</VCol>
-
-			<VCol sm="4">
-				<h4>{{ erc20.balance }}</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<RouterLink :to="`/v1-vault/${address}?erc20Address=${erc20.contract}`">
-					<VBtn
-						class="w-100 rounded-xl"
-						color="success"
-						variant="tonal"
-						@click="
-							$store.state.pages.RVV1Vault.tab = 'wr';
-							$store.state.pages.RVV1Vault.wrTab = 'c';
-							$store.state.pages.RVV1Vault.withdrawalRequestKey++
-						"
-					>
-						↗️ Transfer Out
-					</VBtn>
-				</RouterLink>
-			</VCol>
-
-			<VCol sm="2">
-				<a
-					:href="`https://etherscan.io/address/${erc20.contract}`"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<VBtn variant="tonal" class="w-100 rounded-xl">🔗</VBtn>
-				</a>
-			</VCol>
-		</VRow>
-	</VCard>
-
-	<VCard class="mb-3 px-6 py-6 rounded-xl elevation-0">
-		<VRow>
-			<VCol cols="12">
-				<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>
-			</VCol>
-		</VRow>
-		<VRow>
-			<VCol cols="4">
-				<h4 class="text-primary">Symbol</h4>
-				<h5 class="text-primary">Name</h5>
-			</VCol>
-
-			<VCol cols="4">
-				<h4 class="text-primary">Balance</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<h4 class="text-primary">Copy</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<h4 class="text-primary">Etherscan</h4>
-			</VCol>
-		</VRow>
-		<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
-			<VCol cols="4">
-				<h4>{{ erc721.name }}</h4>
-				<h5>{{ erc721.symbol }}</h5>
-			</VCol>
-
-			<VCol sm="4">
-				<h4>{{ erc721.balance }}</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<VBtn class="w-100" variant="tonal">📋</VBtn>
-			</VCol>
-
-			<VCol sm="2">
-				<a
-					:href="`https://etherscan.io/address/${erc721.contract}`"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<VBtn variant="tonal" class="w-100">🔗</VBtn>
-				</a>
-			</VCol>
-		</VRow>
-	</VCard>
 </template>
 
 <script lang="ts">

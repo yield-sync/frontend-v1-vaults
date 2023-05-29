@@ -25,11 +25,11 @@
 					<h3 class="text-decoration-none text-center">
 						{{
 							v.address ?
-							v.address.substring(0, 4) +
-							"..." +
-							v.address.substring($store.state.wallet.accounts[0].length - 4)
-							:
-							""
+								v.address.substring(0, 4) +
+								"..." +
+								v.address.substring($store.state.wallet.accounts[0].length - 4)
+								:
+								""
 						}}
 					</h3>
 				</VCol>

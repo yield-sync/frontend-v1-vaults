@@ -21,7 +21,12 @@
 				</VCol>
 
 				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn :disabled="removing" color="danger" class="w-100 rounded-xl elevation-0" @click="removeMember(a)">
+					<VBtn
+						:disabled="removing"
+						color="danger"
+						class="w-100 rounded-xl elevation-0"
+						@click="removeMember(a)"
+					>
 						Remove
 					</VBtn>
 				</VCol>

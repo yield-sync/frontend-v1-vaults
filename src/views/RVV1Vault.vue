@@ -67,8 +67,7 @@
 		<VCol cols="9">
 			<VContainer>
 				<VRow>
-					<VCol cols="4">
-					</VCol>
+					<VCol cols="4"/>
 
 					<VCol cols="4">
 						<h3 class="mb-3 text-center text-uppercase text-primary">V1 Vault</h3>
@@ -80,14 +79,7 @@
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<h6 class="word-wrap">{{ vaultAddress }}</h6>
-						</a>
-						<a
-							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<VBtn variant="plain" size="sm"><h6>🔗 V1 Vault Contract</h6></VBtn>
+							<VBtn variant="tonal"><h6>🔗 Etherscan</h6></VBtn>
 						</a>
 					</VCol>
 

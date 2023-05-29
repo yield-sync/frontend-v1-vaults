@@ -64,13 +64,14 @@
 
 	export default defineComponent({
 		name: "CFooter",
-		data() {
+		data() 
+		{
 			return {
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,
 				accessControl: this.$store.state.config.address[
 					this.$store.state.chainName
 				].yieldSyncV1VaultAccessControl,
-			}
+			};
 		},
 	});
 </script>

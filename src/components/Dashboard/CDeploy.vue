@@ -148,7 +148,12 @@
 		</VCol>
 
 		<VCol cols="12">
-			<VBtn color="primary" class="w-100 rounded-xl elevation-0" :disabled="deploying" @click="deployYieldSyncV1Vault()">
+			<VBtn
+				color="primary"
+				class="w-100 rounded-xl elevation-0"
+				:disabled="deploying"
+				@click="deployYieldSyncV1Vault()"
+			>
 				<h2>Deploy</h2>
 			</VBtn>
 		</VCol>

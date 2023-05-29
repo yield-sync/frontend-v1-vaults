@@ -21,7 +21,12 @@
 				</VCol>
 
 				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn :disabled="removing" color="danger" class="w-100 rounded-xl elevation-0" @click="removeAdmin(a)">
+					<VBtn
+						:disabled="removing"
+						color="danger"
+						class="w-100 rounded-xl elevation-0"
+						@click="removeAdmin(a)"
+					>
 						Remove
 					</VBtn>
 				</VCol>
@@ -37,7 +42,14 @@
 					/>
 				</VCol>
 				<VCol md="2" lg="2">
-					<VBtn :disabled="adding" color="success" class="w-100 rounded-xl elevation-0" @click="addAdmin()">Add</VBtn>
+					<VBtn
+						:disabled="adding"
+						color="success"
+						class="w-100 rounded-xl elevation-0"
+						@click="addAdmin()"
+					>
+						Add
+					</VBtn>
 				</VCol>
 
 				<VCol cols="12">
