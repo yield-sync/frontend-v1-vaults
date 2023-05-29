@@ -101,12 +101,12 @@
 				<CMembers
 					v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
 					:v1VaultAddress="vaultAddress"
-					:asAdmin="$route.query.admin !== 'true'"
+					:asAdmin="$route.query.admin == 'true'"
 				/>
 				<CAdmins
 					v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
 					:v1VaultAddress="vaultAddress"
-					:asAdmin="$route.query.admin !== 'true'"
+					:asAdmin="$route.query.admin == 'true'"
 				/>
 
 				<VCard v-if="$store.state.pages.RVV1Vault.tab == 'wr'">
@@ -126,14 +126,14 @@
 								<CWithdrawalRequest
 									:key="$store.state.pages.RVV1Vault.withdrawalRequestKey"
 									:vaultAddress="vaultAddress"
-									:asAdmin="$route.query.admin !== 'true'"
+									:asAdmin="$route.query.admin == 'true'"
 								/>
 							</VWindowItem>
 
 							<VWindowItem value="c">
 								<CCreateWithdrawalRequest
 									:vaultAddress="vaultAddress"
-									:asAdmin="$route.query.admin !== 'true'"
+									:asAdmin="$route.query.admin == 'true'"
 								/>
 							</VWindowItem>
 						</VWindow>
@@ -143,7 +143,7 @@
 				<CSettings
 					v-if="$store.state.pages.RVV1Vault.tab == 'settings'"
 					:vaultAddress="vaultAddress"
-					:asAdmin="$route.query.admin !== 'true'"
+					:asAdmin="$route.query.admin == 'true'"
 				/>
 			</VContainer>
 		</VCol>
