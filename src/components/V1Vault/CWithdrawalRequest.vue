@@ -29,7 +29,7 @@
 
 		<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
 			<VCol cols="2">
-				<h6>{{ w.amount }}</h6>
+				<h6>{{ w.amount * 10 ** -18 }}</h6>
 			</VCol>
 
 			<VCol cols="2">
@@ -93,7 +93,7 @@
 
 					<VCol cols="3">
 						<h4 class="text-primary">Amount</h4>
-						<h4 class="text-dark">{{ w.amount }}</h4>
+						<h4 class="text-dark">{{ w.amount * 10 ** -18 }}</h4>
 					</VCol>
 
 					<VCol cols="6">
@@ -107,7 +107,8 @@
 					</VCol>
 
 					<VCol cols="12">
-						<h6>{{ w.votedMembers }}</h6>
+						<h4 class="text-primary">Voted Voter</h4>
+						<h4 v-for="(v, i) in w.votedMembers" :key="i">{{ i + 1 }}. {{ v }}</h4>
 					</VCol>
 
 					<VCol cols="4">
@@ -201,7 +202,7 @@
 				] as {
 					id: number
 					againstVoteCount: string
-					amount: string
+					amount: number
 					creator: string
 					forERC20: boolean
 					forERC721: boolean
@@ -235,7 +236,7 @@
 				this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
 
 				this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests()
-				.call();
+					.call();
 
 				for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++)
 				{
