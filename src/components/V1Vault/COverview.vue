@@ -48,7 +48,7 @@
 						@click="
 							$store.state.pages.RVV1Vault.tab = 'wr';
 							$store.state.pages.RVV1Vault.wrTab = 'c';
-							$store.state.pages.RVV1Vault.wrKey++
+							$store.state.pages.RVV1Vault.withdrawalRequestKey++
 						"
 					>↗️</VBtn>
 				</RouterLink>

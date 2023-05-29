@@ -44,9 +44,9 @@ export default createStore({
 
 		pages: {
 			RVV1Vault: {
-				wrKey: 0,
-				tab: "overview",
-				wrTab: "o",
+				withdrawalRequestKey: 0 as number,
+				tab: "overview" as string,
+				wrTab: "o" as string,
 			}
 		}
 	},

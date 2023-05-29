@@ -124,7 +124,7 @@
 						<VWindow v-model="$store.state.pages.RVV1Vault.wrTab">
 							<VWindowItem value="o">
 								<CWithdrawalRequest
-									:key="$store.state.pages.RVV1Vault.wrKey"
+									:key="$store.state.pages.RVV1Vault.withdrawalRequestKey"
 									:vaultAddress="vaultAddress"
 									:asAdmin="$route.query.admin !== 'true'"
 								/>
