@@ -1,28 +1,40 @@
 <template>
-	<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
-		<VRow>
-			<VCol cols="10">
-				<h4 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h4>
-			</VCol>
+	<VRow>
+		<VCol cols="6">
+			<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
+				<h6>Against Vote Count Required: {{ vault.againstVoteCountRequired }}</h6>
+				<h6>For Vote Count Required: {{ vault.forVoteCountRequired }}</h6>
+				<h6>Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h6>
+			</VCard>
+		</VCol>
 
-			<VCol cols="2">
-				<RouterLink :to="`/v1-vault/${address}?eth=true`">
-					<VBtn
-						class="w-100 rounded-xl"
-						color="success"
-						variant="tonal"
-						@click="
-							$store.state.pages.RVV1Vault.tab = 'wr';
-							$store.state.pages.RVV1Vault.wrTab = 'c';
-							$store.state.pages.RVV1Vault.withdrawalRequestKey++
-						"
-					>
-						↗️ Transfer Out
-					</VBtn>
-				</RouterLink>
-			</VCol>
-		</VRow>
-	</VCard>
+		<VCol cols="6">
+			<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
+				<VRow>
+					<VCol cols="6">
+						<h4 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h4>
+					</VCol>
+
+					<VCol cols="6">
+						<RouterLink :to="`/v1-vault/${address}?eth=true`">
+							<VBtn
+								class="w-100 rounded-xl"
+								color="success"
+								variant="tonal"
+								@click="
+									$store.state.pages.RVV1Vault.tab = 'wr';
+									$store.state.pages.RVV1Vault.wrTab = 'c';
+									$store.state.pages.RVV1Vault.withdrawalRequestKey++
+								"
+							>
+								↗️ Transfer Out
+							</VBtn>
+						</RouterLink>
+					</VCol>
+				</VRow>
+			</VCard>
+		</VCol>
+	</VRow>
 
 	<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 		<VRow>
@@ -144,6 +156,7 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 
 	export default defineComponent({
@@ -174,6 +187,11 @@
 					balance: number | string,
 					contract: number | string
 				}[],
+				vault: {
+					againstVoteCountRequired: 0,
+					forVoteCountRequired: 0,
+					withdrawalDelaySeconds: 0,
+				}
 			};
 		},
 
@@ -260,6 +278,15 @@
 					immediate: true
 				}
 			);
+
+			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1Vault as AbiItem[],
+				this.address
+			);
+
+			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
+			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
+			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
 		},
 	});
 </script>

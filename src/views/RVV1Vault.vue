@@ -68,9 +68,6 @@
 			<VContainer>
 				<VRow>
 					<VCol cols="4">
-						<h6>Against Vote Count Required: {{ vault.againstVoteCountRequired }}</h6>
-						<h6>For Vote Count Required: {{ vault.forVoteCountRequired }}</h6>
-						<h6>Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h6>
 					</VCol>
 
 					<VCol cols="4">
@@ -152,9 +149,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import { AbiItem } from "web3-utils";
 
-	import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
 	import COverview from "../components/V1Vault/COverview.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
@@ -168,13 +163,8 @@
 		data()
 		{
 			return {
-				asAdmin: false,
+				asAdmin: false as boolean,
 				vaultAddress: this.$route.params.address as string,
-				vault: {
-					againstVoteCountRequired: 0,
-					forVoteCountRequired: 0,
-					withdrawalDelaySeconds: 0,
-				}
 			};
 		},
 
@@ -193,15 +183,6 @@
 			{
 				this.asAdmin = true;
 			}
-
-			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1Vault as AbiItem[],
-				this.vaultAddress
-			);
-
-			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
-			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
-			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
 		},
 	});
 </script>
