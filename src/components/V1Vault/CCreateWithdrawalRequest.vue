@@ -70,7 +70,12 @@
 			</VCol>
 
 			<VCol cols="12" class="">
-				<VBtn color="primary" class="w-100" @click="createWR()">Create Withdrawal Request</VBtn>
+				<VBtn
+					:disabled="creating"
+					color="primary"
+					class="w-100" @click="createWR()"
+				>Create Withdrawal Request</VBtn>
+				<h6 v-if="error" class="text-danger">{{ error }}</h6>
 			</VCol>
 		</VRow>
 	</VContainer>
@@ -79,6 +84,7 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 	import { AbiItem } from "web3-utils";
+	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
@@ -96,6 +102,7 @@
 		data()
 		{
 			return {
+				creating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				withdrawalRequest: {
 					for: "Ether" as string,
@@ -103,7 +110,8 @@
 					token: "" as string,
 					amount: 0 as number,
 					tokenId: 0 as number,
-				}
+				},
+				error: ""
 			};
 		},
 
@@ -123,6 +131,27 @@
 						this.withdrawalRequest.tokenId
 					).send({
 						from: this.$store.state.wallet.accounts[0]
+					}).on("sent", async () =>
+					{
+						this.creating = true;
+					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.$store.state.pages.RVV1Vault.wrTab = "o";
+							this.$store.state.pages.RVV1Vault.wrKey++;
+						}
+
+						this.creating = false;
+					}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+					{
+						console.log("Error receipt:", receipt);
+
+						this.error = String(error);
+
+						this.creating = false;
 					});
 				}
 			}

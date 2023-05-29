@@ -121,9 +121,6 @@
 				}).on("sent", async (receipt: TransactionReceipt) =>
 				{
 					this.adding = true;
-				}).on("receipt", async (receipt: TransactionReceipt) =>
-				{
-					console.log("receipt:", receipt);
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);
@@ -160,9 +157,6 @@
 				}).on("sent", async (receipt: TransactionReceipt) =>
 				{
 					this.removing = true;
-				}).on("receipt", async (receipt: TransactionReceipt) =>
-				{
-					console.log("receipt:", receipt);
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);

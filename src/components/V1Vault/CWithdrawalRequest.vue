@@ -135,8 +135,11 @@
 					<VCol cols="4">
 						<VBtn
 							:disabled="
-								parseInt(w.forVoteCount) < forVoteCountRequired &&
+								(
+									parseInt(w.forVoteCount) < forVoteCountRequired &&
 									parseInt(w.againstVoteCount) < againstVoteCountRequired
+								) ||
+								processing
 							"
 							color="primary"
 							class="w-100"
@@ -144,6 +147,10 @@
 						>
 							Proccess Withdrawal Request
 						</VBtn>
+					</VCol>
+
+					<VCol cols="12">
+						<h6 v-if="error" class="text-danger">{{ error }}</h6>
 					</VCol>
 				</VRow>
 			</VCol>
@@ -174,6 +181,7 @@
 		{
 			return {
 				voting: false,
+				processing: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				againstVoteCountRequired: 0 as number,
 				forVoteCountRequired: 0 as number,
@@ -285,6 +293,21 @@
 
 				await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
 					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async () =>
+				{
+					this.processing = true;
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					this.processing = false;
+				}).on("error", async (error: Error, receipt: TransactionReceipt) =>
+				{
+					console.log("Error receipt:", receipt);
+
+					this.error = String(error);
+
+					this.processing = false;
 				});
 			},
 
@@ -302,9 +325,6 @@
 				}).on("sent", async () =>
 				{
 					this.voting = true;
-				}).on("receipt", async (receipt: TransactionReceipt) =>
-				{
-					console.log("receipt:", receipt);
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);

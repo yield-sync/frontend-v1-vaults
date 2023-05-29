@@ -35,11 +35,20 @@ export default createStore({
 
 		alchemyApiKey: "" as string,
 		isAdmin: false as boolean,
+
 		contract: {
 			yieldSyncGovernance: undefined as undefined | Contract,
 			yieldSyncV1VaultFactory: undefined as undefined | Contract,
 			yieldSyncV1VaultAccessControl: undefined as undefined | Contract,
 		},
+
+		pages: {
+			RVV1Vault: {
+				wrKey: 0,
+				tab: "overview",
+				wrTab: "o",
+			}
+		}
 	},
 
 	mutations: {

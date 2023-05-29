@@ -8,7 +8,7 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'overview'"
+					@click="$store.state.pages.RVV1Vault.tab = 'overview'"
 				>
 					V1 Vault Overview
 				</VBtn>
@@ -17,7 +17,7 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'admins-and-members'"
+					@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 				>
 					Admins & Members
 				</VBtn>
@@ -26,7 +26,7 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'wr'"
+					@click="$store.state.pages.RVV1Vault.tab = 'wr'"
 				>
 					Withdrawal Request
 				</VBtn>
@@ -36,7 +36,7 @@
 					color="dark"
 					variant="tonal"
 					class="w-100 mb-3 no-box-shadow"
-					@click="tab = 'settings'"
+					@click="$store.state.pages.RVV1Vault.tab = 'settings'"
 				>
 					Settings
 				</VBtn>
@@ -97,13 +97,21 @@
 					<VCol cols="4" class="text-right"/>
 				</VRow>
 
-				<CBalances v-if="tab == 'overview'" :address="vaultAddress" />
-				<CMembers v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'"  />
-				<CAdmins v-if="tab == 'admins-and-members'" :v1VaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
+				<CBalances v-if="$store.state.pages.RVV1Vault.tab == 'overview'" :address="vaultAddress" />
+				<CMembers
+					v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
+					:v1VaultAddress="vaultAddress"
+					:asAdmin="$route.query.admin !== 'true'"
+				/>
+				<CAdmins
+					v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
+					:v1VaultAddress="vaultAddress"
+					:asAdmin="$route.query.admin !== 'true'"
+				/>
 
-				<VCard v-if="tab == 'wr'">
+				<VCard v-if="$store.state.pages.RVV1Vault.tab == 'wr'">
 					<VTabs
-						v-model="wrtab"
+						v-model="$store.state.pages.RVV1Vault.wrTab"
 						bg-color="primary"
 						color="light-green-lighten-5"
 						fixed-tabs
@@ -113,19 +121,30 @@
 					</VTabs>
 
 					<VCardText variant="light">
-						<VWindow v-model="wrtab">
+						<VWindow v-model="$store.state.pages.RVV1Vault.wrTab">
 							<VWindowItem value="o">
-								<CWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
+								<CWithdrawalRequest
+									:key="$store.state.pages.RVV1Vault.wrKey"
+									:vaultAddress="vaultAddress"
+									:asAdmin="$route.query.admin !== 'true'"
+								/>
 							</VWindowItem>
 
 							<VWindowItem value="c">
-								<CCreateWithdrawalRequest :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'"  />
+								<CCreateWithdrawalRequest
+									:vaultAddress="vaultAddress"
+									:asAdmin="$route.query.admin !== 'true'"
+								/>
 							</VWindowItem>
 						</VWindow>
 					</VCardText>
 				</VCard>
 
-				<CSettings v-if="tab == 'settings'" :vaultAddress="vaultAddress" :asAdmin="$route.query.admin !== 'true'" />
+				<CSettings
+					v-if="$store.state.pages.RVV1Vault.tab == 'settings'"
+					:vaultAddress="vaultAddress"
+					:asAdmin="$route.query.admin !== 'true'"
+				/>
 			</VContainer>
 		</VCol>
 	</VRow>
@@ -149,9 +168,7 @@
 		data()
 		{
 			return {
-				wrtab: "o",
 				asAdmin: false,
-				tab: "overview",
 				vaultAddress: this.$route.params.address as string,
 				vault: {
 					againstVoteCountRequired: 0,
