@@ -1,10 +1,30 @@
 <template>
-	<VCard class="mx-auto mb-6 px-6 py-6 elevation-0" style="max-width: 600px;">
-		<h4 class="text-center text-primary">Eth Balance</h4>
-		<h5 class="text-center">{{ ethBalance * 10 ** -18 }}</h5>
+	<VCard class="mx-auto mb-6 px-6 py-6 rounded-xl elevation-0">
+		<VRow>
+			<VCol cols="10">
+				<h4 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h4>
+			</VCol>
+
+			<VCol cols="2">
+				<RouterLink :to="`/v1-vault/${address}?eth=true`">
+					<VBtn
+						class="w-100 rounded-xl"
+						color="success"
+						variant="tonal"
+						@click="
+							$store.state.pages.RVV1Vault.tab = 'wr';
+							$store.state.pages.RVV1Vault.wrTab = 'c';
+							$store.state.pages.RVV1Vault.withdrawalRequestKey++
+						"
+					>
+						↗️ Transfer Out
+					</VBtn>
+				</RouterLink>
+			</VCol>
+		</VRow>
 	</VCard>
 
-	<VCard class="mb-6 px-6 py-6 elevation-0">
+	<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 20 Tokens</h4>
@@ -42,7 +62,7 @@
 			<VCol cols="2">
 				<RouterLink :to="`/v1-vault/${address}?erc20Address=${erc20.contract}`">
 					<VBtn
-						class="w-100"
+						class="w-100 rounded-xl"
 						color="success"
 						variant="tonal"
 						@click="
@@ -51,7 +71,7 @@
 							$store.state.pages.RVV1Vault.withdrawalRequestKey++
 						"
 					>
-						↗️
+						↗️ Transfer Out
 					</VBtn>
 				</RouterLink>
 			</VCol>
@@ -62,13 +82,13 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<VBtn variant="tonal" class="w-100">🔗</VBtn>
+					<VBtn variant="tonal" class="w-100 rounded-xl">🔗</VBtn>
 				</a>
 			</VCol>
 		</VRow>
 	</VCard>
 
-	<VCard class="mb-3 px-6 py-6 elevation-0">
+	<VCard class="mb-3 px-6 py-6 rounded-xl elevation-0">
 		<VRow>
 			<VCol cols="12">
 				<h4 class="text-center text-primary">ERC 721 Tokens (NFTs)</h4>

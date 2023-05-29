@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<VCard class="mb-6 px-6 py-6 elevation-0">
+		<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 			<VCardTitle>
 				<h4 class="text-primary">Members</h4>
 			</VCardTitle>
@@ -17,11 +17,13 @@
 				</VCol>
 
 				<VCol md="1" lg="1">
-					<VBtn class="w-100" variant="tonal" @click="copy(a)">📋</VBtn>
+					<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
 				</VCol>
 
 				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn :disabled="removing" color="danger" class="w-100" @click="removeMember(a)">Remove</VBtn>
+					<VBtn :disabled="removing" color="danger" class="w-100 rounded-xl elevation-0" @click="removeMember(a)">
+						Remove
+					</VBtn>
 				</VCol>
 			</VRow>
 
@@ -35,7 +37,9 @@
 					/>
 				</VCol>
 				<VCol md="2" lg="2">
-					<VBtn :disabled="adding" color="success" class="w-100" @click="addMember()">Add</VBtn>
+					<VBtn :disabled="adding" color="success" class="w-100 rounded-xl elevation-0" @click="addMember()">
+						Add
+					</VBtn>
 				</VCol>
 
 				<VCol cols="12">

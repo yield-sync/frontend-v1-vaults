@@ -38,12 +38,10 @@
 				</VCol>
 			</VRow>
 
-			<VCard class="rounded-xl elevation-0">
-				<VCardText>
-					<CMemberships v-if="tab == 'm'" />
-					<CAdminships v-if="tab == 'a'" />
-					<CDeploy v-if="tab == 'd'" />
-				</VCardText>
+			<VCard class="px-6 py-6 rounded-xl elevation-0">
+				<CMemberships v-if="tab == 'm'" />
+				<CAdminships v-if="tab == 'a'" />
+				<CDeploy v-if="tab == 'd'" />
 			</VCard>
 		</div>
 	</VContainer>
@@ -51,9 +49,9 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import CDeploy from "@/components/V1Vaults/CDeploy.vue";
-	import CAdminships from "@/components/V1Vaults/CAdminships.vue";
-	import CMemberships from "@/components/V1Vaults/CMemberships.vue";
+	import CDeploy from "@/components/Dashboard/CDeploy.vue";
+	import CAdminships from "@/components/Dashboard/CAdminships.vue";
+	import CMemberships from "@/components/Dashboard/CMemberships.vue";
 
 	export default defineComponent({
 		name: "RVGovernance",

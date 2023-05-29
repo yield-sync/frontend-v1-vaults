@@ -1,15 +1,15 @@
 <template>
-	<VRow class="mt-6 mb-12">
+	<VRow class="mt-6 mb-6">
 		<VCol cols="12" md="4">
-			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Vault Address</h2>
+			<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Vault Address</h3>
 		</VCol>
 
 		<VCol cols="12" md="4" class="d-none d-md-block">
-			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">For : Against</h2>
+			<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">For : Against</h3>
 		</VCol>
 
 		<VCol cols="12" md="4" class="d-none d-md-block">
-			<h2 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Delay</h2>
+			<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Delay</h3>
 		</VCol>
 	</VRow>
 

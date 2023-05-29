@@ -1,15 +1,17 @@
 <template>
 	<VContainer>
-		<VBtn
-			:disabled="processing"
-			color="primary"
-			class="w-100"
-			@click="renounceMembership()"
-		>
-			Renounce Membership
-		</VBtn>
+		<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
+			<VBtn
+				:disabled="processing"
+				color="primary"
+				class="w-100"
+				@click="renounceMembership()"
+			>
+				Renounce Membership
+			</VBtn>
 
-		<h6 v-if="error">{{ error }}</h6>
+			<h6 v-if="error">{{ error }}</h6>
+		</VCard>
 	</VContainer>
 </template>
 

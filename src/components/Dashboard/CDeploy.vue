@@ -1,6 +1,6 @@
 <template>
 	<VRow>
-		<VCol cols="12" class="text-right">
+		<VCol cols="6" class="">
 			<a
 				:href="`https://${d}.etherscan.io/address/${factory}#readContract`"
 				target="_blank"
@@ -10,17 +10,8 @@
 			</a>
 		</VCol>
 
-		<!-- Sig Manager -->
-		<VCol cols="12">
-			<VTextField
-				v-model="deployParams.signatureManager"
-				type="text"
-				label="Signature Manager"
-				variant="outlined"
-				hide-details
-				class="mb-3"
-				size="small"
-			/>
+		<VCol cols="6" class="text-right">
+			<h6>Deployment Fee: {{ deploymentFee }}</h6>
 		</VCol>
 
 		<!-- Against -->
@@ -59,67 +50,22 @@
 			/>
 		</VCol>
 
-		<!-- Admins -->
-		<VCol cols="12" md="6">
-			<div class="mb-4 px-3 py-3 border">
-				<h5>Admins</h5>
-
-				<VRow
-					v-for="(m, i) in deployParams.admins" :key="i"
-					class="mb-3"
-				>
-					<VCol md="10">
-						<h6 class="member-or-admin my-2">{{ m }}</h6>
-					</VCol>
-					<VCol md="2">
-						<VBtn
-							variant="tonal"
-							color="warning"
-							size="small"
-							class="w-100"
-							@click="removeAdmin(i)"
-						>
-							✕
-						</VBtn>
-					</VCol>
-				</VRow>
-
-				<VRow>
-					<VCol md="10">
-						<VTextField v-model="addAdminField" label="Address" variant="outlined" />
-					</VCol>
-					<VCol md="2">
-						<VBtn
-							variant="tonal"
-							color="success"
-							class="w-100 my-3"
-							size="small"
-							@click="addAdmin()"
-						>
-							+
-						</VBtn>
-					</VCol>
-				</VRow>
-			</div>
-		</VCol>
-
 		<!-- Members -->
-		<VCol cols="12" md="6">
-			<div class="mb-4 px-3 py-3 border">
-				<h5>Members</h5>
+		<VCol cols="12">
+			<div class="mb-4 px-3 py-3 bg-light">
+				<h3 class="text-primary">Members</h3>
 
 				<VRow
 					v-for="(m, i) in deployParams.members" :key="i"
 					class="mb-3"
 				>
 					<VCol md="10">
-						<h6 class="member-or-admin my-2">{{ m }}</h6>
+						<h5 class="member-or-admin my-2">{{ m }}</h5>
 					</VCol>
 					<VCol md="2">
 						<VBtn
 							variant="tonal"
-							color="warning"
-							size="small"
+							color="danger"
 							class="w-100"
 							@click="removeMember(i)"
 						>
@@ -136,21 +82,74 @@
 						<VBtn
 							variant="tonal"
 							color="success"
-							class="w-100 my-3"
-							size="small"
+							class="w-100"
 							@click="addMember()"
 						>
-							+
+							Add
 						</VBtn>
 					</VCol>
 				</VRow>
 			</div>
 		</VCol>
 
+		<!-- Admins -->
 		<VCol cols="12">
-			<h6>Deployment Fee: {{ deploymentFee }}</h6>
-			<VBtn color="primary" class="w-100 elevation-0" :disabled="deploying" @click="deployYieldSyncV1Vault()">
-				Deploy
+			<div class="mb-4 px-3 py-3 bg-light">
+				<h3 class="text-primary">Admins</h3>
+
+				<VRow
+					v-for="(m, i) in deployParams.admins" :key="i"
+					class="mb-3"
+				>
+					<VCol md="10">
+						<h5 class="member-or-admin my-2">{{ m }}</h5>
+					</VCol>
+					<VCol md="2">
+						<VBtn
+							variant="tonal"
+							color="danger"
+							class="w-100"
+							@click="removeAdmin(i)"
+						>
+							✕
+						</VBtn>
+					</VCol>
+				</VRow>
+
+				<VRow>
+					<VCol md="10">
+						<VTextField v-model="addAdminField" label="Address" variant="outlined" />
+					</VCol>
+					<VCol md="2">
+						<VBtn
+							variant="tonal"
+							color="success"
+							class="w-100"
+							@click="addAdmin()"
+						>
+							Add
+						</VBtn>
+					</VCol>
+				</VRow>
+			</div>
+		</VCol>
+
+		<!-- Sig Manager -->
+		<VCol v-if="false" cols="12">
+			<VTextField
+				v-model="deployParams.signatureManager"
+				type="text"
+				label="Signature Manager"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+		</VCol>
+
+		<VCol cols="12">
+			<VBtn color="primary" class="w-100 rounded-xl elevation-0" :disabled="deploying" @click="deployYieldSyncV1Vault()">
+				<h2>Deploy</h2>
 			</VBtn>
 		</VCol>
 	</VRow>
