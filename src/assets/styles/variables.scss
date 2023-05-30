@@ -2,6 +2,13 @@
 
 @import 'vuetify/_styles.scss';
 
+$primary: rgb(87, 117, 62);
+$light: rgb(245, 245, 245);
+
+$regulard-blur: 10px;
+
+$bg-img: url('~@/assets/blurry-gradient.svg');
+
 * {
 	font-family: 'Chakra Petch', sans-serif !important;
 	letter-spacing: 2px;
@@ -86,4 +93,23 @@ input:checked+.slider:before {
 
 .slider.round:before {
 	border-radius: 50%;
+}
+
+// [BG][GRADIENT] //
+.bg-gradient {
+	background-image: $bg-img;
+}
+
+// [BG][FROST][PRIMARY] //
+.bg-primary-frost-lightest {
+	background-color: mix($primary, rgba(255, 255, 255, .75), $weight: 10%);
+	backdrop-filter: blur($regulard-blur) !important;
+	-webkit-backdrop-filter: blur($regulard-blur) !important;
+}
+
+// [BG][FROST][LIGHT] //
+.bg-light-frost {
+	background-color: mix($light, rgba(255, 255, 255, .5), $weight: 50%);
+	backdrop-filter: blur($regulard-blur) !important;
+	-webkit-backdrop-filter: blur($regulard-blur) !important;
 }

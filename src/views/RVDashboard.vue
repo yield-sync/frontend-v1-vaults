@@ -1,5 +1,5 @@
 <template>
-	<VContainer class="py-16">
+	<VContainer style="padding: 160px 0;">
 		<div class="w-100 mx-auto" style="max-width: 800px;">
 			<VRow
 				bg-color="primary"
