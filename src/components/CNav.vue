@@ -48,14 +48,14 @@
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
-					Disconnect | {{
+						Disconnect ⦁ {{
 						$store.state.wallet.accounts[0] ?
 							$store.state.wallet.accounts[0].substring(0, 4) +
 							"..." +
 							$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
 							:
 							""
-					}} @ {{ $store.state.chainName }}
+						}} : {{ $store.state.chainName }}
 					</VBtn>
 				</VCol>
 			</VRow>
