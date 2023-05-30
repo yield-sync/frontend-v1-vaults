@@ -23,7 +23,7 @@
 					/>
 				</VCol>
 
-				<VCol cols="12" md="8" class="text-left">
+				<VCol cols="12" md="9" class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
 						<VBtn variant="plain" color="light">
 							Dashboard
@@ -31,37 +31,32 @@
 					</RouterLink>
 				</VCol>
 
-				<VCol cols="12" md="4" class="text-right">
+				<VCol cols="12" md="3" class="text-right">
 					<VBtn
 						v-if="!$store.state.wallet.connected"
 						@click="connectWallet()"
 						color="light"
 						variant="tonal"
-						class="rounded-pill"
+						class="w-100 rounded-pill"
 					>
-						Connect
+						Connect Wallet
 					</VBtn>
 					<VBtn
 						v-if="$store.state.wallet.connected"
 						@click="disconnectWallet()"
 						color="light"
 						variant="tonal"
-						class="rounded-pill"
+						class="w-100 rounded-pill"
 					>
-						Disconnect
+					Disconnect | {{
+						$store.state.wallet.accounts[0] ?
+							$store.state.wallet.accounts[0].substring(0, 4) +
+							"..." +
+							$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
+							:
+							""
+					}} @ {{ $store.state.chainName }}
 					</VBtn>
-
-					<h5 class="my-3">
-						<span class="text-primary">.</span>
-						{{
-							$store.state.wallet.accounts[0] ?
-								$store.state.wallet.accounts[0].substring(0, 4) +
-								"..." +
-								$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
-								:
-								""
-						}} : {{ $store.state.chainName }}
-					</h5>
 				</VCol>
 			</VRow>
 		</VContainer>
