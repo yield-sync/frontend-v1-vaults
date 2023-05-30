@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-gradient">
+	<div class="bg-gradient" style="background-attachment: fixed; background-size: cover;">
 		<!-- Top Navigation -->
 		<CNav />
 
