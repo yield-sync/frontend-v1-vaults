@@ -1,17 +1,12 @@
 <template>
 	<VRow>
-		<VCol cols="12" lg="6">
-			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
-				<h4 class="mb-3 text-primary">{{ address }}</h4>
-				<h6>Against Vote Count Required: {{ vault.againstVoteCountRequired }}</h6>
-				<h6>For Vote Count Required: {{ vault.forVoteCountRequired }}</h6>
-				<h6>Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h6>
-			</VCard>
-		</VCol>
-
-		<VCol cols="12" lg="6">
+		<VCol cols="12">
 			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 				<VRow>
+					<VCol cols="12">
+						<h4 class="mb-3 text-center text-primary">{{ address }}</h4>
+					</VCol>
+
 					<VCol cols="6">
 						<h4 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h4>
 					</VCol>
@@ -31,6 +26,104 @@
 								↗️ Transfer Out
 							</VBtn>
 						</RouterLink>
+					</VCol>
+
+					<VCol cols="12" sm="6">
+						<VRow>
+							<!-- [TITLE] -->
+							<VCol cols="7">
+								<h4 class="text-primary">Against Vote Count Required</h4>
+							</VCol>
+
+							<!-- [EDIT-BUTTON] -->
+							<VCol cols="5" class="text-right">
+								<VBtn
+									variant="outlined"
+									color="primary"
+									size="sm"
+									class="w-100"
+									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
+								>{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
+							</VCol>
+
+							<VCol cols="12">
+								<!-- [CURRENT] -->
+								<h3 v-if="!edit.againstVoteCountRequired" class="m-0">
+									{{ vault.againstVoteCountRequired }}
+								</h3>
+
+								<!-- [EDIT] -->
+								<VRow v-if="edit.againstVoteCountRequired" class="input-group input-group-sm">
+									<VCol cols="7">
+										<VTextField
+											v-model="update.againstVoteCountRequired"
+											size="sm"
+											type="number"
+											label="For Vote Count"
+											variant="outlined"
+										/>
+									</VCol>
+									<VCol cols="5" class="input-group-append">
+										<VBtn
+											variant="flat"
+											color="primary"
+											class="w-100"
+											@click="console.log()"
+										>Update</VBtn>
+									</VCol>
+								</VRow>
+							</VCol>
+						</VRow>
+					</VCol>
+
+					<VCol cols="12" sm="6">
+						<VRow>
+							<!-- [TITLE] -->
+							<VCol cols="7">
+								<h4 class="text-primary">For Vote Count Required</h4>
+							</VCol>
+
+							<!-- [EDIT-BUTTON] -->
+							<VCol cols="5" class="text-right">
+								<VBtn
+									variant="outlined"
+									color="primary"
+									size="sm"
+									class="w-100"
+									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
+								>{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
+							</VCol>
+
+							<VCol cols="12">
+								<!-- [CURRENT] -->
+								<h3 v-if="!edit.forVoteCountRequired" class="m-0">{{ vault.forVoteCountRequired }}</h3>
+
+								<!-- [EDIT] -->
+								<VRow v-if="edit.forVoteCountRequired" class="input-group input-group-sm">
+									<VCol cols="7">
+										<VTextField
+											v-model="update.forVoteCountRequired"
+											size="sm"
+											type="number"
+											label="For Vote Count"
+											variant="outlined"
+										/>
+									</VCol>
+									<VCol cols="5" class="input-group-append">
+										<VBtn
+											variant="flat"
+											color="primary"
+											class="w-100"
+											@click="console.log()"
+										>Update</VBtn>
+									</VCol>
+								</VRow>
+							</VCol>
+						</VRow>
+					</VCol>
+
+					<VCol cols="12" sm="12">
+						<h4 class="text-primary">Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h4>
 					</VCol>
 				</VRow>
 			</VCard>
@@ -194,7 +287,17 @@
 					againstVoteCountRequired: 0,
 					forVoteCountRequired: 0,
 					withdrawalDelaySeconds: 0,
-				}
+				},
+				edit: {
+					againstVoteCountRequired: false,
+					forVoteCountRequired: false,
+					withdrawalDelaySeconds: false
+				},
+				update: {
+					againstVoteCountRequired: 0,
+					forVoteCountRequired: 0,
+					withdrawalDelaySeconds: 0,
+				},
 			};
 		},
 
@@ -288,8 +391,11 @@
 			);
 
 			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
+			this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
 			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
+			this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
 			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
+			this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
 		},
 	});
 </script>
