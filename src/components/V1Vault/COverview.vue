@@ -31,12 +31,12 @@
 					<VCol cols="12" sm="6">
 						<VRow>
 							<!-- [TITLE] -->
-							<VCol cols="7">
+							<VCol cols="8">
 								<h4 class="text-primary">Against Vote Count Required</h4>
 							</VCol>
 
 							<!-- [EDIT-BUTTON] -->
-							<VCol cols="5" class="text-right">
+							<VCol cols="4" class="text-right">
 								<VBtn
 									variant="outlined"
 									color="primary"
@@ -79,12 +79,12 @@
 					<VCol cols="12" sm="6">
 						<VRow>
 							<!-- [TITLE] -->
-							<VCol cols="7">
+							<VCol cols="8">
 								<h4 class="text-primary">For Vote Count Required</h4>
 							</VCol>
 
 							<!-- [EDIT-BUTTON] -->
-							<VCol cols="5" class="text-right">
+							<VCol cols="4" class="text-right">
 								<VBtn
 									variant="outlined"
 									color="primary"
@@ -123,7 +123,51 @@
 					</VCol>
 
 					<VCol cols="12" sm="12">
-						<h4 class="text-primary">Withdrawal Delay Seconds: {{ vault.withdrawalDelaySeconds }}</h4>
+						<VRow>
+							<!-- [TITLE] -->
+							<VCol cols="8">
+								<h4 class="text-primary">Withdrawal Delay Seconds</h4>
+							</VCol>
+
+							<!-- [EDIT-BUTTON] -->
+							<VCol cols="4" class="text-right">
+								<VBtn
+									variant="outlined"
+									color="primary"
+									size="sm"
+									class="w-100"
+									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
+								>{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}</VBtn>
+							</VCol>
+
+							<VCol cols="12">
+								<!-- [CURRENT] -->
+								<h3 v-if="!edit.withdrawalDelaySeconds" class="m-0">
+									{{ vault.withdrawalDelaySeconds }}
+								</h3>
+
+								<!-- [EDIT] -->
+								<VRow v-if="edit.withdrawalDelaySeconds" class="input-group input-group-sm">
+									<VCol cols="7">
+										<VTextField
+											v-model="update.withdrawalDelaySeconds"
+											size="sm"
+											type="number"
+											label="For Vote Count"
+											variant="outlined"
+										/>
+									</VCol>
+									<VCol cols="5" class="input-group-append">
+										<VBtn
+											variant="flat"
+											color="primary"
+											class="w-100"
+											@click="console.log()"
+										>Update</VBtn>
+									</VCol>
+								</VRow>
+							</VCol>
+						</VRow>
 					</VCol>
 				</VRow>
 			</VCard>
