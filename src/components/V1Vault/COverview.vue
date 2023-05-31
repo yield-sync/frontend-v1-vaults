@@ -4,7 +4,7 @@
 			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
 				<VRow>
 					<VCol cols="12">
-						<h4 class="mb-3 text-center text-primary">{{ address }}</h4>
+						<h4 class="mb-3 text-primary">{{ address }}</h4>
 					</VCol>
 
 					<VCol cols="6">
@@ -28,7 +28,11 @@
 							</VBtn>
 						</RouterLink>
 					</VCol>
+				</VRow>
+			</VCard>
 
+			<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
+				<VRow>
 					<VCol cols="12" sm="6">
 						<VRow>
 							<!-- [TITLE] -->
