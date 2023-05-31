@@ -73,11 +73,21 @@
 				</VCol>
 			</VRow>
 
-			<COverview v-if="$store.state.pages.RVV1Vault.tab == 'overview'" :address="vaultAddress" />
-			<CMembers v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" :v1VaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'" />
-			<CAdmins v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" :v1VaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'" />
+			<COverview
+				v-if="$store.state.pages.RVV1Vault.tab == 'overview'"
+				:address="vaultAddress"
+				:asAdmin="$route.query.admin == 'true'"
+			/>
+			<CMembers
+				v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
+				:v1VaultAddress="vaultAddress"
+				:asAdmin="$route.query.admin == 'true'"
+			/>
+			<CAdmins
+				v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
+				:v1VaultAddress="vaultAddress"
+				:asAdmin="$route.query.admin == 'true'"
+			/>
 
 			<VCard v-if="$store.state.pages.RVV1Vault.tab == 'wr'">
 				<VTabs v-model="$store.state.pages.RVV1Vault.wrTab" bg-color="primary" color="light-green-lighten-5"

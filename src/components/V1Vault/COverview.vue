@@ -14,6 +14,7 @@
 					<VCol cols="6">
 						<RouterLink :to="`/v1-vault/${address}?eth=true`">
 							<VBtn
+								v-if="!asAdmin"
 								class="w-100 rounded-xl"
 								color="success"
 								variant="tonal"
@@ -38,6 +39,7 @@
 							<!-- [EDIT-BUTTON] -->
 							<VCol cols="4" class="text-right">
 								<VBtn
+									v-if="asAdmin"
 									variant="outlined"
 									color="primary"
 									size="sm"
@@ -48,12 +50,12 @@
 
 							<VCol cols="12">
 								<!-- [CURRENT] -->
-								<h3 v-if="!edit.againstVoteCountRequired" class="m-0">
+								<h3 v-if="!asAdmin || !edit.againstVoteCountRequired" class="m-0">
 									{{ vault.againstVoteCountRequired }}
 								</h3>
 
 								<!-- [EDIT] -->
-								<VRow v-if="edit.againstVoteCountRequired" class="input-group input-group-sm">
+								<VRow v-if="asAdmin && edit.againstVoteCountRequired" class="input-group input-group-sm">
 									<VCol cols="7">
 										<VTextField
 											v-model="update.againstVoteCountRequired"
@@ -86,6 +88,7 @@
 							<!-- [EDIT-BUTTON] -->
 							<VCol cols="4" class="text-right">
 								<VBtn
+									v-if="asAdmin"
 									variant="outlined"
 									color="primary"
 									size="sm"
@@ -96,10 +99,10 @@
 
 							<VCol cols="12">
 								<!-- [CURRENT] -->
-								<h3 v-if="!edit.forVoteCountRequired" class="m-0">{{ vault.forVoteCountRequired }}</h3>
+								<h3 v-if="!asAdmin || !edit.forVoteCountRequired" class="m-0">{{ vault.forVoteCountRequired }}</h3>
 
 								<!-- [EDIT] -->
-								<VRow v-if="edit.forVoteCountRequired" class="input-group input-group-sm">
+								<VRow v-if="asAdmin && edit.forVoteCountRequired" class="input-group input-group-sm">
 									<VCol cols="7">
 										<VTextField
 											v-model="update.forVoteCountRequired"
@@ -132,6 +135,7 @@
 							<!-- [EDIT-BUTTON] -->
 							<VCol cols="4" class="text-right">
 								<VBtn
+									v-if="asAdmin"
 									variant="outlined"
 									color="primary"
 									size="sm"
@@ -140,14 +144,14 @@
 								>{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}</VBtn>
 							</VCol>
 
-							<VCol cols="12">
+							<VCol cols="12" >
 								<!-- [CURRENT] -->
-								<h3 v-if="!edit.withdrawalDelaySeconds" class="m-0">
+								<h3 v-if="!asAdmin || !edit.withdrawalDelaySeconds" class="m-0">
 									{{ vault.withdrawalDelaySeconds }}
 								</h3>
 
 								<!-- [EDIT] -->
-								<VRow v-if="edit.withdrawalDelaySeconds" class="input-group input-group-sm">
+								<VRow v-if="asAdmin && edit.withdrawalDelaySeconds" class="input-group input-group-sm">
 									<VCol cols="7">
 										<VTextField
 											v-model="update.withdrawalDelaySeconds"
@@ -306,7 +310,12 @@
 			address: {
 				type: String,
 				required: true
-			}
+			},
+
+			asAdmin: {
+				type: Boolean,
+				default: false
+			},
 		},
 
 		data()
