@@ -1,11 +1,11 @@
 <template>
-	<VSheet color="primary">
+	<VSheet color="transparent">
 		<VContainer>
 			<VRow>
 				<VCol cols="12" md="8">
 					<RouterLink to="/" style="letter-spacing: 4px; text-decoration: none !important">
 						<h1
-							class="text-light text-uppercase"
+							class="text-primary text-uppercase"
 							style="letter-spacing: 4px;"
 						>
 							Yield Sync
@@ -26,8 +26,8 @@
 				<VCol cols="12" md="7" lg="8" xl="9"
 					class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="plain" color="light">
-							Dashboard
+						<VBtn variant="plain" color="primary">
+							<h3>Dashboard</h3>
 						</VBtn>
 					</RouterLink>
 				</VCol>
@@ -37,7 +37,7 @@
 					<VBtn
 						v-if="!$store.state.wallet.connected"
 						@click="connectWallet()"
-						color="light"
+						color="dark"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
@@ -46,7 +46,7 @@
 					<VBtn
 						v-if="$store.state.wallet.connected"
 						@click="disconnectWallet()"
-						color="light"
+						color="dark"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
