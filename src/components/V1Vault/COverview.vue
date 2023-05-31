@@ -45,7 +45,9 @@
 									size="sm"
 									class="w-100 rounded-xl"
 									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
-								>{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
+								>
+									{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}
+								</VBtn>
 							</VCol>
 
 							<VCol cols="12">
@@ -72,7 +74,9 @@
 											color="primary"
 											class="w-100 rounded-xl"
 											@click="updateAgainstVoteCountRequired()"
-										>Update</VBtn>
+										>
+											Update
+										</VBtn>
 									</VCol>
 								</VRow>
 							</VCol>
@@ -95,7 +99,9 @@
 									size="sm"
 									class="w-100 rounded-xl"
 									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
-								>{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
+								>
+									{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}
+								</VBtn>
 							</VCol>
 
 							<VCol cols="12">
@@ -120,7 +126,9 @@
 											color="primary"
 											class="w-100 rounded-xl"
 											@click="updateForVoteCountRequired()"
-										>Update</VBtn>
+										>
+											Update
+										</VBtn>
 									</VCol>
 								</VRow>
 							</VCol>
@@ -143,7 +151,9 @@
 									size="sm"
 									class="w-100 rounded-xl"
 									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
-								>{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}</VBtn>
+								>
+									{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}
+								</VBtn>
 							</VCol>
 
 							<VCol cols="12" >
@@ -170,7 +180,9 @@
 											color="primary"
 											class="w-100 rounded-xl"
 											@click="updateWithdrawalDelaySecondsRequired()"
-										>Update</VBtn>
+										>
+											Update
+										</VBtn>
 									</VCol>
 								</VRow>
 							</VCol>

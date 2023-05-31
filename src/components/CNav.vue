@@ -23,7 +23,8 @@
 					/>
 				</VCol>
 
-				<VCol cols="12" md="7" lg="8" xl="9" class="text-left">
+				<VCol cols="12" md="7" lg="8" xl="9"
+					class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
 						<VBtn variant="plain" color="light">
 							Dashboard
@@ -31,7 +32,8 @@
 					</RouterLink>
 				</VCol>
 
-				<VCol cols="12" md="5" lg="4" xl="3" class="text-right">
+				<VCol cols="12" md="5" lg="4" xl="3"
+					class="text-right">
 					<VBtn
 						v-if="!$store.state.wallet.connected"
 						@click="connectWallet()"
@@ -49,12 +51,12 @@
 						class="w-100 rounded-pill"
 					>
 						Disconnect ⦁ {{
-						$store.state.wallet.accounts[0] ?
-							$store.state.wallet.accounts[0].substring(0, 4) +
-							"..." +
-							$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
-							:
-							""
+							$store.state.wallet.accounts[0] ?
+								$store.state.wallet.accounts[0].substring(0, 4) +
+								"..." +
+								$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
+								:
+								""
 						}} : {{ $store.state.chainName }}
 					</VBtn>
 				</VCol>

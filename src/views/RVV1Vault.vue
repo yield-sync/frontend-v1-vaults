@@ -6,7 +6,7 @@
 					<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
 						<VBtn
 							:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
-							:color="'primary'"
+							color="primary"
 							size="sm"
 							class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
 						>
@@ -52,8 +52,8 @@
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
 					<VBtn :color="$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
-							'primary text-white' : 'white text-primary'
-						" class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
+						'primary text-white' : 'white text-primary'
+					" class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
 						<h3>Admins & Members</h3>
 					</VBtn>
@@ -122,38 +122,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+	import { defineComponent } from "vue";
 
-import COverview from "../components/V1Vault/COverview.vue";
-import CAdmins from "../components/V1Vault/CAdmins.vue";
-import CMembers from "../components/V1Vault/CMembers.vue";
-import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
-import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
-import CSettings from "../components/V1Vault/CSettings.vue";
+	import COverview from "../components/V1Vault/COverview.vue";
+	import CAdmins from "../components/V1Vault/CAdmins.vue";
+	import CMembers from "../components/V1Vault/CMembers.vue";
+	import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
+	import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
+	import CSettings from "../components/V1Vault/CSettings.vue";
 
-export default defineComponent({
-	name: "RVV1Vault",
+	export default defineComponent({
+		name: "RVV1Vault",
 
-	data() {
-		return {
-			asAdmin: false as boolean,
-			vaultAddress: this.$route.params.address as string,
-		};
-	},
+		data() 
+		{
+			return {
+				asAdmin: false as boolean,
+				vaultAddress: this.$route.params.address as string,
+			};
+		},
 
-	components: {
-		COverview,
-		CAdmins,
-		CMembers,
-		CWithdrawalRequest,
-		CCreateWithdrawalRequest,
-		CSettings,
-	},
+		components: {
+			COverview,
+			CAdmins,
+			CMembers,
+			CWithdrawalRequest,
+			CCreateWithdrawalRequest,
+			CSettings,
+		},
 
-	async created() {
-		if (this.$route.query.admin == "true") {
-			this.asAdmin = true;
-		}
-	},
-});
+		async created() 
+		{
+			if (this.$route.query.admin == "true") 
+			{
+				this.asAdmin = true;
+			}
+		},
+	});
 </script>
