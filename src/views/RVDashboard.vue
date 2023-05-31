@@ -38,7 +38,7 @@
 				</VCol>
 			</VRow>
 
-			<VCard class="px-6 py-6 rounded-xl elevation-0">
+			<VCard color="white" class="px-6 py-6 rounded-xl elevation-0">
 				<CMemberships v-if="tab == 'm'" />
 				<CAdminships v-if="tab == 'a'" />
 				<CDeploy v-if="tab == 'd'" />

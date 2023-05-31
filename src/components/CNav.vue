@@ -18,6 +18,7 @@
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
 						variant="outlined"
+						color="primary"
 						hide-details
 						@change="updateLocalStorage()"
 					/>
@@ -46,7 +47,7 @@
 					<VBtn
 						v-if="$store.state.wallet.connected"
 						@click="disconnectWallet()"
-						color="dark"
+						color="white"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
