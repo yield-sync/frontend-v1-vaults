@@ -115,10 +115,11 @@
 									</VCol>
 									<VCol cols="5" class="input-group-append">
 										<VBtn
+											:disabled="updating.forVoteCountRequired"
 											variant="flat"
 											color="primary"
 											class="w-100"
-											@click="console.log()"
+											@click="updateForVoteCountRequired()"
 										>Update</VBtn>
 									</VCol>
 								</VRow>
@@ -462,7 +463,45 @@
 
 					this.updating.againstVoteCountRequired = false;
 				});
-			}
+			},
+
+			updateForVoteCountRequired()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.address))
+				{
+					return;
+				}
+
+				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.address
+				);
+
+				v1Vault.methods.updateForVoteCountRequired(this.update.forVoteCountRequired).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async () =>
+				{
+					this.updating.forVoteCountRequired = true;
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					if (confirmationNumber == 0)
+					{
+						this.edit.forVoteCountRequired = false;
+
+						this.vault.forVoteCountRequired = await v1Vault.methods.forVoteCountRequired().call();
+						this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
+
+						this.updating.forVoteCountRequired = false;
+					}
+				}).on("error", async (error: Error) =>
+				{
+					this.error = String(error);
+
+					this.updating.forVoteCountRequired = false;
+				});
+			},
 		},
 
 		async created()
