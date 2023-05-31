@@ -29,10 +29,10 @@ h1 {
 
 .vault {
 	&:hover {
-		@extend .bg-light-green-lighten-4;
+		@extend .bg-light-green-lighten-5;
 	}
 
-	@extend .bg-light-green-lighten-5;
+	@extend .bg-grey-lighten-4;
 }
 
 .switch {
