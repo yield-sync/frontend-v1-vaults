@@ -40,10 +40,10 @@
 							<VCol cols="4" class="text-right">
 								<VBtn
 									v-if="asAdmin"
-									variant="outlined"
-									color="primary"
+									variant="flat"
+									color="light"
 									size="sm"
-									class="w-100"
+									class="w-100 rounded-xl"
 									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
 								>{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
 							</VCol>
@@ -70,7 +70,7 @@
 											:disabled="updating.againstVoteCountRequired"
 											variant="flat"
 											color="primary"
-											class="w-100"
+											class="w-100 rounded-xl"
 											@click="updateAgainstVoteCountRequired()"
 										>Update</VBtn>
 									</VCol>
@@ -90,10 +90,10 @@
 							<VCol cols="4" class="text-right">
 								<VBtn
 									v-if="asAdmin"
-									variant="outlined"
-									color="primary"
+									variant="flat"
+									color="light"
 									size="sm"
-									class="w-100"
+									class="w-100 rounded-xl"
 									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
 								>{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}</VBtn>
 							</VCol>
@@ -118,7 +118,7 @@
 											:disabled="updating.forVoteCountRequired"
 											variant="flat"
 											color="primary"
-											class="w-100"
+											class="w-100 rounded-xl"
 											@click="updateForVoteCountRequired()"
 										>Update</VBtn>
 									</VCol>
@@ -138,10 +138,10 @@
 							<VCol cols="4" class="text-right">
 								<VBtn
 									v-if="asAdmin"
-									variant="outlined"
-									color="primary"
+									variant="flat"
+									color="light"
 									size="sm"
-									class="w-100"
+									class="w-100 rounded-xl"
 									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
 								>{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}</VBtn>
 							</VCol>
@@ -165,10 +165,11 @@
 									</VCol>
 									<VCol cols="5" class="input-group-append">
 										<VBtn
+											:disabled="updating.withdrawalDelaySeconds"
 											variant="flat"
 											color="primary"
-											class="w-100"
-											@click="console.log()"
+											class="w-100 rounded-xl"
+											@click="updateWithdrawalDelaySecondsRequired()"
 										>Update</VBtn>
 									</VCol>
 								</VRow>
@@ -500,6 +501,44 @@
 					this.error = String(error);
 
 					this.updating.forVoteCountRequired = false;
+				});
+			},
+
+			updateWithdrawalDelaySecondsRequired()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.address))
+				{
+					return;
+				}
+
+				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.address
+				);
+
+				v1Vault.methods.updateWithdrawalDelaySeconds(this.update.withdrawalDelaySeconds).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async () =>
+				{
+					this.updating.withdrawalDelaySeconds = true;
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					if (confirmationNumber == 0)
+					{
+						this.edit.withdrawalDelaySeconds = false;
+
+						this.vault.withdrawalDelaySeconds = await v1Vault.methods.withdrawalDelaySeconds().call();
+						this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
+
+						this.updating.withdrawalDelaySeconds = false;
+					}
+				}).on("error", async (error: Error) =>
+				{
+					this.error = String(error);
+
+					this.updating.withdrawalDelaySeconds = false;
 				});
 			},
 		},

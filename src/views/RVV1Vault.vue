@@ -10,7 +10,7 @@
 							size="sm"
 							class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
 						>
-							Admin
+							<h3>Admin</h3>
 						</VBtn>
 					</RouterLink>
 				</VCol>
@@ -23,7 +23,7 @@
 							size="sm"
 							class="w-100 mb-3 rounded-e-xl elevation-0 border-primary"
 						>
-							Member
+							<h3>Member</h3>
 						</VBtn>
 					</RouterLink>
 				</VCol>
@@ -44,31 +44,35 @@
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
 					<VBtn
 						:color="$store.state.pages.RVV1Vault.tab == 'overview' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'overview'">
-						Overview
+						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'overview'"
+					>
+						<h3>Overview</h3>
 					</VBtn>
 				</VCol>
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
 					<VBtn :color="$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
 							'primary text-white' : 'white text-primary'
-						" class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'">
-						Admins & Members
+						" class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
+					>
+						<h3>Admins & Members</h3>
 					</VBtn>
 				</VCol>
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
 					<VBtn :color="$store.state.pages.RVV1Vault.tab == 'wr' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'wr'">
-						Withdrawal Req.
+						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'wr'"
+					>
+						<h3>Withdrawal Req.</h3>
 					</VBtn>
 				</VCol>
 
 				<VCol v-if="$route.query.admin !== 'true'" cols="3">
 					<VBtn
 						:color="$store.state.pages.RVV1Vault.tab == 'settings' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'settings'">
-						Settings
+						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'settings'"
+					>
+						<h3>Settings</h3>
 					</VBtn>
 				</VCol>
 			</VRow>
