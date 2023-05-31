@@ -67,10 +67,11 @@
 									</VCol>
 									<VCol cols="5" class="input-group-append">
 										<VBtn
+											:disabled="updating.againstVoteCountRequired"
 											variant="flat"
 											color="primary"
 											class="w-100"
-											@click="console.log()"
+											@click="updateAgainstVoteCountRequired()"
 										>Update</VBtn>
 									</VCol>
 								</VRow>
@@ -297,6 +298,8 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
+	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
@@ -351,6 +354,12 @@
 					forVoteCountRequired: 0,
 					withdrawalDelaySeconds: 0,
 				},
+				updating: {
+					againstVoteCountRequired: false,
+					forVoteCountRequired: false,
+					withdrawalDelaySeconds: false,
+				},
+				error: "" as string,
 			};
 		},
 
@@ -415,6 +424,44 @@
 						}
 					}
 				}
+			},
+
+			updateAgainstVoteCountRequired()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.address))
+				{
+					return;
+				}
+
+				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.address
+				);
+
+				v1Vault.methods.updateAgainstVoteCountRequired(this.update.againstVoteCountRequired).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on("sent", async () =>
+				{
+					this.updating.againstVoteCountRequired = true;
+				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+				{
+					console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+					if (confirmationNumber == 0)
+					{
+						this.edit.againstVoteCountRequired = false;
+
+						this.vault.againstVoteCountRequired = await v1Vault.methods.againstVoteCountRequired().call();
+						this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
+
+						this.updating.againstVoteCountRequired = false;
+					}
+				}).on("error", async (error: Error) =>
+				{
+					this.error = String(error);
+
+					this.updating.againstVoteCountRequired = false;
+				});
 			}
 		},
 
