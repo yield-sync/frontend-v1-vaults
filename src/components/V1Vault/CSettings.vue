@@ -4,7 +4,7 @@
 			<VBtn
 				:disabled="processing"
 				color="primary"
-				class="w-100"
+				class="w-100 rounded-xl"
 				@click="renounceMembership()"
 			>
 				Renounce Membership
