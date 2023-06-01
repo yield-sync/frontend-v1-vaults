@@ -29,7 +29,8 @@ const vuetify = createVuetify({
 					success: "#4CAF50",
 					warning: "#ffd712",
 					danger: "#ff0000",
-					white: "#FFFFFF"
+					white: "#FFFFFF",
+					"bg-light-frost": "mix($light, rgba(255, 255, 255, .1), $weight: 10%)"
 				},
 			}
 		}

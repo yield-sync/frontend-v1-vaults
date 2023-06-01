@@ -2,13 +2,27 @@
 
 @import 'vuetify/_styles.scss';
 
-$primary: rgb(87, 117, 62);
+$primary: #56733d;
 $light: rgb(245, 245, 245);
 $frosted: #ffffffd8;
 
 $regulard-blur: 10px;
 
 $bg-img: url('~@/assets/blurry-gradient.svg');
+
+// [BG][FROST][PRIMARY] //
+.bg-primary-frost-lightest {
+	background-color: mix($primary, rgba(255, 255, 255, .75), $weight: 10%);
+	backdrop-filter: blur($regulard-blur) !important;
+	-webkit-backdrop-filter: blur($regulard-blur) !important;
+}
+
+// [BG][FROST][LIGHT] //
+.bg-light-frost {
+	background-color: mix($light, rgba(255, 255, 255, .1), $weight: 10%);
+	backdrop-filter: blur($regulard-blur) !important;
+	-webkit-backdrop-filter: blur($regulard-blur) !important;
+}
 
 * {
 	font-family: 'Chakra Petch', sans-serif !important;
@@ -29,10 +43,15 @@ h1 {
 
 .vault {
 	&:hover {
-		@extend .bg-light-green-lighten-5;
+		background-color: mix($primary, rgba(255, 255, 255, 0), $weight: 0%);
+		backdrop-filter: blur($regulard-blur) !important;
+		-webkit-backdrop-filter: blur($regulard-blur) !important;
 	}
 
-	@extend .bg-grey-lighten-4;
+	color: $primary;
+	background-color: mix($light, rgba(255, 255, 255, .1), $weight: 10%);
+	backdrop-filter: blur($regulard-blur) !important;
+	-webkit-backdrop-filter: blur($regulard-blur) !important;
 }
 
 .switch {
@@ -99,18 +118,4 @@ input:checked+.slider:before {
 // [BG][GRADIENT] //
 .bg-gradient {
 	background-image: $bg-img;
-}
-
-// [BG][FROST][PRIMARY] //
-.bg-primary-frost-lightest {
-	background-color: mix($primary, rgba(255, 255, 255, .75), $weight: 10%);
-	backdrop-filter: blur($regulard-blur) !important;
-	-webkit-backdrop-filter: blur($regulard-blur) !important;
-}
-
-// [BG][FROST][LIGHT] //
-.bg-light-frost {
-	background-color: mix($light, rgba(255, 255, 255, .5), $weight: 50%);
-	backdrop-filter: blur($regulard-blur) !important;
-	-webkit-backdrop-filter: blur($regulard-blur) !important;
 }

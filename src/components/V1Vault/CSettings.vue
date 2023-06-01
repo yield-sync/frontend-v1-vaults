@@ -1,6 +1,6 @@
 <template>
 	<VContainer>
-		<VCard class="mb-6 rounded-xl elevation-0">
+		<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 			<VCardTitle class="bg-primary text-light">
 				<h4 class="m-0 text-center text-uppercase">Settings</h4>
 			</VCardTitle>
@@ -9,7 +9,7 @@
 				<VBtn
 					:disabled="processing"
 					color="primary"
-					class="w-100 rounded-xl"
+					class="w-100 rounded-xl elevation-0"
 					@click="renounceMembership()"
 				>
 					Renounce Membership

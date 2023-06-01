@@ -9,7 +9,7 @@
 			>
 				<VCol cols="4">
 					<VBtn
-						:color="tab == 'm' ? 'primary text-white' : 'white text-primary'"
+						:class="tab == 'm' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
 						class="w-100 rounded-pill elevation-0"
 						@click="tab = 'm'"
 					>
@@ -19,7 +19,7 @@
 
 				<VCol cols="4">
 					<VBtn
-						:color="tab == 'a' ? 'primary text-white' : 'white text-primary'"
+						:class="tab == 'a' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
 						class="w-100 rounded-pill elevation-0"
 						@click="tab = 'a'"
 					>
@@ -29,7 +29,7 @@
 
 				<VCol cols="4">
 					<VBtn
-						:color="tab == 'd' ? 'primary text-white' : 'white text-primary'"
+						:class="tab == 'd' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
 						class="w-100 rounded-pill elevation-0"
 						@click="tab = 'd'"
 					>
@@ -38,11 +38,11 @@
 				</VCol>
 			</VRow>
 
-			<VCard color="white" class="px-6 py-6 rounded-xl elevation-0">
+
 				<CMemberships v-if="tab == 'm'" />
 				<CAdminships v-if="tab == 'a'" />
 				<CDeploy v-if="tab == 'd'" />
-			</VCard>
+
 		</div>
 	</VContainer>
 </template>

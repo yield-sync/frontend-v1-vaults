@@ -1,7 +1,7 @@
 <template>
 	<VRow>
 		<VCol cols="12">
-			<VCard class="mb-6 rounded-xl elevation-0">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="text-center text-uppercase">Overview</h4>
 				</VCardTitle>
@@ -46,7 +46,7 @@
 				</VCardText>
 			</VCard>
 
-			<VCard class="mb-6 rounded-xl elevation-0">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">Properties</h4>
 				</VCardTitle>
@@ -94,7 +94,7 @@
 										<VCol cols="5" class="input-group-append">
 											<VBtn
 												:disabled="updating.againstVoteCountRequired"
-												variant="flat"
+												variant="tonal"
 												color="primary"
 												class="w-100 rounded-xl"
 												@click="updateAgainstVoteCountRequired()"
@@ -146,7 +146,7 @@
 										<VCol cols="5" class="input-group-append">
 											<VBtn
 												:disabled="updating.forVoteCountRequired"
-												variant="flat"
+												variant="tonal"
 												color="primary"
 												class="w-100 rounded-xl"
 												@click="updateForVoteCountRequired()"
@@ -200,7 +200,7 @@
 										<VCol cols="5" class="input-group-append">
 											<VBtn
 												:disabled="updating.withdrawalDelaySeconds"
-												variant="flat"
+												variant="tonal"
 												color="primary"
 												class="w-100 rounded-xl"
 												@click="updateWithdrawalDelaySecondsRequired()"
@@ -218,7 +218,7 @@
 		</VCol>
 
 		<VCol cols="12">
-			<VCard class="mb-6 rounded-xl elevation-0">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">ERC 20 Tokens</h4>
 				</VCardTitle>
@@ -283,7 +283,7 @@
 				</VCardText>
 			</VCard>
 
-			<VCard class="mb-6 rounded-xl elevation-0">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">ERC 721 Tokens (NFTs)</h4>
 				</VCardTitle>

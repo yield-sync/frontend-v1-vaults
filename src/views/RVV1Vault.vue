@@ -45,25 +45,38 @@
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
 					<VBtn
-						:color="$store.state.pages.RVV1Vault.tab == 'overview' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'overview'"
+						:class="
+							$store.state.pages.RVV1Vault.tab == 'overview' ?
+								'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
+						class="w-100 mb-3 rounded-xl elevation-0"
+						@click="$store.state.pages.RVV1Vault.tab = 'overview'"
 					>
 						<h3>Overview</h3>
 					</VBtn>
 				</VCol>
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
-					<VBtn :color="$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
-						'primary text-white' : 'white text-primary'
-					" class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
+					<VBtn
+						:class="
+							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
+								'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
+						class="w-100 mb-3 rounded-xl elevation-0"
+						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
 						<h3>Admins & Members</h3>
 					</VBtn>
 				</VCol>
 
 				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
-					<VBtn :color="$store.state.pages.RVV1Vault.tab == 'wr' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'wr'"
+					<VBtn
+						:class="
+							$store.state.pages.RVV1Vault.tab == 'wr' ?
+								'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
+						class="w-100 mb-3 rounded-xl elevation-0"
+						@click="$store.state.pages.RVV1Vault.tab = 'wr'"
 					>
 						<h3>Withdrawal Req.</h3>
 					</VBtn>
@@ -71,8 +84,12 @@
 
 				<VCol v-if="$route.query.admin !== 'true'" cols="3">
 					<VBtn
-						:color="$store.state.pages.RVV1Vault.tab == 'settings' ? 'primary text-white' : 'white text-primary'"
-						class="w-100 mb-3 rounded-xl elevation-0" @click="$store.state.pages.RVV1Vault.tab = 'settings'"
+						:class="
+							$store.state.pages.RVV1Vault.tab == 'settings' ?
+								'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
+						class="w-100 mb-3 rounded-xl elevation-0"
+						@click="$store.state.pages.RVV1Vault.tab = 'settings'"
 					>
 						<h3>Settings</h3>
 					</VBtn>
