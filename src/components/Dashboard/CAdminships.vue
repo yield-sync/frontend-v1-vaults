@@ -1,5 +1,5 @@
 <template>
-	<VRow class="mt-6 mb-6">
+	<VRow class="mt-3 mb-6">
 		<VCol cols="12" md="4">
 			<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Vault Address</h3>
 		</VCol>

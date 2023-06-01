@@ -1,56 +1,58 @@
 <template>
 	<VContainer>
-		<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
-			<VCardTitle>
-				<h4 class="text-primary">Members</h4>
+		<VCard class="mb-6 rounded-xl elevation-0">
+			<VCardTitle class="bg-primary text-light">
+				<h4 class="m-0 text-center text-uppercase">Members</h4>
 			</VCardTitle>
 
-			<VRow v-for="(a, i) in members" :key="i" class="">
-				<VCol md="9" lg="9">
-					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<VBtn variant="plain" size="sm" class="word-wrap">🔗 {{ a }}</VBtn>
-					</a>
-				</VCol>
+			<VCardText class="mt-4">
+				<VRow v-for="(a, i) in members" :key="i" class="">
+					<VCol md="9" lg="9">
+						<a
+							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<VBtn variant="plain" size="sm" class="word-wrap">🔗 {{ a }}</VBtn>
+						</a>
+					</VCol>
 
-				<VCol md="1" lg="1">
-					<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
-				</VCol>
+					<VCol md="1" lg="1">
+						<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
+					</VCol>
 
-				<VCol v-if="asAdmin" md="2" lg="2">
-					<VBtn
-						:disabled="removing"
-						color="danger"
-						class="w-100 rounded-xl elevation-0"
-						@click="removeMember(a)"
-					>
-						Remove
-					</VBtn>
-				</VCol>
-			</VRow>
+					<VCol v-if="asAdmin" md="2" lg="2">
+						<VBtn
+							:disabled="removing"
+							color="danger"
+							class="w-100 rounded-xl elevation-0"
+							@click="removeMember(a)"
+						>
+							Remove
+						</VBtn>
+					</VCol>
+				</VRow>
 
-			<VRow v-if="asAdmin">
-				<VCol md="10" lg="10">
-					<VTextField
-						v-model="tobeAdded"
-						label="Address to be added as a Member"
-						variant="outlined"
-						hide-details
-					/>
-				</VCol>
-				<VCol md="2" lg="2">
-					<VBtn :disabled="adding" color="success" class="w-100 rounded-xl elevation-0" @click="addMember()">
-						Add
-					</VBtn>
-				</VCol>
+				<VRow v-if="asAdmin">
+					<VCol md="10" lg="10">
+						<VTextField
+							v-model="tobeAdded"
+							label="Address to be added as a Member"
+							variant="outlined"
+							hide-details
+						/>
+					</VCol>
+					<VCol md="2" lg="2">
+						<VBtn :disabled="adding" color="success" class="w-100 rounded-xl elevation-0" @click="addMember()">
+							Add
+						</VBtn>
+					</VCol>
 
-				<VCol cols="12">
-					<h6 class="text-danger">{{ error }}</h6>
-				</VCol>
-			</VRow>
+					<VCol cols="12">
+						<h6 class="text-danger">{{ error }}</h6>
+					</VCol>
+				</VRow>
+			</VCardText>
 		</VCard>
 	</VContainer>
 </template>

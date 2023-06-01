@@ -1,16 +1,22 @@
 <template>
 	<VContainer>
-		<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0">
-			<VBtn
-				:disabled="processing"
-				color="primary"
-				class="w-100 rounded-xl"
-				@click="renounceMembership()"
-			>
-				Renounce Membership
-			</VBtn>
+		<VCard class="mb-6 rounded-xl elevation-0">
+			<VCardTitle class="bg-primary text-light">
+				<h4 class="m-0 text-center text-uppercase">Settings</h4>
+			</VCardTitle>
 
-			<h6 v-if="error">{{ error }}</h6>
+			<VCardText class="mt-4">
+				<VBtn
+					:disabled="processing"
+					color="primary"
+					class="w-100 rounded-xl"
+					@click="renounceMembership()"
+				>
+					Renounce Membership
+				</VBtn>
+
+				<h6 v-if="error">{{ error }}</h6>
+			</VCardText>
 		</VCard>
 	</VContainer>
 </template>

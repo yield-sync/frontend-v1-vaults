@@ -47,7 +47,7 @@
 					class="text-center"
 				>
 					<a
-						:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}#readContract`"
+						:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -64,7 +64,7 @@
 
 	export default defineComponent({
 		name: "CFooter",
-		data() 
+		data()
 		{
 			return {
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,

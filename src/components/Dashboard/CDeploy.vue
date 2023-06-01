@@ -2,7 +2,7 @@
 	<VRow>
 		<VCol cols="6" class="">
 			<a
-				:href="`https://${d}.etherscan.io/address/${factory}#readContract`"
+				:href="`https://${d}.etherscan.io/address/${factory}`"
 				target="_blank"
 				rel="noopener noreferrer"
 			>

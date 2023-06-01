@@ -33,9 +33,11 @@
 				</VCol>
 
 				<VCol cols="4" class="text-right">
-					<a :href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
-						target="_blank" rel="noopener noreferrer">
-						<VBtn variant="tonal">
+					<a
+						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
+						target="_blank" rel="noopener noreferrer"
+					>
+						<VBtn color="light" variant="tonal">
 							<h6>🔗 Etherscan</h6>
 						</VBtn>
 					</a>
@@ -134,7 +136,7 @@
 	export default defineComponent({
 		name: "RVV1Vault",
 
-		data() 
+		data()
 		{
 			return {
 				asAdmin: false as boolean,
@@ -151,9 +153,9 @@
 			CSettings,
 		},
 
-		async created() 
+		async created()
 		{
-			if (this.$route.query.admin == "true") 
+			if (this.$route.query.admin == "true")
 			{
 				this.asAdmin = true;
 			}
