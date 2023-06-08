@@ -120,6 +120,7 @@
 								:model-value="(parseInt(w.forVoteCount) / againstVoteCountRequired * 100)"
 								:height="32"
 								striped
+								class="rounded-xl"
 							>
 								<strong>{{ w.forVoteCount }}/{{ againstVoteCountRequired }}</strong>
 							</v-progress-linear>
@@ -132,6 +133,7 @@
 								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
 								:height="32"
 								striped
+								class="rounded-xl"
 							>
 								<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
 							</v-progress-linear>
@@ -147,6 +149,7 @@
 						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
+								variant="tonal"
 								color="success"
 								size="large"
 								class="px-6 rounded-xl elevation-0"
@@ -159,6 +162,7 @@
 						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
+								variant="tonal"
 								color="danger"
 								size="large"
 								class="px-6 rounded-xl elevation-0"
