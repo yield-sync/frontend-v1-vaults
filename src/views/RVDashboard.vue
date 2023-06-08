@@ -39,9 +39,9 @@
 			</VRow>
 
 
-				<CMemberships v-if="tab == 'm'" />
-				<CAdminships v-if="tab == 'a'" />
-				<CDeploy v-if="tab == 'd'" />
+			<CMemberships v-if="tab == 'm'" />
+			<CAdminships v-if="tab == 'a'" />
+			<CDeploy v-if="tab == 'd'" />
 
 		</div>
 	</VContainer>

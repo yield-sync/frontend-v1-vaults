@@ -34,8 +34,8 @@
 									variant="tonal"
 									@click="
 										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.wrTab = 'c';
-										$store.state.pages.RVV1Vault.withdrawalRequestKey++
+										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
+										$store.state.pages.RVV1Vault.withdrawalRequest.key++
 									"
 								>
 									↗️ Transfer Out
@@ -261,8 +261,8 @@
 									variant="tonal"
 									@click="
 										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.wrTab = 'c';
-										$store.state.pages.RVV1Vault.withdrawalRequestKey++
+										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
+										$store.state.pages.RVV1Vault.withdrawalRequest.key++
 									"
 								>
 									↗️ Transfer Out

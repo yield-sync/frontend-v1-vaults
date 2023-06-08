@@ -142,8 +142,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.wrTab = "o";
-							this.$store.state.pages.RVV1Vault.withdrawalRequestKey++;
+							this.$store.state.pages.RVV1Vault.withdrawalRequest.tab = "o";
+							this.$store.state.pages.RVV1Vault.withdrawalRequest.key++;
 						}
 
 						this.creating = false;

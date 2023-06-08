@@ -37,18 +37,32 @@ export default createStore({
 		isAdmin: false as boolean,
 
 		contract: {
-			yieldSyncGovernance: undefined as undefined | Contract,
-			yieldSyncV1VaultFactory: undefined as undefined | Contract,
-			yieldSyncV1VaultAccessControl: undefined as undefined | Contract,
+			yieldSyncGovernance: undefined,
+			yieldSyncV1VaultFactory: undefined,
+			yieldSyncV1VaultAccessControl: undefined,
+		} as {
+			yieldSyncGovernance: undefined | Contract
+			yieldSyncV1VaultFactory: undefined | Contract
+			yieldSyncV1VaultAccessControl: undefined | Contract
 		},
 
 		pages: {
 			RVV1Vault: {
-				withdrawalRequestKey: 0 as number,
-				tab: "overview" as string,
-				wrTab: "o" as string,
+				withdrawalRequest: {
+					tab: "o",
+					key: 0,
+				},
+				tab: "overview",
 			}
-		}
+		} as {
+			RVV1Vault: {
+				withdrawalRequest: {
+					tab: string,
+					key: number
+				},
+				tab: string
+			}
+		},
 	},
 
 	mutations: {

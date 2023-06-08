@@ -125,7 +125,7 @@
 				</VCol>
 				<VCol md="2">
 					<VBtn
-					variant="flat"
+						variant="flat"
 						color="success"
 						class="w-100 rounded-xl elevation-0"
 						@click="addAdmin()"

@@ -106,36 +106,24 @@
 				:v1VaultAddress="vaultAddress"
 				:asAdmin="$route.query.admin == 'true'"
 			/>
+
 			<CAdmins
 				v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
 				:v1VaultAddress="vaultAddress"
 				:asAdmin="$route.query.admin == 'true'"
 			/>
 
-			<VCard v-if="$store.state.pages.RVV1Vault.tab == 'wr'">
-				<VTabs v-model="$store.state.pages.RVV1Vault.wrTab" bg-color="primary" color="light-green-lighten-5"
-					fixed-tabs>
-					<VTab value="o">Open WithdrawalRequests</VTab>
-					<VTab v-if="$route.query.admin !== 'true'" value="c">Create WithdrawalRequest</VTab>
-				</VTabs>
+			<CWithdrawalRequest
+				v-if="$store.state.pages.RVV1Vault.tab == 'wr'"
+				:vaultAddress="vaultAddress"
+				:asAdmin="$route.query.admin == 'true'"
+			/>
 
-				<VCardText variant="light">
-					<VWindow v-model="$store.state.pages.RVV1Vault.wrTab">
-						<VWindowItem value="o">
-							<CWithdrawalRequest :key="$store.state.pages.RVV1Vault.withdrawalRequestKey"
-								:vaultAddress="vaultAddress" :asAdmin="$route.query.admin == 'true'" />
-						</VWindowItem>
-
-						<VWindowItem value="c">
-							<CCreateWithdrawalRequest :vaultAddress="vaultAddress"
-								:asAdmin="$route.query.admin == 'true'" />
-						</VWindowItem>
-					</VWindow>
-				</VCardText>
-			</VCard>
-
-			<CSettings v-if="$store.state.pages.RVV1Vault.tab == 'settings'" :vaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'" />
+			<CSettings
+				v-if="$store.state.pages.RVV1Vault.tab == 'settings'"
+				:vaultAddress="vaultAddress"
+				:asAdmin="$route.query.admin == 'true'"
+			/>
 		</div>
 	</VContainer>
 </template>
@@ -147,7 +135,6 @@
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
 	import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
-	import CCreateWithdrawalRequest from "../components/V1Vault/CCreateWithdrawalRequest.vue";
 	import CSettings from "../components/V1Vault/CSettings.vue";
 
 	export default defineComponent({
@@ -166,7 +153,6 @@
 			CAdmins,
 			CMembers,
 			CWithdrawalRequest,
-			CCreateWithdrawalRequest,
 			CSettings,
 		},
 
