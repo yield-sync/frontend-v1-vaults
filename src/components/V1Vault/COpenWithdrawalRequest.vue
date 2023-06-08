@@ -65,56 +65,89 @@
 			<VCol v-if="opened[i]" cols="12">
 				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
 					<VRow>
-						<VCol cols="3">
-							<h4 class="text-primary">WR Id</h4>
-							<h4 class="text-dark">{{ w.id }}</h4>
+						<VCol cols="2">
+							<h4 class="mb-3 text-primary">WR Id: {{ w.id }}</h4>
 						</VCol>
 
-						<VCol cols="3">
-							<h4 class="text-primary">For Votes</h4>
-							<h4 class="text-dark">{{ w.forVoteCount }}/{{ againstVoteCountRequired }}</h4>
+						<VCol cols="10" class="text-right">
+							<h4 class="mb-3 text-primary" :title="w.creator">
+								Created by
+								{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.to.length - 4) }}
+							</h4>
+							<h4 class="text-dark"></h4>
 						</VCol>
 
-						<VCol cols="3">
-							<h4 class="text-primary">Against Votes</h4>
-							<h4 class="text-dark">{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</h4>
-						</VCol>
-
-						<VCol cols="3">
-							<h4 class="text-primary">Latest Relevant Approve Vote Time</h4>
-							<h4 class="text-dark">{{ w.latestRelevantApproveVoteTime }}</h4>
-						</VCol>
-
-						<VCol cols="3">
-							<h4 class="text-primary">Asset</h4>
+						<VCol cols="4" class="text-left">
+							<h4 class="mb-3 text-primary">Asset</h4>
 							<h4 v-if="w.forERC20">ERC 20</h4>
 							<h4 v-else-if="w.forERC721">ERC 721</h4>
 							<h4 v-else>Ether</h4>
 						</VCol>
 
-						<VCol cols="6">
-							<h4 class="text-primary">Token Contract</h4>
-							<h4>{{ w.creator }}</h4>
-						</VCol>
-
-						<VCol cols="3">
-							<h4 class="text-primary">Amount</h4>
+						<VCol cols="4" class="text-center">
+							<h4 class="mb-3 text-primary">Amount</h4>
 							<h4 class="text-dark">{{ w.amount * 10 ** -18 }}</h4>
 						</VCol>
 
-						<VCol cols="6">
-							<h4 class="text-primary">Creator</h4>
-							<h4 class="text-dark">{{ w.creator }}</h4>
-						</VCol>
-
-						<VCol cols="6">
-							<h4 class="text-primary">To</h4>
-							<h4 class="text-dark">{{ w.to }}</h4>
+						<VCol cols="4" class="text-right">
+							<h4 class="mb-3 text-primary">Token Contract</h4>
+							<a
+								:href="`https://etherscan.io/address/${w.tokenAddress}`"
+								target="_blank"
+								rel="noopener noreferrer"
+								:title="w.tokenAddress"
+							>
+								<VBtn color="dark" variant="tonal" class="">
+									🔗
+									{{
+										w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(
+											w.to.length - 4
+										)
+									}}
+								</VBtn>
+							</a>
 						</VCol>
 
 						<VCol cols="12">
-							<h4 class="text-primary">Voted Voter</h4>
-							<h4 v-for="(v, i) in w.votedMembers" :key="i">{{ i + 1 }}. {{ v }}</h4>
+							<h4 class="mb-3 text-primary">To</h4>
+							<h4 class="text-dark">{{ w.to }}</h4>
+						</VCol>
+
+						<VCol cols="6">
+							<h4 class="text-center mb-3 text-primary">For</h4>
+							<v-progress-linear
+								color="success"
+								:model-value="(parseInt(w.forVoteCount) / againstVoteCountRequired * 100)"
+								:height="32"
+								striped
+							>
+								<strong>{{ w.forVoteCount }}/{{ againstVoteCountRequired }}</strong>
+							</v-progress-linear>
+						</VCol>
+
+						<VCol cols="6">
+							<h4 class="text-center mb-3 text-primary">Against</h4>
+							<v-progress-linear
+								color="danger"
+								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
+								:height="32"
+								striped
+							>
+								<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
+							</v-progress-linear>
+						</VCol>
+
+						<VCol cols="12">
+							<h4 class="mb-3 text-primary">
+								Latest Relevant For Vote Time: {{ w.latestRelevantApproveVoteTime }}
+							</h4>
+						</VCol>
+
+						<VCol v-if=false cols="12">
+							<h4 class="mb-3 text-primary">Voted Voter</h4>
+							<h4 v-for="(v, i) in w.votedMembers" :key="i">
+								{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
+							</h4>
 						</VCol>
 
 						<VCol cols="4">
