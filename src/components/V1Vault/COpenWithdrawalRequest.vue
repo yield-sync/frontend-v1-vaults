@@ -77,19 +77,19 @@
 							<h4 class="text-dark"></h4>
 						</VCol>
 
-						<VCol cols="4" class="text-left">
+						<VCol cols="3" class="text-left">
 							<h4 class="mb-3 text-primary">Asset</h4>
-							<h4 v-if="w.forERC20">ERC 20</h4>
-							<h4 v-else-if="w.forERC721">ERC 721</h4>
-							<h4 v-else>Ether</h4>
+							<h3 v-if="w.forERC20">ERC 20</h3>
+							<h3 v-else-if="w.forERC721">ERC 721</h3>
+							<h3 v-else>Ether</h3>
 						</VCol>
 
-						<VCol cols="4" class="text-center">
+						<VCol cols="6" class="text-center">
 							<h4 class="mb-3 text-primary">Amount</h4>
-							<h4 class="text-dark">{{ w.amount * 10 ** -18 }}</h4>
+							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
 						</VCol>
 
-						<VCol cols="4" class="text-right">
+						<VCol cols="3" class="text-right">
 							<h4 class="mb-3 text-primary">Token Contract</h4>
 							<a
 								:href="`https://etherscan.io/address/${w.tokenAddress}`"
@@ -109,12 +109,12 @@
 						</VCol>
 
 						<VCol cols="12">
-							<h4 class="mb-3 text-primary">To</h4>
-							<h4 class="text-dark">{{ w.to }}</h4>
+							<h4 class="mb-3 text-center text-primary">To</h4>
+							<h3 class="mb-3 text-center text-dark">{{ w.to }}</h3>
 						</VCol>
 
 						<VCol cols="6">
-							<h4 class="text-center mb-3 text-primary">For</h4>
+							<h3 class="text-center mb-3 text-success text-uppercase">For</h3>
 							<v-progress-linear
 								color="success"
 								:model-value="(parseInt(w.forVoteCount) / againstVoteCountRequired * 100)"
@@ -126,7 +126,7 @@
 						</VCol>
 
 						<VCol cols="6">
-							<h4 class="text-center mb-3 text-primary">Against</h4>
+							<h3 class="text-center mb-3 text-danger text-uppercase">Against</h3>
 							<v-progress-linear
 								color="danger"
 								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
@@ -137,12 +137,6 @@
 							</v-progress-linear>
 						</VCol>
 
-						<VCol cols="12">
-							<h4 class="mb-3 text-primary">
-								Latest Relevant For Vote Time: {{ w.latestRelevantApproveVoteTime }}
-							</h4>
-						</VCol>
-
 						<VCol v-if=false cols="12">
 							<h4 class="mb-3 text-primary">Voted Voter</h4>
 							<h4 v-for="(v, i) in w.votedMembers" :key="i">
@@ -150,29 +144,37 @@
 							</h4>
 						</VCol>
 
-						<VCol cols="4">
+						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
 								color="success"
-								class="w-100 rounded-xl elevation-0"
+								size="large"
+								class="px-6 rounded-xl elevation-0"
 								@click="voteOnWithdrawalRequest(w.id, true)"
 							>
 								Vote For
 							</VBtn>
 						</VCol>
 
-						<VCol cols="4">
+						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
 								color="danger"
-								class="w-100 rounded-xl elevation-0"
+								size="large"
+								class="px-6 rounded-xl elevation-0"
 								@click="voteOnWithdrawalRequest(w.id, false)"
 							>
 								Vote Against
 							</VBtn>
 						</VCol>
 
-						<VCol cols="4">
+						<VCol cols="12">
+							<h4 class="mb-3 text-center text-primary">
+								Latest Relevant For Vote Time: {{ w.latestRelevantApproveVoteTime }}
+							</h4>
+						</VCol>
+
+						<VCol cols="12">
 							<VBtn
 								:disabled="
 									(
