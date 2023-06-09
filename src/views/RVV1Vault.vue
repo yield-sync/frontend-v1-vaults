@@ -78,7 +78,7 @@
 						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'wr'"
 					>
-						💸 Withdrawal Req.
+						💸 Transfer Req.
 					</VBtn>
 				</VCol>
 

@@ -13,8 +13,8 @@
 			color="light-green-lighten-5"
 			fixed-tabs
 		>
-			<VTab value="o">Open WithdrawalRequests</VTab>
-			<VTab v-if="$route.query.admin !== 'true'" value="c">Create WithdrawalRequest</VTab>
+			<VTab value="o">Open Transfer Requests</VTab>
+			<VTab v-if="$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
 		</VTabs>
 
 		<VCardText variant="light">

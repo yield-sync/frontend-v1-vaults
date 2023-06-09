@@ -2,115 +2,127 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="2">
-				<h5 class="text-primary">Amount</h5>
+				<h4 class="text-center text-primary">Token Symbol</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 class="text-primary">Token</h5>
-				<h6 class="text-primary">Token Symbol</h6>
+				<h4 class="text-center text-primary">Amount</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 class="text-primary">To</h5>
+				<h4 class="text-center text-primary">To</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 class="text-primary">For Vote Count</h5>
+				<h4 class="text-center text-primary">For Votes</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 class="text-primary">Against Vote Count</h5>
+				<h4 class="text-center text-primary">Against Votes</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h5 class="text-primary">Expand</h5>
+				<h4 class="text-center text-primary">Expand</h4>
 			</VCol>
 		</VRow>
 
 		<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
 			<VCol cols="2">
-				<h6>{{ w.amount * 10 ** -18 }}</h6>
+				<h4 class="text-center ">{{ w.tokenSymbol }}</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h6>{{ w.token }}</h6>
-				<h6>{{ w.tokenSymbol }}</h6>
+				<h4 class="text-center ">{{ w.amount * 10 ** -18 }}</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<a :href="`https://etherscan.io/address/${w.to}`" target="_blank" rel="noopener noreferrer">
-					<h6>
-						{{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
-					</h6>
+				<a
+					:href="`https://etherscan.io/address/${w.to}`"
+					target="_blank"
+					rel="noopener noreferrer"
+					:title="w.to"
+					class="text-center "
+				>
+					<VBtn variant="plain" class="w-100 rounded-xl">
+						🔗 {{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
+					</VBtn>
 				</a>
 			</VCol>
 
 			<VCol cols="2">
-				<h6>{{ w.forVoteCount }}</h6>
+				<h4 class="text-center">{{ w.forVoteCount }}</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h6>{{ w.againstVoteCount }}</h6>
+				<h4 class="text-center">{{ w.againstVoteCount }}</h4>
 			</VCol>
 
 			<VCol cols="2">
 				<VBtn
 					variant="tonal"
 					color="primary"
-					class="rounded-xl elevation-0"
+					class="w-100 rounded-xl elevation-0"
 					@click="opened[i] = !opened[i]"
-				>Expand</VBtn>
+				>➕</VBtn>
 			</VCol>
 
 			<VCol v-if="opened[i]" cols="12">
 				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
 					<VRow>
 						<VCol cols="6">
-							<h2 class="mb-3 text-primary">Trasnfer Request Id #{{ w.id }}</h2>
+							<h2 class="mb-3 text-uppercase text-primary">Transfer Request {{ w.id }}</h2>
 						</VCol>
 
 						<VCol cols="6" class="text-right">
-							<h3 class="mb-3 text-primary" :title="w.creator">
+							<h4 class="mb-3 text-uppercase text-primary" :title="w.creator">
 								Created by
 								{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.to.length - 4) }}
-							</h3>
-							<h4 class="text-dark"></h4>
+							</h4>
 						</VCol>
 
 						<VCol cols="3" class="text-left">
-							<h4 class="mb-3 text-primary">Asset</h4>
+							<h3 class="mb-3 text-uppercase text-primary">Asset</h3>
 							<h3 v-if="w.forERC20">ERC 20</h3>
 							<h3 v-else-if="w.forERC721">ERC 721</h3>
 							<h3 v-else>Ether</h3>
 						</VCol>
 
 						<VCol cols="6" class="text-center">
-							<h4 class="mb-3 text-primary">Amount</h4>
+							<h3 class="mb-3 text-uppercase text-primary">Amount</h3>
 							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
 						</VCol>
 
 						<VCol cols="3" class="text-right">
-							<h4 class="mb-3 text-primary">Token Contract</h4>
+							<h3 class="mb-3 text-uppercase text-primary">Token Contract</h3>
 							<a
 								:href="`https://etherscan.io/address/${w.tokenAddress}`"
 								target="_blank"
 								rel="noopener noreferrer"
 								:title="w.tokenAddress"
 							>
-								<VBtn color="dark" variant="tonal" class="">
+								<VBtn color="dark" variant="plain" class="rounded-xl">
 									🔗
 									{{
 										w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(
-											w.to.length - 4
+											w.tokenAddress.length - 4
 										)
 									}}
 								</VBtn>
 							</a>
 						</VCol>
 
-						<VCol cols="12">
-							<h4 class="mb-3 text-center text-primary">To</h4>
-							<h3 class="mb-3 text-center text-dark">{{ w.to }}</h3>
+						<VCol cols="12" class="text-center">
+							<h3 class="mb-3 text-center text-uppercase text-primary">To</h3>
+							<a
+								:href="`https://etherscan.io/address/${w.to}`"
+								target="_blank"
+								rel="noopener noreferrer"
+								:title="w.to"
+							>
+								<VBtn color="dark" variant="plain" class="rounded-xl">
+									<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
+								</VBtn>
+							</a>
 						</VCol>
 
 						<VCol cols="6">
@@ -173,8 +185,11 @@
 						</VCol>
 
 						<VCol cols="12">
+							<h5 class="mb-3 text-center text-primary">
+								Latest Relevant For Vote Time
+							</h5>
 							<h4 class="mb-3 text-center text-primary">
-								Latest Relevant For Vote Time: {{ w.latestRelevantApproveVoteTime }}
+								{{ w.latestRelevantApproveVoteTime }}
 							</h4>
 						</VCol>
 

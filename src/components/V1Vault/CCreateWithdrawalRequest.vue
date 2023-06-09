@@ -75,7 +75,7 @@
 					color="primary"
 					class="w-100" @click="createWR()"
 				>
-					Create Withdrawal Request
+					Create Request
 				</VBtn>
 				<h6 v-if="error" class="text-danger">{{ error }}</h6>
 			</VCol>
