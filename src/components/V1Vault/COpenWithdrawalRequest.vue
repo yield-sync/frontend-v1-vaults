@@ -161,9 +161,8 @@
 						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
-								variant="tonal"
+								variant="flat"
 								color="success"
-								size="large"
 								class="px-6 rounded-xl elevation-0"
 								@click="voteOnWithdrawalRequest(w.id, true)"
 							>
@@ -174,9 +173,8 @@
 						<VCol cols="6" class="text-center">
 							<VBtn
 								:disabled="voting[w.id]"
-								variant="tonal"
+								variant="flat"
 								color="danger"
-								size="large"
 								class="px-6 rounded-xl elevation-0"
 								@click="voteOnWithdrawalRequest(w.id, false)"
 							>
