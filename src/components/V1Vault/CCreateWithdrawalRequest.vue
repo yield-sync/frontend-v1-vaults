@@ -2,7 +2,7 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="12" class="">
-				<VRadioGroup v-model="withdrawalRequest.for" :label="'For: ' + withdrawalRequest.for " inline>
+				<VRadioGroup v-model="withdrawalRequest.for" :label="'For: ' + withdrawalRequest.for" inline>
 					<VRadio
 						label="Ether"
 						value="Ether"
@@ -11,10 +11,12 @@
 					<VRadio
 						label="ERC 20"
 						value="ERC 20"
+						color="primary"
 					/>
 					<VRadio
 						label="ERC 721"
 						value="ERC 721"
+						color="primary"
 					/>
 				</VRadioGroup>
 			</VCol>
