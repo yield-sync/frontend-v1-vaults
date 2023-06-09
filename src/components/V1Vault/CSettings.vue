@@ -31,7 +31,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									color="light"
+									:color="edit.forVoteCountRequired ? 'danger' : 'light'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
 								>
@@ -41,8 +41,8 @@
 								<VBtn
 									v-if="asAdmin && edit.forVoteCountRequired"
 									:disabled="updating.forVoteCountRequired"
-									variant="tonal"
-									color="primary"
+									variant="flat"
+									color="success"
 									class="w-100 mb-3 rounded-xl"
 									@click="updateForVoteCountRequired()"
 								>
@@ -76,7 +76,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									color="light"
+									:color="edit.againstVoteCountRequired ? 'danger' : 'light'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
 								>
@@ -86,8 +86,8 @@
 								<VBtn
 									v-if="asAdmin && edit.againstVoteCountRequired"
 									:disabled="updating.againstVoteCountRequired"
-									variant="tonal"
-									color="primary"
+									variant="flat"
+									color="success"
 									class="mb-3 w-100 rounded-xl"
 									@click="updateAgainstVoteCountRequired()"
 								>
@@ -120,7 +120,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									color="light"
+									:color="edit.withdrawalDelaySeconds ? 'danger' : 'light'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
 								>
@@ -130,8 +130,8 @@
 								<VBtn
 									v-if="asAdmin && edit.withdrawalDelaySeconds"
 									:disabled="updating.withdrawalDelaySeconds"
-									variant="tonal"
-									color="primary"
+									variant="flat"
+									color="success"
 									class="w-100 mb-3 rounded-xl"
 									@click="updateWithdrawalDelaySecondsRequired()"
 								>

@@ -7,6 +7,10 @@
 
 			<VCardText class="mt-4">
 				<VRow v-for="(a, i) in members" :key="i" class="">
+					<VCol md="1" lg="1">
+						<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
+					</VCol>
+
 					<VCol md="9" lg="9">
 						<a
 							:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
@@ -17,14 +21,10 @@
 						</a>
 					</VCol>
 
-					<VCol md="1" lg="1">
-						<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
-					</VCol>
-
 					<VCol v-if="asAdmin" md="2" lg="2">
 						<VBtn
 							:disabled="removing"
-							variant="tonal"
+							variant="flat"
 							color="danger"
 							class="w-100 rounded-xl elevation-0"
 							@click="removeMember(a)"
@@ -46,7 +46,7 @@
 					<VCol md="2" lg="2">
 						<VBtn
 							:disabled="adding"
-							variant="tonal"
+							variant="flat"
 							color="success"
 							class="w-100 rounded-xl elevation-0"
 							@click="addMember()"

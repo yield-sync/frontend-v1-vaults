@@ -15,14 +15,16 @@
 								"
 								target="_blank" rel="noopener noreferrer"
 							>
-								<VBtn class="w-100" variant="tonal" color="primary">
+								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
 									<h3>🔗 {{ address }}</h3>
 								</VBtn>
 							</a>
 						</VCol>
 
 						<VCol cols="6">
-							<h2 class="text-primary">Ξ Eth Balance: {{ ethBalance * 10 ** -18 }}</h2>
+							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+								<h2 class="text-primary">Ξ Eth Balance: {{ ethBalance * 10 ** -18 }}</h2>
+							</VCard>
 						</VCol>
 
 						<VCol cols="6">
@@ -55,27 +57,27 @@
 					<VRow class="text-center">
 						<!-- For Vote -->
 						<VCol cols="12" sm="4">
-							<h3 class="mb-3 text-primary">✅ For Vote Count Required</h3>
+							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+								<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
-							<h2 class="m-0">
-								{{ vault.forVoteCountRequired }}
-							</h2>
+								<h2 class="m-0">{{ vault.forVoteCountRequired }}</h2>
+							</VCard>
 						</VCol>
 
 						<VCol cols="12" sm="4">
-							<h3 class="mb-3 text-primary">❌ Against Vote Count Required</h3>
+							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+								<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
-							<h2 class="m-0">
-								{{ vault.againstVoteCountRequired }}
-							</h2>
+								<h2 class="m-0">{{ vault.againstVoteCountRequired }}</h2>
+							</VCard>
 						</VCol>
 
 						<VCol cols="12" sm="4">
-							<h3 class="mb-3 text-primary">⏳ Withdrawal Delay Seconds</h3>
+							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+								<h3 class="mb-3 text-primary">⏳ Withdrawal Delay</h3>
 
-							<h2 class="m-0">
-								{{ vault.withdrawalDelaySeconds }} Sec.
-							</h2>
+								<h2 class="m-0">{{ vault.withdrawalDelaySeconds }} Seconds</h2>
+							</VCard>
 						</VCol>
 					</VRow>
 				</VCardText>
