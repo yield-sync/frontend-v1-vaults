@@ -14,7 +14,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="plain" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
+						<VBtn variant="outlined" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
 					</a>
 				</VCol>
 

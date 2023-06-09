@@ -65,15 +65,15 @@
 			<VCol v-if="opened[i]" cols="12">
 				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
 					<VRow>
-						<VCol cols="2">
-							<h4 class="mb-3 text-primary">WR Id: {{ w.id }}</h4>
+						<VCol cols="6">
+							<h2 class="mb-3 text-primary">Trasnfer Request Id #{{ w.id }}</h2>
 						</VCol>
 
-						<VCol cols="10" class="text-right">
-							<h4 class="mb-3 text-primary" :title="w.creator">
+						<VCol cols="6" class="text-right">
+							<h3 class="mb-3 text-primary" :title="w.creator">
 								Created by
 								{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.to.length - 4) }}
-							</h4>
+							</h3>
 							<h4 class="text-dark"></h4>
 						</VCol>
 
@@ -117,12 +117,12 @@
 							<h3 class="text-center mb-3 text-success text-uppercase">For</h3>
 							<v-progress-linear
 								color="success"
-								:model-value="(parseInt(w.forVoteCount) / againstVoteCountRequired * 100)"
-								:height="32"
+								:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
+								:height="36"
 								striped
 								class="rounded-xl"
 							>
-								<strong>{{ w.forVoteCount }}/{{ againstVoteCountRequired }}</strong>
+								<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
 							</v-progress-linear>
 						</VCol>
 
@@ -131,7 +131,7 @@
 							<v-progress-linear
 								color="danger"
 								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
-								:height="32"
+								:height="36"
 								striped
 								class="rounded-xl"
 							>

@@ -3,27 +3,27 @@
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
 				<VCol cols="2" style="margin: 0; padding: 0;">
-					<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
+					<RouterLink :to="`/v1-vault/${vaultAddress}`">
 						<VBtn
-							:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
+							:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
 							color="primary"
-							size="sm"
 							class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
+							style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;"
 						>
-							<h3>Admin</h3>
+							👤 Member
 						</VBtn>
 					</RouterLink>
 				</VCol>
 
 				<VCol cols="2" style="margin: 0; padding: 0;">
-					<RouterLink :to="`/v1-vault/${vaultAddress}`">
+					<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
 						<VBtn
-							:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
+							:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
 							color="primary"
-							size="sm"
-							class="w-100 mb-3 rounded-e-xl elevation-0 border-primary"
+							class="w-100 mb-3 rounded-e-xl rounded-e-none elevation-0 border-primary"
+							style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;"
 						>
-							<h3>Member</h3>
+							🔑 Admin
 						</VBtn>
 					</RouterLink>
 				</VCol>
@@ -37,13 +37,13 @@
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn color="light" variant="tonal">
-							<h6>🔗 Etherscan</h6>
+						<VBtn color="light" variant="tonal" class="rounded-xl">
+							🔗 Etherscan
 						</VBtn>
 					</a>
 				</VCol>
 
-				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
+				<VCol cols="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'overview' ?
@@ -52,11 +52,11 @@
 						class="w-100 mb-3 rounded-xl elevation-0"
 						@click="$store.state.pages.RVV1Vault.tab = 'overview'"
 					>
-						<h3>Overview</h3>
+						<h3>📊 Overview</h3>
 					</VBtn>
 				</VCol>
 
-				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
+				<VCol cols="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
@@ -65,11 +65,11 @@
 						class="w-100 mb-3 rounded-xl elevation-0"
 						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
-						<h3>Admins & Members</h3>
+						<h3>👥 Admins & Members</h3>
 					</VBtn>
 				</VCol>
 
-				<VCol :cols="$route.query.admin == 'true' ? 4 : 3">
+				<VCol cols="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'wr' ?
@@ -78,11 +78,11 @@
 						class="w-100 mb-3 rounded-xl elevation-0"
 						@click="$store.state.pages.RVV1Vault.tab = 'wr'"
 					>
-						<h3>Withdrawal Req.</h3>
+						<h3>💸 Withdrawal Req.</h3>
 					</VBtn>
 				</VCol>
 
-				<VCol v-if="$route.query.admin !== 'true'" cols="3">
+				<VCol cols="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'settings' ?
@@ -91,7 +91,7 @@
 						class="w-100 mb-3 rounded-xl elevation-0"
 						@click="$store.state.pages.RVV1Vault.tab = 'settings'"
 					>
-						<h3>Settings</h3>
+						<h3>⚙️ Settings</h3>
 					</VBtn>
 				</VCol>
 			</VRow>

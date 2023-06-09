@@ -12,7 +12,7 @@ $bg-img: url('~@/assets/blurry-gradient.svg');
 
 // [BG][FROST][PRIMARY] //
 .bg-primary-frost-lightest {
-	background-color: mix($primary, rgba(255, 255, 255, .75), $weight: 10%);
+	background-color: mix($primary, rgba(255, 255, 255, .75), $weight: 90%);
 	backdrop-filter: blur($regulard-blur) !important;
 	-webkit-backdrop-filter: blur($regulard-blur) !important;
 }

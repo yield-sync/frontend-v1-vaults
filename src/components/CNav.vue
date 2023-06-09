@@ -18,7 +18,6 @@
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
 						variant="outlined"
-						color="primary"
 						hide-details
 						@change="updateLocalStorage()"
 					/>
@@ -27,7 +26,7 @@
 				<VCol cols="12" md="7" lg="8" xl="9"
 					class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="plain" color="primary">
+						<VBtn variant="plain" color="primary" class="rounded-xl">
 							<h3>Dashboard</h3>
 						</VBtn>
 					</RouterLink>

@@ -2,7 +2,7 @@
 	<VContainer>
 		<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 			<VCardTitle class="bg-primary text-light">
-				<h4 class="m-0 text-center text-uppercase">Admins</h4>
+				<h4 class="m-0 text-center text-uppercase">🔑 Admins</h4>
 			</VCardTitle>
 
 			<VCardText class="mt-4">
@@ -13,7 +13,7 @@
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<VBtn variant="plain" size="sm" class="word-wrap">🔗 {{ a }}</VBtn>
+							<VBtn variant="none" color="dark" class="word-wrap rounded-xl">{{ a }}</VBtn>
 						</a>
 					</VCol>
 

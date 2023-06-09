@@ -9,7 +9,7 @@
 					class="text-center"
 				>
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="plain" color="light" class="w-100">
+						<VBtn variant="plain" color="light" class="w-100 mb-3">
 							Governance
 						</VBtn>
 					</RouterLink>
@@ -25,7 +25,7 @@
 						:to="`/balances/${$store.state.wallet.accounts[0]}`"
 						class="mr-2 text-decoration-none"
 					>
-						<VBtn variant="plain" color="light" class="w-100">
+						<VBtn variant="plain" color="light" class="w-100 mb-3">
 							Balances
 						</VBtn>
 					</RouterLink>
@@ -34,7 +34,7 @@
 						to="/sign-message"
 						class="mr-2 text-decoration-none"
 					>
-						<VBtn variant="plain" color="light" class="w-100">
+						<VBtn variant="plain" color="light" class="w-100 mb-3">
 							Sign Message
 						</VBtn>
 					</RouterLink>
@@ -51,7 +51,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="plain" color="light" class="w-100">🔗 Access Control Contract</VBtn>
+						<VBtn variant="plain" color="light" class="w-100 mb-3">🔗 Access Control Contract</VBtn>
 					</a>
 				</VCol>
 			</VRow>

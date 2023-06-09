@@ -22,7 +22,7 @@
 						</VCol>
 
 						<VCol cols="6">
-							<h3 class="text-primary">Eth Balance: {{ ethBalance * 10 ** -18 }}</h3>
+							<h2 class="text-primary">Ξ Eth Balance: {{ ethBalance * 10 ** -18 }}</h2>
 						</VCol>
 
 						<VCol cols="6">
@@ -48,169 +48,34 @@
 
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">Properties</h4>
+					<h4 class="m-0 text-center text-uppercase">🔧 Properties</h4>
 				</VCardTitle>
 
 				<VCardText class="mt-4">
-					<VRow>
-						<VCol cols="12" sm="6">
-							<VRow>
-								<!-- [TITLE] -->
-								<VCol cols="8">
-									<h4 class="text-primary">Against Vote Count Required</h4>
-								</VCol>
+					<VRow class="text-center">
+						<!-- For Vote -->
+						<VCol cols="12" sm="4">
+							<h3 class="mb-3 text-primary">✅ For Vote Count Required</h3>
 
-								<!-- [EDIT-BUTTON] -->
-								<VCol cols="4" class="text-right">
-									<VBtn
-										v-if="asAdmin"
-										variant="flat"
-										color="light"
-										size="sm"
-										class="w-100 rounded-xl"
-										@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
-									>
-										{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}
-									</VBtn>
-								</VCol>
-
-								<VCol cols="12">
-									<!-- [CURRENT] -->
-									<h3 v-if="!asAdmin || !edit.againstVoteCountRequired" class="m-0">
-										{{ vault.againstVoteCountRequired }}
-									</h3>
-
-									<!-- [EDIT] -->
-									<VRow v-if="asAdmin && edit.againstVoteCountRequired" class="input-group input-group-sm">
-										<VCol cols="7">
-											<VTextField
-												v-model="update.againstVoteCountRequired"
-												size="sm"
-												type="number"
-												label="For Vote Count"
-												variant="outlined"
-											/>
-										</VCol>
-										<VCol cols="5" class="input-group-append">
-											<VBtn
-												:disabled="updating.againstVoteCountRequired"
-												variant="tonal"
-												color="primary"
-												class="w-100 rounded-xl"
-												@click="updateAgainstVoteCountRequired()"
-											>
-												Update
-											</VBtn>
-										</VCol>
-									</VRow>
-								</VCol>
-							</VRow>
+							<h2 class="m-0">
+								{{ vault.forVoteCountRequired }}
+							</h2>
 						</VCol>
 
-						<VCol cols="12" sm="6">
-							<VRow>
-								<!-- [TITLE] -->
-								<VCol cols="8">
-									<h4 class="text-primary">For Vote Count Required</h4>
-								</VCol>
+						<VCol cols="12" sm="4">
+							<h3 class="mb-3 text-primary">❌ Against Vote Count Required</h3>
 
-								<!-- [EDIT-BUTTON] -->
-								<VCol cols="4" class="text-right">
-									<VBtn
-										v-if="asAdmin"
-										variant="flat"
-										color="light"
-										size="sm"
-										class="w-100 rounded-xl"
-										@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
-									>
-										{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}
-									</VBtn>
-								</VCol>
-
-								<VCol cols="12">
-									<!-- [CURRENT] -->
-									<h3 v-if="!asAdmin || !edit.forVoteCountRequired" class="m-0">{{ vault.forVoteCountRequired }}</h3>
-
-									<!-- [EDIT] -->
-									<VRow v-if="asAdmin && edit.forVoteCountRequired" class="input-group input-group-sm">
-										<VCol cols="7">
-											<VTextField
-												v-model="update.forVoteCountRequired"
-												size="sm"
-												type="number"
-												label="For Vote Count"
-												variant="outlined"
-											/>
-										</VCol>
-										<VCol cols="5" class="input-group-append">
-											<VBtn
-												:disabled="updating.forVoteCountRequired"
-												variant="tonal"
-												color="primary"
-												class="w-100 rounded-xl"
-												@click="updateForVoteCountRequired()"
-											>
-												Update
-											</VBtn>
-										</VCol>
-									</VRow>
-								</VCol>
-							</VRow>
+							<h2 class="m-0">
+								{{ vault.againstVoteCountRequired }}
+							</h2>
 						</VCol>
 
-						<VCol cols="12" sm="12">
-							<VRow>
-								<!-- [TITLE] -->
-								<VCol cols="8">
-									<h4 class="text-primary">Withdrawal Delay Seconds</h4>
-								</VCol>
+						<VCol cols="12" sm="4">
+							<h3 class="mb-3 text-primary">⏳ Withdrawal Delay Seconds</h3>
 
-								<!-- [EDIT-BUTTON] -->
-								<VCol cols="4" class="text-right">
-									<VBtn
-										v-if="asAdmin"
-										variant="flat"
-										color="light"
-										size="sm"
-										class="w-100 rounded-xl"
-										@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
-									>
-										{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}
-									</VBtn>
-								</VCol>
-
-								<VCol cols="12" >
-									<!-- [CURRENT] -->
-									<h3 v-if="!asAdmin || !edit.withdrawalDelaySeconds" class="m-0">
-										{{ vault.withdrawalDelaySeconds }}
-									</h3>
-
-									<!-- [EDIT] -->
-									<VRow v-if="asAdmin && edit.withdrawalDelaySeconds" class="input-group input-group-sm">
-										<VCol cols="7">
-											<VTextField
-												v-model="update.withdrawalDelaySeconds"
-												size="sm"
-												type="number"
-												label="For Vote Count"
-												variant="outlined"
-											/>
-										</VCol>
-										<VCol cols="5" class="input-group-append">
-											<VBtn
-												:disabled="updating.withdrawalDelaySeconds"
-												variant="tonal"
-												color="primary"
-												class="w-100 rounded-xl"
-												@click="updateWithdrawalDelaySecondsRequired()"
-											>
-												Update
-											</VBtn>
-										</VCol>
-									</VRow>
-								</VCol>
-							</VRow>
+							<h2 class="m-0">
+								{{ vault.withdrawalDelaySeconds }} Sec.
+							</h2>
 						</VCol>
 					</VRow>
 				</VCardText>
@@ -220,7 +85,7 @@
 		<VCol cols="12">
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">ERC 20 Tokens</h4>
+					<h4 class="m-0 text-center text-uppercase">🪙 ERC 20 Tokens</h4>
 				</VCardTitle>
 
 				<VCardText class="mt-4">
@@ -285,7 +150,7 @@
 
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">ERC 721 Tokens (NFTs)</h4>
+					<h4 class="m-0 text-center text-uppercase">🖼️ ERC 721 Tokens (NFTs)</h4>
 				</VCardTitle>
 
 				<VCardText class="mt-4">
@@ -340,8 +205,6 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import { TransactionReceipt } from "web3-core";
-	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
@@ -385,21 +248,6 @@
 					againstVoteCountRequired: 0,
 					forVoteCountRequired: 0,
 					withdrawalDelaySeconds: 0,
-				},
-				edit: {
-					againstVoteCountRequired: false,
-					forVoteCountRequired: false,
-					withdrawalDelaySeconds: false
-				},
-				update: {
-					againstVoteCountRequired: 0,
-					forVoteCountRequired: 0,
-					withdrawalDelaySeconds: 0,
-				},
-				updating: {
-					againstVoteCountRequired: false,
-					forVoteCountRequired: false,
-					withdrawalDelaySeconds: false,
 				},
 				error: "" as string,
 			};
@@ -467,120 +315,6 @@
 					}
 				}
 			},
-
-			updateAgainstVoteCountRequired()
-			{
-				if (!this.$store.state.web3.utils.isAddress(this.address))
-				{
-					return;
-				}
-
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.address
-				);
-
-				v1Vault.methods.updateAgainstVoteCountRequired(this.update.againstVoteCountRequired).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.againstVoteCountRequired = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
-					{
-						this.edit.againstVoteCountRequired = false;
-
-						this.vault.againstVoteCountRequired = await v1Vault.methods.againstVoteCountRequired().call();
-						this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
-
-						this.updating.againstVoteCountRequired = false;
-					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.againstVoteCountRequired = false;
-				});
-			},
-
-			updateForVoteCountRequired()
-			{
-				if (!this.$store.state.web3.utils.isAddress(this.address))
-				{
-					return;
-				}
-
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.address
-				);
-
-				v1Vault.methods.updateForVoteCountRequired(this.update.forVoteCountRequired).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.forVoteCountRequired = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
-					{
-						this.edit.forVoteCountRequired = false;
-
-						this.vault.forVoteCountRequired = await v1Vault.methods.forVoteCountRequired().call();
-						this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
-
-						this.updating.forVoteCountRequired = false;
-					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.forVoteCountRequired = false;
-				});
-			},
-
-			updateWithdrawalDelaySecondsRequired()
-			{
-				if (!this.$store.state.web3.utils.isAddress(this.address))
-				{
-					return;
-				}
-
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.address
-				);
-
-				v1Vault.methods.updateWithdrawalDelaySeconds(this.update.withdrawalDelaySeconds).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.withdrawalDelaySeconds = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
-					{
-						this.edit.withdrawalDelaySeconds = false;
-
-						this.vault.withdrawalDelaySeconds = await v1Vault.methods.withdrawalDelaySeconds().call();
-						this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
-
-						this.updating.withdrawalDelaySeconds = false;
-					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.withdrawalDelaySeconds = false;
-				});
-			},
 		},
 
 		async created()
@@ -609,11 +343,8 @@
 			);
 
 			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
-			this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
 			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
-			this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
 			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
-			this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
 		},
 	});
 </script>

@@ -8,7 +8,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="plain" size="sm"><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
+						<VBtn variant="outlined" size="sm"><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
 					</a>
 				</VCol>
 

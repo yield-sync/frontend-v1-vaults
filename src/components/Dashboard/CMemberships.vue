@@ -18,7 +18,7 @@
 			<RouterLink
 				v-for="(v, i) in membershipYieldSyncV1VaultVaults"
 				:key="i"
-				:to="`/v1-vault/${v.address}?admin=true`"
+				:to="`/v1-vault/${v.address}`"
 				class="text-decoration-none"
 			>
 				<div class="py-6 mb-6 rounded-xl vault">
