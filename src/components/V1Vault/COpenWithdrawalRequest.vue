@@ -50,11 +50,11 @@
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center">{{ w.forVoteCount }}</h4>
+				<h4 class="text-center text-success">{{ w.forVoteCount }}</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center">{{ w.againstVoteCount }}</h4>
+				<h4 class="text-center text-danger">{{ w.againstVoteCount }}</h4>
 			</VCol>
 
 			<VCol cols="2">
@@ -63,7 +63,7 @@
 					color="primary"
 					class="w-100 rounded-xl elevation-0"
 					@click="opened[i] = !opened[i]"
-				>➕</VBtn>
+				> {{ opened[i] ? '➖' : '➕' }}</VBtn>
 			</VCol>
 
 			<VCol v-if="opened[i]" cols="12">
@@ -208,8 +208,8 @@
 							</VBtn>
 						</VCol>
 
-						<VCol cols="12">
-							<h6 v-if="error" class="text-danger">{{ error }}</h6>
+						<VCol v-if="error" cols="12">
+							<h6 class="text-danger">{{ error }}</h6>
 						</VCol>
 					</VRow>
 				</VCard>
