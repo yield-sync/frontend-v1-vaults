@@ -3,7 +3,7 @@
 		<VCol cols="12">
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
-					<h4 class="text-center text-uppercase">Overview</h4>
+					<h4 class="text-center text-uppercase">🏦 Overview</h4>
 				</VCardTitle>
 
 				<VCardText class="mt-4">

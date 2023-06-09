@@ -49,10 +49,10 @@
 							$store.state.pages.RVV1Vault.tab == 'overview' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0"
+						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'overview'"
 					>
-						<h3>📊 Overview</h3>
+						📊 Overview
 					</VBtn>
 				</VCol>
 
@@ -62,10 +62,10 @@
 							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0"
+						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
-						<h3>👥 Admins & Members</h3>
+						👥 Members & Admins
 					</VBtn>
 				</VCol>
 
@@ -75,10 +75,10 @@
 							$store.state.pages.RVV1Vault.tab == 'wr' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0"
+						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'wr'"
 					>
-						<h3>💸 Withdrawal Req.</h3>
+						💸 Withdrawal Req.
 					</VBtn>
 				</VCol>
 
@@ -88,10 +88,10 @@
 							$store.state.pages.RVV1Vault.tab == 'settings' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0"
+						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'settings'"
 					>
-						<h3>⚙️ Settings</h3>
+						⚙️ Settings
 					</VBtn>
 				</VCol>
 			</VRow>
