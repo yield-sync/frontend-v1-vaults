@@ -92,40 +92,42 @@
 
 				<VCardText class="mt-4">
 					<VRow>
-						<VCol cols="4">
-							<h4 class="text-primary">Symbol</h4>
-							<h5 class="text-primary">Name</h5>
+						<VCol cols="3">
+							<h4 class="text-center text-primary">Name</h4>
 						</VCol>
 
-						<VCol cols="4">
-							<h4 class="text-primary">Balance</h4>
+						<VCol cols="6">
+							<h4 class="text-center text-primary">Balance</h4>
 						</VCol>
 
-						<VCol cols="2">
-							<h4 class="text-primary">Withdrawal Reqest</h4>
-						</VCol>
-
-						<VCol cols="2">
-							<h4 class="text-primary">Etherscan</h4>
+						<VCol cols="3">
+							<h4 class="text-center text-primary">Transfer Request</h4>
 						</VCol>
 					</VRow>
 
 					<VRow v-for="(erc20, i) in erc20Balances" :key="i">
-						<VCol cols="4">
-							<h4>{{ erc20.symbol }}</h4>
-							<h5>{{ erc20.name }}</h5>
+						<VCol cols="3">
+							<a
+								:href="`https://etherscan.io/address/${erc20.contract}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
+									🔗 {{ erc20.name }}
+								</VBtn>
+							</a>
 						</VCol>
 
-						<VCol sm="4">
-							<h4>{{ erc20.balance }}</h4>
+						<VCol sm="6">
+							<h4 class="text-center">{{ erc20.balance }}</h4>
 						</VCol>
 
-						<VCol cols="2">
+						<VCol cols="3">
 							<RouterLink :to="`/v1-vault/${address}?erc20Address=${erc20.contract}`">
 								<VBtn
-									class="w-100 rounded-xl"
 									color="success"
 									variant="tonal"
+									class="w-100 rounded-xl"
 									@click="
 										$store.state.pages.RVV1Vault.tab = 'wr';
 										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
@@ -135,16 +137,6 @@
 									↗️ Transfer Out
 								</VBtn>
 							</RouterLink>
-						</VCol>
-
-						<VCol sm="2">
-							<a
-								:href="`https://etherscan.io/address/${erc20.contract}`"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<VBtn variant="tonal" class="w-100 rounded-xl">🔗</VBtn>
-							</a>
 						</VCol>
 					</VRow>
 				</VCardText>
