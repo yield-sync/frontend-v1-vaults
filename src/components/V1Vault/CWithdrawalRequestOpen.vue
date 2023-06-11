@@ -78,9 +78,11 @@
 						</VCol>
 
 						<VCol cols="3">
-							<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
-								Edit
-							</VBtn>
+							<RouterLink :to="`/transfer-request-edit/${vaultAddress}/${w.id}`">
+								<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
+									Edit
+								</VBtn>
+							</RouterLink>
 						</VCol>
 
 						<VCol cols="4" class="text-left">

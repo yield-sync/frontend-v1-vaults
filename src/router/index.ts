@@ -34,6 +34,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: "/transfer-request-edit/:vaultaddress/:transferrequestid",
+		name: "transfer-request-edit",
+		component: () =>
+		{
+			return import("../views/RVTransferRequestEdit.vue");
+		}
+	},
+	{
 		path: "/v1-vault/:address",
 		name: "v1-vault",
 		component: () =>
