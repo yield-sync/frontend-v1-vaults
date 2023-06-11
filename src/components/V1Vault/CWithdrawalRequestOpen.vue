@@ -41,7 +41,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 					:title="w.to"
-					class="text-center "
+					class="text-center text-dark"
 				>
 					<VBtn variant="plain" class="w-100 rounded-xl">
 						🔗 {{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
@@ -71,8 +71,16 @@
 			<VCol v-if="opened[i]" cols="12">
 				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
 					<VRow>
-						<VCol cols="12">
+						<VCol cols="3"/>
+
+						<VCol cols="6">
 							<h2 class="text-center text-uppercase text-primary">Transfer Request {{ w.id }}</h2>
+						</VCol>
+
+						<VCol cols="3">
+							<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
+								Edit
+							</VBtn>
 						</VCol>
 
 						<VCol cols="4" class="text-left">
@@ -269,7 +277,12 @@
 			vaultAddress: {
 				required: true,
 				type: String
-			}
+			},
+
+			asAdmin: {
+				type: Boolean,
+				default: false
+			},
 		},
 
 		data()

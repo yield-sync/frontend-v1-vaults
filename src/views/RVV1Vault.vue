@@ -2,46 +2,48 @@
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
-				<VCol cols="2" style="margin: 0; padding: 0;">
-					<RouterLink :to="`/v1-vault/${vaultAddress}`">
-						<VBtn
-							:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
-							color="primary"
-							class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
-							style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;"
-						>
-							👤 Member
-						</VBtn>
-					</RouterLink>
-				</VCol>
-
-				<VCol cols="2" style="margin: 0; padding: 0;">
-					<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
-						<VBtn
-							:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
-							color="primary"
-							class="w-100 mb-3 rounded-e-xl rounded-e-none elevation-0 border-primary"
-							style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;"
-						>
-							🔑 Admin
-						</VBtn>
-					</RouterLink>
-				</VCol>
-
-				<VCol cols="4">
-					<h3 class="mb-3 text-center text-uppercase text-primary">V1 Vault</h3>
-				</VCol>
-
-				<VCol cols="4" class="text-right">
+				<VCol cols="4" class="">
 					<a
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn color="light" variant="tonal" class="rounded-xl">
-							🔗 Etherscan
+						<VBtn variant="plain" color="primary" class="rounded-xl bg-light-frost elevation-0">
+							🔗 V1 Vault
 						</VBtn>
 					</a>
 				</VCol>
+
+				<VCol cols="4">
+					<VRow style="margin: 0; padding: 0;">
+						<VCol cols="6" style="margin: 0; padding: 0;">
+							<RouterLink :to="`/v1-vault/${vaultAddress}`">
+								<VBtn
+									:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
+									color="primary"
+									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
+									style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;"
+								>
+									👤 Member
+								</VBtn>
+							</RouterLink>
+						</VCol>
+
+						<VCol cols="6" style="margin: 0; padding: 0;">
+							<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
+								<VBtn
+									:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
+									color="primary"
+									class="w-100 mb-3 rounded-e-xl rounded-e-none elevation-0 border-primary"
+									style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;"
+								>
+									🔑 Admin
+								</VBtn>
+							</RouterLink>
+						</VCol>
+					</VRow>
+				</VCol>
+
+				<VCol cols="4"/>
 
 				<VCol cols="3">
 					<VBtn

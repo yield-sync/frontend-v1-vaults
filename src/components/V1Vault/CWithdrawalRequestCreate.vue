@@ -94,7 +94,7 @@
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
-		name: "CCreateWithdrawalRequest",
+		name: "CWithdrawalRequestCreate",
 
 		props: {
 			vaultAddress: {

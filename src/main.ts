@@ -21,14 +21,15 @@ const vuetify = createVuetify({
 			myCustomLightTheme: {
 				dark: false,
 				colors: {
+					admin: "#ffe596",
 					dark: "#1c261e",
 					info: "#2196F3",
 					light: "#e6e6e6",
-					primary: "#56733d",
+					primary: "#7fad6f",
 					secondary: "#03DAC6",
-					success: "#4CAF50",
+					success: "#2fe039",
 					warning: "#ffd712",
-					danger: "#ff0000",
+					danger: "#f0483a",
 					white: "#FFFFFF",
 					"bg-light-frost": "mix($light, rgba(255, 255, 255, .1), $weight: 10%)"
 				},

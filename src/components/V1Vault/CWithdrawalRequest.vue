@@ -20,14 +20,14 @@
 		<VCardText variant="light">
 			<VWindow v-model="$store.state.pages.RVV1Vault.withdrawalRequest.tab">
 				<VWindowItem value="o">
-					<COpenWithdrawalRequest
+					<CWithdrawalRequestOpen
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
 				</VWindowItem>
 
 				<VWindowItem value="c">
-					<CCreateWithdrawalRequest
+					<CWithdrawalRequestCreate
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -40,8 +40,8 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 
-	import CCreateWithdrawalRequest from "./CCreateWithdrawalRequest.vue";
-	import COpenWithdrawalRequest from "./COpenWithdrawalRequest.vue";
+	import CWithdrawalRequestCreate from "./CWithdrawalRequestCreate.vue";
+	import CWithdrawalRequestOpen from "./CWithdrawalRequestOpen.vue";
 
 	export default defineComponent({
 		name: "CWithdrawalRequest",
@@ -54,8 +54,8 @@
 		},
 
 		components: {
-			CCreateWithdrawalRequest,
-			COpenWithdrawalRequest
+			CWithdrawalRequestCreate,
+			CWithdrawalRequestOpen
 		},
 	});
 </script>

@@ -31,7 +31,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									:color="edit.forVoteCountRequired ? 'danger' : 'light'"
+									:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
 								>
@@ -76,7 +76,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									:color="edit.againstVoteCountRequired ? 'danger' : 'light'"
+									:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
 								>
@@ -120,7 +120,7 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									:color="edit.withdrawalDelaySeconds ? 'danger' : 'light'"
+									:color="edit.withdrawalDelaySeconds ? 'danger' : 'admin'"
 									class="w-100 mb-3 rounded-xl"
 									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
 								>

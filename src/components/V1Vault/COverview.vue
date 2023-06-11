@@ -8,32 +8,31 @@
 
 				<VCardText class="mt-4">
 					<VRow>
-						<VCol cols="12">
+						<VCol cols="12" class="text-center">
 							<a
 								:href="
 									`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${address}`
 								"
 								target="_blank" rel="noopener noreferrer"
 							>
-								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
-									<h3>🔗 {{ address }}</h3>
+								<VBtn variant="tonal" color="primary" class="rounded-xl" size="large">
+									🔗 {{ address }}
 								</VBtn>
 							</a>
 						</VCol>
 
-						<VCol cols="6">
+						<VCol :cols="asAdmin ? 12 : 6" class="text-center">
 							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 								<h2 class="text-primary">Ξ Eth Balance: {{ ethBalance * 10 ** -18 }}</h2>
 							</VCard>
 						</VCol>
 
-						<VCol cols="6">
+						<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 6">
 							<RouterLink :to="`/v1-vault/${address}?eth=true`">
 								<VBtn
-									v-if="!asAdmin"
 									class="w-100 rounded-xl"
-									color="success"
-									variant="tonal"
+									color="primary"
+									variant="flat"
 									@click="
 										$store.state.pages.RVV1Vault.tab = 'wr';
 										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
@@ -123,20 +122,14 @@
 						</VCol>
 
 						<VCol cols="3">
-							<RouterLink :to="`/v1-vault/${address}?erc20Address=${erc20.contract}`">
-								<VBtn
-									color="success"
-									variant="tonal"
-									class="w-100 rounded-xl"
-									@click="
-										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
-										$store.state.pages.RVV1Vault.withdrawalRequest.key++
-									"
-								>
-									↗️ Transfer Out
-								</VBtn>
-							</RouterLink>
+							<VBtn
+								color="primary"
+								variant="flat"
+								class="w-100 rounded-xl"
+								@click="forwardToCreate(address, erc20)"
+							>
+								↗️ Transfer Out
+							</VBtn>
 						</VCol>
 					</VRow>
 				</VCardText>
@@ -204,6 +197,7 @@
 	import abiER20 from "../../abi/erc20";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
+	import router from "../../router";
 
 	export default defineComponent({
 		name: "COverview",
@@ -309,6 +303,22 @@
 					}
 				}
 			},
+
+			forwardToCreate(
+				address: string,
+				erc20: {
+					name: string,
+					symbol: string,
+					balance: number | string,
+					contract: number | string,
+				}
+			)
+			{
+				this.$store.state.pages.RVV1Vault.tab = 'wr';
+				this.$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
+
+				router.push(`/v1-vault/${address}?erc20Address=${erc20.contract}`);
+			}
 		},
 
 		async created()
