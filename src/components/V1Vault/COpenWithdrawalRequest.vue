@@ -63,71 +63,106 @@
 					color="primary"
 					class="w-100 rounded-xl elevation-0"
 					@click="opened[i] = !opened[i]"
-				> {{ opened[i] ? '➖' : '➕' }}</VBtn>
+				>
+					{{ opened[i] ? '➖' : '➕' }}
+				</VBtn>
 			</VCol>
 
 			<VCol v-if="opened[i]" cols="12">
 				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
 					<VRow>
-						<VCol cols="6">
-							<h2 class="mb-3 text-uppercase text-primary">Transfer Request {{ w.id }}</h2>
+						<VCol cols="12">
+							<h2 class="text-center text-uppercase text-primary">Transfer Request {{ w.id }}</h2>
 						</VCol>
 
-						<VCol cols="6" class="text-right">
-							<h4 class="mb-3 text-uppercase text-primary" :title="w.creator">
-								Created by
-								{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.to.length - 4) }}
+						<VCol cols="4" class="text-left">
+							<h4 v-if="w.forERC20" class="mb-3 text-center text-uppercase text-primary">
+								ERC 20
 							</h4>
-						</VCol>
 
-						<VCol cols="3" class="text-left">
-							<h3 class="mb-3 text-uppercase text-primary">Asset</h3>
-							<h3 v-if="w.forERC20">ERC 20</h3>
-							<h3 v-else-if="w.forERC721">ERC 721</h3>
-							<h3 v-else>Ether</h3>
-						</VCol>
+							<h4 v-else-if="w.forERC721" class="mb-3 text-center text-uppercase text-primary">
+								ERC 721
+							</h4>
 
-						<VCol cols="6" class="text-center">
-							<h3 class="mb-3 text-uppercase text-primary">Amount</h3>
-							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
-						</VCol>
+							<h4 v-else class="mb-3 text-center text-uppercase text-primary">
+								Ether
+							</h4>
 
-						<VCol cols="3" class="text-right">
-							<h3 class="mb-3 text-uppercase text-primary">Token Contract</h3>
 							<a
+								v-if="w.forERC20"
 								:href="`https://etherscan.io/address/${w.tokenAddress}`"
 								target="_blank"
 								rel="noopener noreferrer"
 								:title="w.tokenAddress"
 							>
-								<VBtn color="dark" variant="plain" class="rounded-xl">
-									🔗
-									{{
-										w.tokenAddress.substring(0, 4) + "..." + w.tokenAddress.substring(
-											w.tokenAddress.length - 4
-										)
-									}}
+								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+									🔗 {{ w.tokenSymbol }}
 								</VBtn>
+							</a>
+
+							<a
+								v-else-if="w.forERC721"
+								:href="`https://etherscan.io/address/${w.tokenAddress}`"
+								target="_blank"
+								rel="noopener noreferrer"
+								:title="w.tokenAddress"
+							>
+								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+									🔗 {{ w.tokenSymbol }}
+								</VBtn>
+							</a>
+
+							<a
+								v-else
+								href="https://etherscan.io/"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-decoration-none"
+								:title="w.tokenAddress"
+							>
+								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+									🔗 ETH
+								</VBtn>
+							</a>
+						</VCol>
+
+						<VCol cols="4" class="text-center">
+							<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
+							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
+						</VCol>
+
+						<VCol cols="4" class="text-center">
+							<h4 class="mb-3 text-uppercase text-primary">Created By</h4>
+
+							<a
+								:href="`https://etherscan.io/address/${w.creator}`"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-decoration-none"
+								:title="w.tokenAddress"
+							>
+								<h3 class="text-center text-uppercase text-dark" :title="w.creator">
+									{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.creator.length - 4) }}
+								</h3>
 							</a>
 						</VCol>
 
 						<VCol cols="12" class="text-center">
-							<h3 class="mb-3 text-center text-uppercase text-primary">To</h3>
+							<h4 class="mb-3 text-center text-uppercase text-primary">Transfer To</h4>
 							<a
 								:href="`https://etherscan.io/address/${w.to}`"
 								target="_blank"
 								rel="noopener noreferrer"
-								:title="w.to"
+								class="text-decoration-none"
+								:title="w.tokenAddress"
 							>
-								<VBtn color="dark" variant="plain" class="rounded-xl">
-									<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
-								</VBtn>
+								<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
 							</a>
 						</VCol>
 
 						<VCol cols="6">
-							<h3 class="text-center mb-3 text-success text-uppercase">For</h3>
-							<v-progress-linear
+							<h4 class="text-center mb-3 text-success text-uppercase">For</h4>
+							<VProgressLinear
 								color="success"
 								:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
 								:height="36"
@@ -135,12 +170,12 @@
 								class="rounded-xl"
 							>
 								<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
-							</v-progress-linear>
+							</VProgressLinear>
 						</VCol>
 
 						<VCol cols="6">
-							<h3 class="text-center mb-3 text-danger text-uppercase">Against</h3>
-							<v-progress-linear
+							<h4 class="text-center mb-3 text-danger text-uppercase">Against</h4>
+							<VProgressLinear
 								color="danger"
 								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
 								:height="36"
@@ -148,10 +183,10 @@
 								class="rounded-xl"
 							>
 								<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
-							</v-progress-linear>
+							</VProgressLinear>
 						</VCol>
 
-						<VCol v-if=false cols="12">
+						<VCol v-if="false" cols="12">
 							<h4 class="mb-3 text-primary">Voted Voter</h4>
 							<h4 v-for="(v, i) in w.votedMembers" :key="i">
 								{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
@@ -183,12 +218,12 @@
 						</VCol>
 
 						<VCol cols="12">
-							<h5 class="mb-3 text-center text-primary">
-								Latest Relevant For Vote Time
-							</h5>
 							<h4 class="mb-3 text-center text-primary">
-								{{ w.latestRelevantApproveVoteTime }}
+								Latest Relevant For Vote Time
 							</h4>
+							<h3 class="mb-3 text-center text-dark">
+								{{ w.latestRelevantApproveVoteTime }}
+							</h3>
 						</VCol>
 
 						<VCol cols="12">

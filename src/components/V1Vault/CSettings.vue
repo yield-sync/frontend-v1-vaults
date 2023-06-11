@@ -378,7 +378,7 @@
 			if (this.yieldSyncV1Vault)
 			{
 				this.vault.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired()
-				.call();
+					.call();
 				this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
 				this.vault.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
 				this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
