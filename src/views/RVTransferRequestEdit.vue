@@ -19,27 +19,27 @@
 <script lang="ts">
 	type TransferRequest = [
 		// forERC20
-		Boolean,
+		boolean,
 		// forERC721
-		Boolean,
+		boolean,
 		// creator
-		String,
+		string,
 		// to
-		String,
+		string,
 		// token
-		String,
+		string,
 		// amount
-		String,
+		string,
 		// tokenId
-		String,
+		string,
 		// approveVoteCount
-		String,
+		string,
 		// denyVoteCount
-		String,
+		string,
 		// latestRelevantApproveVoteTime
-		String,
+		string,
 		// votedMembers
-		String[],
+		string[],
 	];
 
 	import { defineComponent } from "vue";
@@ -51,7 +51,8 @@
 	export default defineComponent({
 		name: "RVV1Vault",
 
-		data() {
+		data()
+		{
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				solTransferRequest: undefined as undefined | TransferRequest,
@@ -63,10 +64,11 @@
 					amount: 0 as number,
 					tokenId: 0 as number,
 				}
-			}
+			};
 		},
 
-		async created() {
+		async created()
+		{
 			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				yieldSyncV1VaultABI as AbiItem[],
 				this.$route.params.vaultaddress
@@ -74,7 +76,7 @@
 
 			if (this.yieldSyncV1Vault)
 			{
-				this.solTransferRequest = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
+				this.solTransferRequest = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
 					this.$route.params.transferrequestid
 				).call();
 

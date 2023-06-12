@@ -2,7 +2,7 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="12" class="">
-				<VRadioGroup v-model="withdrawalRequest.for" :label="'For: ' + withdrawalRequest.for" inline>
+				<VRadioGroup v-model="transferRequest.for" :label="'For: ' + transferRequest.for" inline>
 					<VRadio
 						label="Ether"
 						value="Ether"
@@ -23,8 +23,8 @@
 
 			<VCol cols="8" class="">
 				<VTextField
-					:disabled="withdrawalRequest.for == 'Ether'"
-					v-model="withdrawalRequest.token"
+					:disabled="transferRequest.for == 'Ether'"
+					v-model="transferRequest.token"
 					type="text"
 					label="ERC Token Address"
 					variant="outlined"
@@ -36,8 +36,8 @@
 
 			<VCol cols="4" class="">
 				<VTextField
-					:disabled="withdrawalRequest.for != 'ERC 721'"
-					v-model="withdrawalRequest.tokenId"
+					:disabled="transferRequest.for != 'ERC 721'"
+					v-model="transferRequest.tokenId"
 					type="number"
 					label="Token Id"
 					variant="outlined"
@@ -49,7 +49,7 @@
 
 			<VCol cols="8" class="">
 				<VTextField
-					v-model="withdrawalRequest.to"
+					v-model="transferRequest.to"
 					type="text"
 					label="To Address"
 					variant="outlined"
@@ -61,7 +61,7 @@
 
 			<VCol cols="4" class="">
 				<VTextField
-					v-model="withdrawalRequest.amount"
+					v-model="transferRequest.amount"
 					type="number"
 					label="Amount"
 					variant="outlined"
@@ -94,7 +94,7 @@
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
-		name: "CWithdrawalRequestCreate",
+		name: "CTransferRequestCreate",
 
 		props: {
 			vaultAddress: {
@@ -108,7 +108,7 @@
 			return {
 				creating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
-				withdrawalRequest: {
+				transferRequest: {
 					for: "Ether" as string,
 					to: "" as string,
 					token: "" as string,
@@ -124,15 +124,15 @@
 			{
 				if (this.yieldSyncV1Vault)
 				{
-					await this.yieldSyncV1Vault.methods.createWithdrawalRequest(
-						this.withdrawalRequest.for == "ERC 20" ? true : false,
-						this.withdrawalRequest.for == "ERC 721" ? true : false,
-						this.withdrawalRequest.to,
-						this.withdrawalRequest.token ?
-							this.withdrawalRequest.token : "0x0000000000000000000000000000000000000000"
+					await this.yieldSyncV1Vault.methods.createTransferRequest(
+						this.transferRequest.for == "ERC 20" ? true : false,
+						this.transferRequest.for == "ERC 721" ? true : false,
+						this.transferRequest.to,
+						this.transferRequest.token ?
+							this.transferRequest.token : "0x0000000000000000000000000000000000000000"
 						,
-						BigInt(this.withdrawalRequest.amount * 10**18),
-						this.withdrawalRequest.tokenId
+						BigInt(this.transferRequest.amount * 10**18),
+						this.transferRequest.tokenId
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on("sent", async () =>
@@ -144,8 +144,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.withdrawalRequest.tab = "o";
-							this.$store.state.pages.RVV1Vault.withdrawalRequest.key++;
+							this.$store.state.pages.RVV1Vault.transferRequest.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequest.key++;
 						}
 
 						this.creating = false;
@@ -163,8 +163,8 @@
 		{
 			if (this.$route.query.erc20Address)
 			{
-				this.withdrawalRequest.for = "ERC 20";
-				this.withdrawalRequest.token = String(this.$route.query.erc20Address);
+				this.transferRequest.for = "ERC 20";
+				this.transferRequest.token = String(this.$route.query.erc20Address);
 			}
 
 			// Governance

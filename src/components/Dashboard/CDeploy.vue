@@ -40,12 +40,12 @@
 					/>
 				</VCol>
 
-				<!-- Withdrawal Delay -->
+				<!-- Transfer Delay -->
 				<VCol cols="12" md="4">
 					<VTextField
-						v-model="deployParams.withdrawalDelaySeconds"
+						v-model="deployParams.transferDelaySeconds"
 						type="number"
-						label="Withdrawal Delay (Seconds)"
+						label="Transfer Delay (Seconds)"
 						variant="outlined"
 						hide-details
 						class="mb-3"
@@ -193,7 +193,7 @@
 					useDefaultSignatureManager: false as boolean,
 					againstVoteCountRequired: 1 as number | undefined,
 					forVoteCountRequired: 1 as number | undefined,
-					withdrawalDelaySeconds: 0 as number | undefined
+					transferDelaySeconds: 0 as number | undefined
 				},
 
 				error: ""
@@ -212,7 +212,7 @@
 						this.deployParams.useDefaultSignatureManager,
 						this.deployParams.againstVoteCountRequired,
 						this.deployParams.forVoteCountRequired,
-						this.deployParams.withdrawalDelaySeconds
+						this.deployParams.transferDelaySeconds
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on("sent", async () =>

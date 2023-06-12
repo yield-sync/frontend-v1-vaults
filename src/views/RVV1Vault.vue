@@ -43,7 +43,9 @@
 					</VRow>
 				</VCol>
 
-				<VCol cols="4"/>
+				<VCol cols="4" class="text-right">
+					<VBtn variant="tonal" color="light" class="rounded-xl" @click="copy(vaultAddress)">📋</VBtn>
+				</VCol>
 
 				<VCol cols="3">
 					<VBtn
@@ -115,7 +117,7 @@
 				:asAdmin="$route.query.admin == 'true'"
 			/>
 
-			<CWithdrawalRequest
+			<CTransferRequest
 				v-if="$store.state.pages.RVV1Vault.tab == 'wr'"
 				:vaultAddress="vaultAddress"
 				:asAdmin="$route.query.admin == 'true'"
@@ -136,7 +138,7 @@
 	import COverview from "../components/V1Vault/COverview.vue";
 	import CAdmins from "../components/V1Vault/CAdmins.vue";
 	import CMembers from "../components/V1Vault/CMembers.vue";
-	import CWithdrawalRequest from "../components/V1Vault/CWithdrawalRequest.vue";
+	import CTransferRequest from "../components/V1Vault/CTransferRequest.vue";
 	import CSettings from "../components/V1Vault/CSettings.vue";
 
 	export default defineComponent({
@@ -154,8 +156,15 @@
 			COverview,
 			CAdmins,
 			CMembers,
-			CWithdrawalRequest,
+			CTransferRequest,
 			CSettings,
+		},
+
+		methods: {
+			copy(a: string)
+			{
+				navigator.clipboard.writeText(a);
+			},
 		},
 
 		async created()

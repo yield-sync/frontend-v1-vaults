@@ -100,15 +100,15 @@
 					<VCol cols="12" sm="12">
 						<VRow>
 							<VCol cols="8">
-								<h4 class="mb-3 text-primary">⏳ Withdrawal Delay Seconds</h4>
+								<h4 class="mb-3 text-primary">⏳ Transfer Delay Seconds</h4>
 
-								<h3 v-if="!asAdmin || !edit.withdrawalDelaySeconds" class="m-0">
-									{{ vault.withdrawalDelaySeconds }}
+								<h3 v-if="!asAdmin || !edit.transferDelaySeconds" class="m-0">
+									{{ vault.transferDelaySeconds }}
 								</h3>
 
 								<VTextField
-									v-if="asAdmin && edit.withdrawalDelaySeconds"
-									v-model="update.withdrawalDelaySeconds"
+									v-if="asAdmin && edit.transferDelaySeconds"
+									v-model="update.transferDelaySeconds"
 									size="sm"
 									type="number"
 									label="For Vote Count"
@@ -120,20 +120,20 @@
 								<VBtn
 									v-if="asAdmin"
 									variant="flat"
-									:color="edit.withdrawalDelaySeconds ? 'danger' : 'admin'"
+									:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
 									class="w-100 mb-3 rounded-xl"
-									@click="edit.withdrawalDelaySeconds = !edit.withdrawalDelaySeconds"
+									@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
 								>
-									{{ edit.withdrawalDelaySeconds ? 'Cancel' : 'Edit' }}
+									{{ edit.transferDelaySeconds ? 'Cancel' : 'Edit' }}
 								</VBtn>
 
 								<VBtn
-									v-if="asAdmin && edit.withdrawalDelaySeconds"
-									:disabled="updating.withdrawalDelaySeconds"
+									v-if="asAdmin && edit.transferDelaySeconds"
+									:disabled="updating.transferDelaySeconds"
 									variant="flat"
 									color="success"
 									class="w-100 mb-3 rounded-xl"
-									@click="updateWithdrawalDelaySecondsRequired()"
+									@click="updateTransferDelaySecondsRequired()"
 								>
 									Update
 								</VBtn>
@@ -197,22 +197,22 @@
 				vault: {
 					againstVoteCountRequired: 0,
 					forVoteCountRequired: 0,
-					withdrawalDelaySeconds: 0,
+					transferDelaySeconds: 0,
 				},
 				edit: {
 					againstVoteCountRequired: false,
 					forVoteCountRequired: false,
-					withdrawalDelaySeconds: false
+					transferDelaySeconds: false
 				},
 				update: {
 					againstVoteCountRequired: 0,
 					forVoteCountRequired: 0,
-					withdrawalDelaySeconds: 0,
+					transferDelaySeconds: 0,
 				},
 				updating: {
 					againstVoteCountRequired: false,
 					forVoteCountRequired: false,
-					withdrawalDelaySeconds: false,
+					transferDelaySeconds: false,
 				},
 
 				error: "" as string
@@ -296,7 +296,7 @@
 				});
 			},
 
-			updateWithdrawalDelaySecondsRequired()
+			updateTransferDelaySecondsRequired()
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.vaultAddress))
 				{
@@ -308,29 +308,29 @@
 					this.vaultAddress
 				);
 
-				v1Vault.methods.updateWithdrawalDelaySeconds(this.update.withdrawalDelaySeconds).send({
+				v1Vault.methods.updateTransferDelaySeconds(this.update.transferDelaySeconds).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
-					this.updating.withdrawalDelaySeconds = true;
+					this.updating.transferDelaySeconds = true;
 				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 				{
 					console.log(`Confirmation #${confirmationNumber}`, receipt);
 
 					if (confirmationNumber == 0)
 					{
-						this.edit.withdrawalDelaySeconds = false;
+						this.edit.transferDelaySeconds = false;
 
-						this.vault.withdrawalDelaySeconds = await v1Vault.methods.withdrawalDelaySeconds().call();
-						this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
+						this.vault.transferDelaySeconds = await v1Vault.methods.transferDelaySeconds().call();
+						this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
 
-						this.updating.withdrawalDelaySeconds = false;
+						this.updating.transferDelaySeconds = false;
 					}
 				}).on("error", async (error: Error) =>
 				{
 					this.error = String(error);
 
-					this.updating.withdrawalDelaySeconds = false;
+					this.updating.transferDelaySeconds = false;
 				});
 			},
 
@@ -382,8 +382,8 @@
 				this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
 				this.vault.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
 				this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
-				this.vault.withdrawalDelaySeconds = await this.yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
-				this.update.withdrawalDelaySeconds = this.vault.withdrawalDelaySeconds;
+				this.vault.transferDelaySeconds = await this.yieldSyncV1Vault.methods.transferDelaySeconds().call();
+				this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
 			}
 		}
 	});

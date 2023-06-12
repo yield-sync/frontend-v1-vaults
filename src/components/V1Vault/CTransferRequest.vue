@@ -1,6 +1,6 @@
 <template>
 	<VCard
-		:key="$store.state.pages.RVV1Vault.withdrawalRequest.key"
+		:key="$store.state.pages.RVV1Vault.transferRequest.key"
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
@@ -8,7 +8,7 @@
 		</VCardTitle>
 
 		<VTabs
-			v-model="$store.state.pages.RVV1Vault.withdrawalRequest.tab"
+			v-model="$store.state.pages.RVV1Vault.transferRequest.tab"
 			bg-color="primary"
 			color="light-green-lighten-5"
 			fixed-tabs
@@ -18,16 +18,16 @@
 		</VTabs>
 
 		<VCardText variant="light">
-			<VWindow v-model="$store.state.pages.RVV1Vault.withdrawalRequest.tab">
+			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequest.tab">
 				<VWindowItem value="o">
-					<CWithdrawalRequestOpen
+					<CTransferRequestOpen
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
 				</VWindowItem>
 
 				<VWindowItem value="c">
-					<CWithdrawalRequestCreate
+					<CTransferRequestCreate
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -40,11 +40,11 @@
 <script lang="ts">
 	import { defineComponent } from "vue";
 
-	import CWithdrawalRequestCreate from "./CWithdrawalRequestCreate.vue";
-	import CWithdrawalRequestOpen from "./CWithdrawalRequestOpen.vue";
+	import CTransferRequestCreate from "./CTransferRequestCreate.vue";
+	import CTransferRequestOpen from "./CTransferRequestOpen.vue";
 
 	export default defineComponent({
-		name: "CWithdrawalRequest",
+		name: "CTransferRequest",
 
 		props: {
 			vaultAddress: {
@@ -54,8 +54,8 @@
 		},
 
 		components: {
-			CWithdrawalRequestCreate,
-			CWithdrawalRequestOpen
+			CTransferRequestCreate,
+			CTransferRequestOpen
 		},
 	});
 </script>

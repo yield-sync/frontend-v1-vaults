@@ -43,7 +43,7 @@
 						</VCol>
 
 						<VCol cols="12" md="4" class="d-none d-md-block">
-							<h3 class="text-center" style="word-wrap: break-word;">{{ v.withdrawalDelaySeconds }}s</h3>
+							<h3 class="text-center" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
 						</VCol>
 					</VRow>
 				</div>
@@ -75,7 +75,7 @@
 					address: string;
 					againstVoteCountRequired: number;
 					forVoteCountRequired: number;
-					withdrawalDelaySeconds: number;
+					transferDelaySeconds: number;
 				}[],
 			};
 		},
@@ -97,7 +97,7 @@
 					address: v1Vaults[i],
 					againstVoteCountRequired: await yieldSyncV1Vault.methods.againstVoteCountRequired().call(),
 					forVoteCountRequired: await yieldSyncV1Vault.methods.forVoteCountRequired().call(),
-					withdrawalDelaySeconds: await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call(),
+					transferDelaySeconds: await yieldSyncV1Vault.methods.transferDelaySeconds().call(),
 				});
 			}
 		},

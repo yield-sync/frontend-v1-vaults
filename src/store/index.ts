@@ -48,7 +48,7 @@ export default createStore({
 
 		pages: {
 			RVV1Vault: {
-				withdrawalRequest: {
+				transferRequest: {
 					tab: "o",
 					key: 0,
 				},
@@ -56,7 +56,7 @@ export default createStore({
 			}
 		} as {
 			RVV1Vault: {
-				withdrawalRequest: {
+				transferRequest: {
 					tab: string,
 					key: number
 				},

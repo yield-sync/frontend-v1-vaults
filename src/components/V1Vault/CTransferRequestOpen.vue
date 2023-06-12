@@ -26,7 +26,7 @@
 			</VCol>
 		</VRow>
 
-		<VRow v-for="(w, i) in detailedWithdrawalRequests" :key="i">
+		<VRow v-for="(w, i) in detailedTransferRequests" :key="i">
 			<VCol cols="2">
 				<h4 class="text-center ">{{ w.tokenSymbol }}</h4>
 			</VCol>
@@ -209,7 +209,7 @@
 								variant="flat"
 								color="success"
 								class="px-6 rounded-xl elevation-0"
-								@click="voteOnWithdrawalRequest(w.id, true)"
+								@click="voteOnTransferRequest(w.id, true)"
 							>
 								Vote For
 							</VBtn>
@@ -221,7 +221,7 @@
 								variant="flat"
 								color="danger"
 								class="px-6 rounded-xl elevation-0"
-								@click="voteOnWithdrawalRequest(w.id, false)"
+								@click="voteOnTransferRequest(w.id, false)"
 							>
 								Vote Against
 							</VBtn>
@@ -247,7 +247,7 @@
 								"
 								color="primary"
 								class="w-100 rounded-xl elevation-0"
-								@click="processWithdrawalRequest(w.id)"
+								@click="processTransferRequest(w.id)"
 							>
 								Proccess Request
 							</VBtn>
@@ -273,7 +273,7 @@
 	import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
 
 	export default defineComponent({
-		name: "CWithdrawalRequest",
+		name: "CTransferRequest",
 
 		props: {
 			vaultAddress: {
@@ -305,9 +305,9 @@
 				} as {
 					[key: string]: boolean
 				},
-				idsOfOpenWithdrawalRequests: [
+				idsOfOpenTransferRequests: [
 				],
-				detailedWithdrawalRequests: [
+				detailedTransferRequests: [
 				] as {
 					id: number
 					againstVoteCount: string
@@ -330,27 +330,27 @@
 		},
 
 		methods: {
-			async getWithdrawalRequestData()
+			async getTransferRequestData()
 			{
 				if (!this.yieldSyncV1Vault)
 				{
 					return;
 				}
 
-				this.detailedWithdrawalRequests = [
+				this.detailedTransferRequests = [
 				];
 
 				this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired().call();
 
 				this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
 
-				this.idsOfOpenWithdrawalRequests = await this.yieldSyncV1Vault.methods.idsOfOpenWithdrawalRequests()
+				this.idsOfOpenTransferRequests = await this.yieldSyncV1Vault.methods.idsOfOpenTransferRequests()
 					.call();
 
-				for (let i = 0; i < this.idsOfOpenWithdrawalRequests.length; i++)
+				for (let i = 0; i < this.idsOfOpenTransferRequests.length; i++)
 				{
-					const wr = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
-						this.idsOfOpenWithdrawalRequests[i]
+					const wr = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
+						this.idsOfOpenTransferRequests[i]
 					).call();
 
 					// Get token details
@@ -383,8 +383,8 @@
 					const minutes = date.getMinutes();
 					const seconds = date.getSeconds();
 
-					this.detailedWithdrawalRequests.push({
-						id: this.idsOfOpenWithdrawalRequests[i],
+					this.detailedTransferRequests.push({
+						id: this.idsOfOpenTransferRequests[i],
 						againstVoteCount: wr.againstVoteCount,
 						amount: wr.amount,
 						creator: wr.creator,
@@ -402,14 +402,14 @@
 				}
 			},
 
-			async processWithdrawalRequest(wId: number)
+			async processTransferRequest(wId: number)
 			{
 				if (!this.yieldSyncV1Vault)
 				{
 					return;
 				}
 
-				await this.yieldSyncV1Vault.methods.processWithdrawalRequest(wId).send({
+				await this.yieldSyncV1Vault.methods.processTransferRequest(wId).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
@@ -422,7 +422,7 @@
 					{
 						this.processing[wId] = false;
 
-						await this.getWithdrawalRequestData();
+						await this.getTransferRequestData();
 					}
 
 				}).on("error", async (error: Error) =>
@@ -433,14 +433,14 @@
 				});
 			},
 
-			async voteOnWithdrawalRequest(wId: number, vote: boolean)
+			async voteOnTransferRequest(wId: number, vote: boolean)
 			{
 				if (!this.yieldSyncV1Vault)
 				{
 					return;
 				}
 
-				await this.yieldSyncV1Vault.methods.voteOnWithdrawalRequest(
+				await this.yieldSyncV1Vault.methods.voteOnTransferRequest(
 					wId, vote
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -452,7 +452,7 @@
 					console.log(`Confirmation #${confirmationNumber}`, receipt);
 					if (confirmationNumber == 0)
 					{
-						await this.getWithdrawalRequestData();
+						await this.getTransferRequestData();
 
 						this.voting[wId] = false;
 					}
@@ -472,7 +472,7 @@
 				this.vaultAddress
 			);
 
-			await this.getWithdrawalRequestData();
+			await this.getTransferRequestData();
 		},
 	});
 </script>

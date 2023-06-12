@@ -35,8 +35,8 @@
 									variant="flat"
 									@click="
 										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
-										$store.state.pages.RVV1Vault.withdrawalRequest.key++
+										$store.state.pages.RVV1Vault.transferRequest.tab = 'c';
+										$store.state.pages.RVV1Vault.transferRequest.key++
 									"
 								>
 									↗️ Transfer Out
@@ -73,9 +73,9 @@
 
 						<VCol cols="12" sm="4">
 							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h3 class="mb-3 text-primary">⏳ Withdrawal Delay</h3>
+								<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
-								<h2 class="m-0">{{ vault.withdrawalDelaySeconds }} Seconds</h2>
+								<h2 class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
 							</VCard>
 						</VCol>
 					</VRow>
@@ -235,7 +235,7 @@
 				vault: {
 					againstVoteCountRequired: 0,
 					forVoteCountRequired: 0,
-					withdrawalDelaySeconds: 0,
+					transferDelaySeconds: 0,
 				},
 				error: "" as string,
 			};
@@ -314,8 +314,8 @@
 				}
 			)
 			{
-				this.$store.state.pages.RVV1Vault.tab = 'wr';
-				this.$store.state.pages.RVV1Vault.withdrawalRequest.tab = 'c';
+				this.$store.state.pages.RVV1Vault.tab = "wr";
+				this.$store.state.pages.RVV1Vault.transferRequest.tab = "c";
 
 				router.push(`/v1-vault/${address}?erc20Address=${erc20.contract}`);
 			}
@@ -348,7 +348,7 @@
 
 			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
 			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
-			this.vault.withdrawalDelaySeconds = await yieldSyncV1Vault.methods.withdrawalDelaySeconds().call();
+			this.vault.transferDelaySeconds = await yieldSyncV1Vault.methods.transferDelaySeconds().call();
 		},
 	});
 </script>
