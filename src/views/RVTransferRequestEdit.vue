@@ -7,7 +7,7 @@
 				</VCardTitle>
 
 				<VCardText class="mt-4">
-					<h6>{{ solTransferRequest }}</h6>
+					<h6>{{ transferRequest }}</h6>
 
 					<h3>{{ transferRequest }}</h3>
 				</VCardText>
@@ -30,30 +30,6 @@
 		{
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
-				solTransferRequest: undefined as undefined | [
-					// 0 forERC20
-					boolean,
-					// 1 forERC721
-					boolean,
-					// 2 creator
-					string,
-					// 3 token
-					string,
-					// 4 tokenId
-					string,
-					// 5 amount
-					string,
-					// 6 to
-					string,
-					// 7 forVoteCount
-					string,
-					// 8 againstVoteCount
-					string,
-					// 9 latestRelevantForVoteTime
-					string,
-					// 10 votedMembers
-					string[],
-				],
 				transferRequest: {
 					for: "Ether" as "Ether" | "ERC20" | "ERC721",
 					creator: "" as string,
@@ -74,27 +50,27 @@
 
 			if (this.yieldSyncV1Vault)
 			{
-				this.solTransferRequest = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
+				const transferRequest = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
 					this.$route.params.transferrequestid
 				).call();
 
-				if (this.solTransferRequest)
+				if (this.transferRequest)
 				{
-					if (this.solTransferRequest[0] && !this.solTransferRequest[1])
+					if (transferRequest.forERC20 && !transferRequest.forERC721)
 					{
 						this.transferRequest.for = "ERC20";
 					}
 
-					if (!this.solTransferRequest[0] && this.solTransferRequest[1])
+					if (!transferRequest.forERC20 && transferRequest.forERC721)
 					{
 						this.transferRequest.for = "ERC721";
 					}
 
-					this.transferRequest.creator = String(this.solTransferRequest[2]);
-					this.transferRequest.token =  String(this.solTransferRequest[3]);
-					this.transferRequest.tokenId =  parseInt(this.solTransferRequest[4]);
-					this.transferRequest.to = String(this.solTransferRequest[6]);
-					this.transferRequest.amount = parseInt(this.solTransferRequest[5]);
+					this.transferRequest.creator = String(transferRequest.creator);
+					this.transferRequest.token =  String(transferRequest.token);
+					this.transferRequest.tokenId =  parseInt(transferRequest.tokenId);
+					this.transferRequest.to = String(transferRequest.to);
+					this.transferRequest.amount = parseInt(transferRequest.amount);
 				}
 			}
 		},
