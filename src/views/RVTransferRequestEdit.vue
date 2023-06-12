@@ -7,7 +7,9 @@
 				</VCardTitle>
 
 				<VCardText class="mt-4">
-					{{ transferrequest }}
+					<h6>{{ solTransferRequest }}</h6>
+
+					<h3>{{ transferRequest }}</h3>
 				</VCardText>
 			</VCard>
 		</div>
@@ -15,6 +17,31 @@
 </template>
 
 <script lang="ts">
+	type TransferRequest = [
+		// forERC20
+		Boolean,
+		// forERC721
+		Boolean,
+		// creator
+		String,
+		// to
+		String,
+		// token
+		String,
+		// amount
+		String,
+		// tokenId
+		String,
+		// approveVoteCount
+		String,
+		// denyVoteCount
+		String,
+		// latestRelevantApproveVoteTime
+		String,
+		// votedMembers
+		String[],
+	];
+
 	import { defineComponent } from "vue";
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
@@ -27,7 +54,15 @@
 		data() {
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
-				transferrequest: undefined
+				solTransferRequest: undefined as undefined | TransferRequest,
+				transferRequest: {
+					for: "Ether" as "Ether" | "ERC20" | "ERC721",
+					creator: "" as string,
+					to: "" as string,
+					token: "" as string,
+					amount: 0 as number,
+					tokenId: 0 as number,
+				}
 			}
 		},
 
@@ -39,9 +74,28 @@
 
 			if (this.yieldSyncV1Vault)
 			{
-				this.transferrequest = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
+				this.solTransferRequest = await this.yieldSyncV1Vault.methods.withdrawalRequestId_withdralRequest(
 					this.$route.params.transferrequestid
 				).call();
+
+				if (this.solTransferRequest)
+				{
+					if (this.solTransferRequest[0] && !this.solTransferRequest[1])
+					{
+						this.transferRequest.for = "ERC20";
+					}
+
+					if (!this.solTransferRequest[0] && this.solTransferRequest[1])
+					{
+						this.transferRequest.for = "ERC721";
+					}
+
+					this.transferRequest.creator = String(this.solTransferRequest[2]);
+
+					this.transferRequest.to = String(this.solTransferRequest[3]);
+
+					this.transferRequest.token =  String(this.solTransferRequest[4]);
+				}
 			}
 		},
 	});

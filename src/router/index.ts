@@ -1,67 +1,63 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-const routes: Array<RouteRecordRaw> = [
-	{
-		path: "/balances/:address",
-		name: "balances",
-		component: () =>
-		{
-			return import("../views/RVBalances.vue");
-		}
-	},
-	{
-		path: "/",
-		name: "dashboard",
-		component: () =>
-		{
-			return import("../views/RVDashboard.vue");
-		}
-	},
-	{
-		path: "/governance",
-		name: "governance",
-		component: () =>
-		{
-			return import("../views/RVGovernance.vue");
-		}
-	},
-	{
-		path: "/sign-message",
-		name: "sign-message",
-		component: () =>
-		{
-			return import("../views/RVSignMessage.vue");
-		}
-	},
-	{
-		path: "/transfer-request-edit/:vaultaddress/:transferrequestid",
-		name: "transfer-request-edit",
-		component: () =>
-		{
-			return import("../views/RVTransferRequestEdit.vue");
-		}
-	},
-	{
-		path: "/v1-vault/:address",
-		name: "v1-vault",
-		component: () =>
-		{
-			return import("../views/RVV1Vault.vue");
-		}
-	},
-	{
-		path: "/:pathMatch(.*)*",
-		name: "not-found",
-		component: () =>
-		{
-			return import("../views/NotFound.vue");
-		}
-	},
-];
-
-const router = createRouter({
+export default createRouter({
 	history: createWebHistory(process.env.BASE_URL),
-	routes
+	routes: [
+		{
+			path: "/balances/:address",
+			name: "balances",
+			component: () =>
+			{
+				return import("../views/RVBalances.vue");
+			}
+		},
+		{
+			path: "/",
+			name: "dashboard",
+			component: () =>
+			{
+				return import("../views/RVDashboard.vue");
+			}
+		},
+		{
+			path: "/governance",
+			name: "governance",
+			component: () =>
+			{
+				return import("../views/RVGovernance.vue");
+			}
+		},
+		{
+			path: "/sign-message",
+			name: "sign-message",
+			component: () =>
+			{
+				return import("../views/RVSignMessage.vue");
+			}
+		},
+		{
+			path: "/transfer-request-edit/:vaultaddress/:transferrequestid",
+			name: "transfer-request-edit",
+			component: () =>
+			{
+				return import("../views/RVTransferRequestEdit.vue");
+			}
+		},
+		{
+			path: "/v1-vault/:address",
+			name: "v1-vault",
+			component: () =>
+			{
+				return import("../views/RVV1Vault.vue");
+			}
+		},
+		{
+			path: "/:pathMatch(.*)*",
+			name: "not-found",
+			component: () =>
+			{
+				return import("../views/NotFound.vue");
+			}
+		},
+	] as Array<RouteRecordRaw>
 });
-
-export default router;
