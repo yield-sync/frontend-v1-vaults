@@ -24,19 +24,19 @@
 		boolean,
 		// creator
 		string,
-		// to
-		string,
 		// token
-		string,
-		// amount
 		string,
 		// tokenId
 		string,
-		// approveVoteCount
+		// amount
 		string,
-		// denyVoteCount
+		// to
 		string,
-		// latestRelevantApproveVoteTime
+		// forVoteCount
+		string,
+		// againstVoteCount
+		string,
+		// latestRelevantForVoteTime
 		string,
 		// votedMembers
 		string[],

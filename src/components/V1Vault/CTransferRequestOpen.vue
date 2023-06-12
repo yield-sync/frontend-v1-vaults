@@ -232,7 +232,7 @@
 								Latest Relevant For Vote Time
 							</h4>
 							<h3 class="mb-3 text-center text-dark">
-								{{ w.latestRelevantApproveVoteTime }}
+								{{ w.latestRelevantForVoteTime }}
 							</h3>
 						</VCol>
 
@@ -316,7 +316,7 @@
 					forERC20: boolean
 					forERC721: boolean
 					forVoteCount: string
-					latestRelevantApproveVoteTime: string
+					latestRelevantForVoteTime: string
 					to: string
 					token: string
 					tokenSymbol: string
@@ -373,7 +373,7 @@
 					}
 
 					// Create a new Date object using the JavaScript timestamp
-					const date = new Date(wr.latestRelevantApproveVoteTime * 1000);
+					const date = new Date(wr.latestRelevantForVoteTime * 1000);
 
 					// Get the individual components of the date and time
 					const year = date.getFullYear();
@@ -391,7 +391,7 @@
 						forERC20: wr.forERC20,
 						forERC721: wr.forERC721,
 						forVoteCount: wr.forVoteCount,
-						latestRelevantApproveVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+						latestRelevantForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
 						to: wr.to,
 						token: !wr.forERC20 && !wr.forERC721 ? "Ether" : name,
 						tokenSymbol: !wr.forERC20 && !wr.forERC721 ? "ETH" : symbol,
