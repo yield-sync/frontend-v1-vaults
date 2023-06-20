@@ -81,7 +81,8 @@
 				<VBtn
 					:disabled="creating"
 					color="primary"
-					class="w-100" @click="createWR()"
+					class="w-100"
+					@click="createWR()"
 				>
 					Create Request
 				</VBtn>

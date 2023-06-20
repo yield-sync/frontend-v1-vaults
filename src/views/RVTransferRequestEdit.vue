@@ -96,11 +96,91 @@
 							/>
 						</VCol>
 
+						<VCol sm="6">
+							<!-- For Vote Count -->
+							<VTextField
+								v-model="transferRequest.forVoteCount"
+								type="number"
+								label="For Vote Count"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
+
+						<VCol sm="6">
+							<!-- Against Vote Count -->
+							<VTextField
+								v-model="transferRequest.againstVoteCount"
+								type="number"
+								label="Against Vote Count"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
+
+						<VCol sm="12">
+							<!-- Latest Relevant For Vote Time -->
+							<VTextField
+								v-model="transferRequest.latestRelevantForVoteTime"
+								type="number"
+								label="Latest Relevant For Vote Time"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
+
+						<VCol cols="12">
+							<VRow
+								v-for="(m, i) in transferRequest.votedMembers" :key="i"
+								class="mb-3"
+							>
+								<VCol md="10">
+									<h5 class="member-or-admin my-2">{{ m }}</h5>
+								</VCol>
+								<VCol md="2">
+									<VBtn
+										variant="flat"
+										color="danger"
+										class="w-100 rounded-xl elevation-0"
+										@click="removeVotedMember(i)"
+									>
+										✕
+									</VBtn>
+								</VCol>
+							</VRow>
+
+							<VRow>
+								<VCol md="10">
+									<VTextField v-model="addVotedMemberField" label="Address" variant="outlined" />
+									{{ addVotedMemberField}}
+								</VCol>
+								<VCol md="2">
+									<VBtn
+										variant="flat"
+										color="success"
+										class="w-100 rounded-xl elevation-0"
+										@click="addVotedMember()"
+									>
+										Add
+									</VBtn>
+								</VCol>
+							</VRow>
+							{{ transferRequest.votedMembers }}
+						</VCol>
+
 						<VCol sm="12">
 							<VBtn
+								:disabled="updating"
 								color="success"
 								variant="tonal"
 								class="w-100 rounded-xl"
+								@click="updateWR()"
 							>
 								Update
 							</VBtn>
@@ -114,6 +194,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
@@ -125,16 +206,94 @@
 		data()
 		{
 			return {
+				updating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
 					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
 					creator: "" as string,
 					token: "" as string,
 					tokenId: 0 as number,
-					to: "" as string,
 					amount: 0 as number,
-				}
+					to: "" as string,
+					forVoteCount: 0 as number,
+					againstVoteCount: 0 as number,
+					latestRelevantForVoteTime: 0 as number,
+					votedMembers: [] as string[],
+				},
+				error: "",
+				addVotedMemberField: "",
 			};
+		},
+
+		methods: {
+			addVotedMember()
+			{
+				if (this.$store.state.web3.utils.isAddress(this.addVotedMemberField))
+				{
+					this.transferRequest.votedMembers = [
+						...this.transferRequest.votedMembers,
+						this.addVotedMemberField
+					];
+					this.addVotedMemberField = "";
+				}
+			},
+
+			removeVotedMember(i: number)
+			{
+				console.log(i);
+
+				if (i > -1)
+				{
+					this.transferRequest.votedMembers.splice(i, 1);
+					this.transferRequest.votedMembers = [...this.transferRequest.votedMembers].splice(i, 1);
+				}
+			},
+
+			async updateWR()
+			{
+				if (this.yieldSyncV1Vault)
+				{
+					await this.yieldSyncV1Vault.methods.updateTransferRequest(
+						this.$route.params.transferrequestid,
+						[
+							this.transferRequest.for == "ERC 20" ? true : false,
+							this.transferRequest.for == "ERC 721" ? true : false,
+							this.transferRequest.creator,
+							this.transferRequest.token ?
+								this.transferRequest.token : "0x0000000000000000000000000000000000000000"
+							,
+							this.transferRequest.tokenId,
+							BigInt(this.transferRequest.amount * 10**18),
+							this.transferRequest.to,
+							this.transferRequest.forVoteCount,
+							this.transferRequest.againstVoteCount,
+							this.transferRequest.latestRelevantForVoteTime,
+							this.transferRequest.votedMembers,
+						]
+					).send({
+						from: this.$store.state.wallet.accounts[0]
+					}).on("sent", async () =>
+					{
+						this.updating = true;
+					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.$store.state.pages.RVV1Vault.transferRequest.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequest.key++;
+						}
+
+						this.updating = false;
+					}).on("error", async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.updating = false;
+					});
+				}
+			}
 		},
 
 		async created()
@@ -165,8 +324,14 @@
 					this.transferRequest.creator = String(transferRequest.creator);
 					this.transferRequest.token =  String(transferRequest.token);
 					this.transferRequest.tokenId =  parseInt(transferRequest.tokenId);
-					this.transferRequest.to = String(transferRequest.to);
 					this.transferRequest.amount = parseInt(transferRequest.amount) * 10 ** -18;
+					this.transferRequest.to = String(transferRequest.to);
+					this.transferRequest.forVoteCount =  parseInt(transferRequest.forVoteCount);
+					this.transferRequest.againstVoteCount =  parseInt(transferRequest.againstVoteCount);
+					this.transferRequest.latestRelevantForVoteTime = parseInt(
+						transferRequest.latestRelevantForVoteTime
+					);
+					this.transferRequest.votedMembers = transferRequest.votedMembers;
 				}
 			}
 		},
