@@ -6,7 +6,7 @@
 			</VCardTitle>
 
 			<VCardText class="mt-4">
-				<VRow v-for="(a, i) in members" :key="i" class="">
+				<VRow v-for="(a, i) in members" :key="i">
 					<VCol md="1" lg="1">
 						<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
 					</VCol>

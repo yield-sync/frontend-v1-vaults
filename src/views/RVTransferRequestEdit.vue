@@ -7,9 +7,105 @@
 				</VCardTitle>
 
 				<VCardText class="mt-4">
-					<h6>{{ transferRequest }}</h6>
+					<VRow>
+						<VCol sm="12">
+							<!-- CREATOR -->
+							<VTextField
+								v-model="transferRequest.creator"
+								type="text"
+								label="Creator"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
 
-					<h3>{{ transferRequest }}</h3>
+						<VCol cols="12">
+							<VRadioGroup v-model="transferRequest.for" :label="'For: ' + transferRequest.for" inline>
+								<VRadio
+									label="Ether"
+									value="Ether"
+									color="primary"
+								/>
+								<VRadio
+									label="ERC 20"
+									value="ERC 20"
+									color="primary"
+								/>
+								<VRadio
+									label="ERC 721"
+									value="ERC 721"
+									color="primary"
+								/>
+							</VRadioGroup>
+						</VCol>
+
+						<VCol sm="12">
+							<!-- TO -->
+							<VTextField
+								v-model="transferRequest.to"
+								type="text"
+								label="To"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+
+						</VCol>
+						<VCol sm="6">
+							<!-- TOKEN -->
+							<VTextField
+								v-model="transferRequest.token"
+								:disabled="transferRequest.for == 'Ether'"
+								type="text"
+								label="Token"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+
+						</VCol>
+
+						<VCol sm="2">
+							<!-- TOKEN ID -->
+							<VTextField
+								v-model="transferRequest.tokenId"
+								:disabled="transferRequest.for != 'ERC 721'"
+								type="number"
+								label="Token Id"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
+
+						<VCol sm="4">
+							<!-- AMOUNT -->
+							<VTextField
+								v-model="transferRequest.amount"
+								type="number"
+								label="Amount"
+								variant="outlined"
+								hide-details
+								class="mb-3"
+								size="small"
+							/>
+						</VCol>
+
+						<VCol sm="12">
+							<VBtn
+								color="success"
+								variant="tonal"
+								class="w-100 rounded-xl"
+							>
+								Update
+							</VBtn>
+						</VCol>
+					</VRow>
 				</VCardText>
 			</VCard>
 		</div>
@@ -31,7 +127,7 @@
 			return {
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
-					for: "Ether" as "Ether" | "ERC20" | "ERC721",
+					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
 					creator: "" as string,
 					token: "" as string,
 					tokenId: 0 as number,
@@ -58,19 +154,19 @@
 				{
 					if (transferRequest.forERC20 && !transferRequest.forERC721)
 					{
-						this.transferRequest.for = "ERC20";
+						this.transferRequest.for = "ERC 20";
 					}
 
 					if (!transferRequest.forERC20 && transferRequest.forERC721)
 					{
-						this.transferRequest.for = "ERC721";
+						this.transferRequest.for = "ERC 721";
 					}
 
 					this.transferRequest.creator = String(transferRequest.creator);
 					this.transferRequest.token =  String(transferRequest.token);
 					this.transferRequest.tokenId =  parseInt(transferRequest.tokenId);
 					this.transferRequest.to = String(transferRequest.to);
-					this.transferRequest.amount = parseInt(transferRequest.amount);
+					this.transferRequest.amount = parseInt(transferRequest.amount) * 10 ** -18;
 				}
 			}
 		},

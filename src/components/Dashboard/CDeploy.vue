@@ -2,7 +2,7 @@
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
 			<VRow>
-				<VCol cols="6" class="">
+				<VCol cols="6">
 					<a
 						:href="`https://${d}.etherscan.io/address/${factory}`"
 						target="_blank"

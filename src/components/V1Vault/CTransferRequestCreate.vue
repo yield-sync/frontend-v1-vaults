@@ -1,7 +1,7 @@
 <template>
 	<VContainer>
 		<VRow>
-			<VCol cols="12" class="">
+			<VCol cols="12">
 				<VRadioGroup v-model="transferRequest.for" :label="'For: ' + transferRequest.for" inline>
 					<VRadio
 						label="Ether"
@@ -21,12 +21,12 @@
 				</VRadioGroup>
 			</VCol>
 
-			<VCol cols="8" class="">
+			<VCol cols="12">
+				<!-- TO -->
 				<VTextField
-					:disabled="transferRequest.for == 'Ether'"
-					v-model="transferRequest.token"
+					v-model="transferRequest.to"
 					type="text"
-					label="ERC Token Address"
+					label="To Address"
 					variant="outlined"
 					hide-details
 					class="mb-3"
@@ -34,7 +34,24 @@
 				/>
 			</VCol>
 
-			<VCol cols="4" class="">
+
+
+			<VCol cols="6">
+				<!-- TOKEN ADDRESS -->
+				<VTextField
+					:disabled="transferRequest.for == 'Ether'"
+					v-model="transferRequest.token"
+					type="text"
+					label="Token Address"
+					variant="outlined"
+					hide-details
+					class="mb-3"
+					size="small"
+				/>
+			</VCol>
+
+			<VCol cols="2">
+				<!-- TOKEN ID -->
 				<VTextField
 					:disabled="transferRequest.for != 'ERC 721'"
 					v-model="transferRequest.tokenId"
@@ -47,19 +64,8 @@
 				/>
 			</VCol>
 
-			<VCol cols="8" class="">
-				<VTextField
-					v-model="transferRequest.to"
-					type="text"
-					label="To Address"
-					variant="outlined"
-					hide-details
-					class="mb-3"
-					size="small"
-				/>
-			</VCol>
-
-			<VCol cols="4" class="">
+			<VCol cols="4">
+				<!-- AMOUNT -->
 				<VTextField
 					v-model="transferRequest.amount"
 					type="number"
@@ -71,7 +77,7 @@
 				/>
 			</VCol>
 
-			<VCol cols="12" class="">
+			<VCol cols="12">
 				<VBtn
 					:disabled="creating"
 					color="primary"
@@ -109,7 +115,7 @@
 				creating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
-					for: "Ether" as string,
+					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
 					to: "" as string,
 					token: "" as string,
 					amount: 0 as number,

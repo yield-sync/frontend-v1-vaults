@@ -57,10 +57,10 @@ export default createStore({
 		} as {
 			RVV1Vault: {
 				transferRequest: {
-					tab: string,
+					tab: "o" | "c",
 					key: number
 				},
-				tab: string
+				tab: "wr" | "overview" | "admins-and-members" | "settings"
 			}
 		},
 	},

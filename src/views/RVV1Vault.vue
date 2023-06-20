@@ -2,7 +2,7 @@
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
-				<VCol cols="4" class="">
+				<VCol cols="4">
 					<a
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
@@ -21,7 +21,10 @@
 									:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
 									color="primary"
 									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
-									style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;"
+									style="
+										border-top-right-radius: 0px !important;
+										border-bottom-right-radius: 0px !important;
+									"
 								>
 									👤 Member
 								</VBtn>
@@ -34,7 +37,10 @@
 									:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
 									color="primary"
 									class="w-100 mb-3 rounded-e-xl rounded-e-none elevation-0 border-primary"
-									style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;"
+									style="
+										border-top-left-radius: 0px !important;
+										border-bottom-left-radius: 0px !important;
+									"
 								>
 									🔑 Admin
 								</VBtn>
