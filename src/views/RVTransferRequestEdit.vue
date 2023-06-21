@@ -145,7 +145,7 @@
 								</VCol>
 								<VCol md="2">
 									<VBtn
-										variant="flat"
+										variant="tonal"
 										color="danger"
 										class="w-100 rounded-xl elevation-0"
 										@click="removeVotedMember(i)"
@@ -158,11 +158,11 @@
 							<VRow>
 								<VCol md="10">
 									<VTextField v-model="addVotedMemberField" label="Address" variant="outlined" />
-									{{ addVotedMemberField}}
 								</VCol>
+
 								<VCol md="2">
 									<VBtn
-										variant="flat"
+										variant="tonal"
 										color="success"
 										class="w-100 rounded-xl elevation-0"
 										@click="addVotedMember()"
@@ -171,7 +171,6 @@
 									</VBtn>
 								</VCol>
 							</VRow>
-							{{ transferRequest.votedMembers }}
 						</VCol>
 
 						<VCol sm="12">
@@ -218,7 +217,8 @@
 					forVoteCount: 0 as number,
 					againstVoteCount: 0 as number,
 					latestRelevantForVoteTime: 0 as number,
-					votedMembers: [] as string[],
+					votedMembers: [
+					] as string[],
 				},
 				error: "",
 				addVotedMemberField: "",
@@ -230,10 +230,13 @@
 			{
 				if (this.$store.state.web3.utils.isAddress(this.addVotedMemberField))
 				{
+					// Add member
 					this.transferRequest.votedMembers = [
 						...this.transferRequest.votedMembers,
-						this.addVotedMemberField
+						this.addVotedMemberField,
 					];
+
+					// Clear field
 					this.addVotedMemberField = "";
 				}
 			},
@@ -244,8 +247,12 @@
 
 				if (i > -1)
 				{
-					this.transferRequest.votedMembers.splice(i, 1);
-					this.transferRequest.votedMembers = [...this.transferRequest.votedMembers].splice(i, 1);
+					this.transferRequest.votedMembers = this.transferRequest.votedMembers.filter(
+						(m) =>
+						{
+							return m !== this.transferRequest.votedMembers[i];
+						}
+					);
 				}
 			},
 
