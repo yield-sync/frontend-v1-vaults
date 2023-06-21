@@ -147,7 +147,7 @@
 									<VBtn
 										variant="tonal"
 										color="danger"
-										class="w-100 rounded-xl elevation-0"
+										class="w-100 rounded-xl elevation-0 border"
 										@click="removeVotedMember(i)"
 									>
 										✕
@@ -164,7 +164,7 @@
 									<VBtn
 										variant="tonal"
 										color="success"
-										class="w-100 rounded-xl elevation-0"
+										class="w-100 rounded-xl elevation-0 border"
 										@click="addVotedMember()"
 									>
 										Add
@@ -178,7 +178,7 @@
 								:disabled="updating"
 								color="success"
 								variant="tonal"
-								class="w-100 rounded-xl"
+								class="w-100 rounded-xl border"
 								@click="updateWR()"
 							>
 								Update
