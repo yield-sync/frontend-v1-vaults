@@ -181,10 +181,10 @@
 						<VCol sm="12">
 							<VBtn
 								:disabled="updating"
-								color="success"
-								variant="tonal"
+								variant="flat"
+								color="primary"
 								border-primary="primary"
-								class="w-100 rounded-xl border"
+								class="w-100 rounded-xl"
 								@click="updateWR()"
 							>
 								Update

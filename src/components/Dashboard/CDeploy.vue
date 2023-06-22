@@ -1,22 +1,34 @@
 <template>
+	<VRow class="mb-4">
+		<VCol cols="6">
+			<a
+				:href="`https://${d}.etherscan.io/address/${factory}`"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<VBtn
+					variant="tonal"
+					color="primary"
+					class="rounded-xl"
+				><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
+			</a>
+		</VCol>
+
+		<VCol cols="6">
+			<h6 class="text-right text-uppercase text-success">Deployment Fee: {{ deploymentFee }}</h6>
+		</VCol>
+	</VRow>
+
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
 			<VRow>
-				<VCol cols="6">
-					<a
-						:href="`https://${d}.etherscan.io/address/${factory}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<VBtn variant="outlined" size="sm"><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
-					</a>
+				<VCol cols="12">
+					<h2 class="mb-6 text-center text-uppercase text-primary">
+						🔧 Properties
+					</h2>
 				</VCol>
 
-				<VCol cols="6" class="text-right">
-					<h6>Deployment Fee: {{ deploymentFee }}</h6>
-				</VCol>
-
-				<!-- Against -->
+					<!-- Against -->
 				<VCol cols="12" md="4">
 					<VTextField
 						v-model="deployParams.againstVoteCountRequired"
@@ -57,7 +69,7 @@
 
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
-			<h2 class="mb-6 text-center text-uppercase text-primary">Members</h2>
+			<h2 class="mb-6 text-center text-uppercase text-primary">👤 Members</h2>
 
 			<VRow
 				v-for="(m, i) in deployParams.members" :key="i"
@@ -68,9 +80,9 @@
 				</VCol>
 				<VCol md="2">
 					<VBtn
-						variant="flat"
+						variant="tonal"
 						color="danger"
-						class="w-100 rounded-xl elevation-0"
+						class="w-100 rounded-xl elevation-0 border"
 						@click="removeMember(i)"
 					>
 						✕
@@ -84,9 +96,9 @@
 				</VCol>
 				<VCol md="2">
 					<VBtn
-						variant="flat"
+						variant="tonal"
 						color="success"
-						class="w-100 rounded-xl elevation-0"
+						class="w-100 rounded-xl elevation-0 border"
 						@click="addMember()"
 					>
 						Add
@@ -98,7 +110,7 @@
 
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
-			<h2 class="mb-6 text-center text-uppercase text-primary">Admins</h2>
+			<h2 class="mb-6 text-center text-uppercase text-primary">🔑 Admins</h2>
 
 			<VRow
 				v-for="(m, i) in deployParams.admins" :key="i"
@@ -109,9 +121,9 @@
 				</VCol>
 				<VCol md="2">
 					<VBtn
-						variant="flat"
+						variant="tonal"
 						color="danger"
-						class="w-100 rounded-xl elevation-0"
+						class="w-100 rounded-xl elevation-0 border"
 						@click="removeAdmin(i)"
 					>
 						✕
@@ -125,9 +137,9 @@
 				</VCol>
 				<VCol md="2">
 					<VBtn
-						variant="flat"
+						variant="tonal"
 						color="success"
-						class="w-100 rounded-xl elevation-0"
+						class="w-100 rounded-xl elevation-0 border"
 						@click="addAdmin()"
 					>
 						Add
