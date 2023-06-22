@@ -7,7 +7,7 @@
 				</VCardTitle>
 
 				<VCardText class="mt-4">
-					<VRow>
+					<VRow class="text-center">
 						<VCol cols="12" class="text-center">
 							<a
 								:href="
@@ -21,39 +21,6 @@
 							</a>
 						</VCol>
 
-						<VCol :cols="asAdmin ? 12 : 6" class="text-center">
-							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h2 class="text-primary">Ξ Eth Balance: {{ ethBalance * 10 ** -18 }}</h2>
-							</VCard>
-						</VCol>
-
-						<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 6">
-							<RouterLink :to="`/v1-vault/${address}?eth=true`">
-								<VBtn
-									class="w-100 rounded-xl"
-									color="primary"
-									variant="flat"
-									@click="
-										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.transferRequest.tab = 'c';
-										$store.state.pages.RVV1Vault.transferRequest.key++
-									"
-								>
-									↗️ Transfer Out
-								</VBtn>
-							</RouterLink>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-
-			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">🔧 Properties</h4>
-				</VCardTitle>
-
-				<VCardText class="mt-4">
-					<VRow class="text-center">
 						<!-- For Vote -->
 						<VCol cols="12" sm="4">
 							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
@@ -84,6 +51,39 @@
 		</VCol>
 
 		<VCol cols="12">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+				<VCardTitle class="bg-primary text-light">
+					<h4 class="text-center text-uppercase">Ξ Ether Balance</h4>
+				</VCardTitle>
+
+				<VCardText class="mt-4">
+					<VRow>
+						<VCol :cols="asAdmin ? 12 : 6" class="text-center">
+							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+								<h2 class="text-primary">Ξ {{ ethBalance * 10 ** -18 }}</h2>
+							</VCard>
+						</VCol>
+
+						<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 6">
+							<RouterLink :to="`/v1-vault/${address}?eth=true`">
+								<VBtn
+									class="w-100 rounded-xl"
+									color="primary"
+									variant="flat"
+									@click="
+										$store.state.pages.RVV1Vault.tab = 'wr';
+										$store.state.pages.RVV1Vault.transferRequest.tab = 'c';
+										$store.state.pages.RVV1Vault.transferRequest.key++
+									"
+								>
+									↗️ Transfer Out
+								</VBtn>
+							</RouterLink>
+						</VCol>
+					</VRow>
+				</VCardText>
+			</VCard>
+
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">🪙 ERC 20 Tokens</h4>

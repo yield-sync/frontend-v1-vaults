@@ -136,12 +136,13 @@
 						</VCol>
 
 						<VCol cols="12">
+							<h3 class="mb-6 text-primary">Voted Members</h3>
 							<VRow
 								v-for="(m, i) in transferRequest.votedMembers" :key="i"
 								class="mb-3"
 							>
 								<VCol md="10">
-									<h5 class="member-or-admin my-2">{{ m }}</h5>
+									<h3 class="member-or-admin my-2">{{ m }}</h3>
 								</VCol>
 								<VCol md="2">
 									<VBtn
@@ -157,7 +158,11 @@
 
 							<VRow>
 								<VCol md="10">
-									<VTextField v-model="addVotedMemberField" label="Address" variant="outlined" />
+									<VTextField
+										v-model="addVotedMemberField"
+										label="Add Voted Member Address"
+										variant="outlined"
+									/>
 								</VCol>
 
 								<VCol md="2">
@@ -178,6 +183,7 @@
 								:disabled="updating"
 								color="success"
 								variant="tonal"
+								border-primary="primary"
 								class="w-100 rounded-xl border"
 								@click="updateWR()"
 							>
