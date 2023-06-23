@@ -2,37 +2,52 @@
 	<VContainer>
 		<VRow>
 			<VCol cols="2">
-				<h4 class="text-center text-primary">Token Symbol</h4>
+				<h4 class="text-center text-uppercase text-primary">Type</h4>
+			</VCol>
+
+			<VCol cols="3">
+				<h4 class="text-center text-uppercase text-primary">Token Symbol</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center text-primary">Amount</h4>
+				<h4 class="text-center text-uppercase text-primary">Amount / ID</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center text-primary">To</h4>
+				<h4 class="text-center text-uppercase text-primary">To</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center text-primary">For Votes</h4>
+				<h4 class="text-center text-uppercase text-primary">For : Against</h4>
 			</VCol>
 
-			<VCol cols="2">
-				<h4 class="text-center text-primary">Against Votes</h4>
-			</VCol>
-
-			<VCol cols="2">
-				<h4 class="text-center text-primary">Expand</h4>
+			<VCol cols="1">
+				<h4 class="text-center text-uppercase text-primary">View</h4>
 			</VCol>
 		</VRow>
 
 		<VRow v-for="(w, i) in detailedTransferRequests" :key="i">
 			<VCol cols="2">
+				<h4 v-if="w.forERC20" class="text-center">
+					ERC 20
+				</h4>
+
+				<h4 v-else-if="w.forERC721" class="text-center">
+					ERC 721
+				</h4>
+
+				<h4 v-else class="text-center">
+					Ether
+				</h4>
+			</VCol>
+
+			<VCol cols="3">
 				<h4 class="text-center ">{{ w.tokenSymbol }}</h4>
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center ">{{ w.amount * 10 ** -18 }}</h4>
+				<h4 v-if="!w.forERC721" class="text-center ">{{ w.amount * 10 ** -18 }}</h4>
+				<h4 v-if="w.forERC721" class="text-center ">#{{ w.tokenId }}</h4>
 			</VCol>
 
 			<VCol cols="2">
@@ -50,14 +65,13 @@
 			</VCol>
 
 			<VCol cols="2">
-				<h4 class="text-center text-success">{{ w.forVoteCount }}</h4>
+				<h4 class="text-center">
+					<span class="text-success">{{ w.forVoteCount }}</span> :
+					<span class="text-danger">{{ w.againstVoteCount }}</span>
+				</h4>
 			</VCol>
 
-			<VCol cols="2">
-				<h4 class="text-center text-danger">{{ w.againstVoteCount }}</h4>
-			</VCol>
-
-			<VCol cols="2">
+			<VCol cols="1">
 				<VBtn
 					variant="tonal"
 					color="primary"
@@ -136,9 +150,14 @@
 							</a>
 						</VCol>
 
-						<VCol cols="4" class="text-center">
+						<VCol v-if="!w.forERC721" cols="4" class="text-center">
 							<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
 							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
+						</VCol>
+
+						<VCol v-if="w.forERC721" cols="4" class="text-center">
+							<h4 class="mb-3 text-uppercase text-primary">Token Id</h4>
+							<h3 class="text-dark">{{ w.tokenId }}</h3>
 						</VCol>
 
 						<VCol cols="4" class="text-center">

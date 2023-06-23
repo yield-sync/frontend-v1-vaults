@@ -4,7 +4,7 @@
 			<VCol cols="12">
 				<VRadioGroup
 					v-model="$store.state.pages.RVV1Vault.transferRequest.for"
-					:label="'For: ' + transferRequest.for"
+					:label="'For: ' + $store.state.pages.RVV1Vault.transferRequest.for"
 					inline
 				>
 					<VRadio
@@ -71,6 +71,7 @@
 			<VCol cols="4">
 				<!-- AMOUNT -->
 				<VTextField
+					:disabled="$store.state.pages.RVV1Vault.transferRequest.for == 'ERC 721'"
 					v-model="$store.state.pages.RVV1Vault.transferRequest.amount"
 					type="number"
 					label="Amount"
@@ -140,10 +141,12 @@
 						this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 20" ? true : false,
 						this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721" ? true : false,
 						this.$store.state.pages.RVV1Vault.transferRequest.to,
-						this.$store.state.pages.RVV1Vault.transferRequest.token ?
-							this.$store.state.pages.RVV1Vault.transferRequest.token : this.ZeroAddress
-						,
-						BigInt(this.$store.state.pages.RVV1Vault.transferRequest.amount * 10**18),
+						(
+							this.$store.state.pages.RVV1Vault.transferRequest.token
+						) ? this.$store.state.pages.RVV1Vault.transferRequest.token : this.ZeroAddress,
+						(
+							this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721"
+						) ?  BigInt(10**18) : BigInt(this.$store.state.pages.RVV1Vault.transferRequest.amount * 10**18),
 						this.$store.state.pages.RVV1Vault.transferRequest.tokenId
 					).send({
 						from: this.$store.state.wallet.accounts[0]
