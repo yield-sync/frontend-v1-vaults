@@ -26,7 +26,12 @@
 				<VCol cols="12" md="7" lg="8" xl="9"
 					class="text-left">
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="plain" color="primary" class="rounded-xl">
+						<VBtn
+							variant="plain"
+							color="primary"
+							class="rounded-xl"
+							@click="$store.state.pages.RVDashboard.tab = 'm'"
+						>
 							<h3>Dashboard</h3>
 						</VBtn>
 					</RouterLink>
