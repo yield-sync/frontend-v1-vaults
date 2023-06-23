@@ -1,6 +1,6 @@
 <template>
 	<VCard
-		:key="$store.state.pages.RVV1Vault.transferRequest.key"
+		:key="$store.state.pages.RVV1Vault.transferRequests.key"
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
@@ -8,7 +8,7 @@
 		</VCardTitle>
 
 		<VTabs
-			v-model="$store.state.pages.RVV1Vault.transferRequest.tab"
+			v-model="$store.state.pages.RVV1Vault.transferRequests.tab"
 			bg-color="primary"
 			color="light-green-lighten-5"
 			fixed-tabs
@@ -18,7 +18,7 @@
 		</VTabs>
 
 		<VCardText variant="light">
-			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequest.tab">
+			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestOpen
 						:vaultAddress="vaultAddress"

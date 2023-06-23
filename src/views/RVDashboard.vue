@@ -9,9 +9,13 @@
 			>
 				<VCol cols="4">
 					<VBtn
-						:class="tab == 'm' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
+						:class="
+							(
+								$store.state.pages.RVDashboard.tab == 'm'
+							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
 						class="w-100 rounded-pill elevation-0"
-						@click="tab = 'm'"
+						@click="$store.state.pages.RVDashboard.tab = 'm'"
 					>
 						<h3>👤 Vault Memberships</h3>
 					</VBtn>
@@ -19,9 +23,13 @@
 
 				<VCol cols="4">
 					<VBtn
-						:class="tab == 'a' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
+						:class="
+							(
+								$store.state.pages.RVDashboard.tab == 'a'
+							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
 						class="w-100 rounded-pill elevation-0"
-						@click="tab = 'a'"
+						@click="$store.state.pages.RVDashboard.tab = 'a'"
 					>
 						<h3>🔑 Vault Adminships</h3>
 					</VBtn>
@@ -29,20 +37,22 @@
 
 				<VCol cols="4">
 					<VBtn
-						:class="tab == 'd' ? 'bg-primary text-white' : 'bg-light-frost text-primary'"
+						:class="
+							(
+								$store.state.pages.RVDashboard.tab == 'd'
+							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
+						"
 						class="w-100 rounded-pill elevation-0"
-						@click="tab = 'd'"
+						@click="$store.state.pages.RVDashboard.tab = 'd'"
 					>
 						<h3>🏦 Deploy a Vault</h3>
 					</VBtn>
 				</VCol>
 			</VRow>
 
-
-			<CMemberships v-if="tab == 'm'" />
-			<CAdminships v-if="tab == 'a'" />
-			<CDeploy v-if="tab == 'd'" />
-
+			<CMemberships v-if="$store.state.pages.RVDashboard.tab == 'm'" />
+			<CAdminships v-if="$store.state.pages.RVDashboard.tab == 'a'" />
+			<CDeploy v-if="$store.state.pages.RVDashboard.tab == 'd'" />
 		</div>
 	</VContainer>
 </template>
@@ -54,15 +64,7 @@
 	import CMemberships from "@/components/Dashboard/CMemberships.vue";
 
 	export default defineComponent({
-		name: "RVGovernance",
-
-		data()
-		{
-			return {
-				tab: "m",
-				currentTab: "member",
-			};
-		},
+		name: "RVDashboard",
 
 		components: {
 			CDeploy,

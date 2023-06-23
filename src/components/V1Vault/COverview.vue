@@ -65,15 +65,15 @@
 						</VCol>
 
 						<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 6">
-							<RouterLink :to="`/v1-vault/${address}?eth=true`">
+							<RouterLink :to="`/v1-vault/${address}`">
 								<VBtn
 									class="w-100 rounded-xl"
 									color="primary"
 									variant="flat"
 									@click="
-										$store.state.pages.RVV1Vault.tab = 'wr';
-										$store.state.pages.RVV1Vault.transferRequest.tab = 'c';
-										$store.state.pages.RVV1Vault.transferRequest.key++
+										$store.state.pages.RVV1Vault.tab = 'tr';
+										$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
+										$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
 									"
 								>
 									↗️ Transfer Out
@@ -217,13 +217,14 @@
 		data()
 		{
 			return {
+				ZeroAddress: "0x0000000000000000000000000000000000000000",
 				ethBalance: 0,
 				erc20Balances: [
 				] as {
 					name: string,
 					symbol: string,
 					balance: number | string,
-					contract: number | string,
+					contract: string,
 				}[],
 				erc721Balances: [
 				] as {
@@ -257,13 +258,11 @@
 						this.address
 					);
 
-					console.log("Alchemy Response:", data);
-
 					for (let i = 0; i < data.tokenBalances.length; i++)
 					{
 						const tB = data.tokenBalances[i];
 
-						if (tB.tokenBalance != "0x0000000000000000000000000000000000000000000000000000000000000000")
+						if (tB.tokenBalance != this.ZeroAddress)
 						{
 
 							const contract = new this.$store.state.web3.eth.Contract(
@@ -310,14 +309,17 @@
 					name: string,
 					symbol: string,
 					balance: number | string,
-					contract: number | string,
+					contract: string,
 				}
 			)
 			{
-				this.$store.state.pages.RVV1Vault.tab = "wr";
-				this.$store.state.pages.RVV1Vault.transferRequest.tab = "c";
+				this.$store.state.pages.RVV1Vault.tab = "tr";
+				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
 
-				router.push(`/v1-vault/${address}?erc20Address=${erc20.contract}`);
+				this.$store.state.pages.RVV1Vault.transferRequest.for = 'ERC 20';
+				this.$store.state.pages.RVV1Vault.transferRequest.token = erc20.contract;
+
+				router.push(`/v1-vault/${address}`);
 			}
 		},
 

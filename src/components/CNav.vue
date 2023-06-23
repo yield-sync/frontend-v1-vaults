@@ -30,6 +30,18 @@
 							<h3>Dashboard</h3>
 						</VBtn>
 					</RouterLink>
+
+
+					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
+						<VBtn
+							variant="plain"
+							color="primary"
+							class="rounded-xl"
+							@click="$store.state.pages.RVDashboard.tab = 'd'"
+						>
+							<h3>Deploy V1-Vault</h3>
+						</VBtn>
+				</RouterLink>
 				</VCol>
 
 				<VCol cols="12" md="5" lg="4" xl="3"

@@ -82,11 +82,11 @@
 				<VCol cols="3">
 					<VBtn
 						:class="
-							$store.state.pages.RVV1Vault.tab == 'wr' ?
+							$store.state.pages.RVV1Vault.tab == 'tr' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
-						@click="$store.state.pages.RVV1Vault.tab = 'wr'"
+						@click="$store.state.pages.RVV1Vault.tab = 'tr'"
 					>
 						↗️ Transfer Req.
 					</VBtn>
@@ -124,7 +124,7 @@
 			/>
 
 			<CTransferRequest
-				v-if="$store.state.pages.RVV1Vault.tab == 'wr'"
+				v-if="$store.state.pages.RVV1Vault.tab == 'tr'"
 				:vaultAddress="vaultAddress"
 				:asAdmin="$route.query.admin == 'true'"
 			/>

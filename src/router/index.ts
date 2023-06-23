@@ -4,14 +4,6 @@ export default createRouter({
 	history: createWebHistory(process.env.BASE_URL),
 	routes: [
 		{
-			path: "/balances/:address",
-			name: "balances",
-			component: () =>
-			{
-				return import("../views/RVBalances.vue");
-			}
-		},
-		{
 			path: "/",
 			name: "dashboard",
 			component: () =>
@@ -25,14 +17,6 @@ export default createRouter({
 			component: () =>
 			{
 				return import("../views/RVGovernance.vue");
-			}
-		},
-		{
-			path: "/sign-message",
-			name: "sign-message",
-			component: () =>
-			{
-				return import("../views/RVSignMessage.vue");
 			}
 		},
 		{
@@ -56,7 +40,7 @@ export default createRouter({
 			name: "not-found",
 			component: () =>
 			{
-				return import("../views/NotFound.vue");
+				return import("../views/RVNotFound.vue");
 			}
 		},
 	] as Array<RouteRecordRaw>

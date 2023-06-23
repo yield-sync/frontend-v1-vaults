@@ -211,6 +211,7 @@
 		data()
 		{
 			return {
+				ZeroAddress: "0x0000000000000000000000000000000000000000",
 				updating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
@@ -272,9 +273,7 @@
 							this.transferRequest.for == "ERC 20" ? true : false,
 							this.transferRequest.for == "ERC 721" ? true : false,
 							this.transferRequest.creator,
-							this.transferRequest.token ?
-								this.transferRequest.token : "0x0000000000000000000000000000000000000000"
-							,
+							this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
 							this.transferRequest.tokenId,
 							BigInt(this.transferRequest.amount * 10**18),
 							this.transferRequest.to,
@@ -294,8 +293,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.transferRequest.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequest.key++;
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
 						}
 
 						this.updating = false;

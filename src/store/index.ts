@@ -47,20 +47,46 @@ export default createStore({
 		},
 
 		pages: {
+			RVDashboard: {
+				tab: "m"
+			},
+
 			RVV1Vault: {
-				transferRequest: {
+				tab: "overview",
+
+				transferRequests: {
 					tab: "o",
 					key: 0,
 				},
-				tab: "overview",
+
+				transferRequest: {
+					for: "Ether",
+					to: "",
+					token: "",
+					amount: 0,
+					tokenId: 0,
+				},
 			}
 		} as {
+			RVDashboard: {
+				tab: "m" | "a" | "d"
+			},
+
 			RVV1Vault: {
-				transferRequest: {
+				tab: "tr" | "overview" | "admins-and-members" | "settings",
+
+				transferRequests: {
 					tab: "o" | "c",
 					key: number
 				},
-				tab: "wr" | "overview" | "admins-and-members" | "settings"
+
+				transferRequest: {
+					for: "Ether" | "ERC 20" | "ERC 721",
+					to:  string,
+					token: string,
+					amount: number,
+					tokenId: number,
+				},
 			}
 		},
 	},
