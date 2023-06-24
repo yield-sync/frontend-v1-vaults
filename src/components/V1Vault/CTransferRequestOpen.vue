@@ -108,7 +108,10 @@
 							</VCol>
 
 							<VCol cols="3">
-								<RouterLink :to="`/transfer-request-edit/${vaultAddress}/${w.id}`">
+								<RouterLink
+									v-if="$route.query.admin == 'true'"
+									:to="`/transfer-request-edit/${vaultAddress}/${w.id}`"
+								>
 									<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
 										Edit
 									</VBtn>
