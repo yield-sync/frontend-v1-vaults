@@ -189,8 +189,14 @@
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
 					deploying ||
-					deployParams.members.length < deployParams.forVoteCountRequired ||
-					deployParams.members.length < deployParams.againstVoteCountRequired
+					(
+						deployParams.members.length < deployParams.forVoteCountRequired &&
+						deployParams.admins.length == 0
+					) ||
+					(
+						deployParams.members.length < deployParams.againstVoteCountRequired &&
+						deployParams.admins.length == 0
+					)
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
