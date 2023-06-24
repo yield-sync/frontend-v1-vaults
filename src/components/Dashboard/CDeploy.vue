@@ -190,12 +190,9 @@
 				:disabled="
 					deploying ||
 					(
-						(
-							deployParams.members.length < deployParams.forVoteCountRequired ||
-							deployParams.members.length < deployParams.againstVoteCountRequired
-						) &&
-						deployParams.admins.length == 0
-					)
+						deployParams.members.length < deployParams.forVoteCountRequired ||
+						deployParams.members.length < deployParams.againstVoteCountRequired
+					) && deployParams.admins.length == 0
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
