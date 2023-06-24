@@ -126,7 +126,7 @@
 								color="primary"
 								variant="flat"
 								class="w-100 rounded-xl"
-								@click="forwardToCreate(address, erc20)"
+								@click="forwardToERC20Create(address, erc20)"
 							>
 								↗️ Transfer Out
 							</VBtn>
@@ -142,46 +142,45 @@
 
 				<VCardText class="mt-4">
 					<VRow>
-						<VCol cols="4">
-							<h4 class="text-primary">Symbol</h4>
-							<h5 class="text-primary">Name</h5>
+						<VCol cols="3">
+							<h4 class="text-center text-primary">Name</h4>
 						</VCol>
 
-						<VCol cols="4">
-							<h4 class="text-primary">Balance</h4>
+						<VCol cols="6">
+							<h4 class="text-center text-primary">Balance</h4>
 						</VCol>
 
-						<VCol cols="2">
-							<h4 class="text-primary">Copy</h4>
-						</VCol>
-
-						<VCol cols="2">
-							<h4 class="text-primary">Etherscan</h4>
+						<VCol cols="3">
+							<h4 class="text-center text-primary">Transfer Request</h4>
 						</VCol>
 					</VRow>
 
 					<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
-						<VCol cols="4">
-							<h4>{{ erc721.name }}</h4>
-							<h5>{{ erc721.symbol }}</h5>
-						</VCol>
-
-						<VCol sm="4">
-							<h4>{{ erc721.balance }}</h4>
-						</VCol>
-
-						<VCol cols="2">
-							<VBtn class="w-100" variant="tonal">📋</VBtn>
-						</VCol>
-
-						<VCol sm="2">
+						<VCol cols="3">
 							<a
 								:href="`https://etherscan.io/address/${erc721.contract}`"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								<VBtn variant="tonal" class="w-100">🔗</VBtn>
+								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
+									🔗 {{ erc721.name }}
+								</VBtn>
 							</a>
+						</VCol>
+
+						<VCol sm="6">
+							<h4 class="text-center">{{ erc721.balance }}</h4>
+						</VCol>
+
+						<VCol cols="3">
+							<VBtn
+								color="primary"
+								variant="flat"
+								class="w-100 rounded-xl"
+								@click="forwardToERC721Create(address, erc721)"
+							>
+								↗️ Transfer Out
+							</VBtn>
 						</VCol>
 					</VRow>
 				</VCardText>
@@ -303,7 +302,7 @@
 				}
 			},
 
-			forwardToCreate(
+			forwardToERC20Create(
 				address: string,
 				erc20: {
 					name: string,
@@ -320,7 +319,26 @@
 				this.$store.state.pages.RVV1Vault.transferRequest.token = erc20.contract;
 
 				router.push(`/v1-vault/${address}`);
-			}
+			},
+
+			forwardToERC721Create(
+				address: string,
+				erc721: {
+					name: string,
+					symbol: string,
+					balance: number | string,
+					contract: number | string
+				}
+			)
+			{
+				this.$store.state.pages.RVV1Vault.tab = "tr";
+				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
+
+				this.$store.state.pages.RVV1Vault.transferRequest.for = 'ERC 721';
+				this.$store.state.pages.RVV1Vault.transferRequest.token = erc721.contract;
+
+				router.push(`/v1-vault/${address}`);
+			},
 		},
 
 		async created()
