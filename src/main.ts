@@ -31,7 +31,6 @@ const vuetify = createVuetify({
 					warning: "#ffd712",
 					danger: "#f0483a",
 					white: "#FFFFFF",
-					"bg-light-frost": "mix($light, rgba(255, 255, 255, .1), $weight: 10%)"
 				},
 			}
 		}
