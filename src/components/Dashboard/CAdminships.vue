@@ -37,7 +37,7 @@
 					<div class="py-6 mb-6 rounded-xl vault">
 						<VRow>
 							<VCol cols="12" md="4">
-								<h3 class="text-decoration-none text-center">
+								<h3 class="text-decoration-none text-center text-primary">
 									{{
 										v.address ?
 											v.address.substring(0, 4) +
@@ -50,13 +50,13 @@
 							</VCol>
 
 							<VCol cols="12" md="4" class="d-none d-md-block">
-								<h3 class="text-center" style="word-wrap: break-word;">
+								<h3 class="text-center text-primary" style="word-wrap: break-word;">
 									{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
 								</h3>
 							</VCol>
 
 							<VCol cols="12" md="4" class="d-none d-md-block">
-								<h3 class="text-center" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
+								<h3 class="text-center text-primary" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
 							</VCol>
 						</VRow>
 					</div>
