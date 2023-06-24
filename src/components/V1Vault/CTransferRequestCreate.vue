@@ -38,8 +38,6 @@
 				/>
 			</VCol>
 
-
-
 			<VCol cols="6">
 				<!-- TOKEN ADDRESS -->
 				<VTextField
@@ -86,7 +84,7 @@
 				<VBtn
 					:disabled="creating"
 					color="primary"
-					class="w-100"
+					class="w-100 rounded-xl"
 					@click="createWR()"
 				>
 					Create Request

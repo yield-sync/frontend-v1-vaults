@@ -19,39 +19,49 @@
 				</VCol>
 			</VRow>
 
-			<RouterLink
-				v-for="(v, i) in adminshipYieldSyncV1VaultVaults"
-				:key="i"
-				:to="`/v1-vault/${v.address}?admin=true`"
-				class="text-decoration-none"
-			>
-				<div class="py-6 mb-6 rounded-xl vault">
-					<VRow>
-						<VCol cols="12" md="4">
-							<h3 class="text-decoration-none text-center">
-								{{
-									v.address ?
-										v.address.substring(0, 4) +
-										"..." +
-										v.address.substring($store.state.wallet.accounts[0].length - 4)
-										:
-										""
-								}}
-							</h3>
-						</VCol>
+			<div v-if="loading" class="text-center">
+				<v-progress-circular
+					class=""
+					indeterminate
+					color="primary"
+				/>
+			</div>
 
-						<VCol cols="12" md="4" class="d-none d-md-block">
-							<h3 class="text-center" style="word-wrap: break-word;">
-								{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
-							</h3>
-						</VCol>
+			<div v-if="!loading">
+				<RouterLink
+					v-for="(v, i) in adminshipYieldSyncV1VaultVaults"
+					:key="i"
+					:to="`/v1-vault/${v.address}?admin=true`"
+					class="text-decoration-none"
+				>
+					<div class="py-6 mb-6 rounded-xl vault">
+						<VRow>
+							<VCol cols="12" md="4">
+								<h3 class="text-decoration-none text-center">
+									{{
+										v.address ?
+											v.address.substring(0, 4) +
+											"..." +
+											v.address.substring($store.state.wallet.accounts[0].length - 4)
+											:
+											""
+									}}
+								</h3>
+							</VCol>
 
-						<VCol cols="12" md="4" class="d-none d-md-block">
-							<h3 class="text-center" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
-						</VCol>
-					</VRow>
-				</div>
-			</RouterLink>
+							<VCol cols="12" md="4" class="d-none d-md-block">
+								<h3 class="text-center" style="word-wrap: break-word;">
+									{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
+								</h3>
+							</VCol>
+
+							<VCol cols="12" md="4" class="d-none d-md-block">
+								<h3 class="text-center" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
+							</VCol>
+						</VRow>
+					</div>
+				</RouterLink>
+			</div>
 		</VCardText>
 	</VCard>
 </template>
@@ -68,6 +78,7 @@
 		data()
 		{
 			return {
+				loading: true as boolean,
 				accessControl: this.$store.state.config.address[
 					this.$store.state.chainName
 				].yieldSyncV1VaultAccessControl,
@@ -107,6 +118,8 @@
 					transferDelaySeconds: await yieldSyncV1Vault.methods.transferDelaySeconds().call(),
 				});
 			}
+
+			this.loading = false;
 		},
 	});
 </script>
