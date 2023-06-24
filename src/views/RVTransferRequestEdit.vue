@@ -22,23 +22,32 @@
 						</VCol>
 
 						<VCol cols="12">
-							<VRadioGroup v-model="transferRequest.for" :label="'For: ' + transferRequest.for" inline>
-								<VRadio
-									label="Ether"
+							<fieldset class="border-0">
+								<input
+									v-model="transferRequest.for"
+									type="radio"
 									value="Ether"
-									color="primary"
-								/>
-								<VRadio
-									label="ERC 20"
+									id="Ether"
+									checked
+								>
+								<label for="Ether">Ether</label>
+
+								<input
+									v-model="transferRequest.for"
+									type="radio"
 									value="ERC 20"
-									color="primary"
-								/>
-								<VRadio
-									label="ERC 721"
+									id="ERC 20"
+								>
+								<label for="ERC 20">ERC 20</label>
+
+								<input
+									v-model="transferRequest.for"
+									type="radio"
 									value="ERC 721"
-									color="primary"
-								/>
-							</VRadioGroup>
+									id="ERC 721"
+								>
+								<label for="ERC 721">ERC 721</label>
+							</fieldset>
 						</VCol>
 
 						<VCol sm="12">
@@ -349,3 +358,13 @@
 		},
 	});
 </script>
+
+<style scoped>
+p, label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: 0.4rem;
+}
+</style>
