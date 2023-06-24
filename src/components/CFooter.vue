@@ -5,7 +5,6 @@
 				<VCol
 					cols="12"
 					sm="6"
-					md="4"
 					class="text-center"
 				>
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
@@ -18,32 +17,6 @@
 				<VCol
 					cols="12"
 					sm="6"
-					md="4"
-					class="text-center"
-				>
-					<RouterLink
-						:to="`/balances/${$store.state.wallet.accounts[0]}`"
-						class="mr-2 text-decoration-none"
-					>
-						<VBtn variant="plain" color="light" class="w-100 mb-3">
-							Balances
-						</VBtn>
-					</RouterLink>
-
-					<RouterLink
-						to="/sign-message"
-						class="mr-2 text-decoration-none"
-					>
-						<VBtn variant="plain" color="light" class="w-100 mb-3">
-							Sign Message
-						</VBtn>
-					</RouterLink>
-				</VCol>
-
-				<VCol
-					cols="12"
-					sm="6"
-					md="4"
 					class="text-center"
 				>
 					<a

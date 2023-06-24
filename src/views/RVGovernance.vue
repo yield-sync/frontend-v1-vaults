@@ -1,53 +1,46 @@
 <template>
-	<VContainer>
-		<VCard class="mb-3 px-6 py-6">
-			<VRow>
-				<VCol cols="4" />
+	<VContainer style="padding: 160px 0;">
+		<div class="w-100 mx-auto" style="max-width: 800px;">
+			<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
+				<VCardText class="px-6 py-6">
+					<VRow>
 
-				<VCol cols="4">
-					<h3 class="mb-3 text-center text-uppercase text-primary">Yield Sync Governance</h3>
-				</VCol>
+						<VCol cols="12">
+							<h3 class="mb-3 text-center text-uppercase text-primary">Yield Sync Governance</h3>
+						</VCol>
 
-				<VCol cols="4" class="text-right">
-					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${governanceAddress}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<VBtn variant="outlined" size="sm"><h6>🔗 Governance Contract</h6></VBtn>
-					</a>
-				</VCol>
+						<VCol cols="12" class="text-center">
+							<a
+								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${govA}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="primary"><h6>🔗 Governance Contract</h6></VBtn>
+							</a>
+						</VCol>
 
-				<VCol cols="12" xl="5">
-					<h4 class="text-primary">DEFAULT_ADMIN_ROLE</h4>
-					<h5>{{ adminRole }}</h5>
-				</VCol>
+						<VCol cols="12">
+							<h4 class="mb-3 text-center text-primary">DEFAULT_ADMIN_ROLE</h4>
+							<h5 class="mb-3 text-center">{{ adminRole }}</h5>
 
-				<VCol cols="12" xl="5">
-					<h4 class="text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
-					<h5>{{ roleAdmin }}</h5>
-				</VCol>
+							<h4 class="mb-3 text-center text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
+							<h5 class="mb-3 text-center">{{ roleAdmin }}</h5>
 
-				<VCol cols="12" xl="2">
-					<h4 class="text-primary">Role Member Count</h4>
-					<h5>{{ roleMemberCount }}</h5>
-				</VCol>
+							<h4 class="mb-3 text-center text-primary">Role Member Count</h4>
+							<h5 class="mb-3 text-center">{{ roleMemberCount }}</h5>
 
-				<VCol cols="12">
-					<h4 class="text-primary">Wallet is Admin</h4>
-					<h5>{{ isAdmin }}</h5>
-				</VCol>
+							<h4 class="mb-3 text-center text-primary">Wallet is Admin</h4>
+							<h5 class="mb-3 text-center">{{ isAdmin }}</h5>
 
-				<VCol cols="12">
-					<h4 class="text-primary">Members</h4>
-					<ul>
-						<li v-for="(m, i) in members" :key="i">
-							<h5>{{ m }}</h5>
-						</li>
-					</ul>
-				</VCol>
-			</VRow>
-		</VCard>
+							<h4 class="mb-3 text-center text-primary">Members</h4>
+							<h5 v-for="(m, i) in members" :key="i" class="text-decoration-none">
+								<h5 class="mb-3 text-center">{{ m }}</h5>
+							</h5>
+						</VCol>
+					</VRow>
+				</VCardText>
+			</VCard>
+		</div>
 	</VContainer>
 </template>
 
@@ -60,7 +53,7 @@
 		data()
 		{
 			return {
-				governanceAddress: this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance,
+				govA: this.$store.state.config.address[this.$store.state.chainName].yieldSyncGovernance,
 				adminRole: undefined,
 				roleMemberCount: 0,
 				roleAdmin: "",
