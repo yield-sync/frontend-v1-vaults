@@ -1,192 +1,183 @@
 <template>
-	<VRow>
-		<VCol cols="12">
-			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
-					<h4 class="text-center text-uppercase">🏦 Overview</h4>
-				</VCardTitle>
+	<VContainer>
+		<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+			<VCardTitle class="bg-primary text-light">
+				<h4 class="text-center text-uppercase">🏦 Overview</h4>
+			</VCardTitle>
 
-				<VCardText class="mt-4">
-					<VRow class="text-center">
-						<VCol cols="12" class="text-center">
-							<a
-								:href="
-									`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${address}`
-								"
-								target="_blank" rel="noopener noreferrer"
-							>
-								<VBtn variant="tonal" color="primary" class="rounded-xl" size="large">
-									🔗 {{ address }}
-								</VBtn>
-							</a>
-						</VCol>
+			<VCardText class="mt-4">
+				<VRow class="text-center">
+					<!-- For Vote -->
+					<VCol cols="12" sm="4">
+						<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+							<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
-						<!-- For Vote -->
-						<VCol cols="12" sm="4">
-							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
+							<h2 class="m-0">{{ vault.forVoteCountRequired }}</h2>
+						</VCard>
+					</VCol>
 
-								<h2 class="m-0">{{ vault.forVoteCountRequired }}</h2>
-							</VCard>
-						</VCol>
+					<VCol cols="12" sm="4">
+						<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+							<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
-						<VCol cols="12" sm="4">
-							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
+							<h2 class="m-0">{{ vault.againstVoteCountRequired }}</h2>
+						</VCard>
+					</VCol>
 
-								<h2 class="m-0">{{ vault.againstVoteCountRequired }}</h2>
-							</VCard>
-						</VCol>
+					<VCol cols="12" sm="4">
+						<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+							<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
-						<VCol cols="12" sm="4">
-							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
+							<h2 class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
+						</VCard>
+					</VCol>
 
-								<h2 class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
-							</VCard>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-		</VCol>
+					<VCol cols="12">
+						<VCard class="rounded-xl elevation-0 bg-light-frost">
+							<VCardText>
+								<VRow>
+									<VCol cols="12" class="text-center">
+										<h2 class="mt-2 text-center text-uppercase text-primary">Ξ Ether Balance</h2>
+									</VCol>
 
-		<VCol cols="12">
-			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
-					<h4 class="text-center text-uppercase">Ξ Ether Balance</h4>
-				</VCardTitle>
+									<VCol :cols="asAdmin ? 12 : 9" class="text-center">
+										<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+											<h2 class="text-primary">Ξ {{ ethBalance * 10 ** -18 }}</h2>
+										</VCard>
+									</VCol>
 
-				<VCardText class="mt-4">
-					<VRow>
-						<VCol :cols="asAdmin ? 12 : 6" class="text-center">
-							<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-								<h2 class="text-primary">Ξ {{ ethBalance * 10 ** -18 }}</h2>
-							</VCard>
-						</VCol>
+									<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 3">
+										<RouterLink :to="`/v1-vault/${address}`">
+											<VBtn
+												class="w-100 rounded-xl"
+												color="primary"
+												variant="flat"
+												@click="
+													$store.state.pages.RVV1Vault.tab = 'tr';
+													$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
+													$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+												"
+											>
+												↗️ Transfer Out
+											</VBtn>
+										</RouterLink>
+									</VCol>
+								</VRow>
+							</VCardText>
+						</VCard>
+					</VCol>
 
-						<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 6">
-							<RouterLink :to="`/v1-vault/${address}`">
-								<VBtn
-									class="w-100 rounded-xl"
-									color="primary"
-									variant="flat"
-									@click="
-										$store.state.pages.RVV1Vault.tab = 'tr';
-										$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
-										$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
-									"
-								>
-									↗️ Transfer Out
-								</VBtn>
-							</RouterLink>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
+					<VCol cols="12">
+						<VCard class="rounded-xl elevation-0 bg-light-frost">
+							<VCardText>
+								<VRow>
+									<VCol cols="12" class="text-center">
+										<h2 class="mt-2 text-center text-uppercase text-primary">🪙 ERC 20 Tokens</h2>
+									</VCol>
 
-			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">🪙 ERC 20 Tokens</h4>
-				</VCardTitle>
+									<VCol cols="3">
+										<h4 class="text-center text-primary">Name</h4>
+									</VCol>
 
-				<VCardText class="mt-4">
-					<VRow>
-						<VCol cols="3">
-							<h4 class="text-center text-primary">Name</h4>
-						</VCol>
+									<VCol cols="6">
+										<h4 class="text-center text-primary">Balance</h4>
+									</VCol>
 
-						<VCol cols="6">
-							<h4 class="text-center text-primary">Balance</h4>
-						</VCol>
+									<VCol cols="3">
+										<h4 class="text-center text-primary">Transfer Request</h4>
+									</VCol>
+								</VRow>
 
-						<VCol cols="3">
-							<h4 class="text-center text-primary">Transfer Request</h4>
-						</VCol>
-					</VRow>
+								<VRow v-for="(erc20, i) in erc20Balances" :key="i">
+									<VCol cols="3">
+										<a
+											:href="`https://etherscan.io/address/${erc20.contract}`"
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
+												🔗 {{ erc20.name }}
+											</VBtn>
+										</a>
+									</VCol>
 
-					<VRow v-for="(erc20, i) in erc20Balances" :key="i">
-						<VCol cols="3">
-							<a
-								:href="`https://etherscan.io/address/${erc20.contract}`"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
-									🔗 {{ erc20.name }}
-								</VBtn>
-							</a>
-						</VCol>
+									<VCol sm="6">
+										<h4 class="text-center">{{ erc20.balance }}</h4>
+									</VCol>
 
-						<VCol sm="6">
-							<h4 class="text-center">{{ erc20.balance }}</h4>
-						</VCol>
+									<VCol cols="3">
+										<VBtn
+											color="primary"
+											variant="flat"
+											class="w-100 rounded-xl"
+											@click="forwardToERC20Create(address, erc20)"
+										>
+											↗️ Transfer Out
+										</VBtn>
+									</VCol>
+								</VRow>
+							</VCardText>
+						</VCard>
+					</VCol>
 
-						<VCol cols="3">
-							<VBtn
-								color="primary"
-								variant="flat"
-								class="w-100 rounded-xl"
-								@click="forwardToERC20Create(address, erc20)"
-							>
-								↗️ Transfer Out
-							</VBtn>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
+					<VCol cols="12">
+						<VCard class="rounded-xl elevation-0 bg-light-frost">
+							<VCardText>
+								<VRow>
+									<VCol cols="12" class="text-center">
+										<h2 class="mt-2 text-center text-uppercase text-primary">
+											🖼️ ERC 721 Tokens (NFTs)
+										</h2>
+									</VCol>
 
-			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
-					<h4 class="m-0 text-center text-uppercase">🖼️ ERC 721 Tokens (NFTs)</h4>
-				</VCardTitle>
+									<VCol cols="3">
+										<h4 class="text-center text-primary">Name</h4>
+									</VCol>
 
-				<VCardText class="mt-4">
-					<VRow>
-						<VCol cols="3">
-							<h4 class="text-center text-primary">Name</h4>
-						</VCol>
+									<VCol cols="6">
+										<h4 class="text-center text-primary">Balance</h4>
+									</VCol>
 
-						<VCol cols="6">
-							<h4 class="text-center text-primary">Balance</h4>
-						</VCol>
+									<VCol cols="3">
+										<h4 class="text-center text-primary">Transfer Request</h4>
+									</VCol>
+								</VRow>
 
-						<VCol cols="3">
-							<h4 class="text-center text-primary">Transfer Request</h4>
-						</VCol>
-					</VRow>
+								<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
+									<VCol cols="3">
+										<a
+											:href="`https://etherscan.io/address/${erc721.contract}`"
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
+												🔗 {{ erc721.name }}
+											</VBtn>
+										</a>
+									</VCol>
 
-					<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
-						<VCol cols="3">
-							<a
-								:href="`https://etherscan.io/address/${erc721.contract}`"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<VBtn variant="tonal" color="primary" class="w-100 rounded-xl">
-									🔗 {{ erc721.name }}
-								</VBtn>
-							</a>
-						</VCol>
+									<VCol sm="6">
+										<h4 class="text-center">{{ erc721.balance }}</h4>
+									</VCol>
 
-						<VCol sm="6">
-							<h4 class="text-center">{{ erc721.balance }}</h4>
-						</VCol>
-
-						<VCol cols="3">
-							<VBtn
-								color="primary"
-								variant="flat"
-								class="w-100 rounded-xl"
-								@click="forwardToERC721Create(address, erc721)"
-							>
-								↗️ Transfer Out
-							</VBtn>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-		</VCol>
-	</VRow>
+									<VCol cols="3">
+										<VBtn
+											color="primary"
+											variant="flat"
+											class="w-100 rounded-xl"
+											@click="forwardToERC721Create(address, erc721)"
+										>
+											↗️ Transfer Out
+										</VBtn>
+									</VCol>
+								</VRow>
+							</VCardText>
+						</VCard>
+					</VCol>
+				</VRow>
+			</VCardText>
+		</VCard>
+	</VContainer>
 </template>
 
 <script lang="ts">
