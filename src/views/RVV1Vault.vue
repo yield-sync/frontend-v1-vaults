@@ -2,7 +2,7 @@
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
-				<VCol cols="4">
+				<VCol cols="12" sm="4">
 					<a
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
@@ -13,7 +13,7 @@
 					</a>
 				</VCol>
 
-				<VCol cols="4">
+				<VCol cols="12" sm="4">
 					<VRow style="margin: 0; padding: 0;">
 						<VCol cols="6" style="margin: 0; padding: 0;">
 							<RouterLink :to="`/v1-vault/${vaultAddress}`">
@@ -49,11 +49,11 @@
 					</VRow>
 				</VCol>
 
-				<VCol cols="4" class="text-right">
+				<VCol cols="12" sm="4" class="text-right">
 					<VBtn variant="tonal" color="light" class="rounded-xl" @click="copy(vaultAddress)">📋</VBtn>
 				</VCol>
 
-				<VCol cols="3">
+				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'overview' ?
@@ -66,7 +66,7 @@
 					</VBtn>
 				</VCol>
 
-				<VCol cols="3">
+				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
@@ -79,7 +79,7 @@
 					</VBtn>
 				</VCol>
 
-				<VCol cols="3">
+				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'tr' ?
@@ -92,7 +92,7 @@
 					</VBtn>
 				</VCol>
 
-				<VCol cols="3">
+				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'settings' ?
