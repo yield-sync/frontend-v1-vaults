@@ -208,41 +208,24 @@
 								</a>
 							</VCol>
 
-							<VCol cols="6">
+							<VCol cols="6" class="text-center">
 								<h4 class="text-center mb-3 text-success text-uppercase">For</h4>
+
 								<VProgressLinear
 									color="success"
 									:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
 									:height="36"
 									striped
-									class="rounded-xl"
+									class="mb-3 rounded-xl"
 								>
 									<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
 								</VProgressLinear>
-							</VCol>
 
-							<VCol cols="6">
-								<h4 class="text-center mb-3 text-danger text-uppercase">Against</h4>
-								<VProgressLinear
-									color="danger"
-									:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
-									:height="36"
-									striped
-									class="rounded-xl"
-								>
-									<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
-								</VProgressLinear>
-							</VCol>
-
-							<VCol v-if="false" cols="12">
-								<h4 class="mb-3 text-primary">Voted Voter</h4>
-								<h4 v-for="(v, i) in w.votedMembers" :key="i">
-									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
-								</h4>
-							</VCol>
-
-							<VCol cols="6" class="text-center">
 								<VBtn
+									v-if="
+										parseInt(w.forVoteCount) < forVoteCountRequired &&
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									"
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="success"
@@ -254,7 +237,23 @@
 							</VCol>
 
 							<VCol cols="6" class="text-center">
+								<h4 class="text-center mb-3 text-danger text-uppercase">Against</h4>
+
+								<VProgressLinear
+									color="danger"
+									:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
+									:height="36"
+									striped
+									class="mb-3 rounded-xl"
+								>
+									<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
+								</VProgressLinear>
+
 								<VBtn
+									v-if="
+										parseInt(w.forVoteCount) < forVoteCountRequired &&
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									"
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="danger"
@@ -263,6 +262,13 @@
 								>
 									Vote Against
 								</VBtn>
+							</VCol>
+
+							<VCol v-if="false" cols="12">
+								<h4 class="mb-3 text-primary">Voted Voter</h4>
+								<h4 v-for="(v, i) in w.votedMembers" :key="i">
+									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
+								</h4>
 							</VCol>
 
 							<VCol cols="12">
@@ -276,13 +282,11 @@
 
 							<VCol cols="12">
 								<VBtn
-									:disabled="
-										(
-											parseInt(w.forVoteCount) < forVoteCountRequired &&
-											parseInt(w.againstVoteCount) < againstVoteCountRequired
-										) ||
-											processing[w.id]
+									v-if="
+										parseInt(w.forVoteCount) >= forVoteCountRequired ||
+										parseInt(w.againstVoteCount) >= againstVoteCountRequired
 									"
+									:disabled="processing[w.id]"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
 									@click="processTransferRequest(w.id)"
