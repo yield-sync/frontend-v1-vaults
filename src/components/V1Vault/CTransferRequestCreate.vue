@@ -84,7 +84,7 @@
 				<VBtn
 					:disabled="creating"
 					color="primary"
-					class="w-100 rounded-xl"
+					class="w-100 rounded-xl elevation-0"
 					@click="createWR()"
 				>
 					Create Request
