@@ -1,103 +1,101 @@
 <template>
-	<VContainer>
-		<VRow>
-			<VCol cols="12">
-				<fieldset class="border-0">
-					<input
-						v-model="$store.state.pages.RVV1Vault.transferRequest.for"
-						type="radio"
-						value="Ether"
-						id="Ether"
-						checked
-					>
-					<label for="Ether">Ether</label>
-
-					<input
-						v-model="$store.state.pages.RVV1Vault.transferRequest.for"
-						type="radio"
-						value="ERC 20"
-						id="ERC 20"
-					>
-					<label for="ERC 20">ERC 20</label>
-
-					<input
-						v-model="$store.state.pages.RVV1Vault.transferRequest.for"
-						type="radio"
-						value="ERC 721"
-						id="ERC 721"
-					>
-					<label for="ERC 721">ERC 721</label>
-				</fieldset>
-			</VCol>
-
-			<VCol cols="12">
-				<!-- TO -->
-				<VTextField
-					v-model="$store.state.pages.RVV1Vault.transferRequest.to"
-					type="text"
-					label="To Address"
-					variant="outlined"
-					hide-details
-					class="mb-3"
-					size="small"
-				/>
-			</VCol>
-
-			<VCol cols="6">
-				<!-- TOKEN ADDRESS -->
-				<VTextField
-					:disabled="$store.state.pages.RVV1Vault.transferRequest.for == 'Ether'"
-					v-model="$store.state.pages.RVV1Vault.transferRequest.token"
-					type="text"
-					label="Token Address"
-					variant="outlined"
-					hide-details
-					class="mb-3"
-					size="small"
-				/>
-			</VCol>
-
-			<VCol cols="2">
-				<!-- TOKEN ID -->
-				<VTextField
-					:disabled="$store.state.pages.RVV1Vault.transferRequest.for != 'ERC 721'"
-					v-model="$store.state.pages.RVV1Vault.transferRequest.tokenId"
-					type="number"
-					label="Token Id"
-					variant="outlined"
-					hide-details
-					class="mb-3"
-					size="small"
-				/>
-			</VCol>
-
-			<VCol cols="4">
-				<!-- AMOUNT -->
-				<VTextField
-					:disabled="$store.state.pages.RVV1Vault.transferRequest.for == 'ERC 721'"
-					v-model="$store.state.pages.RVV1Vault.transferRequest.amount"
-					type="number"
-					label="Amount"
-					variant="outlined"
-					hide-details
-					class="mb-3"
-					size="small"
-				/>
-			</VCol>
-
-			<VCol cols="12">
-				<VBtn
-					:disabled="creating"
-					color="primary"
-					class="w-100 rounded-xl elevation-0"
-					@click="createWR()"
+	<VRow>
+		<VCol cols="12">
+			<fieldset class="border-0">
+				<input
+					v-model="$store.state.pages.RVV1Vault.transferRequest.for"
+					type="radio"
+					value="Ether"
+					id="Ether"
+					checked
 				>
-					Create Request
-				</VBtn>
-				<h6 v-if="error" class="text-danger">{{ error }}</h6>
-			</VCol>
-		</VRow>
-	</VContainer>
+				<label for="Ether">Ether</label>
+
+				<input
+					v-model="$store.state.pages.RVV1Vault.transferRequest.for"
+					type="radio"
+					value="ERC 20"
+					id="ERC 20"
+				>
+				<label for="ERC 20">ERC 20</label>
+
+				<input
+					v-model="$store.state.pages.RVV1Vault.transferRequest.for"
+					type="radio"
+					value="ERC 721"
+					id="ERC 721"
+				>
+				<label for="ERC 721">ERC 721</label>
+			</fieldset>
+		</VCol>
+
+		<VCol cols="12">
+			<!-- TO -->
+			<VTextField
+				v-model="$store.state.pages.RVV1Vault.transferRequest.to"
+				type="text"
+				label="To Address"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+		</VCol>
+
+		<VCol cols="6">
+			<!-- TOKEN ADDRESS -->
+			<VTextField
+				:disabled="$store.state.pages.RVV1Vault.transferRequest.for == 'Ether'"
+				v-model="$store.state.pages.RVV1Vault.transferRequest.token"
+				type="text"
+				label="Token Address"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+		</VCol>
+
+		<VCol cols="2">
+			<!-- TOKEN ID -->
+			<VTextField
+				:disabled="$store.state.pages.RVV1Vault.transferRequest.for != 'ERC 721'"
+				v-model="$store.state.pages.RVV1Vault.transferRequest.tokenId"
+				type="number"
+				label="Token Id"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+		</VCol>
+
+		<VCol cols="4">
+			<!-- AMOUNT -->
+			<VTextField
+				:disabled="$store.state.pages.RVV1Vault.transferRequest.for == 'ERC 721'"
+				v-model="$store.state.pages.RVV1Vault.transferRequest.amount"
+				type="number"
+				label="Amount"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+		</VCol>
+
+		<VCol cols="12">
+			<VBtn
+				:disabled="creating"
+				color="primary"
+				class="w-100 rounded-xl elevation-0"
+				@click="createWR()"
+			>
+				Create Request
+			</VBtn>
+			<h6 v-if="error" class="text-danger">{{ error }}</h6>
+		</VCol>
+	</VRow>
 </template>
 
 <script lang="ts">

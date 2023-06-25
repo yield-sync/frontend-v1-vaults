@@ -61,7 +61,7 @@
 							$store.state.pages.RVV1Vault.tab == 'overview' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
+						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'overview'"
 					>
 						📊 Overview
@@ -74,7 +74,7 @@
 							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
+						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
 						👥 Members & Admins
@@ -87,7 +87,7 @@
 							$store.state.pages.RVV1Vault.tab == 'tr' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
+						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'tr'"
 					>
 						↗️ Transfer Req.
@@ -98,44 +98,50 @@
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'settings' ?
-								'bg-primary text-white' : 'bg-light-frost text-primary'
+							'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
-						class="w-100 mb-3 rounded-xl elevation-0 font-weight-bold"
+						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'settings'"
 					>
 						⚙️ Settings
 					</VBtn>
 				</VCol>
+
+				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'overview'" cols="12">
+					<COverview
+						:address="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VCol>
+
+				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
+					<CMembers
+						:v1VaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VCol>
+
+				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
+					<CAdmins
+						:v1VaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VCol>
+
+				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'tr'" cols="12">
+					<CTransferRequest
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VCol>
+
+				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'settings'" cols="12">
+					<CSettings
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VCol>
 			</VRow>
-
-			<COverview
-				v-if="$store.state.pages.RVV1Vault.tab == 'overview'"
-				:address="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'"
-			/>
-			<CMembers
-				v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
-				:v1VaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'"
-			/>
-
-			<CAdmins
-				v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'"
-				:v1VaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'"
-			/>
-
-			<CTransferRequest
-				v-if="$store.state.pages.RVV1Vault.tab == 'tr'"
-				:vaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'"
-			/>
-
-			<CSettings
-				v-if="$store.state.pages.RVV1Vault.tab == 'settings'"
-				:vaultAddress="vaultAddress"
-				:asAdmin="$route.query.admin == 'true'"
-			/>
 		</div>
 	</VContainer>
 </template>

@@ -1,42 +1,40 @@
 <template>
-	<VContainer>
-		<VCard
-			:key="$store.state.pages.RVV1Vault.transferRequests.key"
-			class="mb-6 rounded-xl elevation-0 bg-light-frost"
+	<VCard
+		:key="$store.state.pages.RVV1Vault.transferRequests.key"
+		class="mb-6 rounded-xl elevation-0 bg-light-frost"
+	>
+		<VCardTitle class="bg-primary text-light">
+			<h4 class="text-center text-uppercase">↗️ Transfer Requests</h4>
+		</VCardTitle>
+
+		<VTabs
+			v-model="$store.state.pages.RVV1Vault.transferRequests.tab"
+			bg-color="primary"
+			color="light-green-lighten-5"
+			fixed-tabs
 		>
-			<VCardTitle class="bg-primary text-light">
-				<h4 class="text-center text-uppercase">↗️ Transfer Requests</h4>
-			</VCardTitle>
+			<VTab value="o">Open Transfer Requests</VTab>
+			<VTab v-if="$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
+		</VTabs>
 
-			<VTabs
-				v-model="$store.state.pages.RVV1Vault.transferRequests.tab"
-				bg-color="primary"
-				color="light-green-lighten-5"
-				fixed-tabs
-			>
-				<VTab value="o">Open Transfer Requests</VTab>
-				<VTab v-if="$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
-			</VTabs>
+		<VCardText variant="light">
+			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
+				<VWindowItem value="o">
+					<CTransferRequestOpen
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VWindowItem>
 
-			<VCardText variant="light">
-				<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
-					<VWindowItem value="o">
-						<CTransferRequestOpen
-							:vaultAddress="vaultAddress"
-							:asAdmin="$route.query.admin == 'true'"
-						/>
-					</VWindowItem>
-
-					<VWindowItem value="c">
-						<CTransferRequestCreate
-							:vaultAddress="vaultAddress"
-							:asAdmin="$route.query.admin == 'true'"
-						/>
-					</VWindowItem>
-				</VWindow>
-			</VCardText>
-		</VCard>
-	</VContainer>
+				<VWindowItem value="c">
+					<CTransferRequestCreate
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+				</VWindowItem>
+			</VWindow>
+		</VCardText>
+	</VCard>
 </template>
 
 <script lang="ts">

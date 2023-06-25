@@ -1,168 +1,166 @@
 <template>
-	<VContainer>
-		<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-			<VCardTitle class="bg-primary text-light">
-				<h4 class="m-0 text-center text-uppercase">🔧 Properties</h4>
-			</VCardTitle>
+	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+		<VCardTitle class="bg-primary text-light">
+			<h4 class="m-0 text-center text-uppercase">🔧 Properties</h4>
+		</VCardTitle>
 
-			<VCardText class="mt-4">
-				<VRow>
-					<!-- For Vote -->
-					<VCol cols="12" sm="12">
-						<VRow>
-							<VCol cols="8">
-								<h4 class="mb-3 text-primary">✅ For Vote Count Required</h4>
+		<VCardText class="mt-4">
+			<VRow>
+				<!-- For Vote -->
+				<VCol cols="12" sm="12">
+					<VRow>
+						<VCol cols="8">
+							<h4 class="mb-3 text-primary">✅ For Vote Count Required</h4>
 
-								<h3 v-if="!asAdmin || !edit.forVoteCountRequired" class="m-0">
-									{{ vault.forVoteCountRequired }}
-								</h3>
+							<h3 v-if="!asAdmin || !edit.forVoteCountRequired" class="m-0">
+								{{ vault.forVoteCountRequired }}
+							</h3>
 
-								<VTextField
-									v-if="asAdmin && edit.forVoteCountRequired"
-									v-model="update.forVoteCountRequired"
-									size="sm"
-									type="number"
-									label="New For Vote Count"
-									variant="outlined"
-								/>
-							</VCol>
+							<VTextField
+								v-if="asAdmin && edit.forVoteCountRequired"
+								v-model="update.forVoteCountRequired"
+								size="sm"
+								type="number"
+								label="New For Vote Count"
+								variant="outlined"
+							/>
+						</VCol>
 
-							<VCol cols="4" class="text-right">
-								<VBtn
-									v-if="asAdmin"
-									variant="flat"
-									:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
-									class="w-100 mb-3 rounded-xl"
-									@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
-								>
-									{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}
-								</VBtn>
+						<VCol cols="4" class="text-right">
+							<VBtn
+								v-if="asAdmin"
+								variant="flat"
+								:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
+								class="w-100 mb-3 rounded-xl"
+								@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
+							>
+								{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}
+							</VBtn>
 
-								<VBtn
-									v-if="asAdmin && edit.forVoteCountRequired"
-									:disabled="updating.forVoteCountRequired"
-									variant="flat"
-									color="success"
-									class="w-100 mb-3 rounded-xl"
-									@click="updateForVoteCountRequired()"
-								>
-									Update
-								</VBtn>
-							</VCol>
-						</VRow>
-					</VCol>
+							<VBtn
+								v-if="asAdmin && edit.forVoteCountRequired"
+								:disabled="updating.forVoteCountRequired"
+								variant="flat"
+								color="success"
+								class="w-100 mb-3 rounded-xl"
+								@click="updateForVoteCountRequired()"
+							>
+								Update
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCol>
 
-					<VCol cols="12" sm="12">
-						<VRow>
-							<VCol cols="8">
-								<h4 class="mb-3 text-primary">❌ Against Vote Count Required</h4>
+				<VCol cols="12" sm="12">
+					<VRow>
+						<VCol cols="8">
+							<h4 class="mb-3 text-primary">❌ Against Vote Count Required</h4>
 
-								<h3 v-if="!asAdmin || !edit.againstVoteCountRequired" class="m-0">
-									{{ vault.againstVoteCountRequired }}
-								</h3>
+							<h3 v-if="!asAdmin || !edit.againstVoteCountRequired" class="m-0">
+								{{ vault.againstVoteCountRequired }}
+							</h3>
 
-								<VTextField
-									v-if="asAdmin && edit.againstVoteCountRequired"
-									v-model="update.againstVoteCountRequired"
-									size="sm"
-									type="number"
-									label="New Against Vote Count"
-									variant="outlined"
-									class="rounded-xl"
-								/>
-							</VCol>
+							<VTextField
+								v-if="asAdmin && edit.againstVoteCountRequired"
+								v-model="update.againstVoteCountRequired"
+								size="sm"
+								type="number"
+								label="New Against Vote Count"
+								variant="outlined"
+								class="rounded-xl"
+							/>
+						</VCol>
 
-							<VCol cols="4" class="text-right">
-								<VBtn
-									v-if="asAdmin"
-									variant="flat"
-									:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
-									class="w-100 mb-3 rounded-xl"
-									@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
-								>
-									{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}
-								</VBtn>
+						<VCol cols="4" class="text-right">
+							<VBtn
+								v-if="asAdmin"
+								variant="flat"
+								:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
+								class="w-100 mb-3 rounded-xl"
+								@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
+							>
+								{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}
+							</VBtn>
 
-								<VBtn
-									v-if="asAdmin && edit.againstVoteCountRequired"
-									:disabled="updating.againstVoteCountRequired"
-									variant="flat"
-									color="success"
-									class="mb-3 w-100 rounded-xl"
-									@click="updateAgainstVoteCountRequired()"
-								>
-									Update
-								</VBtn>
-							</VCol>
-						</VRow>
-					</VCol>
+							<VBtn
+								v-if="asAdmin && edit.againstVoteCountRequired"
+								:disabled="updating.againstVoteCountRequired"
+								variant="flat"
+								color="success"
+								class="mb-3 w-100 rounded-xl"
+								@click="updateAgainstVoteCountRequired()"
+							>
+								Update
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCol>
 
-					<VCol cols="12" sm="12">
-						<VRow>
-							<VCol cols="8">
-								<h4 class="mb-3 text-primary">⏳ Transfer Delay Seconds</h4>
+				<VCol cols="12" sm="12">
+					<VRow>
+						<VCol cols="8">
+							<h4 class="mb-3 text-primary">⏳ Transfer Delay Seconds</h4>
 
-								<h3 v-if="!asAdmin || !edit.transferDelaySeconds" class="m-0">
-									{{ vault.transferDelaySeconds }}
-								</h3>
+							<h3 v-if="!asAdmin || !edit.transferDelaySeconds" class="m-0">
+								{{ vault.transferDelaySeconds }}
+							</h3>
 
-								<VTextField
-									v-if="asAdmin && edit.transferDelaySeconds"
-									v-model="update.transferDelaySeconds"
-									size="sm"
-									type="number"
-									label="For Vote Count"
-									variant="outlined"
-								/>
-							</VCol>
+							<VTextField
+								v-if="asAdmin && edit.transferDelaySeconds"
+								v-model="update.transferDelaySeconds"
+								size="sm"
+								type="number"
+								label="For Vote Count"
+								variant="outlined"
+							/>
+						</VCol>
 
-							<VCol cols="4" class="text-right">
-								<VBtn
-									v-if="asAdmin"
-									variant="flat"
-									:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
-									class="w-100 mb-3 rounded-xl"
-									@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
-								>
-									{{ edit.transferDelaySeconds ? 'Cancel' : 'Edit' }}
-								</VBtn>
+						<VCol cols="4" class="text-right">
+							<VBtn
+								v-if="asAdmin"
+								variant="flat"
+								:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
+								class="w-100 mb-3 rounded-xl"
+								@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
+							>
+								{{ edit.transferDelaySeconds ? 'Cancel' : 'Edit' }}
+							</VBtn>
 
-								<VBtn
-									v-if="asAdmin && edit.transferDelaySeconds"
-									:disabled="updating.transferDelaySeconds"
-									variant="flat"
-									color="success"
-									class="w-100 mb-3 rounded-xl"
-									@click="updateTransferDelaySecondsRequired()"
-								>
-									Update
-								</VBtn>
-							</VCol>
-						</VRow>
-					</VCol>
-				</VRow>
-			</VCardText>
-		</VCard>
+							<VBtn
+								v-if="asAdmin && edit.transferDelaySeconds"
+								:disabled="updating.transferDelaySeconds"
+								variant="flat"
+								color="success"
+								class="w-100 mb-3 rounded-xl"
+								@click="updateTransferDelaySecondsRequired()"
+							>
+								Update
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
 
-		<VCard v-if="!asAdmin" class="mb-6 rounded-xl elevation-0 bg-light-frost">
-			<VCardTitle class="bg-primary text-light">
-				<h4 class="m-0 text-center text-uppercase">⚙️ Membership Settings</h4>
-			</VCardTitle>
+	<VCard v-if="!asAdmin" class="mb-6 rounded-xl elevation-0 bg-light-frost">
+		<VCardTitle class="bg-primary text-light">
+			<h4 class="m-0 text-center text-uppercase">⚙️ Membership Settings</h4>
+		</VCardTitle>
 
-			<VCardText class="mt-4">
-				<VBtn
-					:disabled="processing"
-					color="danger"
-					class="w-100 rounded-xl elevation-0"
-					@click="renounceMembership()"
-				>
-					Renounce Membership
-				</VBtn>
+		<VCardText class="mt-4">
+			<VBtn
+				:disabled="processing"
+				color="danger"
+				class="w-100 rounded-xl elevation-0"
+				@click="renounceMembership()"
+			>
+				Renounce Membership
+			</VBtn>
 
-				<h6 v-if="error">{{ error }}</h6>
-			</VCardText>
-		</VCard>
-	</VContainer>
+			<h6 v-if="error">{{ error }}</h6>
+		</VCardText>
+	</VCard>
 </template>
 
 <script lang="ts">
