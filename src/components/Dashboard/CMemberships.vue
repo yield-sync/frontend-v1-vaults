@@ -64,6 +64,10 @@
 					</div>
 				</RouterLink>
 			</div>
+
+			<div v-if="!loading && membershipYieldSyncV1VaultVaults.length == 0" class="text-center">
+				<h5>No memberships found</h5>
+			</div>
 		</VCardText>
 	</VCard>
 </template>

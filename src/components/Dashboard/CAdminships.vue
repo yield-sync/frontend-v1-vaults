@@ -43,8 +43,7 @@
 											v.address.substring(0, 4) +
 											"..." +
 											v.address.substring($store.state.wallet.accounts[0].length - 4)
-											:
-											""
+										: ""
 									}}
 								</h3>
 							</VCol>
@@ -63,6 +62,10 @@
 						</VRow>
 					</div>
 				</RouterLink>
+			</div>
+
+			<div v-if="!loading && adminshipYieldSyncV1VaultVaults.length == 0" class="text-center">
+				<h5>No adminships found</h5>
 			</div>
 		</VCardText>
 	</VCard>
