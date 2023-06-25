@@ -7,7 +7,6 @@
 					type="radio"
 					value="Ether"
 					id="Ether"
-					checked
 				>
 				<label for="Ether">Ether</label>
 

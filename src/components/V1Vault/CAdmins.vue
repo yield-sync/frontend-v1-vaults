@@ -23,7 +23,7 @@
 				<VCol v-if="asAdmin" md="2" lg="2">
 					<VBtn
 						:disabled="removing"
-						variant="flat"
+						variant="tonal"
 						color="danger"
 						class="w-100 rounded-xl elevation-0"
 						@click="removeAdmin(a)"
@@ -45,7 +45,7 @@
 				<VCol md="2" lg="2">
 					<VBtn
 						:disabled="adding"
-						variant="flat"
+						variant="tonal"
 						color="success"
 						class="w-100 rounded-xl elevation-0"
 						@click="addAdmin()"
