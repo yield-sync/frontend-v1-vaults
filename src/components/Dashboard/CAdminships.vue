@@ -43,7 +43,7 @@
 											v.address.substring(0, 4) +
 											"..." +
 											v.address.substring($store.state.wallet.accounts[0].length - 4)
-										: ""
+											: ""
 									}}
 								</h3>
 							</VCol>

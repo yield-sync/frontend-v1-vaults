@@ -187,6 +187,9 @@
 			{
 				this.asAdmin = true;
 			}
-		},
+
+			await this.$store.commit("setPagesRVV1VaultVaultAddress", this.vaultAddress);
+			await this.$store.dispatch("getTokens");
+		}
 	});
 </script>

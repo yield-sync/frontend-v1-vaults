@@ -3,6 +3,8 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import { Contract } from "web3-eth-contract";
 
+import abiER20 from "../abi/erc20";
+import alchemyGetBalances from "../alchemy/getBalances";
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
@@ -11,6 +13,8 @@ import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl"
 
 export default createStore({
 	state: {
+		ZeroAddress: "0x0000000000000000000000000000000000000000" as const,
+
 		loading: true as boolean,
 		error: "" as string,
 
@@ -22,7 +26,7 @@ export default createStore({
 
 		chainName: "" as string,
 		chainId: 0 as number,
-		etherscanDomainStart: "www" as string,
+		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
 		wallet: {
 			connected: false,
@@ -48,15 +52,31 @@ export default createStore({
 
 		pages: {
 			RVDashboard: {
-				tab: "m"
+				tab: "m" as "m" | "a" | "d"
 			},
 
 			RVV1Vault: {
-				tab: "overview",
+				vaultAddress: "" as string,
+
+				tab: "overview" as "tr" | "overview" | "admins-and-members" | "settings",
+
+				erc20s: [
+				] as {
+					name: string,
+					symbol: string,
+					contract: string,
+				}[],
+
+				erc721s: [
+				] as {
+					name: string,
+					symbol: string,
+					contract: string,
+				}[],
 
 				transferRequests: {
-					tab: "o",
-					key: 0,
+					tab: "o" as  "o" | "c",
+					key: 0 as number,
 				},
 
 				transferRequest: {
@@ -65,22 +85,7 @@ export default createStore({
 					token: "",
 					amount: 0,
 					tokenId: 0,
-				},
-			}
-		} as {
-			RVDashboard: {
-				tab: "m" | "a" | "d"
-			},
-
-			RVV1Vault: {
-				tab: "tr" | "overview" | "admins-and-members" | "settings",
-
-				transferRequests: {
-					tab: "o" | "c",
-					key: number
-				},
-
-				transferRequest: {
+				} as {
 					for: "Ether" | "ERC 20" | "ERC 721",
 					to:  string,
 					token: string,
@@ -148,6 +153,21 @@ export default createStore({
 		{
 			state.contract.yieldSyncV1VaultAccessControl = contract;
 		},
+
+		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
+		{
+			state.pages.RVV1Vault.vaultAddress = vaultAddress;
+		},
+
+		setPagesRVV1VaultErc20s(state, erc20s: { name: string, symbol: string, contract: string, }[])
+		{
+			state.pages.RVV1Vault.erc20s = erc20s;
+		},
+
+		setPagesRVV1VaultErc721s(state, erc721s: { name: string, symbol: string, contract: string, }[])
+		{
+			state.pages.RVV1Vault.erc721s = erc721s;
+		},
 	},
 
 	actions: {
@@ -185,6 +205,65 @@ export default createStore({
 				)
 			);
 		},
+
+		getTokens: async ({ commit, state }) =>
+		{
+			const vaultAddress: string = String(state.pages.RVV1Vault.vaultAddress);
+
+			const erc20s: {
+				name: string,
+				symbol: string,
+				contract: string,
+			}[] = [
+			];
+
+			if (state.web3.utils.isAddress(vaultAddress))
+			{
+				// eslint-disable-next-line
+				const data: any = await alchemyGetBalances(state.alchemyApiKey, vaultAddress);
+
+				for (let i = 0; i < data.tokenBalances.length; i++)
+				{
+					if (data.tokenBalances[i].tokenBalance != state.ZeroAddress)
+					{
+						const contract = new state.web3.eth.Contract(
+							abiER20 as AbiItem[],
+							data.tokenBalances[i].contractAddress
+						);
+
+						let n = "NA";
+						try
+						{
+							n = await contract.methods.name().call();
+						}
+						catch (e)
+						{
+							state.error = String(e);
+						}
+
+						let s = "NA";
+						try
+						{
+							s = await contract.methods.symbol().call();
+						}
+						catch (e)
+						{
+							state.error = String(e);
+						}
+
+						erc20s.push(
+							{
+								name: n,
+								symbol: s,
+								contract: data.tokenBalances[i].contractAddress
+							}
+						);
+					}
+				}
+
+				commit("setPagesRVV1VaultErc20s", erc20s);
+			}
+		}
 	},
 
 	getters: {

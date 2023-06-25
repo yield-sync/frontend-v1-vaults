@@ -241,10 +241,7 @@
 					];
 
 					// eslint-disable-next-line
-					const data: any = await alchemyGetBalances(
-						this.$store.state.alchemyApiKey,
-						this.address
-					);
+					const data: any = await alchemyGetBalances(this.$store.state.alchemyApiKey, this.address);
 
 					for (let i = 0; i < data.tokenBalances.length; i++)
 					{
@@ -252,7 +249,6 @@
 
 						if (tB.tokenBalance != this.ZeroAddress)
 						{
-
 							const contract = new this.$store.state.web3.eth.Contract(
 								abiER20 as AbiItem[],
 								tB.contractAddress
