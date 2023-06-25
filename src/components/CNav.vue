@@ -123,7 +123,7 @@
 				}
 				else
 				{
-					this.$store.state.error = "No ethereum deteceted";
+					this.$store.state.error = "No window.ethereum detected!";
 				}
 			},
 
