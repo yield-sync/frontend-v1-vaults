@@ -98,7 +98,7 @@
 					<VBtn
 						:class="
 							$store.state.pages.RVV1Vault.tab == 'settings' ?
-							'bg-primary text-white' : 'bg-light-frost text-primary'
+								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'settings'"

@@ -7,7 +7,7 @@
 					type="radio"
 					value="Ether"
 					id="Ether"
-				>
+				/>
 				<label for="Ether">Ether</label>
 
 				<input
@@ -15,7 +15,7 @@
 					type="radio"
 					value="ERC 20"
 					id="ERC 20"
-				>
+				/>
 				<label for="ERC 20">ERC 20</label>
 
 				<input
@@ -23,7 +23,7 @@
 					type="radio"
 					value="ERC 721"
 					id="ERC 721"
-				>
+				/>
 				<label for="ERC 721">ERC 721</label>
 			</fieldset>
 		</VCol>

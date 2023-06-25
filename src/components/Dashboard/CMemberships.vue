@@ -20,7 +20,7 @@
 			</VRow>
 
 			<div v-if="loading" class="text-center">
-				<v-progress-circular
+				<VProgressCircular
 					class=""
 					indeterminate
 					color="primary"

@@ -304,7 +304,7 @@
 				this.$store.state.pages.RVV1Vault.tab = "tr";
 				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
 
-				this.$store.state.pages.RVV1Vault.transferRequest.for = 'ERC 20';
+				this.$store.state.pages.RVV1Vault.transferRequest.for = "ERC 20";
 				this.$store.state.pages.RVV1Vault.transferRequest.token = erc20.contract;
 
 				router.push(`/v1-vault/${address}`);
@@ -323,7 +323,7 @@
 				this.$store.state.pages.RVV1Vault.tab = "tr";
 				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
 
-				this.$store.state.pages.RVV1Vault.transferRequest.for = 'ERC 721';
+				this.$store.state.pages.RVV1Vault.transferRequest.for = "ERC 721";
 				this.$store.state.pages.RVV1Vault.transferRequest.token = erc721.contract;
 
 				router.push(`/v1-vault/${address}`);

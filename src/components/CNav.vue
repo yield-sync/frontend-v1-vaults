@@ -2,7 +2,12 @@
 	<VSheet color="transparent">
 		<VContainer>
 			<VRow>
-				<VCol cols="12" md="8">
+				<VCol
+					cols="12"
+					md="7"
+					lg="8"
+					xl="9"
+				>
 					<RouterLink to="/" style="letter-spacing: 4px; text-decoration: none !important">
 						<h1
 							class="text-primary text-uppercase"
@@ -13,7 +18,12 @@
 					</RouterLink>
 				</VCol>
 
-				<VCol cols="12" md="4">
+				<VCol
+					cols="12"
+					md="5"
+					lg="4"
+					xl="3"
+				>
 					<VTextField
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
@@ -23,8 +33,13 @@
 					/>
 				</VCol>
 
-				<VCol cols="12" md="7" lg="8" xl="9"
-					class="text-left">
+				<VCol
+					cols="12"
+					md="7"
+					lg="8"
+					xl="9"
+					class="text-left"
+				>
 					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
 						<VBtn
 							variant="plain"
@@ -46,11 +61,16 @@
 						>
 							<h3>Deploy V1-Vault</h3>
 						</VBtn>
-				</RouterLink>
+					</RouterLink>
 				</VCol>
 
-				<VCol cols="12" md="5" lg="4" xl="3"
-					class="text-right">
+				<VCol
+					cols="12"
+					md="5"
+					lg="4"
+					xl="3"
+					class="text-right"
+				>
 					<VBtn
 						v-if="!$store.state.wallet.connected"
 						@click="connectWallet()"

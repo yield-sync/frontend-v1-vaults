@@ -12,7 +12,9 @@
 							variant="tonal"
 							color="primary"
 							class="rounded-xl"
-						><h6>🔗 Yield Sync V1 Vault Factory</h6></VBtn>
+						>
+							<h6>🔗 Yield Sync V1 Vault Factory</h6>
+						</VBtn>
 					</a>
 				</VCol>
 
@@ -30,7 +32,7 @@
 							</h2>
 						</VCol>
 
-							<!-- Against -->
+						<!-- Against -->
 						<VCol cols="12" md="4">
 							<VTextField
 								v-model="deployParams.againstVoteCountRequired"
@@ -189,10 +191,10 @@
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
 					deploying ||
-					(
-						deployParams.members.length < deployParams.forVoteCountRequired ||
-						deployParams.members.length < deployParams.againstVoteCountRequired
-					) && deployParams.admins.length == 0
+						(
+							deployParams.members.length < deployParams.forVoteCountRequired ||
+							deployParams.members.length < deployParams.againstVoteCountRequired
+						) && deployParams.admins.length == 0
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
@@ -290,7 +292,8 @@
 					return;
 				}
 
-				for (let i = 0; i < this.deployParams.admins.length; i++) {
+				for (let i = 0; i < this.deployParams.admins.length; i++) 
+				{
 					if (this.deployParams.admins[i] == this.addAdminField)
 					{
 						return;
@@ -316,7 +319,8 @@
 					return;
 				}
 
-				for (let i = 0; i < this.deployParams.members.length; i++) {
+				for (let i = 0; i < this.deployParams.members.length; i++) 
+				{
 					if (this.deployParams.members[i] == this.addMemberField)
 					{
 						return;

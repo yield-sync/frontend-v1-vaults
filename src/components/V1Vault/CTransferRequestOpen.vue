@@ -1,6 +1,6 @@
 <template>
 	<div v-if="loading" class="text-center">
-		<v-progress-circular
+		<VProgressCircular
 			class=""
 			indeterminate
 			color="primary"
@@ -223,7 +223,7 @@
 							<VBtn
 								v-if="
 									parseInt(w.forVoteCount) < forVoteCountRequired &&
-									parseInt(w.againstVoteCount) < againstVoteCountRequired
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
 								"
 								:disabled="voting[w.id]"
 								variant="flat"
@@ -251,7 +251,7 @@
 							<VBtn
 								v-if="
 									parseInt(w.forVoteCount) < forVoteCountRequired &&
-									parseInt(w.againstVoteCount) < againstVoteCountRequired
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
 								"
 								:disabled="voting[w.id]"
 								variant="flat"
@@ -283,7 +283,7 @@
 							<VBtn
 								v-if="
 									parseInt(w.forVoteCount) >= forVoteCountRequired ||
-									parseInt(w.againstVoteCount) >= againstVoteCountRequired
+										parseInt(w.againstVoteCount) >= againstVoteCountRequired
 								"
 								:disabled="processing[w.id]"
 								color="primary"

@@ -20,7 +20,7 @@
 			</VRow>
 
 			<div v-if="loading" class="text-center">
-				<v-progress-circular
+				<VProgressCircular
 					class=""
 					indeterminate
 					color="primary"
@@ -56,7 +56,9 @@
 							</VCol>
 
 							<VCol cols="12" md="4" class="d-none d-md-block">
-								<h3 class="text-center text-primary" style="word-wrap: break-word;">{{ v.transferDelaySeconds }}s</h3>
+								<h3 class="text-center text-primary" style="word-wrap: break-word;">
+									{{ v.transferDelaySeconds }}s
+								</h3>
 							</VCol>
 						</VRow>
 					</div>
