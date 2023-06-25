@@ -1,6 +1,6 @@
 <template>
 	<VRow>
-		<VCol cols="12">
+		<VCol cols="12" md="8">
 			<fieldset class="border-0">
 				<input
 					v-model="$store.state.pages.RVV1Vault.transferRequest.for"
@@ -26,6 +26,18 @@
 				/>
 				<label for="ERC 721">ERC 721</label>
 			</fieldset>
+		</VCol>
+
+		<VCol cols="12" md="4">
+			<select
+				v-model="$store.state.pages.RVV1Vault.transferRequest.token"
+				class="w-100 px-4 py-2 bg-light border rounded"
+			>
+				<VOption value="">Select Token</VOption>
+				<option v-for="(t, i) in $store.state.pages.RVV1Vault.erc20s" :key="i" :value="t.contract">
+					{{ t.name }}
+				</option>
+			</select>
 		</VCol>
 
 		<VCol cols="12">
