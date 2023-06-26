@@ -8,6 +8,7 @@
 			<CMembers
 				:v1VaultAddress="vaultAddress"
 				:asAdmin="asAdmin"
+				class="mb-6"
 			/>
 
 			<CAdmins
