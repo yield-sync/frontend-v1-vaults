@@ -133,8 +133,12 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol cols="6">
+								<VCol cols="3">
 									<h4 class="text-center text-primary">Balance</h4>
+								</VCol>
+
+								<VCol cols="3">
+									<h4 class="text-center text-primary">Token Id</h4>
 								</VCol>
 
 								<VCol cols="3">
@@ -155,8 +159,12 @@
 									</a>
 								</VCol>
 
-								<VCol sm="6">
+								<VCol sm="3">
 									<h4 class="text-center">{{ erc721.balance }}</h4>
+								</VCol>
+
+								<VCol sm="3">
+									<h4 class="text-center">{{ erc721.tokenId }}</h4>
 								</VCol>
 
 								<VCol cols="3">
@@ -185,6 +193,7 @@
 	import abiER20 from "../../abi/erc20";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
+	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
 	import router from "../../router";
 
 	export default defineComponent({
@@ -219,7 +228,8 @@
 					name: string,
 					symbol: string,
 					balance: number | string,
-					contract: number | string
+					contract: number | string,
+					tokenId: number | string
 				}[],
 				vault: {
 					againstVoteCountRequired: 0,
@@ -284,6 +294,48 @@
 							);
 						}
 					}
+
+					// eslint-disable-next-line
+					const alchemyNFTData: any = await alchemyGetGetNFTBalances(
+						this.$store.state.alchemyApiKey,
+						this.address
+					);
+
+					for (let i = 0; i < alchemyNFTData.ownedNfts.length; i++)
+					{
+						console.log(alchemyNFTData.ownedNfts[i]);
+						let name = "Unknown";
+
+						try
+						{
+							name = alchemyNFTData.ownedNfts[i].contract.name;
+						}
+						catch (e)
+						{
+							console.log(e);
+						}
+
+						let symbol = "NA";
+
+						try
+						{
+							symbol = alchemyNFTData.ownedNfts[i].contract.symbol;
+						}
+						catch (e)
+						{
+							console.log(e);
+						}
+
+						this.erc721Balances.push(
+							{
+								name,
+								symbol,
+								balance: parseInt(alchemyNFTData.ownedNfts[i].balance) * Math.pow(10, -18),
+								contract: alchemyNFTData.ownedNfts[i].contract.address,
+								tokenId: alchemyNFTData.ownedNfts[i].tokenId,
+							}
+						);
+					}
 				}
 			},
 
@@ -329,22 +381,6 @@
 		async created()
 		{
 			await this.getBalances();
-
-			// watch the params of the route to fetch the data again
-			this.$watch(
-				() =>
-				{
-					return this.$route.params;
-				},
-				async () =>
-				{
-					await this.getBalances();
-				},
-				// fetch the data when the view is created and the data is already being observed
-				{
-					immediate: true
-				}
-			);
 
 			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

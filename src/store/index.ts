@@ -5,6 +5,7 @@ import { Contract } from "web3-eth-contract";
 
 import abiER20 from "../abi/erc20";
 import alchemyGetBalances from "../alchemy/getBalances";
+import alchemyGetGetNFTBalances from "../alchemy/getNFTBalances";
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
@@ -80,18 +81,12 @@ export default createStore({
 				},
 
 				transferRequest: {
-					for: "Ether",
-					to: "",
-					token: "",
-					amount: 0,
-					tokenId: 0,
-				} as {
-					for: "Ether" | "ERC 20" | "ERC 721",
-					to:  string,
-					token: string,
-					amount: number,
-					tokenId: number,
-				},
+					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
+					to: "" as string,
+					token: "" as string,
+					amount: 0 as number,
+					tokenId: 0 as number,
+				}
 			}
 		},
 	},
@@ -263,6 +258,59 @@ export default createStore({
 
 				commit("setPagesRVV1VaultErc20s", erc20s);
 			}
+		},
+
+		getERC721Tokens: async ({ commit, state }) =>
+		{
+			const vaultAddress: string = String(state.pages.RVV1Vault.vaultAddress);
+
+			const erc721s: {
+				name: string,
+				symbol: string,
+				contract: string,
+			}[] = [
+			];
+
+			if (state.web3.utils.isAddress(vaultAddress))
+			{
+				// eslint-disable-next-line
+				const data: any = await alchemyGetGetNFTBalances(state.alchemyApiKey, vaultAddress);
+
+				for (let i = 0; i < data.ownedNfts.length; i++)
+				{
+					let name = "Unknown";
+
+					try
+					{
+						name = data.ownedNfts[i].contract.name;
+					}
+					catch (e)
+					{
+						state.error = String(e);
+					}
+
+					let symbol = "NA";
+
+					try
+					{
+						symbol = data.ownedNfts[i].contract.symbol;
+					}
+					catch (e)
+					{
+						state.error = "Symbol: " + String(e);
+					}
+
+					erc721s.push(
+						{
+							name,
+							symbol,
+							contract: data.ownedNfts[i].contract.address
+						}
+					);
+				}
+			}
+
+			commit("setPagesRVV1VaultErc721s", erc721s);
 		}
 	},
 

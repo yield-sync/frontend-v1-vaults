@@ -190,6 +190,7 @@
 
 			await this.$store.commit("setPagesRVV1VaultVaultAddress", this.vaultAddress);
 			await this.$store.dispatch("getTokens");
+			await this.$store.dispatch("getERC721Tokens");
 		}
 	});
 </script>
