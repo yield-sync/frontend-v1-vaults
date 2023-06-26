@@ -115,15 +115,8 @@
 				</VCol>
 
 				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
-					<CMembers
-						:v1VaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
-					/>
-				</VCol>
-
-				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
-					<CAdmins
-						:v1VaultAddress="vaultAddress"
+					<CMembersAndAdmins
+						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
 				</VCol>
@@ -150,8 +143,7 @@
 	import { defineComponent } from "vue";
 
 	import COverview from "../components/V1Vault/COverview.vue";
-	import CAdmins from "../components/V1Vault/CAdmins.vue";
-	import CMembers from "../components/V1Vault/CMembers.vue";
+	import CMembersAndAdmins from "../components/V1Vault/CMembersAndAdmins.vue";
 	import CTransferRequest from "../components/V1Vault/CTransferRequest.vue";
 	import CSettings from "../components/V1Vault/CSettings.vue";
 
@@ -168,8 +160,7 @@
 
 		components: {
 			COverview,
-			CAdmins,
-			CMembers,
+			CMembersAndAdmins,
 			CTransferRequest,
 			CSettings,
 		},

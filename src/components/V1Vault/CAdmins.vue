@@ -1,10 +1,12 @@
 <template>
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-		<VCardTitle class="bg-primary text-light">
-			<h4 class="m-0 text-center text-uppercase">🔑 Admins</h4>
-		</VCardTitle>
+		<VCardText>
+			<VRow>
+				<VCol>
+					<h2 class="mt-2 text-center text-uppercase text-primary">🔑 Admins</h2>
+				</VCol>
+			</VRow>
 
-		<VCardText class="mt-4">
 			<VRow v-for="(a, i) in admins" :key="i">
 				<VCol md="1" lg="1">
 					<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
