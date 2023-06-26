@@ -364,7 +364,8 @@
 					name: string,
 					symbol: string,
 					balance: number | string,
-					contract: number | string
+					contract: number | string,
+					tokenId: number | string
 				}
 			)
 			{
@@ -373,6 +374,7 @@
 
 				this.$store.state.pages.RVV1Vault.transferRequest.for = "ERC 721";
 				this.$store.state.pages.RVV1Vault.transferRequest.token = erc721.contract;
+				this.$store.state.pages.RVV1Vault.transferRequest.tokenId = erc721.tokenId;
 
 				router.push(`/v1-vault/${address}`);
 			},
