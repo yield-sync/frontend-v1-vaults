@@ -326,7 +326,6 @@ module.exports = {
 				"*.vue",
 			],
 			"env": {
-				jest: true
 			},
 			"rules": {
 				"indent": "off"
