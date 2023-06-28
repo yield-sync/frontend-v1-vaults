@@ -29,7 +29,8 @@
 						<VCol cols="4" class="text-right">
 							<VBtn
 								v-if="asAdmin"
-								variant="flat"
+								:disabled="updating.forVoteCountRequired"
+								:variant="edit.forVoteCountRequired ? 'tonal' : 'flat'"
 								:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
 								class="w-100 mb-3 rounded-xl"
 								@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
@@ -40,7 +41,7 @@
 							<VBtn
 								v-if="asAdmin && edit.forVoteCountRequired"
 								:disabled="updating.forVoteCountRequired"
-								variant="flat"
+								variant="tonal"
 								color="success"
 								class="w-100 mb-3 rounded-xl"
 								@click="updateForVoteCountRequired()"
@@ -74,7 +75,8 @@
 						<VCol cols="4" class="text-right">
 							<VBtn
 								v-if="asAdmin"
-								variant="flat"
+								:disabled="updating.againstVoteCountRequired"
+								:variant="edit.againstVoteCountRequired ? 'tonal' : 'flat'"
 								:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
 								class="w-100 mb-3 rounded-xl"
 								@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
@@ -85,7 +87,7 @@
 							<VBtn
 								v-if="asAdmin && edit.againstVoteCountRequired"
 								:disabled="updating.againstVoteCountRequired"
-								variant="flat"
+								variant="tonal"
 								color="success"
 								class="mb-3 w-100 rounded-xl"
 								@click="updateAgainstVoteCountRequired()"
@@ -118,7 +120,8 @@
 						<VCol cols="4" class="text-right">
 							<VBtn
 								v-if="asAdmin"
-								variant="flat"
+								:disabled="updating.transferDelaySeconds"
+								:variant="edit.transferDelaySeconds ? 'tonal' : 'flat'"
 								:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
 								class="w-100 mb-3 rounded-xl"
 								@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
@@ -129,7 +132,7 @@
 							<VBtn
 								v-if="asAdmin && edit.transferDelaySeconds"
 								:disabled="updating.transferDelaySeconds"
-								variant="flat"
+								variant="tonal"
 								color="success"
 								class="w-100 mb-3 rounded-xl"
 								@click="updateTransferDelaySecondsRequired()"

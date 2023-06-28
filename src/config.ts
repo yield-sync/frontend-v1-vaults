@@ -26,8 +26,8 @@ export default {
 
 		sepolia: {
 			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
-			yieldSyncV1VaultFactory: "0x97d1e8cd994579cedea02dca668e7d61fe1dea5c",
-			yieldSyncV1VaultAccessControl: "0x0A1Bd6B7769458f346Fe2eA10a9795Cd32376DEA",
+			yieldSyncV1VaultFactory: "0x29669074FfA446308ac72A3A060b3215BC4699b3",
+			yieldSyncV1VaultAccessControl: "0x3191d2C62C920297b8E50f45CF10025C86af119C",
 		},
 	} as networkYieldSyncContractAddresses
 };

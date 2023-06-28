@@ -1,10 +1,4 @@
 <template>
-	<div class="mb-6">
-		<h4 class="text-center text-uppercase text-dark">
-			✅ Ready ⏳ Waiting Delay 🗳️ Voting in Progress
-		</h4>
-	</div>
-
 	<div v-if="loading" class="text-center">
 		<VProgressCircular
 			class=""
@@ -13,7 +7,7 @@
 		/>
 	</div>
 
-	<div v-if="!loading">
+	<div v-if="!loading" class="mb-6">
 		<VRow>
 			<VCol cols="1">
 				<h5 class="text-center text-uppercase text-primary">Status</h5>
@@ -48,8 +42,10 @@
 							parseInt(w.forVoteCount) < forVoteCountRequired &&
 							parseInt(w.againstVoteCount) < againstVoteCountRequired
 						) ? '🗳️' : (
-							currentTimestamp - w.latestRelevantForVoteBlockTimestamp > transferDelaySeconds
-						) ? '✅' : '⏳'
+							parseInt(w.againstVoteCount) >= againstVoteCountRequired
+						) ? '❌' : (
+							currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
+						) ?  '✅' : '⏳'
 					}}
 				</h4>
 			</VCol>
@@ -232,7 +228,7 @@
 							<VBtn
 								v-if="
 									parseInt(w.forVoteCount) < forVoteCountRequired &&
-										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									parseInt(w.againstVoteCount) < againstVoteCountRequired
 								"
 								:disabled="voting[w.id]"
 								variant="flat"
@@ -260,7 +256,7 @@
 							<VBtn
 								v-if="
 									parseInt(w.forVoteCount) < forVoteCountRequired &&
-										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									parseInt(w.againstVoteCount) < againstVoteCountRequired
 								"
 								:disabled="voting[w.id]"
 								variant="flat"
@@ -291,10 +287,13 @@
 						<VCol cols="12">
 							<VBtn
 								v-if="
+									parseInt(w.againstVoteCount) >= againstVoteCountRequired ||
 									(
-										parseInt(w.forVoteCount) >= forVoteCountRequired ||
-										parseInt(w.againstVoteCount) >= againstVoteCountRequired
-									) && currentTimestamp > w.latestRelevantForVoteBlockTimestamp
+										(
+											parseInt(w.forVoteCount) >= forVoteCountRequired &&
+											currentTimestamp > w.latestRelevantForVoteBlockTimestamp
+										)
+									)
 								"
 								:disabled="processing[w.id]"
 								color="primary"
@@ -313,6 +312,36 @@
 			</VCol>
 		</VRow>
 	</div>
+
+	<VCard class="rounded-xl elevation-0 bg-light-frost">
+		<VCardText>
+			<VRow>
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						🗳️ Voting in Progress
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						⏳ Waiting Delay
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						✅ Approved
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						❌ Denied
+					</h6>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
 </template>
 
 <script lang="ts">

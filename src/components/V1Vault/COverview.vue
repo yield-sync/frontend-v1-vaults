@@ -133,11 +133,7 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol cols="3">
-									<h4 class="text-center text-primary">Balance</h4>
-								</VCol>
-
-								<VCol cols="3">
+								<VCol cols="6">
 									<h4 class="text-center text-primary">Token Id</h4>
 								</VCol>
 
@@ -159,11 +155,7 @@
 									</a>
 								</VCol>
 
-								<VCol sm="3">
-									<h4 class="text-center">{{ erc721.balance }}</h4>
-								</VCol>
-
-								<VCol sm="3">
+								<VCol sm="6">
 									<h4 class="text-center">{{ erc721.tokenId }}</h4>
 								</VCol>
 
