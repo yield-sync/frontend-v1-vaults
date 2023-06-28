@@ -1,4 +1,10 @@
 <template>
+	<div class="mb-6">
+		<h4 class="text-center text-uppercase text-dark">
+			✅ Ready ⏳ Waiting Delay 🗳️ Voting in Progress
+		</h4>
+	</div>
+
 	<div v-if="loading" class="text-center">
 		<VProgressCircular
 			class=""
@@ -306,12 +312,6 @@
 				</VCard>
 			</VCol>
 		</VRow>
-	</div>
-
-	<div class="mt-6">
-		<h4 class="text-center text-uppercase text-dark">
-			✅ Ready ⏳ Waiting Delay 🗳️ Voting in Progress
-		</h4>
 	</div>
 </template>
 
