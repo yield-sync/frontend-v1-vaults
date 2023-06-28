@@ -57,15 +57,15 @@
 					</VCol>
 
 					<VCol v-if="!opened[i]" cols="3">
-						<h4 v-if="w.forERC20" class="mt-2 text-center">
+						<h4 v-if="w.forERC20" class="mt-2 text-center text-primary">
 							ERC 20 | {{ w.tokenSymbol }}
 						</h4>
 
-						<h4 v-else-if="w.forERC721" class="mt-2 text-center">
+						<h4 v-else-if="w.forERC721" class="mt-2 text-center text-primary">
 							ERC 721 | {{ w.tokenSymbol }}
 						</h4>
 
-						<h4 v-else class="mt-2 text-center">
+						<h4 v-else class="mt-2 text-center text-primary">
 							Ether | {{ w.tokenSymbol }}
 						</h4>
 					</VCol>
@@ -98,18 +98,33 @@
 
 					<VCol v-if="!opened[i]" cols="2">
 						<VBtn
-							variant="tonal"
+							variant="flat"
 							color="primary"
 							class="w-100 rounded-xl elevation-0"
 							@click="opened[i] = true"
 						>
-							➕
+							<h1 class="m-0">+</h1>
 						</VBtn>
 					</VCol>
 
 					<VCol v-if="opened[i]" cols="12">
 						<VRow>
-							<VCol cols="2">
+							<VCol cols="1">
+								<h4 class="mt-2 text-center">
+									{{
+										(
+											parseInt(w.forVoteCount) < forVoteCountRequired &&
+											parseInt(w.againstVoteCount) < againstVoteCountRequired
+										) ? '🗳️' : (
+											parseInt(w.againstVoteCount) >= againstVoteCountRequired
+										) ? '❌' : (
+											currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
+										) ?  '✅' : '⏳'
+									}}
+								</h4>
+							</VCol>
+
+							<VCol cols="1">
 								<RouterLink
 									v-if="$route.query.admin == 'true'"
 									:to="`/transfer-request-edit/${vaultAddress}/${w.id}`"
@@ -128,12 +143,12 @@
 
 							<VCol cols="2">
 								<VBtn
-									variant="tonal"
+									variant="flat"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
 									@click="opened[i] = false"
 								>
-									➖
+									<h1 class="m-0">-</h1>
 								</VBtn>
 							</VCol>
 
@@ -241,10 +256,10 @@
 								</VProgressLinear>
 
 								<VBtn
-									v-if="
+									v-if="(
 										parseInt(w.forVoteCount) < forVoteCountRequired &&
 										parseInt(w.againstVoteCount) < againstVoteCountRequired
-									"
+									)"
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="success"
@@ -269,10 +284,10 @@
 								</VProgressLinear>
 
 								<VBtn
-									v-if="
+									v-if="(
 										parseInt(w.forVoteCount) < forVoteCountRequired &&
 										parseInt(w.againstVoteCount) < againstVoteCountRequired
-									"
+									)"
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="danger"
@@ -302,10 +317,10 @@
 							<VCol cols="12">
 								<VBtn
 									v-if="
-										parseInt(w.againstVoteCount) >= againstVoteCountRequired ||
-										(
-											parseInt(w.forVoteCount) >= forVoteCountRequired &&
-											currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
+										parseInt(w.againstVoteCount) >= againstVoteCountRequired || (
+											parseInt(w.forVoteCount) >= forVoteCountRequired && (
+												currentTimestamp - w.latestRelevantForVoteBlockTimestamp
+											) >= transferDelaySeconds
 										)
 									"
 									:disabled="processing[w.id]"
