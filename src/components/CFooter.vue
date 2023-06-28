@@ -29,6 +29,7 @@
 				</VCol>
 			</VRow>
 		</VContainer>
+
 	</VSheet>
 </template>
 
@@ -43,7 +44,7 @@
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,
 				accessControl: this.$store.state.config.address[
 					this.$store.state.chainName
-				].yieldSyncV1VaultAccessControl,
+				].yieldSyncV1VaultAccessControl
 			};
 		},
 	});

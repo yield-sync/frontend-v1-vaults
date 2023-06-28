@@ -110,7 +110,7 @@
 								v-model="update.transferDelaySeconds"
 								size="sm"
 								type="number"
-								label="For Vote Count"
+								label="Transfer Delay Seconds"
 								variant="outlined"
 							/>
 						</VCol>

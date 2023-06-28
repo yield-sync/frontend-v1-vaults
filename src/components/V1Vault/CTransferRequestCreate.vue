@@ -159,7 +159,9 @@
 						) ? this.$store.state.pages.RVV1Vault.transferRequest.token : this.ZeroAddress,
 						(
 							this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721"
-						) ?  BigInt(10**18) : BigInt(this.$store.state.pages.RVV1Vault.transferRequest.amount * 10**18),
+						) ?  BigInt(10 ** 18) : BigInt(
+							this.$store.state.pages.RVV1Vault.transferRequest.amount * 10 ** 18
+						),
 						this.$store.state.pages.RVV1Vault.transferRequest.tokenId
 					).send({
 						from: this.$store.state.wallet.accounts[0]

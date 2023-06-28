@@ -22,7 +22,7 @@
 		<RouterView v-if="!$store.state.loading && $store.state.wallet.connected && $store.state.error === ''" />
 
 		<!-- Bottom Navigation -->
-		<CFooter />
+		<CFooter v-if="!$store.state.loading" />
 	</div>
 </template>
 
