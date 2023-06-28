@@ -1,4 +1,30 @@
 <template>
+	<VRow>
+		<VCol cols="1">
+			<h5 class="text-center text-uppercase text-primary">Status</h5>
+		</VCol>
+
+		<VCol cols="3">
+			<h5 class="text-center text-uppercase text-primary">Type | Token Symbol</h5>
+		</VCol>
+
+		<VCol cols="2">
+			<h5 class="text-center text-uppercase text-primary">Amount / ID</h5>
+		</VCol>
+
+		<VCol cols="2">
+			<h5 class="text-center text-uppercase text-primary">To</h5>
+		</VCol>
+
+		<VCol cols="2">
+			<h5 class="text-center text-uppercase text-primary">For : Against</h5>
+		</VCol>
+
+		<VCol cols="2">
+			<h5 class="text-center text-uppercase text-primary">View</h5>
+		</VCol>
+	</VRow>
+
 	<div v-if="loading" class="text-center">
 		<VProgressCircular
 			class=""
@@ -8,32 +34,6 @@
 	</div>
 
 	<div v-if="!loading" class="mb-6">
-		<VRow>
-			<VCol cols="1" class="">
-				<h5 class="text-center text-uppercase text-primary">Status</h5>
-			</VCol>
-
-			<VCol cols="3">
-				<h5 class="text-center text-uppercase text-primary">Type | Token Symbol</h5>
-			</VCol>
-
-			<VCol cols="2">
-				<h5 class="text-center text-uppercase text-primary">Amount / ID</h5>
-			</VCol>
-
-			<VCol cols="2">
-				<h5 class="text-center text-uppercase text-primary">To</h5>
-			</VCol>
-
-			<VCol cols="2">
-				<h5 class="text-center text-uppercase text-primary">For : Against</h5>
-			</VCol>
-
-			<VCol cols="2">
-				<h5 class="text-center text-uppercase text-primary">View</h5>
-			</VCol>
-		</VRow>
-
 		<VCard
 			v-for="(w, i) in detailedTransferRequests"
 			:key="i"
