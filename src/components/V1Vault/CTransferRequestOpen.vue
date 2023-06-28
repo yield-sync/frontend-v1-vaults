@@ -9,7 +9,7 @@
 
 	<div v-if="!loading" class="mb-6">
 		<VRow>
-			<VCol cols="1">
+			<VCol cols="1" class="">
 				<h5 class="text-center text-uppercase text-primary">Status</h5>
 			</VCol>
 
@@ -34,283 +34,298 @@
 			</VCol>
 		</VRow>
 
-		<VRow v-for="(w, i) in detailedTransferRequests" :key="i">
-			<VCol cols="1">
-				<h4 class="text-center">
-					{{
-						(
-							parseInt(w.forVoteCount) < forVoteCountRequired &&
-							parseInt(w.againstVoteCount) < againstVoteCountRequired
-						) ? '🗳️' : (
-							parseInt(w.againstVoteCount) >= againstVoteCountRequired
-						) ? '❌' : (
-							currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
-						) ?  '✅' : '⏳'
-					}}
-				</h4>
-			</VCol>
+		<VCard
+			v-for="(w, i) in detailedTransferRequests"
+			:key="i"
+			class="my-6 rounded-xl elevation-0 bg-light-frost"
+		>
+			<VCardText>
+				<VRow>
+					<VCol v-if="!opened[i]" cols="1">
+						<h4 class="mt-2 text-center">
+							{{
+								(
+									parseInt(w.forVoteCount) < forVoteCountRequired &&
+									parseInt(w.againstVoteCount) < againstVoteCountRequired
+								) ? '🗳️' : (
+									parseInt(w.againstVoteCount) >= againstVoteCountRequired
+								) ? '❌' : (
+									currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
+								) ?  '✅' : '⏳'
+							}}
+						</h4>
+					</VCol>
 
-			<VCol cols="3">
-				<h4 v-if="w.forERC20" class="text-center ">
-					ERC 20 | {{ w.tokenSymbol }}
-				</h4>
+					<VCol v-if="!opened[i]" cols="3">
+						<h4 v-if="w.forERC20" class="mt-2 text-center">
+							ERC 20 | {{ w.tokenSymbol }}
+						</h4>
 
-				<h4 v-else-if="w.forERC721" class="text-center ">
-					ERC 721 | {{ w.tokenSymbol }}
-				</h4>
+						<h4 v-else-if="w.forERC721" class="mt-2 text-center">
+							ERC 721 | {{ w.tokenSymbol }}
+						</h4>
 
-				<h4 v-else class="text-center ">
-					Ether | {{ w.tokenSymbol }}
-				</h4>
-			</VCol>
+						<h4 v-else class="mt-2 text-center">
+							Ether | {{ w.tokenSymbol }}
+						</h4>
+					</VCol>
 
-			<VCol cols="2">
-				<h4 v-if="!w.forERC721" class="text-center ">{{ w.amount * 10 ** -18 }}</h4>
-				<h4 v-if="w.forERC721" class="text-center ">#{{ w.tokenId }}</h4>
-			</VCol>
+					<VCol v-if="!opened[i]" cols="2">
+						<h4 v-if="!w.forERC721" class="mt-2 text-center">{{ w.amount * 10 ** -18 }}</h4>
+						<h4 v-if="w.forERC721" class="mt-2 text-center">#{{ w.tokenId }}</h4>
+					</VCol>
 
-			<VCol cols="2">
-				<a
-					:href="`https://etherscan.io/address/${w.to}`"
-					target="_blank"
-					rel="noopener noreferrer"
-					:title="w.to"
-					class="text-center text-dark"
-				>
-					<VBtn variant="plain" class="w-100 rounded-xl">
-						🔗 {{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
-					</VBtn>
-				</a>
-			</VCol>
+					<VCol v-if="!opened[i]" cols="2">
+						<a
+							:href="`https://etherscan.io/address/${w.to}`"
+							target="_blank"
+							rel="noopener noreferrer"
+							:title="w.to"
+							class="text-center text-dark"
+						>
+							<VBtn variant="plain" class="w-100 rounded-xl">
+								🔗 {{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
+							</VBtn>
+						</a>
+					</VCol>
 
-			<VCol cols="2">
-				<h4 class="text-center">
-					<span class="text-success">{{ w.forVoteCount }}</span> :
-					<span class="text-danger">{{ w.againstVoteCount }}</span>
-				</h4>
-			</VCol>
+					<VCol v-if="!opened[i]" cols="2">
+						<h3 class="mt-2 text-center">
+							<span class="text-success">{{ w.forVoteCount }}</span> :
+							<span class="text-danger">{{ w.againstVoteCount }}</span>
+						</h3>
+					</VCol>
 
-			<VCol cols="2">
-				<VBtn
-					variant="tonal"
-					color="primary"
-					class="w-100 rounded-xl elevation-0"
-					@click="opened[i] = !opened[i]"
-				>
-					{{ opened[i] ? '➖' : '➕' }}
-				</VBtn>
-			</VCol>
+					<VCol v-if="!opened[i]" cols="2">
+						<VBtn
+							variant="tonal"
+							color="primary"
+							class="w-100 rounded-xl elevation-0"
+							@click="opened[i] = true"
+						>
+							➕
+						</VBtn>
+					</VCol>
 
-			<VCol v-if="opened[i]" cols="12">
-				<VCard class="mb-6 px-6 py-6 rounded-xl elevation-0 bg-light-frost">
-					{{currentTimestamp}} > {{ w.latestRelevantForVoteBlockTimestamp }}
-					<VRow>
-						<VCol cols="3"/>
+					<VCol v-if="opened[i]" cols="12">
+						<VRow>
+							<VCol cols="2">
+								<RouterLink
+									v-if="$route.query.admin == 'true'"
+									:to="`/transfer-request-edit/${vaultAddress}/${w.id}`"
+								>
+									<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
+										Edit
+									</VBtn>
+								</RouterLink>
+							</VCol>
 
-						<VCol cols="6">
-							<h2 class="text-center text-uppercase text-primary">Transfer Request {{ w.id }}</h2>
-						</VCol>
-
-						<VCol cols="3">
-							<RouterLink
-								v-if="$route.query.admin == 'true'"
-								:to="`/transfer-request-edit/${vaultAddress}/${w.id}`"
-							>
-								<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
-									Edit
-								</VBtn>
-							</RouterLink>
-						</VCol>
-
-						<VCol cols="4" class="text-left">
-							<h4 v-if="w.forERC20" class="mb-3 text-center text-uppercase text-primary">
-								ERC 20
-							</h4>
-
-							<h4 v-else-if="w.forERC721" class="mb-3 text-center text-uppercase text-primary">
-								ERC 721
-							</h4>
-
-							<h4 v-else class="mb-3 text-center text-uppercase text-primary">
-								Ether
-							</h4>
-
-							<a
-								v-if="w.forERC20"
-								:href="`https://etherscan.io/address/${w.tokenAddress}`"
-								target="_blank"
-								rel="noopener noreferrer"
-								:title="w.tokenAddress"
-							>
-								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
-									🔗 {{ w.tokenSymbol }}
-								</VBtn>
-							</a>
-
-							<a
-								v-else-if="w.forERC721"
-								:href="`https://etherscan.io/address/${w.tokenAddress}`"
-								target="_blank"
-								rel="noopener noreferrer"
-								:title="w.tokenAddress"
-							>
-								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
-									🔗 {{ w.tokenSymbol }}
-								</VBtn>
-							</a>
-
-							<a
-								v-else
-								href="https://etherscan.io/"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-decoration-none"
-								:title="w.tokenAddress"
-							>
-								<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
-									🔗 ETH
-								</VBtn>
-							</a>
-						</VCol>
-
-						<VCol v-if="!w.forERC721" cols="4" class="text-center">
-							<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
-							<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
-						</VCol>
-
-						<VCol v-if="w.forERC721" cols="4" class="text-center">
-							<h4 class="mb-3 text-uppercase text-primary">Token Id</h4>
-							<h3 class="text-dark">{{ w.tokenId }}</h3>
-						</VCol>
-
-						<VCol cols="4" class="text-center">
-							<h4 class="mb-3 text-uppercase text-primary">Created By</h4>
-
-							<a
-								:href="`https://etherscan.io/address/${w.creator}`"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-decoration-none"
-								:title="w.tokenAddress"
-							>
-								<h3 class="text-center text-uppercase text-dark" :title="w.creator">
-									{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.creator.length - 4) }}
+							<VCol cols="8">
+								<h3 class="mt-2 text-center text-uppercase text-primary">
+									Transfer Request {{ w.id }}
 								</h3>
-							</a>
-						</VCol>
+							</VCol>
 
-						<VCol cols="12" class="text-center">
-							<h4 class="mb-3 text-center text-uppercase text-primary">Transfer To</h4>
-							<a
-								:href="`https://etherscan.io/address/${w.to}`"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="text-decoration-none"
-								:title="w.tokenAddress"
-							>
-								<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
-							</a>
-						</VCol>
+							<VCol cols="2">
+								<VBtn
+									variant="tonal"
+									color="primary"
+									class="w-100 rounded-xl elevation-0"
+									@click="opened[i] = false"
+								>
+									➖
+								</VBtn>
+							</VCol>
 
-						<VCol cols="6" class="text-center">
-							<h4 class="text-center mb-3 text-success text-uppercase">For</h4>
+							<VCol cols="4" class="text-left">
+								<h4 v-if="w.forERC20" class="mb-3 text-center text-uppercase text-primary">
+									ERC 20
+								</h4>
 
-							<VProgressLinear
-								color="success"
-								:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
-								:height="36"
-								striped
-								class="mb-3 rounded-xl"
-							>
-								<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
-							</VProgressLinear>
+								<h4 v-else-if="w.forERC721" class="mb-3 text-center text-uppercase text-primary">
+									ERC 721
+								</h4>
 
-							<VBtn
-								v-if="
-									parseInt(w.forVoteCount) < forVoteCountRequired &&
-									parseInt(w.againstVoteCount) < againstVoteCountRequired
-								"
-								:disabled="voting[w.id]"
-								variant="flat"
-								color="success"
-								class="px-6 rounded-xl elevation-0"
-								@click="voteOnTransferRequest(w.id, true)"
-							>
-								Vote For
-							</VBtn>
-						</VCol>
+								<h4 v-else class="mb-3 text-center text-uppercase text-primary">
+									Ether
+								</h4>
 
-						<VCol cols="6" class="text-center">
-							<h4 class="text-center mb-3 text-danger text-uppercase">Against</h4>
+								<a
+									v-if="w.forERC20"
+									:href="`https://etherscan.io/address/${w.tokenAddress}`"
+									target="_blank"
+									rel="noopener noreferrer"
+									:title="w.tokenAddress"
+								>
+									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+										🔗 {{ w.tokenSymbol }}
+									</VBtn>
+								</a>
 
-							<VProgressLinear
-								color="danger"
-								:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
-								:height="36"
-								striped
-								class="mb-3 rounded-xl"
-							>
-								<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
-							</VProgressLinear>
+								<a
+									v-else-if="w.forERC721"
+									:href="`https://etherscan.io/address/${w.tokenAddress}`"
+									target="_blank"
+									rel="noopener noreferrer"
+									:title="w.tokenAddress"
+								>
+									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+										🔗 {{ w.tokenSymbol }}
+									</VBtn>
+								</a>
 
-							<VBtn
-								v-if="
-									parseInt(w.forVoteCount) < forVoteCountRequired &&
-									parseInt(w.againstVoteCount) < againstVoteCountRequired
-								"
-								:disabled="voting[w.id]"
-								variant="flat"
-								color="danger"
-								class="px-6 rounded-xl elevation-0"
-								@click="voteOnTransferRequest(w.id, false)"
-							>
-								Vote Against
-							</VBtn>
-						</VCol>
+								<a
+									v-else
+									href="https://etherscan.io/"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-decoration-none"
+									:title="w.tokenAddress"
+								>
+									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
+										🔗 ETH
+									</VBtn>
+								</a>
+							</VCol>
 
-						<VCol v-if="false" cols="12">
-							<h4 class="mb-3 text-primary">Voted Voter</h4>
-							<h4 v-for="(v, i) in w.votedMembers" :key="i">
-								{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
-							</h4>
-						</VCol>
+							<VCol v-if="!w.forERC721" cols="4" class="text-center">
+								<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
+								<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
+							</VCol>
 
-						<VCol cols="12">
-							<h4 class="mb-3 text-center text-primary">
-								Latest Relevant For Vote Time
-							</h4>
-							<h3 class="mb-3 text-center text-dark">
-								{{ w.latestRelevantForVoteTime }}
-							</h3>
-						</VCol>
+							<VCol v-if="w.forERC721" cols="4" class="text-center">
+								<h4 class="mb-3 text-uppercase text-primary">Token Id</h4>
+								<h3 class="text-dark">{{ w.tokenId }}</h3>
+							</VCol>
 
-						<VCol cols="12">
-							<VBtn
-								v-if="
-									parseInt(w.againstVoteCount) >= againstVoteCountRequired ||
-									(
+							<VCol cols="4" class="text-center">
+								<h4 class="mb-3 text-uppercase text-primary">Created By</h4>
+
+								<a
+									:href="`https://etherscan.io/address/${w.creator}`"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-decoration-none"
+									:title="w.tokenAddress"
+								>
+									<h3 class="text-center text-uppercase text-dark" :title="w.creator">
+										{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.creator.length - 4) }}
+									</h3>
+								</a>
+							</VCol>
+
+							<VCol cols="12" class="text-center">
+								<h4 class="mb-3 text-center text-uppercase text-primary">Transfer To</h4>
+								<a
+									:href="`https://etherscan.io/address/${w.to}`"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-decoration-none"
+									:title="w.tokenAddress"
+								>
+									<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
+								</a>
+							</VCol>
+
+							<VCol cols="6" class="text-center">
+								<h4 class="text-center mb-3 text-success text-uppercase">For</h4>
+
+								<VProgressLinear
+									color="success"
+									:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
+									:height="36"
+									striped
+									class="mb-3 rounded-xl"
+								>
+									<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
+								</VProgressLinear>
+
+								<VBtn
+									v-if="
+										parseInt(w.forVoteCount) < forVoteCountRequired &&
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									"
+									:disabled="voting[w.id]"
+									variant="flat"
+									color="success"
+									class="px-6 rounded-xl elevation-0"
+									@click="voteOnTransferRequest(w.id, true)"
+								>
+									Vote For
+								</VBtn>
+							</VCol>
+
+							<VCol cols="6" class="text-center">
+								<h4 class="text-center mb-3 text-danger text-uppercase">Against</h4>
+
+								<VProgressLinear
+									color="danger"
+									:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
+									:height="36"
+									striped
+									class="mb-3 rounded-xl"
+								>
+									<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
+								</VProgressLinear>
+
+								<VBtn
+									v-if="
+										parseInt(w.forVoteCount) < forVoteCountRequired &&
+										parseInt(w.againstVoteCount) < againstVoteCountRequired
+									"
+									:disabled="voting[w.id]"
+									variant="flat"
+									color="danger"
+									class="px-6 rounded-xl elevation-0"
+									@click="voteOnTransferRequest(w.id, false)"
+								>
+									Vote Against
+								</VBtn>
+							</VCol>
+
+							<VCol v-if="false" cols="12">
+								<h4 class="mb-3 text-primary">Voted Voter</h4>
+								<h4 v-for="(v, i) in w.votedMembers" :key="i">
+									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
+								</h4>
+							</VCol>
+
+							<VCol cols="12">
+								<h4 class="mb-3 text-center text-primary">
+									Latest Relevant For Vote Time
+								</h4>
+								<h3 class="mb-3 text-center text-dark">
+									{{ w.latestRelevantForVoteTime }}
+								</h3>
+							</VCol>
+
+							<VCol cols="12">
+								<VBtn
+									v-if="
+										parseInt(w.againstVoteCount) >= againstVoteCountRequired ||
 										(
 											parseInt(w.forVoteCount) >= forVoteCountRequired &&
-											currentTimestamp > w.latestRelevantForVoteBlockTimestamp
+											currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
 										)
-									)
-								"
-								:disabled="processing[w.id]"
-								color="primary"
-								class="w-100 rounded-xl elevation-0"
-								@click="processTransferRequest(w.id)"
-							>
-								Proccess Request
-							</VBtn>
-						</VCol>
+									"
+									:disabled="processing[w.id]"
+									color="primary"
+									class="w-100 rounded-xl elevation-0"
+									@click="processTransferRequest(w.id)"
+								>
+									Proccess Request
+								</VBtn>
+							</VCol>
 
-						<VCol v-if="error" cols="12">
-							<h6 class="text-danger">{{ error }}</h6>
-						</VCol>
-					</VRow>
-				</VCard>
-			</VCol>
-		</VRow>
+							<VCol v-if="error" cols="12">
+								<h6 class="text-danger">{{ error }}</h6>
+							</VCol>
+						</VRow>
+					</VCol>
+				</VRow>
+			</VCardText>
+		</VCard>
+
 	</div>
 
 	<VCard class="rounded-xl elevation-0 bg-light-frost">
