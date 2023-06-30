@@ -1,5 +1,5 @@
 <template>
-	<VSheet color="dark" class="py-6" style="height: 600px;">
+	<VSheet class="py-6 bg-gradient-dark" style="height: 600px;">
 		<VContainer>
 			<VRow>
 				<VCol

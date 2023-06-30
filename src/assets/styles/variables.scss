@@ -9,6 +9,7 @@ $frosted: #ffffffd8;
 $regulard-blur: 10px;
 
 $bg-img: url('~@/assets/blurry-gradient.svg');
+$bg-img-dark: url('~@/assets/blurry-gradient-dark.svg');
 
 // [BG][FROST][PRIMARY] //
 .bg-primary-frost-lightest {
@@ -19,7 +20,7 @@ $bg-img: url('~@/assets/blurry-gradient.svg');
 
 // [BG][FROST][LIGHT] //
 .bg-light-frost {
-	background-color: mix($light, rgba(255, 255, 255, .1), $weight: 10%);
+	background-color: mix($light, rgba(255, 255, 255, 0.1), $weight: 15%);
 	backdrop-filter: blur($regulard-blur) !important;
 	-webkit-backdrop-filter: blur($regulard-blur) !important;
 }
@@ -118,4 +119,9 @@ input:checked+.slider:before {
 // [BG][GRADIENT] //
 .bg-gradient {
 	background-image: $bg-img;
+}
+
+// [BG][GRADIENT] //
+.bg-gradient-dark {
+	background-image: $bg-img-dark;
 }

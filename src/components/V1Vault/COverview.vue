@@ -5,9 +5,9 @@
 		</VCardTitle>
 
 		<VCardText class="mt-4">
-			<VRow class="text-center">
+			<VRow>
 				<!-- For Vote -->
-				<VCol cols="12" sm="4">
+				<VCol cols="12" sm="4" class="text-center">
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
@@ -15,7 +15,7 @@
 					</VCard>
 				</VCol>
 
-				<VCol cols="12" sm="4">
+				<VCol cols="12" sm="4" class="text-center">
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
@@ -23,7 +23,7 @@
 					</VCard>
 				</VCol>
 
-				<VCol cols="12" sm="4">
+				<VCol cols="12" sm="4" class="text-center">
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
@@ -39,13 +39,11 @@
 									<h2 class="mt-2 text-center text-uppercase text-primary">Ξ Ether Balance</h2>
 								</VCol>
 
-								<VCol :cols="asAdmin ? 12 : 9" class="text-center">
-									<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-										<h2 class="text-primary">Ξ {{ ethBalance * 10 ** -18 }}</h2>
-									</VCard>
+								<VCol cols="12">
+									<h1 class="text-center">{{ ethBalance * 10 ** -18 }}</h1>
 								</VCol>
 
-								<VCol v-if="!asAdmin" :cols="asAdmin ? 12 : 3">
+								<VCol v-if="!asAdmin" cols="12">
 									<RouterLink :to="`/v1-vault/${address}`">
 										<VBtn
 											class="w-100 rounded-xl"
@@ -78,11 +76,11 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol cols="6">
+								<VCol :cols="asAdmin ? 9 : 6">
 									<h4 class="text-center text-primary">Balance</h4>
 								</VCol>
 
-								<VCol cols="3">
+								<VCol v-if="!asAdmin" cols="3">
 									<h4 class="text-center text-primary">Transfer Request</h4>
 								</VCol>
 							</VRow>
@@ -100,11 +98,11 @@
 									</a>
 								</VCol>
 
-								<VCol sm="6">
+								<VCol :cols="asAdmin ? 9 : 6">
 									<h4 class="text-center">{{ erc20.balance }}</h4>
 								</VCol>
 
-								<VCol cols="3">
+								<VCol v-if="!asAdmin" cols="3">
 									<VBtn
 										color="primary"
 										variant="flat"
@@ -133,11 +131,11 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol cols="6">
+								<VCol :cols="asAdmin ? 9 : 6">
 									<h4 class="text-center text-primary">Token Id</h4>
 								</VCol>
 
-								<VCol cols="3">
+								<VCol v-if="!asAdmin" cols="3">
 									<h4 class="text-center text-primary">Transfer Request</h4>
 								</VCol>
 							</VRow>
@@ -155,11 +153,11 @@
 									</a>
 								</VCol>
 
-								<VCol sm="6">
+								<VCol :cols="asAdmin ? 9 : 6">
 									<h4 class="text-center">{{ erc721.tokenId }}</h4>
 								</VCol>
 
-								<VCol cols="3">
+								<VCol v-if="!asAdmin" cols="3">
 									<VBtn
 										color="primary"
 										variant="flat"
