@@ -1,29 +1,33 @@
 <template>
-	<VRow>
-		<VCol cols="1">
-			<h5 class="text-center text-uppercase text-primary">Status</h5>
-		</VCol>
+	<VCard class="m-0 rounded-xl elevation-0 clear">
+		<VCardText>
+			<VRow>
+				<VCol cols="1">
+					<h6 class="text-center text-uppercase text-primary">Status</h6>
+				</VCol>
 
-		<VCol cols="3">
-			<h5 class="text-center text-uppercase text-primary">Type | Token Symbol</h5>
-		</VCol>
+				<VCol cols="3">
+					<h6 class="text-center text-uppercase text-primary">Type | Token Symbol</h6>
+				</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center text-uppercase text-primary">Amount / ID</h5>
-		</VCol>
+				<VCol cols="2">
+					<h6 class="text-center text-uppercase text-primary">Amount / ID</h6>
+				</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center text-uppercase text-primary">To</h5>
-		</VCol>
+				<VCol cols="2">
+					<h6 class="text-center text-uppercase text-primary">To</h6>
+				</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center text-uppercase text-primary">For : Against</h5>
-		</VCol>
+				<VCol cols="2">
+					<h6 class="text-center text-uppercase text-primary">For : Against</h6>
+				</VCol>
 
-		<VCol cols="2">
-			<h5 class="text-center text-uppercase text-primary">View</h5>
-		</VCol>
-	</VRow>
+				<VCol cols="2">
+					<h6 class="text-center text-uppercase text-primary">View</h6>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
 
 	<div v-if="loading" class="text-center">
 		<VProgressCircular
@@ -651,3 +655,9 @@
 		}
 	});
 </script>
+
+<style lang="scss" scoped>
+	.clear {
+		background-color: rgba(255, 255, 255, 0);
+	}
+</style>

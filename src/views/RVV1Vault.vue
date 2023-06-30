@@ -1,6 +1,6 @@
 <template>
 	<VContainer class="py-16">
-		<div class="w-100 mx-auto" style="max-width: 1000px;">
+		<div class="w-100 mx-auto" style="max-width: 900px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
 				<VCol cols="12" sm="4">
 					<a
@@ -80,7 +80,7 @@
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
-						👥 Members & Admins
+						👥 Admins & Members
 					</VBtn>
 				</VCol>
 
