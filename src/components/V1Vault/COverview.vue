@@ -178,10 +178,12 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
 	import router from "../../router";
@@ -222,11 +224,15 @@
 					tokenId: number | string
 				}[],
 				vault: {
-					againstVoteCountRequired: 0,
-					forVoteCountRequired: 0,
-					transferDelaySeconds: 0,
+					againstVoteCountRequired: 0 as number,
+					forVoteCountRequired: 0 as number,
+					transferDelaySeconds: 0 as number,
 				},
 				error: "" as string,
+
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},
 
@@ -374,14 +380,31 @@
 		{
 			await this.getBalances();
 
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				this.transferRequestProtocol
+			);
+
 			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],
 				this.address
 			);
 
-			this.vault.againstVoteCountRequired = await yieldSyncV1Vault.methods.againstVoteCountRequired().call();
-			this.vault.forVoteCountRequired = await yieldSyncV1Vault.methods.forVoteCountRequired().call();
-			this.vault.transferDelaySeconds = await yieldSyncV1Vault.methods.transferDelaySeconds().call();
+			this.vault.againstVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.address
+				).call()
+			)[0];
+			this.vault.forVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.address
+				).call()
+			)[1];
+			this.vault.transferDelaySeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.address
+				).call()
+			)[2];
 		},
 	});
 </script>

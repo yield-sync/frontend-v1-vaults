@@ -73,6 +73,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
 	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
@@ -111,13 +112,13 @@
 		{
 			this.loading = true;
 
-			const transferRequestProtocol = new this.$store.state.web3.eth.Contract(
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],
 				this.transferRequestProtocol
 			);
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-				.admin_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call()
+				.admin_yieldSyncV1VaultsAddresses(this.$store.state.wallet.accounts[0]).call()
 			;
 
 			for (let i = 0; i < v1Vaults.length; i++)

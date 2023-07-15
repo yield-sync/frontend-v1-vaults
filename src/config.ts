@@ -4,12 +4,6 @@ type yieldSyncContractAddresses = {
 	yieldSyncV1VaultAccessControl: string
 }
 
-type networkYieldSyncContractAddresses = {
-	goerli: yieldSyncContractAddresses,
-	mainnet: yieldSyncContractAddresses,
-	sepolia: yieldSyncContractAddresses
-}
-
 export default {
 	address: {
 		goerli: {
@@ -28,9 +22,13 @@ export default {
 
 		sepolia: {
 			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
-			yieldSyncV1VaultFactory: "0x03fC0D60dFa8CCF80c59CaBa7d20c48DBd4e3727",
-			yieldSyncV1VaultAccessControl: "0xb1AE4F8CBEd7e81764897AD141983ca4058ed8be",
-			yieldSyncV1ATransferRequestProtocol: "0x7e4237DCEcDcf0B133F6d258eDFc088B525A0e1F",
+			yieldSyncV1VaultFactory: "0xfF91158c8BAE2a922ceeB6F011b0d0Bc4911c033",
+			yieldSyncV1VaultAccessControl: "0x3476d5c5d4Bf849F483A95dCcC7ECAe305c3fB3F",
+			yieldSyncV1ATransferRequestProtocol: "0x98D23B69d852B751F25b92981262cBb579989879",
 		},
-	} as networkYieldSyncContractAddresses
+	} as {
+		goerli: yieldSyncContractAddresses,
+		mainnet: yieldSyncContractAddresses,
+		sepolia: yieldSyncContractAddresses
+	}
 };

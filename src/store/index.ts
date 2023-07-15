@@ -14,8 +14,7 @@ import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl"
 
 export default createStore({
 	state: {
-		ZeroAddress: "0x0000000000000000000000000000000000000000" as const,
-
+		ZERO_ADDRESS: "0x0000000000000000000000000000000000000000" as const,
 		loading: true as boolean,
 		error: "" as string,
 
@@ -219,7 +218,7 @@ export default createStore({
 
 				for (let i = 0; i < data.tokenBalances.length; i++)
 				{
-					if (data.tokenBalances[i].tokenBalance != state.ZeroAddress)
+					if (data.tokenBalances[i].tokenBalance != state.ZERO_ADDRESS)
 					{
 						const contract = new state.web3.eth.Contract(
 							abiER20 as AbiItem[],

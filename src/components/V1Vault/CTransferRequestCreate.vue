@@ -117,6 +117,7 @@
 	import { Contract } from "web3-eth-contract";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "CTransferRequestCreate",
@@ -131,7 +132,12 @@
 		data()
 		{
 			return {
-				ZeroAddress: "0x0000000000000000000000000000000000000000",
+				ZERO_ADDRESS: this.$store.state.ZERO_ADDRESS,
+
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
+
 				creating: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
@@ -148,27 +154,34 @@
 		methods: {
 			async createWR()
 			{
-				if (this.yieldSyncV1Vault)
-				{
-					await this.yieldSyncV1Vault.methods.createTransferRequest(
-						this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 20" ? true : false,
-						this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721" ? true : false,
-						this.$store.state.pages.RVV1Vault.transferRequest.to,
-						(
-							this.$store.state.pages.RVV1Vault.transferRequest.token
-						) ? this.$store.state.pages.RVV1Vault.transferRequest.token : this.ZeroAddress,
-						(
-							this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721"
-						) ?  BigInt(10 ** 18) : BigInt(
-							this.$store.state.pages.RVV1Vault.transferRequest.amount * 10 ** 18
-						),
-						this.$store.state.pages.RVV1Vault.transferRequest.tokenId
-					).send({
-						from: this.$store.state.wallet.accounts[0]
-					}).on("sent", async () =>
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestCreate(
+					this.vaultAddress,
+					this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 20" ? true : false,
+					this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721" ? true : false,
+					this.$store.state.pages.RVV1Vault.transferRequest.to,
+					(
+						this.$store.state.pages.RVV1Vault.transferRequest.token
+					) ? this.$store.state.pages.RVV1Vault.transferRequest.token : this.ZERO_ADDRESS,
+					(
+						this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721"
+					) ? BigInt(10 ** 18) : BigInt(this.$store.state.pages.RVV1Vault.transferRequest.amount * 10 ** 18),
+					this.$store.state.pages.RVV1Vault.transferRequest.tokenId
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
 					{
 						this.creating = true;
-					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
 					{
 						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
@@ -179,23 +192,28 @@
 						}
 
 						this.creating = false;
-					}).on("error", async (error: Error) =>
+					}
+				).on(
+					"error",
+					async (error: Error) =>
 					{
 						this.error = String(error);
 
 						this.creating = false;
-					});
-				}
+					}
+				);
 			}
 		},
 
 		async created()
 		{
-			// Governance
-			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1Vault as AbiItem[],
-				this.vaultAddress
-			);
+			if (this.yieldSyncV1Vault)
+			{
+				this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.vaultAddress
+				);
+			}
 		},
 	});
 </script>

@@ -386,6 +386,7 @@
 
 	import abiER20 from "../../abi/erc20";
 	import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "CTransferRequest",
@@ -446,6 +447,9 @@
 				}[],
 
 				error: "" as string,
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},
 
@@ -504,6 +508,11 @@
 			{
 				this.loading = true;
 
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
 				await this.setCurrentBlockTimestamp();
 
 				if (!this.yieldSyncV1Vault)
@@ -514,25 +523,46 @@
 				this.detailedTransferRequests = [
 				];
 
-				this.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired().call();
+				this.againstVoteCountRequired = (
+					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+						this.vaultAddress
+					).call()
+				)[0];
 
-				this.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
+				this.forVoteCountRequired = (
+					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+						this.vaultAddress
+					).call()
+				)[1];
 
-				this.transferDelaySeconds = await this.yieldSyncV1Vault.methods.transferDelaySeconds().call();
+				this.transferDelaySeconds = (
+					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+						this.vaultAddress
+					).call()
+				)[2];
 
-				this.idsOfOpenTransferRequests = await this.yieldSyncV1Vault.methods.idsOfOpenTransferRequests()
-					.call();
+				this.idsOfOpenTransferRequests = (
+					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_openTransferRequestIds(
+						this.vaultAddress
+					).call()
+				);
 
 				for (let i = 0; i < this.idsOfOpenTransferRequests.length; i++)
 				{
-					const wr = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
+					const tR = await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+						this.vaultAddress,
+						this.idsOfOpenTransferRequests[i]
+					).call();
+
+					const tRP = await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
+						this.vaultAddress,
 						this.idsOfOpenTransferRequests[i]
 					).call();
 
 					// Get token details
 					const erc20Contract = new this.$store.state.web3.eth.Contract(
 						abiER20 as AbiItem[],
-						wr.token
+						tR.token
 					);
 
 					let name = "N.A.";
@@ -549,7 +579,7 @@
 					}
 
 					// Create a new Date object using the JavaScript timestamp
-					const date = new Date(wr.latestRelevantForVoteTime * 1000);
+					const date = new Date(tRP.latestRelevantForVoteTime * 1000);
 
 					// Get the individual components of the date and time
 					const year = date.getFullYear();
@@ -561,20 +591,20 @@
 
 					this.detailedTransferRequests.push({
 						id: this.idsOfOpenTransferRequests[i],
-						againstVoteCount: wr.againstVoteCount,
-						amount: wr.amount,
-						creator: wr.creator,
-						forERC20: wr.forERC20,
-						forERC721: wr.forERC721,
-						forVoteCount: wr.forVoteCount,
+						againstVoteCount: tR.againstVoteCount,
+						amount: tR.amount,
+						creator: tR.creator,
+						forERC20: tR.forERC20,
+						forERC721: tR.forERC721,
+						forVoteCount: tR.forVoteCount,
 						latestRelevantForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-						latestRelevantForVoteBlockTimestamp: wr.latestRelevantForVoteTime,
-						to: wr.to,
-						token: !wr.forERC20 && !wr.forERC721 ? "Ether" : name,
-						tokenSymbol: !wr.forERC20 && !wr.forERC721 ? "ETH" : symbol,
-						tokenAddress: wr.token,
-						tokenId: wr.tokenId,
-						votedMembers: wr.votedMembers
+						latestRelevantForVoteBlockTimestamp: tRP.latestRelevantForVoteTime,
+						to: tR.to,
+						token: !tR.forERC20 && !tR.forERC721 ? "Ether" : name,
+						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
+						tokenAddress: tR.token,
+						tokenId: tR.tokenId,
+						votedMembers: tRP.votedMembers
 					});
 				}
 

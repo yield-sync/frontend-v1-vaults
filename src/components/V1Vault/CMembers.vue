@@ -18,7 +18,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="none" color="dark" class="word-wrap rounded-xl">{{ a }}</VBtn>
+						<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">{{ a }}</VBtn>
 					</a>
 				</VCol>
 
@@ -113,7 +113,7 @@
 				}
 
 				this.members = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1Vault_members(this.v1VaultAddress).call()
+					.yieldSyncV1VaultAddress_members(this.v1VaultAddress).call()
 				;
 			},
 
@@ -173,19 +173,25 @@
 
 				v1Vault.methods.removeMember(member).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.removing = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+				}).on(
+					"sent",
+					async () =>
 					{
-						await this.getMembers();
+						this.removing = true;
 					}
-					this.removing = false;
-				}).on("error", async (error: Error) =>
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							await this.getMembers();
+						}
+						this.removing = false;
+					}
+				).on("error", async (error: Error) =>
 				{
 					this.error = String(error);
 

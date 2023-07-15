@@ -18,7 +18,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="none" color="dark" class="word-wrap rounded-xl">{{ a }}</VBtn>
+						<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">{{ a }}</VBtn>
 					</a>
 				</VCol>
 
@@ -114,7 +114,7 @@
 				}
 
 				this.admins = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1Vault_admins(this.v1VaultAddress).call()
+					.yieldSyncV1VaultAddress_admins(this.v1VaultAddress).call()
 				;
 			},
 
