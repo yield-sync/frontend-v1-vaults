@@ -591,12 +591,12 @@
 
 					this.detailedTransferRequests.push({
 						id: this.idsOfOpenTransferRequests[i],
-						againstVoteCount: tR.againstVoteCount,
+						againstVoteCount: tRP.againstVoteCount,
 						amount: tR.amount,
 						creator: tR.creator,
 						forERC20: tR.forERC20,
 						forERC721: tR.forERC721,
-						forVoteCount: tR.forVoteCount,
+						forVoteCount: tRP.forVoteCount,
 						latestRelevantForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
 						latestRelevantForVoteBlockTimestamp: tRP.latestRelevantForVoteTime,
 						to: tR.to,
