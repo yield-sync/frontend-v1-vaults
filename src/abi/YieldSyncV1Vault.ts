@@ -7,6 +7,16 @@ export default [
 				"type": "address"
 			},
 			{
+				"internalType": "address",
+				"name": "_transferRequestProtocol",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_signatureProtocol",
+				"type": "address"
+			},
+			{
 				"internalType": "address[]",
 				"name": "admins",
 				"type": "address[]"
@@ -16,80 +26,9 @@ export default [
 				"name": "members",
 				"type": "address[]"
 			},
-			{
-				"internalType": "address",
-				"name": "_signatureManager",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_againstVoteCountRequired",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_forVoteCountRequired",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_transferDelaySeconds",
-				"type": "uint256"
-			},
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-		],
-		"name": "CreatedTransferRequest",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-		],
-		"name": "DeletedTransferRequest",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "member",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "vote",
-				"type": "bool"
-			},
-		],
-		"name": "MemberVoted",
-		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -134,134 +73,12 @@ export default [
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-		],
-		"name": "TransferRequestReadyToBeProcessed",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "againstVoteCountRequired",
-				"type": "uint256"
-			},
-		],
-		"name": "UpdatedAgainstVoteCountRequired",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "forVoteCountRequired",
-				"type": "uint256"
-			},
-		],
-		"name": "UpdatedForVoteCountRequired",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
 				"internalType": "address",
-				"name": "signatureManager",
+				"name": "signatureProtocol",
 				"type": "address"
 			},
 		],
-		"name": "UpdatedSignatureManger",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "transferDelaySeconds",
-				"type": "uint256"
-			},
-		],
-		"name": "UpdatedTransferDelaySeconds",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "bool",
-						"name": "forERC20",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "forERC721",
-						"type": "bool"
-					},
-					{
-						"internalType": "address",
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address[]",
-						"name": "votedMembers",
-						"type": "address[]"
-					},
-				],
-				"indexed": false,
-				"internalType": "struct TransferRequest",
-				"name": "transferRequest",
-				"type": "tuple"
-			},
-		],
-		"name": "UpdatedTransferRequest",
+		"name": "UpdatedSignatureProtocol",
 		"type": "event"
 	},
 	{
@@ -291,7 +108,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "addAdmin",
+		"name": "adminAdd",
 		"outputs": [
 
 		],
@@ -302,115 +119,15 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "targetAddress",
+				"name": "admin",
 				"type": "address"
 			},
 		],
-		"name": "addMember",
+		"name": "adminRemove",
 		"outputs": [
 
 		],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-
-		],
-		"name": "againstVoteCountRequired",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "forERC20",
-				"type": "bool"
-			},
-			{
-				"internalType": "bool",
-				"name": "forERC721",
-				"type": "bool"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "tokenAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-		],
-		"name": "createTransferRequest",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-		],
-		"name": "deleteTransferRequest",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-
-		],
-		"name": "forVoteCountRequired",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-
-		],
-		"name": "idsOfOpenTransferRequests",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -440,12 +157,27 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "targetAddress",
+				"type": "address"
 			},
 		],
-		"name": "processTransferRequest",
+		"name": "memberAdd",
+		"outputs": [
+
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "member",
+				"type": "address"
+			},
+		],
+		"name": "memberRemove",
 		"outputs": [
 
 		],
@@ -469,36 +201,6 @@ export default [
 	},
 	{
 		"inputs": [
-			{
-				"internalType": "address",
-				"name": "admin",
-				"type": "address"
-			},
-		],
-		"name": "removeAdmin",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "member",
-				"type": "address"
-			},
-		],
-		"name": "removeMember",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
 
 		],
 		"name": "renounceMembership",
@@ -512,7 +214,7 @@ export default [
 		"inputs": [
 
 		],
-		"name": "signatureManager",
+		"name": "signatureProtocol",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -525,104 +227,13 @@ export default [
 	},
 	{
 		"inputs": [
-
-		],
-		"name": "transferDelaySeconds",
-		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_signatureProtocol",
+				"type": "address"
 			},
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-		],
-		"name": "transferRequestId_transferRequest",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "bool",
-						"name": "forERC20",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "forERC721",
-						"type": "bool"
-					},
-					{
-						"internalType": "address",
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address[]",
-						"name": "votedMembers",
-						"type": "address[]"
-					},
-				],
-				"internalType": "struct TransferRequest",
-				"name": "",
-				"type": "tuple"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_againstVoteCountRequired",
-				"type": "uint256"
-			},
-		],
-		"name": "updateAgainstVoteCountRequired",
+		"name": "signatureProtocolUpdate",
 		"outputs": [
 
 		],
@@ -631,43 +242,28 @@ export default [
 	},
 	{
 		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_forVoteCountRequired",
-				"type": "uint256"
-			},
-		],
-		"name": "updateForVoteCountRequired",
-		"outputs": [
 
 		],
-		"stateMutability": "nonpayable",
+		"name": "transferRequestProtocol",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_signatureManager",
+				"name": "_transferRequestProtocol",
 				"type": "address"
 			},
 		],
-		"name": "updateSignatureManager",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_transferDelaySeconds",
-				"type": "uint256"
-			},
-		],
-		"name": "updateTransferDelaySeconds",
+		"name": "transferRequestProtocolUpdate",
 		"outputs": [
 
 		],
@@ -681,90 +277,8 @@ export default [
 				"name": "transferRequestId",
 				"type": "uint256"
 			},
-			{
-				"components": [
-					{
-						"internalType": "bool",
-						"name": "forERC20",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "forERC721",
-						"type": "bool"
-					},
-					{
-						"internalType": "address",
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address[]",
-						"name": "votedMembers",
-						"type": "address[]"
-					},
-				],
-				"internalType": "struct TransferRequest",
-				"name": "__transferRequest",
-				"type": "tuple"
-			},
 		],
-		"name": "updateTransferRequest",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "vote",
-				"type": "bool"
-			},
-		],
-		"name": "voteOnTransferRequest",
+		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess",
 		"outputs": [
 
 		],

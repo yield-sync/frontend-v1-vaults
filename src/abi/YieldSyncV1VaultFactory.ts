@@ -2,147 +2,215 @@ export default [
 	{
 		"inputs": [
 			{
-				"internalType": "address", "name": "_YieldSyncGovernance", "type": "address"
+				"internalType": "address",
+				"name": "_YieldSyncGovernance",
+				"type": "address"
 			},
 			{
-				"internalType": "address", "name": "_YieldSyncV1VaultAccessControl", "type": "address"
+				"internalType": "address",
+				"name": "_YieldSyncV1VaultAccessControl",
+				"type": "address"
 			},
-		], "stateMutability": "nonpayable", "type": "constructor"
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	},
 	{
-		"anonymous": false, "inputs": [
+		"anonymous": false,
+		"inputs": [
 			{
-				"indexed": true, "internalType": "address", "name": "vaultAddress", "type": "address"
+				"indexed": true,
+				"internalType": "address",
+				"name": "vaultAddress",
+				"type": "address"
 			},
-		], "name": "DeployedYieldSyncV1Vault", "type": "event"
+		],
+		"name": "DeployedYieldSyncV1Vault",
+		"type": "event"
 	},
 	{
-		"stateMutability": "payable", "type": "fallback"
+		"stateMutability": "payable",
+		"type": "fallback"
 	},
 	{
 		"inputs": [
-		], "name": "YieldSyncGovernance", "outputs": [
+
+		],
+		"name": "YieldSyncGovernance",
+		"outputs": [
 			{
-				"internalType": "address", "name": "", "type": "address"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			},
-		], "stateMutability": "view", "type": "function"
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
-		], "name": "YieldSyncV1VaultAccessControl", "outputs": [
+
+		],
+		"name": "YieldSyncV1VaultAccessControl",
+		"outputs": [
 			{
-				"internalType": "address", "name": "", "type": "address"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			},
-		], "stateMutability": "view", "type": "function"
-	},
-	{
-		"inputs": [
-		], "name": "defaultSignatureManager", "outputs": [
-			{
-				"internalType": "address", "name": "", "type": "address"
-			},
-		], "stateMutability": "view", "type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]", "name": "admins", "type": "address[]"
-			},
-			{
-				"internalType": "address[]", "name": "members", "type": "address[]"
-			},
-			{
-				"internalType": "address", "name": "signatureManager", "type": "address"
-			},
-			{
-				"internalType": "bool", "name": "useDefaultSignatureManager", "type": "bool"
-			},
-			{
-				"internalType": "uint256", "name": "againstVoteCountRequired", "type": "uint256"
-			},
-			{
-				"internalType": "uint256", "name": "forVoteCountRequired", "type": "uint256"
-			},
-			{
-				"internalType": "uint256", "name": "transferDelaySeconds", "type": "uint256"
-			},
-		], "name": "deployYieldSyncV1Vault", "outputs": [
-			{
-				"internalType": "address", "name": "", "type": "address"
-			},
-		], "stateMutability": "payable", "type": "function"
-	},
-	{
-		"inputs": [
-		], "name": "fee", "outputs": [
-			{
-				"internalType": "uint256", "name": "", "type": "uint256"
-			},
-		], "stateMutability": "view", "type": "function"
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "address", "name": "to", "type": "address"
+				"internalType": "address",
+				"name": "signatureProtocol",
+				"type": "address"
 			},
-		], "name": "transferEther", "outputs": [
-		], "stateMutability": "nonpayable", "type": "function"
-	},
-	{
-		"inputs": [
-		], "name": "transferEtherLocked", "outputs": [
 			{
-				"internalType": "bool", "name": "", "type": "bool"
+				"internalType": "address",
+				"name": "transferRequestProtocol",
+				"type": "address"
 			},
-		], "stateMutability": "view", "type": "function"
-	},
-	{
-		"inputs": [
 			{
-				"internalType": "address", "name": "_defaultSignatureManager", "type": "address"
+				"internalType": "address[]",
+				"name": "admins",
+				"type": "address[]"
 			},
-		], "name": "updateDefaultSignatureManager", "outputs": [
-		], "stateMutability": "nonpayable", "type": "function"
-	},
-	{
-		"inputs": [
 			{
-				"internalType": "uint256", "name": "_fee", "type": "uint256"
+				"internalType": "address[]",
+				"name": "members",
+				"type": "address[]"
 			},
-		], "name": "updateFee", "outputs": [
-		], "stateMutability": "nonpayable", "type": "function"
-	},
-	{
-		"inputs": [
+		],
+		"name": "deployYieldSyncV1Vault",
+		"outputs": [
 			{
-				"internalType": "address", "name": "yieldSyncV1VaultAddress", "type": "address"
+				"internalType": "address",
+				"name": "deployedYieldSyncV1VaultAddress",
+				"type": "address"
 			},
-		], "name": "yieldSyncV1VaultAddress_yieldSyncV1VaultId", "outputs": [
-			{
-				"internalType": "uint256", "name": "yieldSyncV1VaultId", "type": "uint256"
-			},
-		], "stateMutability": "view", "type": "function"
-	},
-	{
-		"inputs": [
-		], "name": "yieldSyncV1VaultIdTracker", "outputs": [
-			{
-				"internalType": "uint256", "name": "", "type": "uint256"
-			},
-		], "stateMutability": "view", "type": "function"
+		],
+		"stateMutability": "payable",
+		"type": "function"
 	},
 	{
 		"inputs": [
 			{
-				"internalType": "uint256", "name": "yieldSyncV1VaultId", "type": "uint256"
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
 			},
-		], "name": "yieldSyncV1VaultId_yieldSyncV1VaultAddress", "outputs": [
-			{
-				"internalType": "address", "name": "yieldSyncV1VaultAddress", "type": "address"
-			},
-		], "stateMutability": "view", "type": "function"
+		],
+		"name": "etherTransfer",
+		"outputs": [
+
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
-		"stateMutability": "payable", "type": "receive"
+		"inputs": [
+
+		],
+		"name": "etherTransferLocked",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+
+		],
+		"name": "fee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			},
+		],
+		"name": "feeUpdate",
+		"outputs": [
+
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1VaultAddress",
+				"type": "address"
+			},
+		],
+		"name": "yieldSyncV1VaultAddress_yieldSyncV1VaultId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "yieldSyncV1VaultId",
+				"type": "uint256"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+
+		],
+		"name": "yieldSyncV1VaultIdTracker",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "yieldSyncV1VaultId",
+				"type": "uint256"
+			},
+		],
+		"name": "yieldSyncV1VaultId_yieldSyncV1VaultAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1VaultAddress",
+				"type": "address"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
 	},
 ];

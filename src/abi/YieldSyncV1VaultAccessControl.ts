@@ -3,16 +3,16 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_yieldSyncV1Vault",
+				"name": "yieldSyncV1VaultAddress",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "admin",
+				"name": "target",
 				"type": "address"
 			},
 		],
-		"name": "addAdmin",
+		"name": "adminAdd",
 		"outputs": [
 
 		],
@@ -23,16 +23,16 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_yieldSyncV1Vault",
+				"name": "yieldSyncV1VaultAddress",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "member",
+				"name": "admin",
 				"type": "address"
 			},
 		],
-		"name": "addMember",
+		"name": "adminRemove",
 		"outputs": [
 
 		],
@@ -62,6 +62,46 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "yieldSyncV1VaultAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "target",
+				"type": "address"
+			},
+		],
+		"name": "memberAdd",
+		"outputs": [
+
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1VaultAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "member",
+				"type": "address"
+			},
+		],
+		"name": "memberRemove",
+		"outputs": [
+
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "member",
 				"type": "address"
 			},
@@ -81,16 +121,54 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "yieldSyncV1Vault",
+				"type": "address"
+			},
+		],
+		"name": "yieldSyncV1VaultAddress_admins",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1Vault",
+				"type": "address"
+			},
+		],
+		"name": "yieldSyncV1VaultAddress_members",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1VaultAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
 				"name": "participant",
 				"type": "address"
 			},
-			{
-				"internalType": "address",
-				"name": "yieldSyncV1Vault",
-				"type": "address"
-			},
 		],
-		"name": "participant_yieldSyncV1Vault_access",
+		"name": "yieldSyncV1VaultAddress_participant_access",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -101,84 +179,6 @@ export default [
 				"internalType": "bool",
 				"name": "member",
 				"type": "bool"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_yieldSyncV1Vault",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "admin",
-				"type": "address"
-			},
-		],
-		"name": "removeAdmin",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_yieldSyncV1Vault",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "member",
-				"type": "address"
-			},
-		],
-		"name": "removeMember",
-		"outputs": [
-
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "yieldSyncV1Vault",
-				"type": "address"
-			},
-		],
-		"name": "yieldSyncV1Vault_admins",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "yieldSyncV1Vault",
-				"type": "address"
-			},
-		],
-		"name": "yieldSyncV1Vault_members",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
 			},
 		],
 		"stateMutability": "view",
