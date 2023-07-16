@@ -1,6 +1,73 @@
 <template>
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
+			<VRow>
+				<VCol cols="12">
+					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties</h2>
+					<h6 class="mb-6 text-center text-uppercase text-dark">
+						Must be set first before deploying a vault
+					</h6>
+				</VCol>
+
+				<!-- Against -->
+				<VCol cols="12" md="4">
+					<VTextField
+						v-model="vaultProperties.againstVoteCountRequired"
+						type="number"
+						label="Against Vote Count"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<!-- For -->
+				<VCol cols="12" md="4">
+					<VTextField
+						v-model="vaultProperties.forVoteCountRequired"
+						type="number"
+						label="For Vote Count"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<!-- Transfer Delay -->
+				<VCol cols="12" md="4">
+					<VTextField
+						v-model="vaultProperties.transferDelaySeconds"
+						type="number"
+						label="Transfer Delay (Seconds)"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+				<VCol cols="12">
+					<VBtn
+						variant="flat"
+						color="primary"
+						class="w-100 rounded-xl elevation-0"
+						@click="updateWalletProperties()"
+						:disabled="vaultProperties.updating || (
+							vaultProperties.againstVoteCountRequired == vaultDeploy.againstVoteCountRequired &&
+							vaultProperties.forVoteCountRequired == vaultDeploy.forVoteCountRequired &&
+							vaultProperties.transferDelaySeconds == vaultDeploy.transferDelaySeconds
+						)"
+					>
+						<h2>Update</h2>
+					</VBtn>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
+
+	<VCard
+		v-if="vaultDeploy.againstVoteCountRequired > 0 && vaultDeploy.forVoteCountRequired > 0"
+		class="mb-4 rounded-xl bg-light-frost elevation-0"
+	>
+		<VCardText class="px-6 py-6">
 			<VRow class="mb-4">
 				<VCol cols="6">
 					<a
@@ -25,58 +92,10 @@
 
 			<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 				<VCardText class="px-6 py-6">
-					<VRow>
-						<VCol cols="12">
-							<h2 class="mb-6 text-center text-uppercase text-primary">
-								🔧 Properties
-							</h2>
-						</VCol>
-
-						<!-- Against -->
-						<VCol cols="12" md="4">
-							<VTextField
-								v-model="deployParams.againstVoteCountRequired"
-								type="number"
-								label="Against Vote Count"
-								variant="outlined"
-								hide-details
-								class="mb-3"
-							/>
-						</VCol>
-
-						<!-- For -->
-						<VCol cols="12" md="4">
-							<VTextField
-								v-model="deployParams.forVoteCountRequired"
-								type="number"
-								label="For Vote Count"
-								variant="outlined"
-								hide-details
-								class="mb-3"
-							/>
-						</VCol>
-
-						<!-- Transfer Delay -->
-						<VCol cols="12" md="4">
-							<VTextField
-								v-model="deployParams.transferDelaySeconds"
-								type="number"
-								label="Transfer Delay (Seconds)"
-								variant="outlined"
-								hide-details
-								class="mb-3"
-							/>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-
-			<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
-				<VCardText class="px-6 py-6">
 					<h2 class="mb-6 text-center text-uppercase text-primary">👤 Members</h2>
 
 					<VRow
-						v-for="(m, i) in deployParams.members" :key="i"
+						v-for="(m, i) in vaultDeploy.members" :key="i"
 						class="mb-3"
 					>
 						<VCol md="10">
@@ -117,7 +136,7 @@
 					<h2 class="mb-6 text-center text-uppercase text-primary">🔑 Admins</h2>
 
 					<VRow
-						v-for="(m, i) in deployParams.admins" :key="i"
+						v-for="(m, i) in vaultDeploy.admins" :key="i"
 						class="mb-3"
 					>
 						<VCol md="10">
@@ -155,7 +174,7 @@
 
 			<VTextField
 				v-if="false"
-				v-model="deployParams.signatureManager"
+				v-model="vaultDeploy.signatureManager"
 				type="text"
 				label="Signature Manager"
 				variant="outlined"
@@ -165,7 +184,7 @@
 			/>
 
 			<VCard
-				v-if="deployParams.members.length < deployParams.againstVoteCountRequired"
+				v-if="vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -176,7 +195,7 @@
 			</VCard>
 
 			<VCard
-				v-if="deployParams.members.length < deployParams.forVoteCountRequired"
+				v-if="vaultDeploy.members.length < vaultDeploy.forVoteCountRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -190,11 +209,10 @@
 				color="primary"
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
-					deploying ||
-						(
-							deployParams.members.length < deployParams.forVoteCountRequired ||
-							deployParams.members.length < deployParams.againstVoteCountRequired
-						) && deployParams.admins.length == 0
+					vaultDeploy.deploying || (
+						vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
+						vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
+					) && vaultDeploy.admins.length == 0
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
@@ -210,7 +228,10 @@
 	import { ethers } from "ethers";
 	import { defineComponent } from "vue";
 	import { TransactionReceipt } from "web3-core";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
 
+	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "RVGovernance",
@@ -218,16 +239,29 @@
 		data()
 		{
 			return {
-				deploying: false,
-				factory: this.$store.state.config.address[this.$store.state.chainName].yieldSyncV1VaultFactory,
-				d: this.$store.state.etherscanDomainStart,
+				factory: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1VaultFactory as string,
 
-				addAdminField: "",
-				addMemberField: "",
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol as string,
 
-				deploymentFee: 0,
+				d: this.$store.state.etherscanDomainStart as string,
 
-				deployParams: {
+				deploymentFee: 0 as number,
+
+				vaultProperties: {
+					againstVoteCountRequired: 0 as number,
+					forVoteCountRequired: 0 as number,
+					transferDelaySeconds: 0 as number,
+					updating: false,
+				},
+
+				addAdminField: "" as string,
+				addMemberField: "" as string,
+
+				vaultDeploy: {
 					admins: [
 						this.$store.state.wallet.accounts[0],
 					] as string[],
@@ -236,55 +270,18 @@
 					] as string[],
 					signatureManager: ethers.ZeroAddress as string,
 					useDefaultSignatureManager: false as boolean,
-					againstVoteCountRequired: 1 as number,
-					forVoteCountRequired: 1 as number,
-					transferDelaySeconds: 0 as number
+
+					againstVoteCountRequired: 0 as number,
+					forVoteCountRequired: 0 as number,
+					transferDelaySeconds: 0 as number,
+					deploying: false as boolean,
 				},
 
-				error: ""
+				error: "" as string
 			};
 		},
 
 		methods: {
-			async deployYieldSyncV1Vault()
-			{
-				try
-				{
-					await this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
-						this.deployParams.admins,
-						this.deployParams.members,
-						this.deployParams.signatureManager,
-						this.deployParams.useDefaultSignatureManager,
-						this.deployParams.againstVoteCountRequired,
-						this.deployParams.forVoteCountRequired,
-						this.deployParams.transferDelaySeconds
-					).send({
-						from: this.$store.state.wallet.accounts[0]
-					}).on("sent", async () =>
-					{
-						this.deploying = true;
-					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-					{
-						console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-						if (confirmationNumber == 0)
-						{
-							this.deploying = false;
-
-						}
-					}).on("error", async (error: Error) =>
-					{
-						this.error = String(error);
-
-						this.deploying = false;
-					});
-				}
-				catch (e)
-				{
-					console.error(e);
-				}
-			},
-
 			addAdmin()
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.addAdminField))
@@ -292,15 +289,15 @@
 					return;
 				}
 
-				for (let i = 0; i < this.deployParams.admins.length; i++) 
+				for (let i = 0; i < this.vaultDeploy.admins.length; i++)
 				{
-					if (this.deployParams.admins[i] == this.addAdminField)
+					if (this.vaultDeploy.admins[i] == this.addAdminField)
 					{
 						return;
 					}
 				}
 
-				this.deployParams.admins.push(this.addAdminField);
+				this.vaultDeploy.admins.push(this.addAdminField);
 				this.addAdminField = "";
 			},
 
@@ -308,7 +305,7 @@
 			{
 				if (i > -1)
 				{
-					this.deployParams.admins.splice(i, 1);
+					this.vaultDeploy.admins.splice(i, 1);
 				}
 			},
 
@@ -319,15 +316,15 @@
 					return;
 				}
 
-				for (let i = 0; i < this.deployParams.members.length; i++) 
+				for (let i = 0; i < this.vaultDeploy.members.length; i++)
 				{
-					if (this.deployParams.members[i] == this.addMemberField)
+					if (this.vaultDeploy.members[i] == this.addMemberField)
 					{
 						return;
 					}
 				}
 
-				this.deployParams.members.push(this.addMemberField);
+				this.vaultDeploy.members.push(this.addMemberField);
 				this.addMemberField = "";
 
 			},
@@ -336,14 +333,138 @@
 			{
 				if (i > -1)
 				{
-					this.deployParams.members.splice(i, 1);
+					this.vaultDeploy.members.splice(i, 1);
 				}
-			}
+			},
+
+			async updateWalletProperties()
+			{
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+					this.$store.state.wallet.accounts[0],
+					[
+						this.vaultProperties.againstVoteCountRequired,
+						this.vaultProperties.forVoteCountRequired,
+						this.vaultProperties.transferDelaySeconds,
+					]
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.vaultProperties.updating = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber != 0)
+						{
+							return;
+						}
+
+						this.vaultDeploy.againstVoteCountRequired = this.vaultProperties.againstVoteCountRequired;
+						this.vaultDeploy.forVoteCountRequired = this.vaultProperties.forVoteCountRequired;
+						this.vaultDeploy.transferDelaySeconds = this.vaultProperties.transferDelaySeconds;
+
+						this.vaultProperties.updating = false;
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.vaultProperties.updating = false;
+					}
+				);
+			},
+
+			async deployYieldSyncV1Vault()
+			{
+				try
+				{
+					await this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
+						this.vaultDeploy.admins,
+						this.vaultDeploy.members,
+						this.vaultDeploy.signatureManager,
+						this.vaultDeploy.useDefaultSignatureManager,
+						this.vaultDeploy.againstVoteCountRequired,
+						this.vaultDeploy.forVoteCountRequired,
+						this.vaultDeploy.transferDelaySeconds
+					).send({
+						from: this.$store.state.wallet.accounts[0]
+					}).on(
+						"sent",
+						async () =>
+						{
+							this.vaultDeploy.deploying = true;
+						}
+					).on(
+						"confirmation",
+						async (confirmationNumber: number, receipt: TransactionReceipt) =>
+						{
+							console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+							if (confirmationNumber == 0)
+							{
+								this.vaultDeploy.deploying = false;
+							}
+						}
+					).on(
+						"error",
+						async (error: Error) =>
+						{
+							this.error = String(error);
+
+							this.vaultDeploy.deploying = false;
+						}
+					);
+				}
+				catch (e)
+				{
+					console.error(e);
+				}
+			},
 		},
 
 		async created()
 		{
 			this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
+
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				this.transferRequestProtocol
+			);
+
+			this.vaultProperties.againstVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.$store.state.wallet.accounts[0]
+				).call()
+			)[0];
+
+			this.vaultProperties.forVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.$store.state.wallet.accounts[0]
+				).call()
+			)[1];
+
+			this.vaultProperties.transferDelaySeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.$store.state.wallet.accounts[0]
+				).call()
+			)[2];
+
+			this.vaultDeploy.againstVoteCountRequired = this.vaultProperties.againstVoteCountRequired;
+			this.vaultDeploy.forVoteCountRequired = this.vaultProperties.forVoteCountRequired;
+			this.vaultDeploy.transferDelaySeconds = this.vaultProperties.transferDelaySeconds;
 		},
 	});
 </script>

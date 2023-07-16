@@ -182,7 +182,6 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
-	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
@@ -383,11 +382,6 @@
 			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],
 				this.transferRequestProtocol
-			);
-
-			const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1Vault as AbiItem[],
-				this.address
 			);
 
 			this.vault.againstVoteCountRequired = (

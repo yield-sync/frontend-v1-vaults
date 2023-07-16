@@ -122,7 +122,9 @@
 										) ? '🗳️' : (
 											parseInt(w.againstVoteCount) >= againstVoteCountRequired
 										) ? '❌' : (
-											currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
+											(
+												currentTimestamp - w.latestRelevantForVoteBlockTimestamp
+											) >= transferDelaySeconds
 										) ?  '✅' : '⏳'
 									}}
 								</h4>
@@ -228,7 +230,11 @@
 									:title="w.tokenAddress"
 								>
 									<h3 class="text-center text-uppercase text-dark" :title="w.creator">
-										{{ w.creator.substring(0, 4) + "..." + w.creator.substring(w.creator.length - 4) }}
+										{{
+											w.creator.substring(0, 4) + "..." + w.creator.substring(
+												w.creator.length - 4
+											)
+										}}
 									</h3>
 								</a>
 							</VCol>
@@ -549,15 +555,19 @@
 
 				for (let i = 0; i < this.idsOfOpenTransferRequests.length; i++)
 				{
-					const tR = await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
-						this.vaultAddress,
-						this.idsOfOpenTransferRequests[i]
-					).call();
+					const tR = await transferRequestProtocol.methods
+						.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+							this.vaultAddress,
+							this.idsOfOpenTransferRequests[i]
+						).call()
+					;
 
-					const tRP = await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
-						this.vaultAddress,
-						this.idsOfOpenTransferRequests[i]
-					).call();
+					const tRP = await transferRequestProtocol.methods
+						.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
+							this.vaultAddress,
+							this.idsOfOpenTransferRequests[i]
+						).call()
+					;
 
 					// Get token details
 					const erc20Contract = new this.$store.state.web3.eth.Contract(
@@ -672,7 +682,7 @@
 
 				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
 					this.vaultAddress,
-					tRId,
+					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on(

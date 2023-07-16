@@ -448,7 +448,7 @@
 
 			if (!this.yieldSyncV1Vault)
 			{
-				return
+				return;
 			}
 
 			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
