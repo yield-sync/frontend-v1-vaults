@@ -113,7 +113,7 @@
 								variant="flat"
 								color="danger"
 								class="w-100 rounded-xl elevation-0"
-								@click="removeMember(i)"
+								@click="memberRemove(i)"
 							>
 								✕
 							</VBtn>
@@ -122,14 +122,14 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="addMemberField" label="Address" variant="outlined" />
+							<VTextField v-model="memberAddField" label="Address" variant="outlined" />
 						</VCol>
 						<VCol md="2">
 							<VBtn
 								variant="tonal"
 								color="success"
 								class="mt-3 w-100 rounded-xl elevation-0"
-								@click="addMember()"
+								@click="memberAdd()"
 							>
 								Add
 							</VBtn>
@@ -154,7 +154,7 @@
 								variant="flat"
 								color="danger"
 								class="w-100 rounded-xl elevation-0"
-								@click="removeAdmin(i)"
+								@click="adminRemove(i)"
 							>
 								✕
 							</VBtn>
@@ -163,14 +163,14 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="addAdminField" label="Address" variant="outlined" />
+							<VTextField v-model="adminAddField" label="Address" variant="outlined" />
 						</VCol>
 						<VCol md="2">
 							<VBtn
 								variant="tonal"
 								color="success"
 								class="w-100 mt-3 rounded-xl elevation-0"
-								@click="addAdmin()"
+								@click="adminAdd()"
 							>
 								Add
 							</VBtn>
@@ -266,8 +266,8 @@
 					updating: false,
 				},
 
-				addAdminField: "" as string,
-				addMemberField: "" as string,
+				adminAddField: "" as string,
+				memberAddField: "" as string,
 
 				vaultDeploy: {
 					admins: [
@@ -290,26 +290,26 @@
 		},
 
 		methods: {
-			addAdmin()
+			adminAdd()
 			{
-				if (!this.$store.state.web3.utils.isAddress(this.addAdminField))
+				if (!this.$store.state.web3.utils.isAddress(this.adminAddField))
 				{
 					return;
 				}
 
 				for (let i = 0; i < this.vaultDeploy.admins.length; i++)
 				{
-					if (this.vaultDeploy.admins[i] == this.addAdminField)
+					if (this.vaultDeploy.admins[i] == this.adminAddField)
 					{
 						return;
 					}
 				}
 
-				this.vaultDeploy.admins.push(this.addAdminField);
-				this.addAdminField = "";
+				this.vaultDeploy.admins.push(this.adminAddField);
+				this.adminAddField = "";
 			},
 
-			removeAdmin(i: number)
+			adminRemove(i: number)
 			{
 				if (i > -1)
 				{
@@ -317,27 +317,27 @@
 				}
 			},
 
-			addMember()
+			memberAdd()
 			{
-				if (!this.$store.state.web3.utils.isAddress(this.addMemberField))
+				if (!this.$store.state.web3.utils.isAddress(this.memberAddField))
 				{
 					return;
 				}
 
 				for (let i = 0; i < this.vaultDeploy.members.length; i++)
 				{
-					if (this.vaultDeploy.members[i] == this.addMemberField)
+					if (this.vaultDeploy.members[i] == this.memberAddField)
 					{
 						return;
 					}
 				}
 
-				this.vaultDeploy.members.push(this.addMemberField);
-				this.addMemberField = "";
+				this.vaultDeploy.members.push(this.memberAddField);
+				this.memberAddField = "";
 
 			},
 
-			removeMember(i: number)
+			memberRemove(i: number)
 			{
 				if (i > -1)
 				{

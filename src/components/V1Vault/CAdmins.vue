@@ -28,7 +28,7 @@
 						variant="tonal"
 						color="danger"
 						class="w-100 rounded-xl elevation-0"
-						@click="removeAdmin(a)"
+						@click="adminRemove(a)"
 					>
 						Remove
 					</VBtn>
@@ -50,7 +50,7 @@
 						variant="tonal"
 						color="success"
 						class="w-100 rounded-xl elevation-0"
-						@click="addAdmin()"
+						@click="adminAdd()"
 					>
 						Add
 					</VBtn>
@@ -118,7 +118,7 @@
 				;
 			},
 
-			async addAdmin(): Promise<void>
+			async adminAdd(): Promise<void>
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
@@ -136,7 +136,7 @@
 					this.v1VaultAddress
 				);
 
-				v1Vault.methods.addAdmin(this.tobeAdded).send({
+				v1Vault.methods.adminAdd(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
@@ -161,7 +161,7 @@
 				});
 			},
 
-			async removeAdmin(admin: string): Promise<void>
+			async adminRemove(admin: string): Promise<void>
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
@@ -173,7 +173,7 @@
 					this.v1VaultAddress
 				);
 
-				v1Vault.methods.removeAdmin(admin).send({
+				v1Vault.methods.adminRemove(admin).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{

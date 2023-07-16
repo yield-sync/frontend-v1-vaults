@@ -28,7 +28,7 @@
 						variant="tonal"
 						color="danger"
 						class="w-100 rounded-xl elevation-0"
-						@click="removeMember(a)"
+						@click="memberRemove(a)"
 					>
 						Remove
 					</VBtn>
@@ -50,7 +50,7 @@
 						variant="tonal"
 						color="success"
 						class="w-100 rounded-xl elevation-0"
-						@click="addMember()"
+						@click="memberAdd()"
 					>
 						Add
 					</VBtn>
@@ -117,7 +117,7 @@
 				;
 			},
 
-			async addMember(): Promise<void>
+			async memberAdd(): Promise<void>
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
@@ -134,7 +134,7 @@
 					this.v1VaultAddress
 				);
 
-				v1Vault.methods.addMember(this.tobeAdded).send({
+				v1Vault.methods.memberAdd(this.tobeAdded).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on("sent", async () =>
 				{
@@ -159,7 +159,7 @@
 				});
 			},
 
-			async removeMember(member: string): Promise<void>
+			async memberRemove(member: string): Promise<void>
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.v1VaultAddress))
 				{
@@ -171,7 +171,7 @@
 					this.v1VaultAddress
 				);
 
-				v1Vault.methods.removeMember(member).send({
+				v1Vault.methods.memberRemove(member).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on(
 					"sent",

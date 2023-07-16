@@ -1,4 +1,34 @@
 <template>
+	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+		<VCardText>
+			<VRow>
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						🗳️ Voting in Progress
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						⏳ Waiting Delay
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						✅ Approved
+					</h6>
+				</VCol>
+
+				<VCol cols="12" sm="3">
+					<h6 class="text-center text-uppercase text-dark">
+						❌ Denied
+					</h6>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
+
 	<VCard class="m-0 rounded-xl elevation-0 clear">
 		<VCardText>
 			<VRow>
@@ -37,7 +67,7 @@
 		/>
 	</div>
 
-	<div v-if="!loading" class="mb-6">
+	<div v-if="!loading">
 		<VCard
 			v-for="(w, i) in detailedTransferRequests"
 			:key="i"
@@ -350,38 +380,7 @@
 				</VRow>
 			</VCardText>
 		</VCard>
-
 	</div>
-
-	<VCard class="rounded-xl elevation-0 bg-light-frost">
-		<VCardText>
-			<VRow>
-				<VCol cols="12" sm="3">
-					<h6 class="text-center text-uppercase text-dark">
-						🗳️ Voting in Progress
-					</h6>
-				</VCol>
-
-				<VCol cols="12" sm="3">
-					<h6 class="text-center text-uppercase text-dark">
-						⏳ Waiting Delay
-					</h6>
-				</VCol>
-
-				<VCol cols="12" sm="3">
-					<h6 class="text-center text-uppercase text-dark">
-						✅ Approved
-					</h6>
-				</VCol>
-
-				<VCol cols="12" sm="3">
-					<h6 class="text-center text-uppercase text-dark">
-						❌ Denied
-					</h6>
-				</VCol>
-			</VRow>
-		</VCardText>
-	</VCard>
 </template>
 
 <script lang="ts">
@@ -391,7 +390,7 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
-	import yieldSyncV1VaultABI from "../../abi/YieldSyncV1Vault";
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
@@ -670,18 +669,12 @@
 
 			async processTransferRequest(tRId: number)
 			{
-				if (!this.vaultAddress || !this.transferRequestProtocol)
+				if (!this.vaultAddress || !this.yieldSyncV1Vault)
 				{
 					return;
 				}
 
-				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1ATransferRequestProtocol as AbiItem[],
-					this.transferRequestProtocol
-				);
-
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
-					this.vaultAddress,
+				await this.yieldSyncV1Vault.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
 					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -720,7 +713,7 @@
 		async created()
 		{
 			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-				yieldSyncV1VaultABI as AbiItem[],
+				YieldSyncV1Vault as AbiItem[],
 				this.vaultAddress
 			);
 
