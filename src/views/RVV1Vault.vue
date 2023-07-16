@@ -20,7 +20,8 @@
 								<VBtn
 									:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
 									color="primary"
-									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary"
+									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary font-weight-bold"
+									:class="$route.query.admin == 'true' ? 'bg-light-frost' : ''"
 									style="
 										border-top-right-radius: 0px !important;
 										border-bottom-right-radius: 0px !important;
@@ -36,7 +37,8 @@
 								<VBtn
 									:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
 									color="primary"
-									class="w-100 mb-3 rounded-e-xl rounded-e-none elevation-0 border-primary"
+									class="w-100 mb-3 rounded-e-xl elevation-0 border-primary  font-weight-bold"
+									:class="$route.query.admin == 'true' ? '' : 'bg-light-frost'"
 									style="
 										border-top-left-radius: 0px !important;
 										border-bottom-left-radius: 0px !important;

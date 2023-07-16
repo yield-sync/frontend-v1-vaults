@@ -1,5 +1,5 @@
 <template>
-	<VCard class="mb-3 rounded-xl elevation-0 bg-light-frost">
+	<VCard class="mb-3 rounded-xl elevation-0 bg-transparent border border-dark">
 		<VCardText>
 			<VRow>
 				<VCol cols="12" sm="3">

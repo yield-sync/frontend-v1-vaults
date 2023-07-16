@@ -23,7 +23,11 @@
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<VBtn class="mb-4 rounded-xl bg-light-frost elevation-0 text-primary font-weight-bold">
+				<VBtn
+					variant="tonal"
+					color="primary"
+					class="mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
+				>
 					🔗 Transfer Request Protocol
 				</VBtn>
 			</a>
