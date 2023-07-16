@@ -1,5 +1,5 @@
 <template>
-	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+	<VCard class="mb-3 rounded-xl elevation-0 bg-light-frost">
 		<VCardText>
 			<VRow>
 				<VCol cols="12" sm="3">
@@ -71,7 +71,7 @@
 		<VCard
 			v-for="(w, i) in detailedTransferRequests"
 			:key="i"
-			class="my-6 rounded-xl elevation-0 bg-light-frost"
+			class="my-3 rounded-xl elevation-0 bg-light-frost"
 		>
 			<VCardText>
 				<VRow>
@@ -368,7 +368,13 @@
 									class="w-100 rounded-xl elevation-0"
 									@click="processTransferRequest(w.id)"
 								>
-									Proccess Request
+								<VProgressCircular
+									v-if="processing[w.id]"
+									indeterminate
+									color="light"
+									class=""
+								/>
+								<span v-else>Proccess Request</span>
 								</VBtn>
 							</VCol>
 

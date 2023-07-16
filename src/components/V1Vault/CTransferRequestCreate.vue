@@ -103,7 +103,13 @@
 				class="w-100 rounded-xl elevation-0"
 				@click="createWR()"
 			>
-				Create Request
+				<VProgressCircular
+					v-if="creating"
+					indeterminate
+					color="light"
+					class=""
+				/>
+				<span v-else>Create Request</span>
 			</VBtn>
 			<h6 v-if="error" class="text-danger">{{ error }}</h6>
 		</VCol>
