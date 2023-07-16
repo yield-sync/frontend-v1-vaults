@@ -11,7 +11,14 @@
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
-						<h2 class="m-0">{{ vault.forVoteCountRequired }}</h2>
+						<VProgressCircular
+							v-if="vault.forVoteCountRequired == 0"
+							indeterminate
+							color="light"
+							class=""
+						/>
+
+						<h2 v-else class="m-0">{{ vault.forVoteCountRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -19,7 +26,14 @@
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
-						<h2 class="m-0">{{ vault.againstVoteCountRequired }}</h2>
+						<VProgressCircular
+							v-if="vault.forVoteCountRequired == 0"
+							indeterminate
+							color="light"
+							class=""
+						/>
+
+						<h2 v-else class="m-0">{{ vault.againstVoteCountRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -27,7 +41,14 @@
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 						<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
-						<h2 class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
+						<VProgressCircular
+							v-if="vault.forVoteCountRequired == 0"
+							indeterminate
+							color="light"
+							class=""
+						/>
+
+						<h2 v-else class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
 					</VCard>
 				</VCol>
 
