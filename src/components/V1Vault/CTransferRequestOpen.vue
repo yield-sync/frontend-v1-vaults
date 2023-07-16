@@ -610,67 +610,100 @@
 
 				this.loading = false;
 			},
-
-			async processTransferRequest(wId: number)
+			async voteOnTransferRequest(tRId: number, vote: boolean)
 			{
-				if (!this.yieldSyncV1Vault)
+				if (!this.vaultAddress || !this.transferRequestProtocol)
 				{
 					return;
 				}
 
-				await this.yieldSyncV1Vault.methods.processTransferRequest(wId).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.processing[wId] = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
 
-					if (confirmationNumber == 0)
-					{
-						this.processing[wId] = false;
-
-						await this.getTransferRequestData();
-					}
-
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.processing[wId] = false;
-				});
-			},
-
-			async voteOnTransferRequest(wId: number, vote: boolean)
-			{
-				if (!this.yieldSyncV1Vault)
-				{
-					return;
-				}
-
-				await this.yieldSyncV1Vault.methods.voteOnTransferRequest(
-					wId, vote
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestPollVote(
+					this.vaultAddress,
+					tRId,
+					vote
 				).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.voting[wId] = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-					if (confirmationNumber == 0)
+				}).on(
+					"sent",
+					async () =>
 					{
-						await this.getTransferRequestData();
-
-						this.voting[wId] = false;
+						this.voting[tRId] = true;
 					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					this.voting[wId] = false;
-				});
+						if (confirmationNumber == 0)
+						{
+							await this.getTransferRequestData();
+
+							this.voting[tRId] = false;
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.voting[tRId] = false;
+					}
+				);
+			},
+
+			async processTransferRequest(tRId: number)
+			{
+				if (!this.vaultAddress || !this.transferRequestProtocol)
+				{
+					return;
+				}
+
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
+					this.vaultAddress,
+					tRId,
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.processing[tRId] = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.processing[tRId] = false;
+
+							await this.getTransferRequestData();
+						}
+
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.processing[tRId] = false;
+					}
+				);
 			},
 		},
 
