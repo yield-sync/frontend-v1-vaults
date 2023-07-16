@@ -179,6 +179,7 @@
 	import { Contract } from "web3-eth-contract";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "CMembers",
@@ -198,31 +199,35 @@
 		data()
 		{
 			return {
-				processing: false,
+				processing: false as boolean,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 
 				vault: {
-					againstVoteCountRequired: 0,
-					forVoteCountRequired: 0,
-					transferDelaySeconds: 0,
-				},
-				edit: {
-					againstVoteCountRequired: false,
-					forVoteCountRequired: false,
-					transferDelaySeconds: false
+					againstVoteCountRequired: 0 as number,
+					forVoteCountRequired: 0 as number,
+					transferDelaySeconds: 0 as number,
 				},
 				update: {
-					againstVoteCountRequired: 0,
-					forVoteCountRequired: 0,
-					transferDelaySeconds: 0,
+					againstVoteCountRequired: 0 as number,
+					forVoteCountRequired: 0 as number,
+					transferDelaySeconds: 0 as number,
+				},
+				edit: {
+					againstVoteCountRequired: false as boolean,
+					forVoteCountRequired: false as boolean,
+					transferDelaySeconds: false as boolean,
 				},
 				updating: {
-					againstVoteCountRequired: false,
-					forVoteCountRequired: false,
-					transferDelaySeconds: false,
+					againstVoteCountRequired: false as boolean,
+					forVoteCountRequired: false as boolean,
+					transferDelaySeconds: false as boolean,
 				},
 
-				error: "" as string
+				error: "" as string,
+
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},
 
@@ -234,35 +239,54 @@
 					return;
 				}
 
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.vaultAddress
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
 				);
 
-				v1Vault.methods.updateAgainstVoteCountRequired(this.update.againstVoteCountRequired).send({
+				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+					this.vaultAddress,
+					[
+						this.update.againstVoteCountRequired,
+						this.vault.forVoteCountRequired,
+						this.vault.transferDelaySeconds,
+					]
+				).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.againstVoteCountRequired = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+				}).on(
+					"sent",
+					async () =>
 					{
-						this.edit.againstVoteCountRequired = false;
+						this.updating.againstVoteCountRequired = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						this.vault.againstVoteCountRequired = await v1Vault.methods.againstVoteCountRequired().call();
-						this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
+						if (confirmationNumber == 0)
+						{
+							this.edit.againstVoteCountRequired = false;
+
+							this.vault.againstVoteCountRequired = (
+								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+									this.vaultAddress
+								).call()
+							)[0];
+
+							this.updating.againstVoteCountRequired = false;
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
 
 						this.updating.againstVoteCountRequired = false;
 					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.againstVoteCountRequired = false;
-				});
+				);
 			},
 
 			updateForVoteCountRequired()
@@ -272,35 +296,54 @@
 					return;
 				}
 
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.vaultAddress
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
 				);
 
-				v1Vault.methods.updateForVoteCountRequired(this.update.forVoteCountRequired).send({
+				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+					this.vaultAddress,
+					[
+						this.vault.againstVoteCountRequired,
+						this.update.forVoteCountRequired,
+						this.vault.transferDelaySeconds,
+					]
+				).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.forVoteCountRequired = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+				}).on(
+					"sent",
+					async () =>
 					{
-						this.edit.forVoteCountRequired = false;
+						this.updating.forVoteCountRequired = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						this.vault.forVoteCountRequired = await v1Vault.methods.forVoteCountRequired().call();
-						this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
+						if (confirmationNumber == 0)
+						{
+							this.edit.forVoteCountRequired = false;
+
+							this.vault.forVoteCountRequired = (
+								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+									this.vaultAddress
+								).call()
+							)[1];
+
+							this.updating.forVoteCountRequired = false;
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
 
 						this.updating.forVoteCountRequired = false;
 					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.forVoteCountRequired = false;
-				});
+				);
 			},
 
 			updateTransferDelaySecondsRequired()
@@ -310,67 +353,88 @@
 					return;
 				}
 
-				const v1Vault: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					this.vaultAddress
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
 				);
 
-				v1Vault.methods.updateTransferDelaySeconds(this.update.transferDelaySeconds).send({
+				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+					this.vaultAddress,
+					[
+						this.vault.againstVoteCountRequired,
+						this.vault.forVoteCountRequired,
+						this.update.transferDelaySeconds,
+					]
+				).send({
 					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updating.transferDelaySeconds = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+				}).on(
+					"sent",
+					async () =>
 					{
-						this.edit.transferDelaySeconds = false;
+						this.updating.transferDelaySeconds = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						this.vault.transferDelaySeconds = await v1Vault.methods.transferDelaySeconds().call();
-						this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
+						if (confirmationNumber == 0)
+						{
+							this.edit.transferDelaySeconds = false;
+
+							this.vault.transferDelaySeconds = (
+								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+									this.vaultAddress
+								).call()
+							)[2];
+
+							this.updating.transferDelaySeconds = false;
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
 
 						this.updating.transferDelaySeconds = false;
 					}
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
-
-					this.updating.transferDelaySeconds = false;
-				});
+				);
 			},
 
 			async renounceMembership()
 			{
-				if (this.yieldSyncV1Vault)
+				if (!this.yieldSyncV1Vault)
 				{
-					try
+					return;
+				}
+
+				try
+				{
+					await this.yieldSyncV1Vault.methods.renounceMembership().send({
+						from: this.$store.state.wallet.accounts[0]
+					}).on("sent", async () =>
 					{
-						await this.yieldSyncV1Vault.methods.renounceMembership().send({
-							from: this.$store.state.wallet.accounts[0]
-						}).on("sent", async () =>
-						{
-							this.processing = true;
-						}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-						{
-							console.log(`Confirmation #${confirmationNumber}`, receipt);
+						this.processing = true;
+					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-							if (confirmationNumber == 0)
-							{
-								this.processing = false;
-							}
-						}).on("error", async (error: Error) =>
+						if (confirmationNumber == 0)
 						{
-							this.error = String(error);
-
 							this.processing = false;
-						});
-					}
-					catch (e)
+						}
+					}).on("error", async (error: Error) =>
 					{
-						this.error = String(e);
-					}
+						this.error = String(error);
+
+						this.processing = false;
+					});
+				}
+				catch (e)
+				{
+					this.error = String(e);
 				}
 			}
 		},
@@ -382,16 +446,37 @@
 				this.vaultAddress
 			);
 
-			if (this.yieldSyncV1Vault)
+			if (!this.yieldSyncV1Vault)
 			{
-				this.vault.againstVoteCountRequired = await this.yieldSyncV1Vault.methods.againstVoteCountRequired()
-					.call();
-				this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
-				this.vault.forVoteCountRequired = await this.yieldSyncV1Vault.methods.forVoteCountRequired().call();
-				this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
-				this.vault.transferDelaySeconds = await this.yieldSyncV1Vault.methods.transferDelaySeconds().call();
-				this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
+				return
 			}
+
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				this.transferRequestProtocol
+			);
+
+			this.vault.againstVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.vaultAddress
+				).call()
+			)[0];
+
+			this.vault.forVoteCountRequired = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.vaultAddress
+				).call()
+			)[1];
+
+			this.vault.transferDelaySeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					this.vaultAddress
+				).call()
+			)[2];
+
+			this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
+			this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
+			this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
 		}
 	});
 </script>
