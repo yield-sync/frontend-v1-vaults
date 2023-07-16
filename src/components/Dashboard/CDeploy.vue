@@ -50,13 +50,20 @@
 						color="primary"
 						class="w-100 rounded-xl elevation-0"
 						@click="updateWalletProperties()"
-						:disabled="vaultProperties.updating || (
+						:disabled="
+							vaultProperties.updating || (
 							vaultProperties.againstVoteCountRequired == vaultDeploy.againstVoteCountRequired &&
 							vaultProperties.forVoteCountRequired == vaultDeploy.forVoteCountRequired &&
 							vaultProperties.transferDelaySeconds == vaultDeploy.transferDelaySeconds
 						)"
 					>
-						<h2>Update</h2>
+						<VProgressCircular
+							v-if="vaultProperties.updating"
+							indeterminate
+							color="light"
+							class=""
+						/>
+						<h2 v-else>Update</h2>
 					</VBtn>
 				</VCol>
 			</VRow>
@@ -86,7 +93,7 @@
 				</VCol>
 
 				<VCol cols="6">
-					<h6 class="text-right text-uppercase text-success">Deployment Fee: {{ deploymentFee }}</h6>
+					<h5 class="text-right text-uppercase text-dark">Deployment Fee: {{ deploymentFee }}</h5>
 				</VCol>
 			</VRow>
 
@@ -103,9 +110,9 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
-								variant="tonal"
+								variant="flat"
 								color="danger"
-								class="w-100 rounded-xl elevation-0 border"
+								class="w-100 rounded-xl elevation-0"
 								@click="removeMember(i)"
 							>
 								✕
@@ -121,7 +128,7 @@
 							<VBtn
 								variant="tonal"
 								color="success"
-								class="w-100 rounded-xl elevation-0 border"
+								class="mt-3 w-100 rounded-xl elevation-0"
 								@click="addMember()"
 							>
 								Add
@@ -144,9 +151,9 @@
 						</VCol>
 						<VCol md="2">
 							<VBtn
-								variant="tonal"
+								variant="flat"
 								color="danger"
-								class="w-100 rounded-xl elevation-0 border"
+								class="w-100 rounded-xl elevation-0"
 								@click="removeAdmin(i)"
 							>
 								✕
@@ -162,7 +169,7 @@
 							<VBtn
 								variant="tonal"
 								color="success"
-								class="w-100 rounded-xl elevation-0 border"
+								class="w-100 mt-3 rounded-xl elevation-0"
 								@click="addAdmin()"
 							>
 								Add
@@ -209,6 +216,7 @@
 				color="primary"
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
+					vaultProperties.updating ||
 					vaultDeploy.deploying || (
 						vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
 						vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
@@ -392,13 +400,10 @@
 				try
 				{
 					await this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
+						this.vaultDeploy.signatureManager,
+						this.transferRequestProtocol,
 						this.vaultDeploy.admins,
 						this.vaultDeploy.members,
-						this.vaultDeploy.signatureManager,
-						this.vaultDeploy.useDefaultSignatureManager,
-						this.vaultDeploy.againstVoteCountRequired,
-						this.vaultDeploy.forVoteCountRequired,
-						this.vaultDeploy.transferDelaySeconds
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on(
