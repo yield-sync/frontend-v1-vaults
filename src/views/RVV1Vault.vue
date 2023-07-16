@@ -2,7 +2,7 @@
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 900px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
-				<VCol cols="12" sm="4">
+				<VCol cols="12" sm="3">
 					<a
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
@@ -13,7 +13,7 @@
 					</a>
 				</VCol>
 
-				<VCol cols="12" sm="4">
+				<VCol cols="12" sm="6">
 					<VRow style="margin: 0; padding: 0;">
 						<VCol cols="6" style="margin: 0; padding: 0;">
 							<RouterLink :to="`/v1-vault/${vaultAddress}`">
@@ -49,7 +49,7 @@
 					</VRow>
 				</VCol>
 
-				<VCol cols="12" sm="4" class="text-right">
+				<VCol cols="12" sm="3" class="text-right">
 					<VBtn
 						class="rounded-xl bg-light-frost elevation-0 text-primary font-weight-bold"
 						@click="copy(vaultAddress)"

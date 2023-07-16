@@ -52,10 +52,11 @@
 						@click="updateWalletProperties()"
 						:disabled="
 							vaultProperties.updating || (
-							vaultProperties.againstVoteCountRequired == vaultDeploy.againstVoteCountRequired &&
-							vaultProperties.forVoteCountRequired == vaultDeploy.forVoteCountRequired &&
-							vaultProperties.transferDelaySeconds == vaultDeploy.transferDelaySeconds
-						)"
+								vaultProperties.againstVoteCountRequired == vaultDeploy.againstVoteCountRequired &&
+								vaultProperties.forVoteCountRequired == vaultDeploy.forVoteCountRequired &&
+								vaultProperties.transferDelaySeconds == vaultDeploy.transferDelaySeconds
+							)
+						"
 					>
 						<VProgressCircular
 							v-if="vaultProperties.updating"
@@ -217,10 +218,10 @@
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
 					vaultProperties.updating ||
-					vaultDeploy.deploying || (
-						vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
-						vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
-					) && vaultDeploy.admins.length == 0
+						vaultDeploy.deploying || (
+							vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
+							vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
+						) && vaultDeploy.admins.length == 0
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
@@ -403,7 +404,7 @@
 						this.vaultDeploy.signatureManager,
 						this.transferRequestProtocol,
 						this.vaultDeploy.admins,
-						this.vaultDeploy.members,
+						this.vaultDeploy.members
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on(

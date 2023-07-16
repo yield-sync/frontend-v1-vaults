@@ -303,10 +303,17 @@
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="success"
-									class="px-6 rounded-xl elevation-0"
+									class="w-100 px-6 rounded-xl elevation-0"
+									style="max-width: 200px;"
 									@click="voteOnTransferRequest(w.id, true)"
 								>
-									Vote For
+									<VProgressCircular
+										v-if="voting[w.id]"
+										indeterminate
+										color="light"
+										class=""
+									/>
+									<span v-else>Vote For</span>
 								</VBtn>
 							</VCol>
 
@@ -331,10 +338,17 @@
 									:disabled="voting[w.id]"
 									variant="flat"
 									color="danger"
-									class="px-6 rounded-xl elevation-0"
+									class="w-100 px-6 rounded-xl elevation-0"
+									style="max-width: 200px;"
 									@click="voteOnTransferRequest(w.id, false)"
 								>
-									Vote Against
+									<VProgressCircular
+										v-if="voting[w.id]"
+										indeterminate
+										color="light"
+										class=""
+									/>
+									<span v-else>Vote Against</span>
 								</VBtn>
 							</VCol>
 
@@ -368,13 +382,13 @@
 									class="w-100 rounded-xl elevation-0"
 									@click="processTransferRequest(w.id)"
 								>
-								<VProgressCircular
-									v-if="processing[w.id]"
-									indeterminate
-									color="light"
-									class=""
-								/>
-								<span v-else>Proccess Request</span>
+									<VProgressCircular
+										v-if="processing[w.id]"
+										indeterminate
+										color="light"
+										class=""
+									/>
+									<span v-else>Proccess Request</span>
 								</VBtn>
 							</VCol>
 
@@ -526,11 +540,6 @@
 
 				await this.setCurrentBlockTimestamp();
 
-				if (!this.yieldSyncV1Vault)
-				{
-					return;
-				}
-
 				this.detailedTransferRequests = [
 				];
 
@@ -666,7 +675,7 @@
 					"error",
 					async (error: Error) =>
 					{
-						this.error = String(error);
+						this.error = error.message ? error.message : "Something went wrong!";
 
 						this.voting[tRId] = false;
 					}
@@ -675,12 +684,22 @@
 
 			async processTransferRequest(tRId: number)
 			{
-				if (!this.vaultAddress || !this.yieldSyncV1Vault)
+				if (!this.vaultAddress)
 				{
 					return;
 				}
 
-				await this.yieldSyncV1Vault.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
+				const yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					this.vaultAddress
+				);
+
+				if (!yieldSyncV1Vault)
+				{
+					return;
+				}
+
+				await yieldSyncV1Vault.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
 					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -708,7 +727,7 @@
 					"error",
 					async (error: Error) =>
 					{
-						this.error = String(error);
+						this.error = error.message ? error.message : "Something went wrong!";
 
 						this.processing[tRId] = false;
 					}
@@ -718,11 +737,6 @@
 
 		async created()
 		{
-			this.yieldSyncV1Vault = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1Vault as AbiItem[],
-				this.vaultAddress
-			);
-
 			await this.getTransferRequestData();
 		}
 	});
