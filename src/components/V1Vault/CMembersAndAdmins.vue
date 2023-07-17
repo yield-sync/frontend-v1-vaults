@@ -5,20 +5,6 @@
 		</VCardTitle>
 
 		<VCardText class="mt-4">
-			<a
-				:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${accessControl}`"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<VBtn
-					variant="tonal"
-					color="primary"
-					class="mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
-				>
-					🔗 Access Control
-				</VBtn>
-			</a>
-
 			<CMembers
 				:v1VaultAddress="vaultAddress"
 				:asAdmin="asAdmin"
@@ -52,15 +38,6 @@
 				type: Boolean,
 				default: false
 			},
-		},
-
-		data()
-		{
-			return {
-				accessControl: this.$store.state.config.address[
-					this.$store.state.chainName
-				].yieldSyncV1VaultAccessControl || ""
-			};
 		},
 
 		components: {

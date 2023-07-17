@@ -8,8 +8,12 @@
 					class="text-center"
 				>
 					<RouterLink to="/governance" class="mr-2 text-decoration-none text-dark">
-						<VBtn variant="plain" color="light" class="w-100 mb-3">
-							Governance
+						<VBtn
+							variant="plain"
+							color="light"
+							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
+						>
+							👥 Governance
 						</VBtn>
 					</RouterLink>
 				</VCol>
@@ -20,11 +24,45 @@
 					class="text-center"
 				>
 					<a
+						:href="`https://${etherscanDomainStart}.etherscan.io/address/${factory}`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<VBtn
+							variant="plain"
+							color="light"
+							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
+						>
+							🔗 Yield Sync V1 Vault Factory
+						</VBtn>
+					</a>
+
+					<a
 						:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<VBtn variant="plain" color="light" class="w-100 mb-3">🔗 Access Control Contract</VBtn>
+						<VBtn
+							variant="plain"
+							color="light"
+							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
+						>
+							🔗 Access Control Contract
+						</VBtn>
+					</a>
+
+					<a
+						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${transferRequestProtocol}`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<VBtn
+							variant="plain"
+							color="light"
+							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
+						>
+							🔗 Transfer Request Protocol
+						</VBtn>
 					</a>
 				</VCol>
 			</VRow>
@@ -42,9 +80,18 @@
 		{
 			return {
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,
+
+				factory: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1VaultFactory as string,
+
 				accessControl: this.$store.state.config.address[
 					this.$store.state.chainName
-				].yieldSyncV1VaultAccessControl
+				].yieldSyncV1VaultAccessControl,
+
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},
 	});

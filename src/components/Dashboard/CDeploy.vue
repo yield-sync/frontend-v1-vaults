@@ -3,7 +3,7 @@
 		<VCardText class="px-6 py-6">
 			<VRow>
 				<VCol cols="12">
-					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties</h2>
+					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties (1/2)</h2>
 					<h6 class="mb-6 text-center text-uppercase text-dark">
 						Must be set first before deploying a vault
 					</h6>
@@ -76,25 +76,12 @@
 		class="mb-4 rounded-xl bg-light-frost elevation-0"
 	>
 		<VCardText class="px-6 py-6">
-			<VRow class="mb-4">
-				<VCol cols="6">
-					<a
-						:href="`https://${d}.etherscan.io/address/${factory}`"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<VBtn
-							variant="tonal"
-							color="primary"
-							class="rounded-xl"
-						>
-							<h6>🔗 Yield Sync V1 Vault Factory</h6>
-						</VBtn>
-					</a>
-				</VCol>
-
-				<VCol cols="6">
-					<h5 class="text-right text-uppercase text-dark">Deployment Fee: {{ deploymentFee }}</h5>
+			<VRow>
+				<VCol cols="12">
+					<h2 class="mb-3 text-center text-uppercase text-primary"> 🚀 Deploy Vault (2/2)</h2>
+					<h6 class="mb-6 text-center text-uppercase text-dark">
+						Deployment Fee: {{ deploymentFee }}
+					</h6>
 				</VCol>
 			</VRow>
 

@@ -7,7 +7,11 @@
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn class="rounded-xl bg-light-frost elevation-0 text-primary font-weight-bold">
+						<VBtn
+							variant="tonal"
+							color="primary"
+							class="w-100 rounded-xl elevation-0 text-primary font-weight-bold"
+						>
 							🔗 Etherscan
 						</VBtn>
 					</a>
@@ -53,10 +57,12 @@
 
 				<VCol cols="12" sm="3" class="text-right">
 					<VBtn
-						class="rounded-xl bg-light-frost elevation-0 text-primary font-weight-bold"
+						variant="tonal"
+						color="primary"
+						class="w-100 rounded-xl elevation-0 text-primary font-weight-bold"
 						@click="copy(vaultAddress)"
 					>
-						📋 Copy Address
+						📋 Address
 					</VBtn>
 				</VCol>
 
@@ -82,7 +88,7 @@
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
 						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
-						👥 Admins & Members
+						🏛️ Admins & Members
 					</VBtn>
 				</VCol>
 

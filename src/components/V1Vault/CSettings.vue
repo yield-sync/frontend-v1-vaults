@@ -27,7 +27,7 @@
 					<VCol v-if="asAdmin" cols="4" class="text-right">
 						<VBtn
 							:disabled="updating.forVoteCountRequired"
-							:variant="edit.forVoteCountRequired ? 'tonal' : 'flat'"
+							variant="flat"
 							:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
 							@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
@@ -72,7 +72,7 @@
 					<VCol v-if="asAdmin" cols="4" class="text-right">
 						<VBtn
 							:disabled="updating.againstVoteCountRequired"
-							:variant="edit.againstVoteCountRequired ? 'tonal' : 'flat'"
+							variant="flat"
 							:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
 							@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
@@ -116,7 +116,7 @@
 					<VCol v-if="asAdmin" cols="4" class="text-right">
 						<VBtn
 							:disabled="updating.transferDelaySeconds"
-							:variant="edit.transferDelaySeconds ? 'tonal' : 'flat'"
+							variant="flat"
 							:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
 							@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
@@ -145,11 +145,12 @@
 			<h4 class="m-0 text-center text-uppercase">⚙️ Membership Settings</h4>
 		</VCardTitle>
 
-		<VCardText class="mt-4">
+		<VCardText class="mt-4 text-center">
 			<VBtn
 				:disabled="processing"
+				variant="outlined"
 				color="danger"
-				class="w-100 rounded-xl elevation-0"
+				class="rounded-xl elevation-0"
 				@click="renounceMembership()"
 			>
 				Renounce Membership

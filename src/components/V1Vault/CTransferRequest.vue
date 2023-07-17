@@ -18,20 +18,6 @@
 		</VTabs>
 
 		<VCardText variant="light">
-			<a
-				:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${transferRequestProtocol}`"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<VBtn
-					variant="tonal"
-					color="primary"
-					class="mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
-				>
-					🔗 Transfer Request Protocol
-				</VBtn>
-			</a>
-
 			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestOpen
@@ -64,14 +50,6 @@
 			vaultAddress: {
 				required: true,
 				type: String
-			}
-		},
-
-		data() {
-			return {
-				transferRequestProtocol: this.$store.state.config.address[
-					this.$store.state.chainName
-				].yieldSyncV1ATransferRequestProtocol,
 			}
 		},
 
