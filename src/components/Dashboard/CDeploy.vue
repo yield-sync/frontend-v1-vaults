@@ -67,6 +67,24 @@
 						<h2 v-else>Update</h2>
 					</VBtn>
 				</VCol>
+
+				<VCol
+					v-if="
+						vaultProperties.againstVoteCountRequired != vaultDeploy.againstVoteCountRequired ||
+						vaultProperties.forVoteCountRequired != vaultDeploy.forVoteCountRequired ||
+						vaultProperties.transferDelaySeconds != vaultDeploy.transferDelaySeconds
+					"
+					cols="12"
+				>
+					<VCard color="warning" class="text-center text-dark elevation-0 rounded-xl">
+						<VCardText>
+							<h4 class="mb-3 text-uppercase font-weight-bold">Warning!</h4>
+							<h6 class="m-0 text-uppercase">
+								Please update before deploying, otherwise changes will not apply.
+							</h6>
+						</VCardText>
+					</VCard>
+				</VCol>
 			</VRow>
 		</VCardText>
 	</VCard>
@@ -80,7 +98,7 @@
 				<VCol cols="12">
 					<h2 class="mb-3 text-center text-uppercase text-primary"> 🚀 Deploy Vault (2/2)</h2>
 					<h6 class="mb-6 text-center text-uppercase text-dark">
-						Deployment Fee: {{ deploymentFee }}
+						Deployment Fee: Ξ {{ deploymentFee }}
 					</h6>
 				</VCol>
 			</VRow>
