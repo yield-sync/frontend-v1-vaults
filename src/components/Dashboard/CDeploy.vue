@@ -205,10 +205,17 @@
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
 					vaultProperties.updating ||
-						vaultDeploy.deploying || (
+					vaultDeploy.deploying || (
+						(
 							vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
 							vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
-						) && vaultDeploy.admins.length == 0
+						) &&
+						vaultDeploy.admins.length == 0
+					) || (
+						vaultProperties.againstVoteCountRequired != vaultDeploy.againstVoteCountRequired ||
+						vaultProperties.forVoteCountRequired != vaultDeploy.forVoteCountRequired ||
+						vaultProperties.transferDelaySeconds != vaultDeploy.transferDelaySeconds
+					)
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
