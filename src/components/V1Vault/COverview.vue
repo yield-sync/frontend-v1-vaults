@@ -61,7 +61,7 @@
 								</VCol>
 
 								<VCol cols="12">
-									<h1 class="text-center">{{ ethBalance * 10 ** -18 }}</h1>
+									<h1 class="text-center">Ξ {{ ethBalance * 10 ** -18 }}</h1>
 								</VCol>
 
 								<VCol v-if="!asAdmin" cols="12">
