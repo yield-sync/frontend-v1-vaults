@@ -118,7 +118,7 @@
 			);
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-				.admin_yieldSyncV1VaultsAddresses(this.$store.state.wallet.accounts[0]).call()
+				.admin_yieldSyncV1VaultAddresses(this.$store.state.wallet.accounts[0]).call()
 			;
 
 			for (let i = 0; i < v1Vaults.length; i++)

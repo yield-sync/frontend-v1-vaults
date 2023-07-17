@@ -47,7 +47,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "admin_yieldSyncV1VaultsAddresses",
+		"name": "admin_yieldSyncV1VaultAddresses",
 		"outputs": [
 			{
 				"internalType": "address[]",
@@ -106,7 +106,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "member_yieldSyncV1VaultsAddresses",
+		"name": "member_yieldSyncV1VaultAddresses",
 		"outputs": [
 			{
 				"internalType": "address[]",
