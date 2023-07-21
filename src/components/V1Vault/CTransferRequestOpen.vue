@@ -77,7 +77,9 @@
 					color="success"
 					class="rounded-xl"
 					@click="$store.state.pages.RVV1Vault.transferRequests.tab = 'c'"
-				>Create</VBtn>
+				>
+					Create
+				</VBtn>
 			</VCardText>
 		</VCard>
 
@@ -313,7 +315,12 @@
 										parseInt(w.forVoteCount) < forVoteCountRequired &&
 										parseInt(w.againstVoteCount) < againstVoteCountRequired
 									)"
-									:disabled="voting[w.id]"
+									:disabled="
+										voting[w.id] ||
+											w.votedMembers.some(
+												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+											)
+									"
 									variant="flat"
 									color="success"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -348,7 +355,12 @@
 										parseInt(w.forVoteCount) < forVoteCountRequired &&
 										parseInt(w.againstVoteCount) < againstVoteCountRequired
 									)"
-									:disabled="voting[w.id]"
+									:disabled="
+										voting[w.id] ||
+											w.votedMembers.some(
+												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+											)
+									"
 									variant="flat"
 									color="danger"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -641,12 +653,13 @@
 						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
 						tokenAddress: tR.token,
 						tokenId: tR.tokenId,
-						votedMembers: tRP.votedMembers
+						votedMembers: tRP.votedMembers,
 					});
 				}
 
 				this.loading = false;
 			},
+
 			async voteOnTransferRequest(tRId: number, vote: boolean)
 			{
 				if (!this.vaultAddress || !this.transferRequestProtocol)
