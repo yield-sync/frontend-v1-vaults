@@ -6,11 +6,6 @@ export default [
 				"name": "_YieldSyncV1VaultAccessControl",
 				"type": "address"
 			},
-			{
-				"internalType": "address",
-				"name": "_YieldSyncV1VaultFactory",
-				"type": "address"
-			},
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -202,27 +197,11 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "YieldSyncV1VaultAccessControl",
 		"outputs": [
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-
-		],
-		"name": "YieldSyncV1VaultFactory",
-		"outputs": [
-			{
-				"internalType": "address",
+				"internalType": "contract IYieldSyncV1VaultAccessControl",
 				"name": "",
 				"type": "address"
 			},
@@ -350,7 +329,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestCreate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -370,7 +348,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestDelete",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -463,7 +440,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestPollUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -488,7 +464,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestPollVote",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -508,7 +483,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -604,7 +578,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -677,7 +650,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -697,7 +669,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultInitialize",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"

@@ -3,7 +3,12 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_YieldSyncV1VaultAccessControl",
+				"name": "deployer",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_signatureProtocol",
 				"type": "address"
 			},
 			{
@@ -13,7 +18,7 @@ export default [
 			},
 			{
 				"internalType": "address",
-				"name": "_signatureProtocol",
+				"name": "_YieldSyncV1VaultAccessControl",
 				"type": "address"
 			},
 			{
@@ -87,12 +92,11 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "YieldSyncV1VaultAccessControl",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "contract IYieldSyncV1VaultAccessControl",
 				"name": "",
 				"type": "address"
 			},
@@ -110,7 +114,6 @@ export default [
 		],
 		"name": "adminAdd",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -125,7 +128,6 @@ export default [
 		],
 		"name": "adminRemove",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -164,7 +166,6 @@ export default [
 		],
 		"name": "memberAdd",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -179,14 +180,12 @@ export default [
 		],
 		"name": "memberRemove",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "processTransferRequestLocked",
 		"outputs": [
@@ -201,18 +200,15 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "renounceMembership",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "signatureProtocol",
 		"outputs": [
@@ -235,14 +231,12 @@ export default [
 		],
 		"name": "signatureProtocolUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "transferRequestProtocol",
 		"outputs": [
@@ -265,7 +259,6 @@ export default [
 		],
 		"name": "transferRequestProtocolUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -280,7 +273,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"

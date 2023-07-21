@@ -14,7 +14,6 @@ export default [
 		],
 		"name": "adminAdd",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -34,7 +33,6 @@ export default [
 		],
 		"name": "adminRemove",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -73,7 +71,6 @@ export default [
 		],
 		"name": "memberAdd",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -93,7 +90,6 @@ export default [
 		],
 		"name": "memberRemove",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"

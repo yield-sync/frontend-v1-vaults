@@ -382,13 +382,13 @@
 									class="w-100 rounded-xl elevation-0"
 									@click="processTransferRequest(w.id)"
 								>
-								<VProgressCircular
-									v-if="processing[w.id]"
-									indeterminate
-									color="light"
-									class=""
-								/>
-								<span v-else>Proccess Request</span>
+									<VProgressCircular
+										v-if="processing[w.id]"
+										indeterminate
+										color="light"
+										class=""
+									/>
+									<span v-else>Proccess Request</span>
 								</VBtn>
 							</VCol>
 

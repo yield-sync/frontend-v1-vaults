@@ -34,7 +34,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "YieldSyncGovernance",
 		"outputs": [
@@ -49,7 +48,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "YieldSyncV1VaultAccessControl",
 		"outputs": [
@@ -106,14 +104,12 @@ export default [
 		],
 		"name": "etherTransfer",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "etherTransferLocked",
 		"outputs": [
@@ -128,7 +124,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "fee",
 		"outputs": [
@@ -151,7 +146,6 @@ export default [
 		],
 		"name": "feeUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -177,7 +171,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "yieldSyncV1VaultIdTracker",
 		"outputs": [
