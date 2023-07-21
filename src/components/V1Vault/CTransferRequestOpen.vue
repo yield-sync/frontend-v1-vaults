@@ -68,6 +68,19 @@
 	</div>
 
 	<div v-if="!loading">
+		<VCard v-if="detailedTransferRequests.length == 0" class="my-3 rounded-xl elevation-0 bg-transparent">
+			<VCardText class="text-center">
+				<h3 class="mb-6 text-uppercase text-primary">No Open Transfer Requests</h3>
+
+				<VBtn
+					variant="tonal"
+					color="success"
+					class="rounded-xl"
+					@click="$store.state.pages.RVV1Vault.transferRequests.tab = 'c'"
+				>Create</VBtn>
+			</VCardText>
+		</VCard>
+
 		<VCard
 			v-for="(w, i) in detailedTransferRequests"
 			:key="i"
