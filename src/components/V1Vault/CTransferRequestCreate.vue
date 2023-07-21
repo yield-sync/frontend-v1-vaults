@@ -30,6 +30,7 @@
 
 		<VCol cols="12" md="4">
 			<select
+				v-if="$store.state.pages.RVV1Vault.transferRequest.for != 'Ether'"
 				v-model="$store.state.pages.RVV1Vault.transferRequest.token"
 				class="w-100 px-4 py-2 bg-light border rounded"
 				@change="$store.state.pages.RVV1Vault.transferRequest.for = 'ERC 20'"
