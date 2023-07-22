@@ -177,7 +177,7 @@ export default [
 					},
 					{
 						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
+						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{
@@ -381,7 +381,7 @@ export default [
 					},
 					{
 						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
+						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{
@@ -424,7 +424,7 @@ export default [
 					},
 					{
 						"internalType": "uint256",
-						"name": "latestRelevantForVoteTime",
+						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{

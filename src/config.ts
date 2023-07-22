@@ -22,9 +22,9 @@ export default {
 
 		sepolia: {
 			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
-			yieldSyncV1VaultFactory: "0x39fBd5D5adb411E62EbB04d9e5b54FbfeaF56c5c",
-			yieldSyncV1VaultAccessControl: "0xF976934eA4d2c21e05363F5207cC34C9E4AABE30",
-			yieldSyncV1ATransferRequestProtocol: "0xB27330c131aaAD8E1f744dcC5F8b54a22F65394b",
+			yieldSyncV1VaultFactory: "0xf368bdA5498E263DD2b191e3587a37196B2A3D6A",
+			yieldSyncV1VaultAccessControl: "0x082090098D8dd09144c7A443F7A38044e98c4647",
+			yieldSyncV1ATransferRequestProtocol: "0x2016aef7bfe6e0755a23195Faa37BA06a9266CA9",
 		},
 	} as {
 		goerli: yieldSyncContractAddresses,

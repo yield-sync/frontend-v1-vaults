@@ -377,6 +377,17 @@
 								</VBtn>
 							</VCol>
 
+							<VCol
+								v-if="
+									w.votedMembers.some(
+										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+									)
+								"
+								cols="12"
+							>
+								<h6 class="text-center text-dark">You have voted already</h6>
+							</VCol>
+
 							<VCol v-if="false" cols="12">
 								<h4 class="mb-3 text-primary">Voted Voter</h4>
 								<h4 v-for="(v, i) in w.votedMembers" :key="i">
@@ -384,24 +395,43 @@
 								</h4>
 							</VCol>
 
-							<VCol cols="12">
+							<!-- Time passed -->
+							<VCol
+								v-if="w.votedMembers.length > 0 || asAdmin"
+								cols="12"
+								:sm="parseInt(w.forVoteCount) >= forVoteCountRequired || asAdmin ? 6: 12"
+							>
 								<h4 class="mb-3 text-center text-primary">
 									Latest Relevant For Vote Time
 								</h4>
 								<h3 class="mb-3 text-center text-dark">
-									{{ w.latestRelevantForVoteTime }}
+									{{ w.latestForVoteTime }}
 								</h3>
 							</VCol>
 
-							<VCol cols="12">
+							<!-- Time passed -->
+							<VCol v-if="parseInt(w.forVoteCount) >= forVoteCountRequired || asAdmin" cols="12" sm="6">
+								<h4 class="mb-3 text-center text-primary">
+									Time Passed / Transfer Delay (s)
+								</h4>
+								<h3 class="mb-3 text-center text-dark">
+									{{ currentTimestamp - w.latestRelevantForVoteBlockTimestamp }} /
+									{{ transferDelaySeconds }}
+								</h3>
+							</VCol>
+
+							<!-- Proccess TransferRequest Button -->
+							<VCol
+								v-if="
+									parseInt(w.againstVoteCount) >= againstVoteCountRequired || (
+										parseInt(w.forVoteCount) >= forVoteCountRequired && (
+											currentTimestamp - w.latestRelevantForVoteBlockTimestamp
+										) >= transferDelaySeconds
+									)
+								"
+								cols="12"
+							>
 								<VBtn
-									v-if="
-										parseInt(w.againstVoteCount) >= againstVoteCountRequired || (
-											parseInt(w.forVoteCount) >= forVoteCountRequired && (
-												currentTimestamp - w.latestRelevantForVoteBlockTimestamp
-											) >= transferDelaySeconds
-										)
-									"
 									:disabled="processing[w.id]"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
@@ -486,7 +516,7 @@
 					forERC20: boolean,
 					forERC721: boolean,
 					forVoteCount: string,
-					latestRelevantForVoteTime: string,
+					latestForVoteTime: string,
 					latestRelevantForVoteBlockTimestamp: number,
 					to: string,
 					token: string,
@@ -628,7 +658,7 @@
 					}
 
 					// Create a new Date object using the JavaScript timestamp
-					const date = new Date(tRP.latestRelevantForVoteTime * 1000);
+					const date = new Date(tRP.latestForVoteTime * 1000);
 
 					// Get the individual components of the date and time
 					const year = date.getFullYear();
@@ -646,8 +676,8 @@
 						forERC20: tR.forERC20,
 						forERC721: tR.forERC721,
 						forVoteCount: tRP.forVoteCount,
-						latestRelevantForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-						latestRelevantForVoteBlockTimestamp: tRP.latestRelevantForVoteTime,
+						latestForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+						latestRelevantForVoteBlockTimestamp: tRP.latestForVoteTime,
 						to: tR.to,
 						token: !tR.forERC20 && !tR.forERC721 ? "Ether" : name,
 						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,

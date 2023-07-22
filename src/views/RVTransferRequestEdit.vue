@@ -134,7 +134,7 @@
 						<VCol sm="12">
 							<!-- Latest Relevant For Vote Time -->
 							<VTextField
-								v-model="transferRequest.latestRelevantForVoteTime"
+								v-model="transferRequest.latestForVoteTime"
 								type="number"
 								label="Latest Relevant For Vote Time"
 								variant="outlined"
@@ -232,7 +232,7 @@
 					to: "" as string,
 					forVoteCount: 0 as number,
 					againstVoteCount: 0 as number,
-					latestRelevantForVoteTime: 0 as number,
+					latestForVoteTime: 0 as number,
 					votedMembers: [
 					] as string[],
 				},
@@ -288,7 +288,7 @@
 							this.transferRequest.to,
 							this.transferRequest.forVoteCount,
 							this.transferRequest.againstVoteCount,
-							this.transferRequest.latestRelevantForVoteTime,
+							this.transferRequest.latestForVoteTime,
 							this.transferRequest.votedMembers,
 						]
 					).send({
@@ -349,8 +349,8 @@
 					this.transferRequest.to = String(transferRequest.to);
 					this.transferRequest.forVoteCount =  parseInt(transferRequest.forVoteCount);
 					this.transferRequest.againstVoteCount =  parseInt(transferRequest.againstVoteCount);
-					this.transferRequest.latestRelevantForVoteTime = parseInt(
-						transferRequest.latestRelevantForVoteTime
+					this.transferRequest.latestForVoteTime = parseInt(
+						transferRequest.latestForVoteTime
 					);
 					this.transferRequest.votedMembers = transferRequest.votedMembers;
 				}
