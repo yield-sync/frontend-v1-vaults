@@ -1,6 +1,18 @@
 <template>
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
+			<RouterLink :to="`/v1-vault/${$route.params.vaultaddress}`">
+				<VBtn
+					class="mb-3 rounded-xl elevation-0 bg-light-frost text-primary"
+					@click="
+						$store.state.pages.RVV1Vault.tab = 'tr';
+						$store.state.pages.RVV1Vault.transferRequests.tab = 'o';
+						$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+					"
+				>
+					⬅️ Return to Vault
+				</VBtn>
+			</RouterLink>
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">Edit Transfer Request</h4>
