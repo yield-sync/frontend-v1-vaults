@@ -121,23 +121,17 @@
 
 			for (let i = 0; i < v1Vaults.length; i++)
 			{
+				const vaultProperties = await transferRequestProtocol.methods
+					.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+						this.$store.state.wallet.accounts[0]
+					).call()
+				;
+
 				this.membershipYieldSyncV1VaultVaults.push({
 					address: v1Vaults[i],
-					againstVoteCountRequired: (
-						await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
-							v1Vaults[i]
-						).call()
-					)[0],
-					forVoteCountRequired: (
-						await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
-							v1Vaults[i]
-						).call()
-					)[1],
-					transferDelaySeconds: (
-						await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
-							v1Vaults[i]
-						).call()
-					)[2],
+					againstVoteCountRequired: vaultProperties[0],
+					forVoteCountRequired: vaultProperties[1],
+					transferDelaySeconds: vaultProperties[2],
 				});
 			}
 

@@ -462,23 +462,15 @@
 				this.transferRequestProtocol
 			);
 
-			this.vaultProperties.againstVoteCountRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+			const connectedWalletsVaultProperties = await transferRequestProtocol.methods
+				.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
 					this.$store.state.wallet.accounts[0]
 				).call()
-			)[0];
+			;
 
-			this.vaultProperties.forVoteCountRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
-					this.$store.state.wallet.accounts[0]
-				).call()
-			)[1];
-
-			this.vaultProperties.transferDelaySeconds = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
-					this.$store.state.wallet.accounts[0]
-				).call()
-			)[2];
+			this.vaultProperties.againstVoteCountRequired = connectedWalletsVaultProperties[0];
+			this.vaultProperties.forVoteCountRequired = connectedWalletsVaultProperties[1];
+			this.vaultProperties.transferDelaySeconds = connectedWalletsVaultProperties[2];
 
 			this.vaultDeploy.againstVoteCountRequired = this.vaultProperties.againstVoteCountRequired;
 			this.vaultDeploy.forVoteCountRequired = this.vaultProperties.forVoteCountRequired;
