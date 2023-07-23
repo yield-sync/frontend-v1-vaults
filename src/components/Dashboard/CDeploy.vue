@@ -237,7 +237,12 @@
 				"
 				@click="deployYieldSyncV1Vault()"
 			>
-				<h2>Deploy</h2>
+				<VProgressCircular
+					v-if="vaultDeploy.deploying"
+					indeterminate
+					color="light"
+				/>
+				<h2 v-else>Deploy</h2>
 			</VBtn>
 		</VCardText>
 	</VCard>
@@ -434,6 +439,8 @@
 							if (confirmationNumber == 0)
 							{
 								this.vaultDeploy.deploying = false;
+
+								this.$store.state.pages.RVDashboard.tab = "m";
 							}
 						}
 					).on(
