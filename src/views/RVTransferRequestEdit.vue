@@ -105,6 +105,31 @@
 							/>
 						</VCol>
 
+						<VCol cols="12">
+							<VBtn
+								:disabled="updatingTR"
+								variant="flat"
+								color="primary"
+								border-primary="primary"
+								class="w-100 rounded-xl"
+								@click="updateTransferRequest()"
+							>
+								Update
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCardText>
+			</VCard>
+		</div>
+
+		<div class="w-100 mx-auto" style="max-width: 1000px;">
+			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+				<VCardTitle class="bg-primary text-light">
+					<h4 class="m-0 text-center text-uppercase">Edit Transfer Request Poll</h4>
+				</VCardTitle>
+
+				<VCardText class="mt-4">
+					<VRow>
 						<VCol sm="6">
 							<!-- For Vote Count -->
 							<VTextField
@@ -189,12 +214,12 @@
 
 						<VCol sm="12">
 							<VBtn
-								:disabled="updating"
+								:disabled="updatingTRP"
 								variant="flat"
 								color="primary"
 								border-primary="primary"
 								class="w-100 rounded-xl"
-								@click="updateWR()"
+								@click="updateTransferRequestPoll()"
 							>
 								Update
 							</VBtn>
@@ -213,6 +238,7 @@
 	import { AbiItem } from "web3-utils";
 
 	import yieldSyncV1VaultABI from "../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "RVV1Vault",
@@ -221,7 +247,8 @@
 		{
 			return {
 				ZeroAddress: "0x0000000000000000000000000000000000000000",
-				updating: false,
+				updatingTR: false,
+				updatingTRP: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
 				transferRequest: {
 					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
@@ -238,6 +265,9 @@
 				},
 				error: "",
 				addVotedMemberField: "",
+				transferRequestProtocol: this.$store.state.config.address[
+					this.$store.state.chainName
+				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},
 
@@ -272,11 +302,18 @@
 				}
 			},
 
-			async updateWR()
+			async updateTransferRequest()
 			{
-				if (this.yieldSyncV1Vault)
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				if (transferRequestProtocol)
 				{
-					await this.yieldSyncV1Vault.methods.updateTransferRequest(
+					await transferRequestProtocol.methods
+						.yieldSyncV1VaultAddress_transferRequestId_transferRequestUpdate(
+						this.$route.params.vaultaddress,
 						this.$route.params.transferrequestid,
 						[
 							this.transferRequest.for == "ERC 20" ? true : false,
@@ -285,17 +322,13 @@
 							this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
 							this.transferRequest.tokenId,
 							BigInt(this.transferRequest.amount * 10**18),
-							this.transferRequest.to,
-							this.transferRequest.forVoteCount,
-							this.transferRequest.againstVoteCount,
-							this.transferRequest.latestForVoteTime,
-							this.transferRequest.votedMembers,
+							this.transferRequest.to
 						]
 					).send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on("sent", async () =>
 					{
-						this.updating = true;
+						this.updatingTR = true;
 					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
 					{
 						console.log(`Confirmation #${confirmationNumber}`, receipt);
@@ -306,15 +339,59 @@
 							this.$store.state.pages.RVV1Vault.transferRequests.key++;
 						}
 
-						this.updating = false;
+						this.updatingTR = false;
 					}).on("error", async (error: Error) =>
 					{
 						this.error = String(error);
 
-						this.updating = false;
+						this.updatingTR = false;
 					});
 				}
-			}
+			},
+
+			async updateTransferRequestPoll()
+			{
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				if (transferRequestProtocol)
+				{
+					await transferRequestProtocol.methods
+						.yieldSyncV1VaultAddress_transferRequestId_transferRequestPollUpdate(
+						this.$route.params.vaultaddress,
+						this.$route.params.transferrequestid,
+						[
+							this.transferRequest.againstVoteCount,
+							this.transferRequest.forVoteCount,
+							this.transferRequest.latestForVoteTime,
+							this.transferRequest.votedMembers,
+						]
+					).send({
+						from: this.$store.state.wallet.accounts[0]
+					}).on("sent", async () =>
+					{
+						this.updatingTRP = true;
+					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
+						}
+
+						this.updatingTRP = false;
+					}).on("error", async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.updatingTRP = false;
+					});
+				}
+			},
 		},
 
 		async created()
@@ -324,35 +401,49 @@
 				this.$route.params.vaultaddress
 			);
 
-			if (this.yieldSyncV1Vault)
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				this.transferRequestProtocol
+			);
+
+			if (transferRequestProtocol)
 			{
-				const transferRequest = await this.yieldSyncV1Vault.methods.transferRequestId_transferRequest(
-					this.$route.params.transferrequestid
-				).call();
+				const tR = await transferRequestProtocol.methods
+						.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+						this.$route.params.vaultaddress,
+						this.$route.params.transferrequestid
+					).call()
+				;
+
+				const tRP = await transferRequestProtocol.methods
+					.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
+						this.$route.params.vaultaddress,
+						this.$route.params.transferrequestid
+					).call()
 
 				if (this.transferRequest)
 				{
-					if (transferRequest.forERC20 && !transferRequest.forERC721)
+					if (tR.forERC20 && !tR.forERC721)
 					{
 						this.transferRequest.for = "ERC 20";
 					}
 
-					if (!transferRequest.forERC20 && transferRequest.forERC721)
+					if (!tR.forERC20 && tR.forERC721)
 					{
 						this.transferRequest.for = "ERC 721";
 					}
 
-					this.transferRequest.creator = String(transferRequest.creator);
-					this.transferRequest.token =  String(transferRequest.token);
-					this.transferRequest.tokenId =  parseInt(transferRequest.tokenId);
-					this.transferRequest.amount = parseInt(transferRequest.amount) * 10 ** -18;
-					this.transferRequest.to = String(transferRequest.to);
-					this.transferRequest.forVoteCount =  parseInt(transferRequest.forVoteCount);
-					this.transferRequest.againstVoteCount =  parseInt(transferRequest.againstVoteCount);
+					this.transferRequest.creator = String(tR.creator);
+					this.transferRequest.token =  String(tR.token);
+					this.transferRequest.tokenId =  parseInt(tR.tokenId);
+					this.transferRequest.amount = parseInt(tR.amount) * 10 ** -18;
+					this.transferRequest.to = String(tR.to);
+					this.transferRequest.forVoteCount =  parseInt(tRP.forVoteCount);
+					this.transferRequest.againstVoteCount =  parseInt(tRP.againstVoteCount);
 					this.transferRequest.latestForVoteTime = parseInt(
-						transferRequest.latestForVoteTime
+						tRP.latestForVoteTime
 					);
-					this.transferRequest.votedMembers = transferRequest.votedMembers;
+					this.transferRequest.votedMembers = tRP.votedMembers;
 				}
 			}
 		},
