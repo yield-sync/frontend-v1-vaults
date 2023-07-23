@@ -1,7 +1,25 @@
 <template>
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="bg-primary text-light">
-			<h4 class="text-center text-uppercase">🏦 Overview</h4>
+			<VRow>
+				<VCol cols="2" class="text-center" />
+
+				<VCol cols="8" class="text-center">
+					<h4 class="text-center text-uppercase">🏦 Overview</h4>
+				</VCol>
+
+				<VCol cols="2" class="text-right">
+					<VBtn
+						variant="plain"
+						color="warning"
+						class="m-0 elevation-0 rounded-xl font-weight-bold"
+						size="sm"
+						@click="dialog = true"
+					>
+						ⓘ
+					</VBtn>
+				</VCol>
+			</VRow>
 		</VCardTitle>
 
 		<VCardText class="mt-4">
@@ -195,6 +213,22 @@
 			</VRow>
 		</VCardText>
 	</VCard>
+
+	<VDialog v-model="dialog" max-width="500px">
+		<VCard>
+			<VCardTitle>
+				<span class="text-h5">Disclaimer</span>
+			</VCardTitle>
+			<VCardText>
+				Please only send tokens to the network in which this vault has been deployed on.
+			</VCardText>
+
+			<VCardActions>
+				<VSpacer/>
+				<VBtn color="green darken-1" @click="dialog = false">Close</VBtn>
+			</VCardActions>
+		</VCard>
+	</VDialog>
 </template>
 
 <script lang="ts">
@@ -253,6 +287,8 @@
 				transferRequestProtocol: this.$store.state.config.address[
 					this.$store.state.chainName
 				].yieldSyncV1ATransferRequestProtocol,
+
+				dialog: false,
 			};
 		},
 

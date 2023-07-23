@@ -325,39 +325,39 @@
 				{
 					await transferRequestProtocol.methods
 						.yieldSyncV1VaultAddress_transferRequestId_transferRequestUpdate(
-						this.$route.params.vaultaddress,
-						this.$route.params.transferrequestid,
-						[
-							this.transferRequest.for == "ERC 20" ? true : false,
-							this.transferRequest.for == "ERC 721" ? true : false,
-							this.transferRequest.creator,
-							this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
-							this.transferRequest.tokenId,
-							BigInt(this.transferRequest.amount * 10**18),
-							this.transferRequest.to
-						]
-					).send({
-						from: this.$store.state.wallet.accounts[0]
-					}).on("sent", async () =>
-					{
-						this.updatingTR = true;
-					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-					{
-						console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-						if (confirmationNumber == 0)
+							this.$route.params.vaultaddress,
+							this.$route.params.transferrequestid,
+							[
+								this.transferRequest.for == "ERC 20" ? true : false,
+								this.transferRequest.for == "ERC 721" ? true : false,
+								this.transferRequest.creator,
+								this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
+								this.transferRequest.tokenId,
+								BigInt(this.transferRequest.amount * 10**18),
+								this.transferRequest.to,
+							]
+						).send({
+							from: this.$store.state.wallet.accounts[0]
+						}).on("sent", async () =>
 						{
-							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequests.key++;
-						}
+							this.updatingTR = true;
+						}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+						{
+							console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						this.updatingTR = false;
-					}).on("error", async (error: Error) =>
-					{
-						this.error = String(error);
+							if (confirmationNumber == 0)
+							{
+								this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+								this.$store.state.pages.RVV1Vault.transferRequests.key++;
+							}
 
-						this.updatingTR = false;
-					});
+							this.updatingTR = false;
+						}).on("error", async (error: Error) =>
+						{
+							this.error = String(error);
+
+							this.updatingTR = false;
+						});
 				}
 			},
 
@@ -372,36 +372,36 @@
 				{
 					await transferRequestProtocol.methods
 						.yieldSyncV1VaultAddress_transferRequestId_transferRequestPollUpdate(
-						this.$route.params.vaultaddress,
-						this.$route.params.transferrequestid,
-						[
-							this.transferRequest.againstVoteCount,
-							this.transferRequest.forVoteCount,
-							this.transferRequest.latestForVoteTime,
-							this.transferRequest.votedMembers,
-						]
-					).send({
-						from: this.$store.state.wallet.accounts[0]
-					}).on("sent", async () =>
-					{
-						this.updatingTRP = true;
-					}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-					{
-						console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-						if (confirmationNumber == 0)
+							this.$route.params.vaultaddress,
+							this.$route.params.transferrequestid,
+							[
+								this.transferRequest.againstVoteCount,
+								this.transferRequest.forVoteCount,
+								this.transferRequest.latestForVoteTime,
+								this.transferRequest.votedMembers,
+							]
+						).send({
+							from: this.$store.state.wallet.accounts[0]
+						}).on("sent", async () =>
 						{
-							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequests.key++;
-						}
+							this.updatingTRP = true;
+						}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
+						{
+							console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-						this.updatingTRP = false;
-					}).on("error", async (error: Error) =>
-					{
-						this.error = String(error);
+							if (confirmationNumber == 0)
+							{
+								this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+								this.$store.state.pages.RVV1Vault.transferRequests.key++;
+							}
 
-						this.updatingTRP = false;
-					});
+							this.updatingTRP = false;
+						}).on("error", async (error: Error) =>
+						{
+							this.error = String(error);
+
+							this.updatingTRP = false;
+						});
 				}
 			},
 		},
@@ -421,7 +421,7 @@
 			if (transferRequestProtocol)
 			{
 				const tR = await transferRequestProtocol.methods
-						.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+					.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
 						this.$route.params.vaultaddress,
 						this.$route.params.transferrequestid
 					).call()
@@ -431,7 +431,7 @@
 					.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
 						this.$route.params.vaultaddress,
 						this.$route.params.transferrequestid
-					).call()
+					).call();
 
 				if (this.transferRequest)
 				{
