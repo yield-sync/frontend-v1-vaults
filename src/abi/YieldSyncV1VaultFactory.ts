@@ -1,4 +1,4 @@
-export default [
+export default  [
 	{
 		"inputs": [
 			{
@@ -106,20 +106,6 @@ export default [
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-		],
-		"name": "etherTransferLocked",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			},
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
