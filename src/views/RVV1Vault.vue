@@ -7,11 +7,7 @@
 						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn
-							variant="tonal"
-							color="primary"
-							class="w-100 rounded-xl elevation-0 text-primary font-weight-bold"
-						>
+						<VBtn class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary">
 							🔗 Etherscan
 						</VBtn>
 					</a>
@@ -57,9 +53,7 @@
 
 				<VCol cols="12" sm="3" class="text-right">
 					<VBtn
-						variant="tonal"
-						color="primary"
-						class="w-100 rounded-xl elevation-0 text-primary font-weight-bold"
+						class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary"
 						@click="copy(vaultAddress)"
 					>
 						📋 Address
