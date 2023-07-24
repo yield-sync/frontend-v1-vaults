@@ -1,19 +1,38 @@
-type yieldSyncContractAddresses = {
-	yieldSyncGovernance: string,
-	yieldSyncV1VaultFactory: string,
-	yieldSyncV1VaultAccessControl: string
+type Config = {
+	address: {
+		[key: string]: {
+			yieldSyncGovernance: string,
+			yieldSyncV1VaultFactory: string,
+			yieldSyncV1VaultAccessControl: string
+			yieldSyncV1ATransferRequestProtocol: string
+		}
+	}
 }
 
 export default {
 	address: {
-		goerli: {
+		mainnet: {
 			yieldSyncGovernance: "",
 			yieldSyncV1VaultFactory: "",
 			yieldSyncV1VaultAccessControl: "",
 			yieldSyncV1ATransferRequestProtocol: "",
 		},
 
-		mainnet: {
+		optimisticEthereum: {
+			yieldSyncGovernance: "",
+			yieldSyncV1VaultFactory: "",
+			yieldSyncV1VaultAccessControl: "",
+			yieldSyncV1ATransferRequestProtocol: "",
+		},
+
+		arbitrumOne: {
+			yieldSyncGovernance: "",
+			yieldSyncV1VaultFactory: "",
+			yieldSyncV1VaultAccessControl: "",
+			yieldSyncV1ATransferRequestProtocol: "",
+		},
+
+		polygon: {
 			yieldSyncGovernance: "",
 			yieldSyncV1VaultFactory: "",
 			yieldSyncV1VaultAccessControl: "",
@@ -26,9 +45,5 @@ export default {
 			yieldSyncV1VaultAccessControl: "0x348bcF3657CB008503fB56618F9EA03FDbCa2205",
 			yieldSyncV1ATransferRequestProtocol: "0x5F85Ee84D38E0b6B7b57817Ccf8B70117e7864cc",
 		},
-	} as {
-		goerli: yieldSyncContractAddresses,
-		mainnet: yieldSyncContractAddresses,
-		sepolia: yieldSyncContractAddresses
 	}
-};
+} as Config;
