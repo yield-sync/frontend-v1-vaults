@@ -25,6 +25,13 @@ export default {
 			yieldSyncV1ATransferRequestProtocol: "",
 		},
 
+		optimisticGoerli: {
+			yieldSyncGovernance: "",
+			yieldSyncV1VaultFactory: "",
+			yieldSyncV1VaultAccessControl: "",
+			yieldSyncV1ATransferRequestProtocol: "",
+		},
+
 		arbitrumOne: {
 			yieldSyncGovernance: "",
 			yieldSyncV1VaultFactory: "",
