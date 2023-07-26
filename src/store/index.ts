@@ -24,7 +24,7 @@ export default createStore({
 		// eslint-disable-next-line
 		web3: window.ethereum ? new Web3(window.ethereum) : undefined as undefined | any,
 
-		chainName: "" as string,
+		chainName: "mainnet" as string,
 		chainId: 0 as number,
 		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
