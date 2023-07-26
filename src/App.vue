@@ -42,11 +42,15 @@
 
 		methods: {
 			async handleNetworkChange() {
+				this.$store.state.loading = true;
+
 				// Governance
 				await this.$store.dispatch("generateChainRelatedData");
 
 				// Yield Sync Contracts
 				await this.$store.dispatch("generateYieldSyncContracts");
+
+				this.$store.state.loading = false;
 			},
 		},
 
@@ -61,7 +65,11 @@
 					return;
 				}
 
-				this.handleNetworkChange()
+				// Governance
+				await this.$store.dispatch("generateChainRelatedData");
+
+				// Yield Sync Contracts
+				await this.$store.dispatch("generateYieldSyncContracts");
 
 				// Connected account
 				window.ethereum.request({
