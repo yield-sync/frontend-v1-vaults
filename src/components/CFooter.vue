@@ -83,7 +83,7 @@
 
 				factory: this.$store.state.config.address[
 					this.$store.state.chainName
-				].yieldSyncV1VaultFactory as string,
+				].yieldSyncV1VaultFactory,
 
 				accessControl: this.$store.state.config.address[
 					this.$store.state.chainName

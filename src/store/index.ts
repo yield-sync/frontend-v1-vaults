@@ -38,6 +38,8 @@ export default createStore({
 		},
 
 		alchemyApiKey: "" as string,
+		alchemyOpApiKey: "" as string,
+
 		isAdmin: false as boolean,
 
 		contract: {
@@ -122,6 +124,10 @@ export default createStore({
 				state.chainName = "sepolia";
 				break;
 
+			case 420:
+				state.chainName = "optimisticGoerli";
+				break;
+
 			default:
 				state.chainName = "?";
 				break;
@@ -140,6 +146,8 @@ export default createStore({
 
 		setYieldSyncV1VaultFactory(state, contract: Contract)
 		{
+			console.log(state.contract);
+
 			state.contract.yieldSyncV1VaultFactory = contract;
 		},
 
@@ -214,15 +222,20 @@ export default createStore({
 			if (state.web3.utils.isAddress(vaultAddress))
 			{
 				// eslint-disable-next-line
-				const data: any = await alchemyGetBalances(state.alchemyApiKey, vaultAddress);
+				const alchemyERCData: any = await alchemyGetBalances(state.alchemyApiKey, vaultAddress);
 
-				for (let i = 0; i < data.tokenBalances.length; i++)
+				if (!alchemyERCData)
 				{
-					if (data.tokenBalances[i].tokenBalance != state.ZERO_ADDRESS)
+					return;
+				}
+
+				for (let i = 0; i < alchemyERCData.tokenBalances.length; i++)
+				{
+					if (alchemyERCData.tokenBalances[i].tokenBalance != state.ZERO_ADDRESS)
 					{
 						const contract = new state.web3.eth.Contract(
 							abiER20 as AbiItem[],
-							data.tokenBalances[i].contractAddress
+							alchemyERCData.tokenBalances[i].contractAddress
 						);
 
 						let n = "NA";
@@ -249,7 +262,7 @@ export default createStore({
 							{
 								name: n,
 								symbol: s,
-								contract: data.tokenBalances[i].contractAddress
+								contract: alchemyERCData.tokenBalances[i].contractAddress
 							}
 						);
 					}
@@ -273,15 +286,20 @@ export default createStore({
 			if (state.web3.utils.isAddress(vaultAddress))
 			{
 				// eslint-disable-next-line
-				const data: any = await alchemyGetGetNFTBalances(state.alchemyApiKey, vaultAddress);
+				const alchemyNFTData: any = await alchemyGetGetNFTBalances(state.alchemyApiKey, vaultAddress);
 
-				for (let i = 0; i < data.ownedNfts.length; i++)
+				if (!alchemyNFTData)
+				{
+					return;
+				}
+
+				for (let i = 0; i < alchemyNFTData.ownedNfts.length; i++)
 				{
 					let name = "Unknown";
 
 					try
 					{
-						name = data.ownedNfts[i].contract.name;
+						name = alchemyNFTData.ownedNfts[i].contract.name;
 					}
 					catch (e)
 					{
@@ -292,7 +310,7 @@ export default createStore({
 
 					try
 					{
-						symbol = data.ownedNfts[i].contract.symbol;
+						symbol = alchemyNFTData.ownedNfts[i].contract.symbol;
 					}
 					catch (e)
 					{
@@ -303,7 +321,7 @@ export default createStore({
 						{
 							name,
 							symbol,
-							contract: data.ownedNfts[i].contract.address
+							contract: alchemyNFTData.ownedNfts[i].contract.address
 						}
 					);
 				}

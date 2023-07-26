@@ -40,6 +40,16 @@
 			CFooter
 		},
 
+		methods: {
+			async handleNetworkChange() {
+				// Governance
+				await this.$store.dispatch("generateChainRelatedData");
+
+				// Yield Sync Contracts
+				await this.$store.dispatch("generateYieldSyncContracts");
+			},
+		},
+
 		async created()
 		{
 			try
@@ -51,8 +61,7 @@
 					return;
 				}
 
-				// Governance
-				await this.$store.dispatch("generateChainRelatedData");
+				this.handleNetworkChange()
 
 				// Connected account
 				window.ethereum.request({
@@ -78,12 +87,14 @@
 					)
 				;
 
-				// Yield Sync Contracts
-				await this.$store.dispatch("generateYieldSyncContracts");
-
 				if (localStorage.alchemyApiKey)
 				{
 					this.$store.state.alchemyApiKey = localStorage.alchemyApiKey;
+				}
+
+				if (localStorage.alchemyOpApiKey)
+				{
+					this.$store.state.alchemyOpApiKey = localStorage.alchemyOpApiKey;
 				}
 
 				this.$store.state.loading = false;
@@ -92,6 +103,9 @@
 			{
 				this.$store.state.error = e;
 			}
+
+			// Handle network
+			window.ethereum.on('chainChanged', (_chainId: number) => this.handleNetworkChange());
 		},
 	});
 </script>

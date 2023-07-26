@@ -26,10 +26,10 @@ export default {
 		},
 
 		optimisticGoerli: {
-			yieldSyncGovernance: "",
-			yieldSyncV1VaultFactory: "",
-			yieldSyncV1VaultAccessControl: "",
-			yieldSyncV1ATransferRequestProtocol: "",
+			yieldSyncGovernance: "0x35E0Df7a18E112e879FA34576e412d999557C1a5",
+			yieldSyncV1VaultFactory: "0x2772a4ffc5d27EfB07c629b3fEB17E4D46550fe3",
+			yieldSyncV1VaultAccessControl: "0x8f06A70d0BE255B851ef838f3593D410e4144550",
+			yieldSyncV1ATransferRequestProtocol: "0x9157F5854bD49CC7e13FAe5209A447e241a49582",
 		},
 
 		arbitrumOne: {

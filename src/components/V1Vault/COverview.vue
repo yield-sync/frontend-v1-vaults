@@ -303,11 +303,18 @@
 					];
 
 					// eslint-disable-next-line
-					const data: any = await alchemyGetBalances(this.$store.state.alchemyApiKey, this.address);
+					const alchemyERCData: any = await alchemyGetBalances(this.$store.state.alchemyApiKey, this.address);
 
-					for (let i = 0; i < data.tokenBalances.length; i++)
+					console.log(this.$store.state.alchemyApiKey, alchemyERCData);
+
+					if (!alchemyERCData)
 					{
-						const tB = data.tokenBalances[i];
+						return;
+					}
+
+					for (let i = 0; i < alchemyERCData.tokenBalances.length; i++)
+					{
+						const tB = alchemyERCData.tokenBalances[i];
 
 						if (tB.tokenBalance != this.ZeroAddress)
 						{
@@ -352,6 +359,11 @@
 						this.$store.state.alchemyApiKey,
 						this.address
 					);
+
+					if (!alchemyNFTData)
+					{
+						return
+					}
 
 					for (let i = 0; i < alchemyNFTData.ownedNfts.length; i++)
 					{

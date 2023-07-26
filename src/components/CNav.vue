@@ -25,8 +25,22 @@
 					xl="3"
 				>
 					<VTextField
+						v-if="
+							$store.state.chainId == 1 ||
+							$store.state.chainId == 5 ||
+							$store.state.chainId == 11155111
+						"
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
+						variant="outlined"
+						hide-details
+						@change="updateLocalStorage()"
+					/>
+
+					<VTextField
+						v-if="$store.state.chainId == 420"
+						v-model="$store.state.alchemyOpApiKey"
+						label="Insert Alchemy Op API Key Here"
 						variant="outlined"
 						hide-details
 						@change="updateLocalStorage()"
@@ -157,6 +171,7 @@
 			updateLocalStorage()
 			{
 				localStorage.alchemyApiKey = this.$store.state.alchemyApiKey;
+				localStorage.alchemyOpApiKey = this.$store.state.alchemyOpApiKey;
 			}
 		},
 
