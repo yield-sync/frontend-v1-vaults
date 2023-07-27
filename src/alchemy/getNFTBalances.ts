@@ -22,6 +22,10 @@ export default async (ALCHEMY_API_KEY: string, address: string) =>
 			network = Network.OPT_MAINNET;
 			break;
 
+		case 420:
+			network = Network.OPT_GOERLI;
+			break;
+
 		case 11155111:
 			network = Network.ETH_SEPOLIA;
 			break;

@@ -146,8 +146,6 @@ export default createStore({
 
 		setYieldSyncV1VaultFactory(state, contract: Contract)
 		{
-			console.log(state.contract);
-
 			state.contract.yieldSyncV1VaultFactory = contract;
 		},
 

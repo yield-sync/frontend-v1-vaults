@@ -302,10 +302,19 @@
 					this.erc20Balances = [
 					];
 
-					// eslint-disable-next-line
-					const alchemyERCData: any = await alchemyGetBalances(this.$store.state.alchemyApiKey, this.address);
+					const apiKey = (
+						this.$store.state.chainId == 1 ||
+						this.$store.state.chainId == 5 ||
+						this.$store.state.chainId == 11155111
+					) ? this.$store.state.alchemyApiKey : this.$store.state.alchemyOpApiKey;
 
-					console.log(this.$store.state.alchemyApiKey, alchemyERCData);
+					// eslint-disable-next-line
+					const alchemyERCData: any = await alchemyGetBalances(
+						apiKey,
+						this.address
+					);
+
+					console.log(apiKey, alchemyERCData);
 
 					if (!alchemyERCData)
 					{
@@ -356,7 +365,7 @@
 
 					// eslint-disable-next-line
 					const alchemyNFTData: any = await alchemyGetGetNFTBalances(
-						this.$store.state.alchemyApiKey,
+						apiKey,
 						this.address
 					);
 
