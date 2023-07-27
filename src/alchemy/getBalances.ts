@@ -31,7 +31,8 @@ export default async (ALCHEMY_API_KEY: string, address: string) =>
 			break;
 
 		default:
-			return;
+			console.log("alchemy/getBalances: Invalid network");
+
 			break;
 		}
 

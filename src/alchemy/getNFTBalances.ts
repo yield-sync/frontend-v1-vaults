@@ -31,7 +31,8 @@ export default async (ALCHEMY_API_KEY: string, address: string) =>
 			break;
 
 		default:
-			return;
+			console.log("alchemy/getNFTBalances: Invalid network");
+
 			break;
 		}
 
@@ -39,8 +40,6 @@ export default async (ALCHEMY_API_KEY: string, address: string) =>
 			apiKey: ALCHEMY_API_KEY,
 			network,
 		});
-
-
 
 		return await alchemy.nft.getNftsForOwner(address);
 	}
