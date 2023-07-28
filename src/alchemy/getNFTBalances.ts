@@ -8,7 +8,7 @@ export default async (ALCHEMY_API_KEY: string, address: string) =>
 
 	try
 	{
-		switch ($store.state.chainId)
+		switch ($store.state.currentChain.id)
 		{
 		case 1:
 			network = Network.ETH_MAINNET;

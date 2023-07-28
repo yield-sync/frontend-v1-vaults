@@ -87,11 +87,11 @@
 			return {
 				loading: true as boolean,
 				accessControl: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1VaultAccessControl,
 
 				transferRequestProtocol: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
 
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,

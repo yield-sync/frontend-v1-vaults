@@ -285,7 +285,7 @@
 				error: "" as string,
 
 				transferRequestProtocol: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
 
 				dialog: false,
@@ -303,9 +303,9 @@
 					];
 
 					const apiKey = (
-						this.$store.state.chainId == 1 ||
-						this.$store.state.chainId == 5 ||
-						this.$store.state.chainId == 11155111
+						this.$store.state.currentChain.id == 1 ||
+						this.$store.state.currentChain.id == 5 ||
+						this.$store.state.currentChain.id == 11155111
 					) ? this.$store.state.alchemyApiKey : this.$store.state.alchemyOpApiKey;
 
 					// eslint-disable-next-line

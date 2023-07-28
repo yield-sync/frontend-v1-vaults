@@ -26,13 +26,13 @@
 						class="w-100 rounded-xl container1 elevation-0"
 					>
 						<img
-							:src="$store.state.config.chains[$store.state.chainName].icon"
+							:src="$store.state.config.chains[$store.state.currentChain.name].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
 						<h5 class="mx-auto text-center text-light">
-							{{ $store.state.config.chains[$store.state.chainName].chainName }}
+							{{ $store.state.config.chains[$store.state.currentChain.name].chainName }}
 						</h5>
 
 						<VMenu activator="parent">
@@ -120,7 +120,9 @@
 				>
 					<VTextField
 						v-if="
-							$store.state.chainId == 1 || $store.state.chainId == 5 || $store.state.chainId == 11155111
+							$store.state.currentChain.id == 1 ||
+							$store.state.currentChain.id == 5 ||
+							$store.state.currentChain.id == 11155111
 						"
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
@@ -130,7 +132,7 @@
 					/>
 
 					<VTextField
-						v-if="$store.state.chainId == 420"
+						v-if="$store.state.currentChain.id == 420"
 						v-model="$store.state.alchemyOpApiKey"
 						label="Insert Alchemy Op API Key Here"
 						variant="outlined"

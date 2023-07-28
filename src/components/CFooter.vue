@@ -82,15 +82,15 @@
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,
 
 				factory: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1VaultFactory,
 
 				accessControl: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1VaultAccessControl,
 
 				transferRequestProtocol: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
 			};
 		},

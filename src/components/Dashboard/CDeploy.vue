@@ -266,11 +266,11 @@
 		{
 			return {
 				factory: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1VaultFactory as string,
 
 				transferRequestProtocol: this.$store.state.config.address[
-					this.$store.state.chainName
+					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol as string,
 
 				d: this.$store.state.etherscanDomainStart as string,

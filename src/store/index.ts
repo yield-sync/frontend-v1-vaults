@@ -24,8 +24,10 @@ export default createStore({
 		// eslint-disable-next-line
 		web3: window.ethereum ? new Web3(window.ethereum) : undefined as undefined | any,
 
-		chainName: "mainnet" as string,
-		chainId: 0 as number,
+		currentChain: {
+			name: "mainnet" as string,
+			id: 1 as number,
+		},
 
 		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
@@ -104,29 +106,29 @@ export default createStore({
 			state.loading = l;
 		},
 
-		setChainId(state, chainId: number)
+		setCurrentChainId(state, chainId: number)
 		{
-			state.chainId = chainId;
+			state.currentChain.id = chainId;
 		},
 
-		setChainName(state, chainId: number)
+		setCurrentChainName(state, chainId: number)
 		{
 			switch (chainId)
 			{
 			case 1:
-				state.chainName = "mainnet";
+				state.currentChain.name = "mainnet";
 				break;
 
 			case 11155111:
-				state.chainName = "sepolia";
+				state.currentChain.name = "sepolia";
 				break;
 
 			case 420:
-				state.chainName = "optimisticGoerli";
+				state.currentChain.name = "optimisticGoerli";
 				break;
 
 			default:
-				state.chainName = "?";
+				state.currentChain.name = "?";
 				break;
 			}
 		},
@@ -170,16 +172,19 @@ export default createStore({
 	actions: {
 		generateChainRelatedData: async ({ commit, state }) =>
 		{
-			commit("setChainId", await state.web3.eth.net.getId());
-			commit("setChainName", await state.web3.eth.net.getId());
-			commit("setEtherscanDomainStart", state.chainName !== "mainnet" ? state.chainName : "www");
+			commit("setCurrentChainId", await state.web3.eth.net.getId());
+			commit("setCurrentChainName", await state.web3.eth.net.getId());
+			commit(
+				"setEtherscanDomainStart",
+				state.currentChain.name !== "mainnet" ? state.currentChain.name : "www"
+			);
 		},
 
 		generateYieldSyncContracts: async ({ commit, state }) =>
 		{
-			if (state.config.address[state.chainName].yieldSyncGovernance == state.ZERO_ADDRESS)
+			if (state.config.address[state.currentChain.name].yieldSyncGovernance == state.ZERO_ADDRESS)
 			{
-				state.error = "Network not supported";
+				state.error = "Network not currently supported";
 
 				return;
 			}
@@ -191,7 +196,7 @@ export default createStore({
 				"setYieldSyncGovernance",
 				new state.web3.eth.Contract(
 					YieldSyncGovernance as AbiItem[],
-					state.config.address[state.chainName].yieldSyncGovernance
+					state.config.address[state.currentChain.name].yieldSyncGovernance
 				)
 			);
 			// Factory
@@ -199,7 +204,7 @@ export default createStore({
 				"setYieldSyncV1VaultFactory",
 				new state.web3.eth.Contract(
 					YieldSyncV1VaultFactory as AbiItem[],
-					state.config.address[state.chainName].yieldSyncV1VaultFactory
+					state.config.address[state.currentChain.name].yieldSyncV1VaultFactory
 				)
 			);
 			// Access Control
@@ -207,7 +212,7 @@ export default createStore({
 				"setYieldSyncV1VaultAccessControl",
 				new state.web3.eth.Contract(
 					YieldSyncV1VaultAccessControl as AbiItem[],
-					state.config.address[state.chainName].yieldSyncV1VaultAccessControl
+					state.config.address[state.currentChain.name].yieldSyncV1VaultAccessControl
 				)
 			);
 		},
