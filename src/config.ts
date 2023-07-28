@@ -9,18 +9,20 @@ type Config = {
 	},
 
 	chains: {
-		key: string,
-		chainId: string,
-		chainName: string,
-		nativeCurrency: {
-			name: string,
-			symbol: string,
-			decimals: number,
-		},
-		rpcUrls: string[],
-		blockExplorerUrls: string[]
-		icon: string,
-	}[]
+		[key: string]: {
+			key: string,
+			chainId: string,
+			chainName: string,
+			nativeCurrency: {
+				name: string,
+				symbol: string,
+				decimals: number,
+			},
+			rpcUrls: string[],
+			blockExplorerUrls: string[]
+			icon: string,
+		}
+	}
 }
 
 export default {
@@ -68,9 +70,9 @@ export default {
 		},
 	},
 
-	chains: [
+	chains: {
 		// Mainnet
-		{
+		mainnet: {
 			key: "mainnet",
 			chainId: "0x1",
 			chainName: "Ethereum Mainnet",
@@ -88,7 +90,7 @@ export default {
 		},
 
 		// Seploia
-		{
+		sepolia: {
 			key: "sepolia",
 			chainId: "0xAA36A7",
 			chainName: "Ethereum Sepolia",
@@ -107,7 +109,7 @@ export default {
 		},
 
 		// Optimistic Goerli
-		{
+		optimisticGoerli: {
 			key: "optimisticGoerli",
 			chainId: "0x1A4",
 			chainName: "Optimistic Goerli",
@@ -124,5 +126,5 @@ export default {
 			icon: require("./assets/op.svg")
 
 		},
-	],
+	},
 } as Config;

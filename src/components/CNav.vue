@@ -4,7 +4,7 @@
 			<VRow>
 				<VCol
 					cols="12"
-					lg="8"
+					lg="4"
 				>
 					<RouterLink to="/" style="letter-spacing: 4px; text-decoration: none !important">
 						<h1
@@ -20,65 +20,64 @@
 					cols="12"
 					lg="4"
 				>
-					<VRow>
-						<VCol cols="5">
-							<VBtn
-								variant="tonal"
-								color="white"
-								class="w-100 rounded-xl container1 elevation-0"
-							>
-								<img
-									:src="$store.state.config.chains[$store.state.chainIndex].icon"
-									alt="Description of Image"
-									class="mr-2"
-									style="max-width: 20px;"
-								/>
-								<h5 class="mx-auto text-center text-light">
-									{{ $store.state.config.chains[$store.state.chainIndex].chainName }}
-								</h5>
+					<VBtn
+						variant="tonal"
+						color="white"
+						class="w-100 rounded-xl container1 elevation-0"
+					>
+						<img
+							:src="$store.state.config.chains[$store.state.chainName].icon"
+							alt="Description of Image"
+							class="mr-2"
+							style="max-width: 20px;"
+						/>
+						<h5 class="mx-auto text-center text-light">
+							{{ $store.state.config.chains[$store.state.chainName].chainName }}
+						</h5>
 
-								<VMenu activator="parent">
-									<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-										<VListItem v-for="(n, i) in $store.state.config.chains" :key="i">
-											<VListItemTitle
-												@click="switchNetwork(i)"
-											>
-												{{ n.chainName }}
-											</VListItemTitle>
-										</VListItem>
-									</VList>
-								</VMenu>
-							</VBtn>
-						</VCol>
+						<VMenu activator="parent">
+							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
+								<VListItem v-for="(n, i) in $store.state.config.chains" :key="i">
+									<VListItemTitle
+										@click="switchNetwork(i)"
+									>
+										{{ n.chainName }}
+									</VListItemTitle>
+								</VListItem>
+							</VList>
+						</VMenu>
+					</VBtn>
+				</VCol>
 
-						<VCol cols="7">
-							<VBtn
-								v-if="!$store.state.wallet.connected"
-								@click="connectWallet()"
-								color="dark"
-								variant="tonal"
-								class="w-100 rounded-pill"
-							>
-								Connect Wallet
-							</VBtn>
-							<VBtn
-								v-if="$store.state.wallet.connected"
-								@click="disconnectWallet()"
-								color="white"
-								variant="tonal"
-								class="w-100 rounded-pill"
-							>
-								Disconnect ⦁ {{
-									$store.state.wallet.accounts[0] ?
-										$store.state.wallet.accounts[0].substring(0, 4) +
-										"..." +
-										$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
-										:
-										""
-								}}
-							</VBtn>
-						</VCol>
-					</VRow>
+				<VCol
+					cols="12"
+					lg="4"
+				>
+					<VBtn
+						v-if="!$store.state.wallet.connected"
+						@click="connectWallet()"
+						color="dark"
+						variant="tonal"
+						class="w-100 rounded-pill"
+					>
+						Connect Wallet
+					</VBtn>
+					<VBtn
+						v-if="$store.state.wallet.connected"
+						@click="disconnectWallet()"
+						color="white"
+						variant="tonal"
+						class="w-100 rounded-pill"
+					>
+						Disconnect ⦁ {{
+							$store.state.wallet.accounts[0] ?
+								$store.state.wallet.accounts[0].substring(0, 4) +
+								"..." +
+								$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
+								:
+								""
+						}}
+					</VBtn>
 				</VCol>
 
 				<VCol
@@ -205,15 +204,13 @@
 
 			async switchNetwork(i: number)
 			{
-				console.log(i, this.$store.state.config.chains[i].chainId);
-
-				try 
+				try
 				{
 					await window.ethereum.request({
 						method: "wallet_switchEthereumChain",
 						params: [
 							{
-								chainId: this.$store.state.config.chains[i].chainId 
+								chainId: this.$store.state.config.chains[i].chainId
 							},
 						],
 					});
@@ -222,7 +219,7 @@
 				{
 					if (switchError.code === 4902)
 					{
-						console.log("Switched");
+						console.error("4902 Error:", String(switchError));
 					}
 					else
 					{
