@@ -48,8 +48,8 @@ export default {
 			chainId: "0x1A4",
 			chainName: " Optimistic Görli",
 			nativeCurrency: {
-				name: "ETH",
-				symbol: "ETH",
+				name: "GOR",
+				symbol: "GOR",
 				decimals: 18
 			},
 			rpcUrls: [
