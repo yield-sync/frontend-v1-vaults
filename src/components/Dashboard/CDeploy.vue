@@ -265,11 +265,11 @@
 		data()
 		{
 			return {
-				factory: this.$store.state.config.address[
+				factory: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1VaultFactory as string,
 
-				transferRequestProtocol: this.$store.state.config.address[
+				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol as string,
 

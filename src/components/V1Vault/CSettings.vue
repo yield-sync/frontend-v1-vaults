@@ -214,7 +214,7 @@
 
 				error: "" as string,
 
-				transferRequestProtocol: this.$store.state.config.address[
+				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
 			};

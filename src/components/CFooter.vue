@@ -81,15 +81,15 @@
 			return {
 				etherscan: this.$store.state.etherscanDomainStart,
 
-				factory: this.$store.state.config.address[
+				factory: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1VaultFactory,
 
-				accessControl: this.$store.state.config.address[
+				accessControl: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1VaultAccessControl,
 
-				transferRequestProtocol: this.$store.state.config.address[
+				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
 			};

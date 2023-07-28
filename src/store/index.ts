@@ -183,7 +183,7 @@ export default createStore({
 
 		generateYieldSyncContracts: async ({ commit, state }) =>
 		{
-			if (state.config.address[state.currentChain.name].yieldSyncGovernance == state.ZERO_ADDRESS)
+			if (state.config.networkChain[state.currentChain.name].yieldSyncGovernance == state.ZERO_ADDRESS)
 			{
 				state.error = "Network not currently supported";
 
@@ -197,7 +197,7 @@ export default createStore({
 				"setYieldSyncGovernance",
 				new state.web3.eth.Contract(
 					YieldSyncGovernance as AbiItem[],
-					state.config.address[state.currentChain.name].yieldSyncGovernance
+					state.config.networkChain[state.currentChain.name].yieldSyncGovernance
 				)
 			);
 			// Factory
@@ -205,7 +205,7 @@ export default createStore({
 				"setYieldSyncV1VaultFactory",
 				new state.web3.eth.Contract(
 					YieldSyncV1VaultFactory as AbiItem[],
-					state.config.address[state.currentChain.name].yieldSyncV1VaultFactory
+					state.config.networkChain[state.currentChain.name].yieldSyncV1VaultFactory
 				)
 			);
 			// Access Control
@@ -213,7 +213,7 @@ export default createStore({
 				"setYieldSyncV1VaultAccessControl",
 				new state.web3.eth.Contract(
 					YieldSyncV1VaultAccessControl as AbiItem[],
-					state.config.address[state.currentChain.name].yieldSyncV1VaultAccessControl
+					state.config.networkChain[state.currentChain.name].yieldSyncV1VaultAccessControl
 				)
 			);
 		},

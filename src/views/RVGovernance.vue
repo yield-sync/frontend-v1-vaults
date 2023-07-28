@@ -53,7 +53,7 @@
 		data()
 		{
 			return {
-				govA: this.$store.state.config.address[this.$store.state.currentChain.name].yieldSyncGovernance,
+				govA: this.$store.state.config.networkChain[this.$store.state.currentChain.name].yieldSyncGovernance,
 				adminRole: undefined,
 				roleMemberCount: 0,
 				roleAdmin: "",

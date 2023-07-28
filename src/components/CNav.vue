@@ -26,18 +26,18 @@
 						class="w-100 rounded-xl container1 elevation-0"
 					>
 						<img
-							:src="$store.state.config.chains[$store.state.currentChain.name].icon"
+							:src="$store.state.config.networkChain[$store.state.currentChain.name].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
 						<h5 class="mx-auto text-center text-light">
-							{{ $store.state.config.chains[$store.state.currentChain.name].chainName }}
+							{{ $store.state.config.networkChain[$store.state.currentChain.name].chainName }}
 						</h5>
 
 						<VMenu activator="parent">
 							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-								<VListItem v-for="(n, i) in $store.state.config.chains" :key="i">
+								<VListItem v-for="(n, i) in $store.state.config.networkChain" :key="i">
 									<VListItemTitle
 										@click="switchNetwork(i)"
 									>
@@ -214,7 +214,7 @@
 						method: "wallet_switchEthereumChain",
 						params: [
 							{
-								chainId: this.$store.state.config.chains[i].chainId
+								chainId: this.$store.state.config.networkChain[i].chainId
 							},
 						],
 					});
