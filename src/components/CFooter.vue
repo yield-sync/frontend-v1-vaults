@@ -24,7 +24,7 @@
 					class="text-center"
 				>
 					<a
-						:href="`https://${etherscanDomainStart}.etherscan.io/address/${factory}`"
+						:href="`https://${etherscan}.etherscan.io/address/${factory}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -38,7 +38,7 @@
 					</a>
 
 					<a
-						:href="`https://${etherscanDomainStart}.etherscan.io/address/${accessControl}`"
+						:href="`https://${etherscan}.etherscan.io/address/${accessControl}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -52,7 +52,7 @@
 					</a>
 
 					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${transferRequestProtocol}`"
+						:href="`https://${etherscan}.etherscan.io/address/${transferRequestProtocol}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -79,7 +79,7 @@
 		data()
 		{
 			return {
-				etherscanDomainStart: this.$store.state.etherscanDomainStart,
+				etherscan: this.$store.state.etherscanDomainStart,
 
 				factory: this.$store.state.config.address[
 					this.$store.state.currentChain.name

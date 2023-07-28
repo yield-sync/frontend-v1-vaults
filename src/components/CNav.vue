@@ -121,8 +121,8 @@
 					<VTextField
 						v-if="
 							$store.state.currentChain.id == 1 ||
-							$store.state.currentChain.id == 5 ||
-							$store.state.currentChain.id == 11155111
+								$store.state.currentChain.id == 5 ||
+								$store.state.currentChain.id == 11155111
 						"
 						v-model="$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
@@ -221,6 +221,7 @@
 
 					router.push("/");
 				}
+				// eslint-disable-next-line
 				catch (switchError: any)
 				{
 					if (switchError.code === 4902)

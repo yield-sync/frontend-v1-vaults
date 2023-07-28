@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { createStore } from "vuex";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
@@ -14,7 +15,7 @@ import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl"
 
 export default createStore({
 	state: {
-		ZERO_ADDRESS: "0x0000000000000000000000000000000000000000" as const,
+		ZERO_ADDRESS: ethers.ZeroAddress as string,
 		loading: true as boolean,
 		error: "" as string,
 

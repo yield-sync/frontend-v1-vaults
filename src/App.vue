@@ -41,7 +41,7 @@
 		},
 
 		methods: {
-			async handleNetworkChange() 
+			async handleNetworkChange()
 			{
 				this.$store.state.loading = true;
 
@@ -114,8 +114,10 @@
 			}
 
 			// Handle network
-			window.ethereum.on("chainChanged", (_chainId: number) => 
+			window.ethereum.on("chainChanged", (chainId: number) =>
 			{
+				console.log(chainId);
+
 				return this.handleNetworkChange();
 			});
 		},
