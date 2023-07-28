@@ -146,6 +146,8 @@
 </template>
 
 <script lang="ts">
+	import router from "@/router";
+
 	import { defineComponent } from "vue";
 
 	export default defineComponent({
@@ -216,6 +218,8 @@
 							},
 						],
 					});
+
+					router.push("/");
 				}
 				catch (switchError: any)
 				{
