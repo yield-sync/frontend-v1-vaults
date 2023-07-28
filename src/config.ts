@@ -6,23 +6,37 @@ type Config = {
 			yieldSyncV1VaultAccessControl: string
 			yieldSyncV1ATransferRequestProtocol: string
 		}
-	}
+	},
+
+	chains: {
+		key: string,
+		chainId: string,
+		chainName: string,
+		nativeCurrency: {
+			name: string,
+			symbol: string,
+			decimals: number,
+		},
+		rpcUrls: string[],
+		blockExplorerUrls: string[]
+		icon: string,
+	}[]
 }
 
 export default {
 	address: {
 		mainnet: {
-			yieldSyncGovernance: "",
-			yieldSyncV1VaultFactory: "",
-			yieldSyncV1VaultAccessControl: "",
-			yieldSyncV1ATransferRequestProtocol: "",
+			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 		},
 
 		optimisticEthereum: {
-			yieldSyncGovernance: "",
-			yieldSyncV1VaultFactory: "",
-			yieldSyncV1VaultAccessControl: "",
-			yieldSyncV1ATransferRequestProtocol: "",
+			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 		},
 
 		optimisticGoerli: {
@@ -33,17 +47,17 @@ export default {
 		},
 
 		arbitrumOne: {
-			yieldSyncGovernance: "",
-			yieldSyncV1VaultFactory: "",
-			yieldSyncV1VaultAccessControl: "",
-			yieldSyncV1ATransferRequestProtocol: "",
+			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 		},
 
 		polygon: {
-			yieldSyncGovernance: "",
-			yieldSyncV1VaultFactory: "",
-			yieldSyncV1VaultAccessControl: "",
-			yieldSyncV1ATransferRequestProtocol: "",
+			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 		},
 
 		sepolia: {
@@ -52,5 +66,63 @@ export default {
 			yieldSyncV1VaultAccessControl: "0x348bcF3657CB008503fB56618F9EA03FDbCa2205",
 			yieldSyncV1ATransferRequestProtocol: "0x5F85Ee84D38E0b6B7b57817Ccf8B70117e7864cc",
 		},
-	}
+	},
+
+	chains: [
+		// Mainnet
+		{
+			key: "mainnet",
+			chainId: "0x1",
+			chainName: "Ethereum Mainnet",
+			nativeCurrency: {
+				name: "ETH",
+				symbol: "ETH",
+				decimals: 18
+			},
+			rpcUrls: [
+			],
+			blockExplorerUrls: [
+				"https://etherscan.io",
+			],
+			icon: require("./assets/eth.svg")
+		},
+
+		// Seploia
+		{
+			key: "sepolia",
+			chainId: "0xAA36A7",
+			chainName: "Ethereum Sepolia",
+			nativeCurrency: {
+				name: "ETH",
+				symbol: "ETH",
+				decimals: 18
+			},
+			rpcUrls: [
+			],
+			blockExplorerUrls: [
+				"https://etherscan.io",
+			],
+			icon: require("./assets/eth.svg")
+
+		},
+
+		// Optimistic Goerli
+		{
+			key: "optimisticGoerli",
+			chainId: "0x1A4",
+			chainName: "Optimistic Goerli",
+			nativeCurrency: {
+				name: "ETH",
+				symbol: "ETH",
+				decimals: 18
+			},
+			rpcUrls: [
+			],
+			blockExplorerUrls: [
+				"https://etherscan.io",
+			],
+			icon: require("./assets/op.svg")
+
+		},
+	],
 } as Config;

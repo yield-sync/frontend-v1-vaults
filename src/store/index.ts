@@ -24,8 +24,10 @@ export default createStore({
 		// eslint-disable-next-line
 		web3: window.ethereum ? new Web3(window.ethereum) : undefined as undefined | any,
 
+		chainIndex: 0 as number,
 		chainName: "mainnet" as string,
 		chainId: 0 as number,
+
 		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
 		wallet: {
@@ -103,9 +105,32 @@ export default createStore({
 			state.loading = l;
 		},
 
-		setChainId(state, id: number)
+		setChainIndex(state, chainId: number)
 		{
-			state.chainId = id;
+
+			switch (chainId)
+			{
+			case 1:
+				state.chainIndex = 0;
+				break;
+
+			case 11155111:
+				state.chainIndex = 1;
+				break;
+
+			case 420:
+				state.chainIndex = 2;
+				break;
+
+			default:
+				state.chainIndex = -1;
+				break;
+			}
+		},
+
+		setChainId(state, chainId: number)
+		{
+			state.chainId = chainId;
 		},
 
 		setChainName(state, chainId: number)
@@ -114,10 +139,6 @@ export default createStore({
 			{
 			case 1:
 				state.chainName = "mainnet";
-				break;
-
-			case 5:
-				state.chainName = "goerli";
 				break;
 
 			case 11155111:
@@ -173,6 +194,7 @@ export default createStore({
 	actions: {
 		generateChainRelatedData: async ({ commit, state }) =>
 		{
+			commit("setChainIndex", await state.web3.eth.net.getId());
 			commit("setChainId", await state.web3.eth.net.getId());
 			commit("setChainName", await state.web3.eth.net.getId());
 			commit("setEtherscanDomainStart", state.chainName !== "mainnet" ? state.chainName : "www");

@@ -371,7 +371,7 @@
 
 					if (!alchemyNFTData)
 					{
-						return
+						return;
 					}
 
 					for (let i = 0; i < alchemyNFTData.ownedNfts.length; i++)
