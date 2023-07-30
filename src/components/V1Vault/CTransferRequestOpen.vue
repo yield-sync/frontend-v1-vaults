@@ -447,14 +447,18 @@
 								</VBtn>
 							</VCol>
 
-							<VCol v-if="error" cols="12">
-								<h6 class="text-danger">{{ error }}</h6>
+							<VCol v-if="transactionError[w.id]" cols="12">
+								<h6 class="text-danger">{{ transactionError[w.id] }}</h6>
 							</VCol>
 						</VRow>
 					</VCol>
 				</VRow>
 			</VCardText>
 		</VCard>
+	</div>
+
+	<div v-if="error" cols="12">
+		<h6 class="text-danger">{{ error }}</h6>
 	</div>
 </template>
 
@@ -467,6 +471,7 @@
 	import abiER20 from "../../abi/erc20";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
+import { ethers } from "ethers";
 
 	export default defineComponent({
 		name: "CTransferRequest",
@@ -527,6 +532,12 @@
 				}[],
 
 				error: "" as string,
+
+				transactionError: {
+				} as {
+					[key: string]: string,
+				},
+
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
@@ -541,7 +552,8 @@
 				{
 					if (error)
 					{
-						console.error("Error:", error);
+						this.error = "Caught: " + String(error);
+
 						return;
 					}
 
@@ -572,7 +584,8 @@
 					{
 						if (error)
 						{
-							console.error("Error:", error);
+							this.error = "Caught: " + String(error);
+
 							return;
 						}
 
@@ -638,23 +651,26 @@
 						).call()
 					;
 
-					// Get token details
-					const erc20Contract = new this.$store.state.web3.eth.Contract(
-						abiER20 as AbiItem[],
-						tR.token
-					);
-
 					let name = "N.A.";
 					let symbol = "N.A.";
 
-					try
+					if (tR.token !== this.$store.state.ZERO_ADDRESS)
 					{
-						name = await erc20Contract.methods.name().call();
-						symbol = await erc20Contract.methods.symbol().call();
-					}
-					catch (e)
-					{
-						console.log(e);
+						// Get token details
+						const erc20Contract = new this.$store.state.web3.eth.Contract(
+							abiER20 as AbiItem[],
+							tR.token
+						);
+
+						try
+						{
+							name = await erc20Contract.methods.name().call();
+							symbol = await erc20Contract.methods.symbol().call();
+						}
+						catch (e)
+						{
+							this.error = "erc20 Error: " + String(e);
+						}
 					}
 
 					// Create a new Date object using the JavaScript timestamp
@@ -702,7 +718,7 @@
 					this.transferRequestProtocol
 				);
 
-				await transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollVote(
+				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollVote(
 					this.vaultAddress,
 					tRId,
 					vote
@@ -731,7 +747,7 @@
 					"error",
 					async (error: Error) =>
 					{
-						this.error = error.message ? error.message : "Something went wrong!";
+						this.transactionError[tRId] = error.message ? error.message : "Something went wrong!";
 
 						this.voting[tRId] = false;
 					}
@@ -755,7 +771,7 @@
 					return;
 				}
 
-				await yieldSyncV1Vault.methods.yieldSyncV1Vault_transferRequestId_transferRequestProcess(
+				yieldSyncV1Vault.methods.yieldSyncV1Vault_transferRequestId_transferRequestProcess(
 					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -783,7 +799,7 @@
 					"error",
 					async (error: Error) =>
 					{
-						this.error = error.message ? error.message : "Something went wrong!";
+						this.transactionError[tRId] = error.message ? error.message : "Something went wrong!";
 
 						this.processing[tRId] = false;
 					}
