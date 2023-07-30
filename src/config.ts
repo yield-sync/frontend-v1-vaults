@@ -37,9 +37,9 @@ export default {
 			],
 			icon: require("./assets/eth.svg"),
 			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
-			yieldSyncV1VaultFactory: "0xEde9646b1e60A92F4E66f84BD49604912De635C1",
-			yieldSyncV1VaultAccessControl: "0x348bcF3657CB008503fB56618F9EA03FDbCa2205",
-			yieldSyncV1ATransferRequestProtocol: "0x5F85Ee84D38E0b6B7b57817Ccf8B70117e7864cc",
+			yieldSyncV1VaultFactory: "0x414812B6218E5662af20b1ddbF1f26b2606c9375",
+			yieldSyncV1VaultAccessControl: "0x4f60eD6951456E7D18044a0b6e7e9ca5B52b4509",
+			yieldSyncV1ATransferRequestProtocol: "0x518C619C47C2b3Eb24eC45FEb96920DB19E93655",
 
 		},
 
@@ -58,10 +58,10 @@ export default {
 				"https://etherscan.io",
 			],
 			icon: require("./assets/op.svg"),
-			yieldSyncGovernance: "0x35E0Df7a18E112e879FA34576e412d999557C1a5",
-			yieldSyncV1VaultFactory: "0x2772a4ffc5d27EfB07c629b3fEB17E4D46550fe3",
-			yieldSyncV1VaultAccessControl: "0x8f06A70d0BE255B851ef838f3593D410e4144550",
-			yieldSyncV1ATransferRequestProtocol: "0x9157F5854bD49CC7e13FAe5209A447e241a49582",
+			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 
 		},
 	},

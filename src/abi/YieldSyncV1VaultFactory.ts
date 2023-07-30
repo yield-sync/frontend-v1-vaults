@@ -87,7 +87,7 @@ export default  [
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "deployedYieldSyncV1VaultAddress",
+				"name": "deployedYieldSyncV1Vault",
 				"type": "address"
 			},
 		],
@@ -140,11 +140,11 @@ export default  [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_yieldSyncV1VaultId",
+		"name": "yieldSyncV1Vault_yieldSyncV1VaultId",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -177,11 +177,11 @@ export default  [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultId_yieldSyncV1VaultAddress",
+		"name": "yieldSyncV1VaultId_yieldSyncV1Vault",
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 		],

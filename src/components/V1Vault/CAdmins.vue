@@ -114,7 +114,7 @@
 				}
 
 				this.admins = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1VaultAddress_admins(this.v1VaultAddress).call()
+					.yieldSyncV1Vault_admins(this.v1VaultAddress).call()
 				;
 			},
 

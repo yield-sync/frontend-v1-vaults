@@ -324,7 +324,7 @@
 				if (transferRequestProtocol)
 				{
 					await transferRequestProtocol.methods
-						.yieldSyncV1VaultAddress_transferRequestId_transferRequestUpdate(
+						.yieldSyncV1Vault_transferRequestId_transferRequestUpdate(
 							this.$route.params.vaultaddress,
 							this.$route.params.transferrequestid,
 							[
@@ -371,7 +371,7 @@
 				if (transferRequestProtocol)
 				{
 					await transferRequestProtocol.methods
-						.yieldSyncV1VaultAddress_transferRequestId_transferRequestPollUpdate(
+						.yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate(
 							this.$route.params.vaultaddress,
 							this.$route.params.transferrequestid,
 							[
@@ -421,14 +421,14 @@
 			if (transferRequestProtocol)
 			{
 				const tR = await transferRequestProtocol.methods
-					.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+					.yieldSyncV1Vault_transferRequestId_transferRequest(
 						this.$route.params.vaultaddress,
 						this.$route.params.transferrequestid
 					).call()
 				;
 
 				const tRP = await transferRequestProtocol.methods
-					.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
+					.yieldSyncV1Vault_transferRequestId_transferRequestPoll(
 						this.$route.params.vaultaddress,
 						this.$route.params.transferrequestid
 					).call();

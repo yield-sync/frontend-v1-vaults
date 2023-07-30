@@ -370,7 +370,7 @@
 					this.transferRequestProtocol
 				);
 
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.$store.state.wallet.accounts[0],
 					[
 						this.vaultProperties.againstVoteCountRequired,
@@ -470,7 +470,7 @@
 			);
 
 			const connectedWalletsVaultProperties = await transferRequestProtocol.methods
-				.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+				.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.$store.state.wallet.accounts[0]
 				).call()
 			;

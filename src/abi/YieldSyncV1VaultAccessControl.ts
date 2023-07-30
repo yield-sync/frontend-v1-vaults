@@ -3,7 +3,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -22,7 +22,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -45,7 +45,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "admin_yieldSyncV1VaultAddresses",
+		"name": "admin_yieldSyncV1Vaults",
 		"outputs": [
 			{
 				"internalType": "address[]",
@@ -60,7 +60,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -79,7 +79,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -102,7 +102,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "member_yieldSyncV1VaultAddresses",
+		"name": "member_yieldSyncV1Vaults",
 		"outputs": [
 			{
 				"internalType": "address[]",
@@ -121,7 +121,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_admins",
+		"name": "yieldSyncV1Vault_admins",
 		"outputs": [
 			{
 				"internalType": "address[]",
@@ -140,7 +140,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_members",
+		"name": "yieldSyncV1Vault_members",
 		"outputs": [
 			{
 				"internalType": "address[]",
@@ -155,7 +155,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -164,7 +164,7 @@ export default [
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_participant_access",
+		"name": "yieldSyncV1Vault_participant_access",
 		"outputs": [
 			{
 				"internalType": "bool",

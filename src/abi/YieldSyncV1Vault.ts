@@ -257,7 +257,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestProcess",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",

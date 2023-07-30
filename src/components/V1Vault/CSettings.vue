@@ -233,7 +233,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
 						this.update.againstVoteCountRequired,
@@ -259,7 +259,7 @@
 							this.edit.againstVoteCountRequired = false;
 
 							this.vault.againstVoteCountRequired = (
-								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[0];
@@ -290,7 +290,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
 						this.vault.againstVoteCountRequired,
@@ -316,7 +316,7 @@
 							this.edit.forVoteCountRequired = false;
 
 							this.vault.forVoteCountRequired = (
-								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[1];
@@ -347,7 +347,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
 						this.vault.againstVoteCountRequired,
@@ -373,7 +373,7 @@
 							this.edit.transferDelaySeconds = false;
 
 							this.vault.transferDelaySeconds = (
-								await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[2];
@@ -446,19 +446,19 @@
 			);
 
 			this.vault.againstVoteCountRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
 			)[0];
 
 			this.vault.forVoteCountRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
 			)[1];
 
 			this.vault.transferDelaySeconds = (
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
 			)[2];

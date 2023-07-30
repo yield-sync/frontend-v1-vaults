@@ -113,7 +113,7 @@
 				}
 
 				this.members = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-					.yieldSyncV1VaultAddress_members(this.v1VaultAddress).call()
+					.yieldSyncV1Vault_members(this.v1VaultAddress).call()
 				;
 			},
 

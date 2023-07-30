@@ -599,25 +599,25 @@
 				];
 
 				this.againstVoteCountRequired = (
-					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.vaultAddress
 					).call()
 				)[0];
 
 				this.forVoteCountRequired = (
-					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.vaultAddress
 					).call()
 				)[1];
 
 				this.transferDelaySeconds = (
-					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.vaultAddress
 					).call()
 				)[2];
 
 				this.idsOfOpenTransferRequests = (
-					await transferRequestProtocol.methods.yieldSyncV1VaultAddress_openTransferRequestIds(
+					await transferRequestProtocol.methods.yieldSyncV1Vault_openTransferRequestIds(
 						this.vaultAddress
 					).call()
 				);
@@ -625,14 +625,14 @@
 				for (let i = 0; i < this.idsOfOpenTransferRequests.length; i++)
 				{
 					const tR = await transferRequestProtocol.methods
-						.yieldSyncV1VaultAddress_transferRequestId_transferRequest(
+						.yieldSyncV1Vault_transferRequestId_transferRequest(
 							this.vaultAddress,
 							this.idsOfOpenTransferRequests[i]
 						).call()
 					;
 
 					const tRP = await transferRequestProtocol.methods
-						.yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll(
+						.yieldSyncV1Vault_transferRequestId_transferRequestPoll(
 							this.vaultAddress,
 							this.idsOfOpenTransferRequests[i]
 						).call()
@@ -702,7 +702,7 @@
 					this.transferRequestProtocol
 				);
 
-				await transferRequestProtocol.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestPollVote(
+				await transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollVote(
 					this.vaultAddress,
 					tRId,
 					vote
@@ -755,7 +755,7 @@
 					return;
 				}
 
-				await yieldSyncV1Vault.methods.yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess(
+				await yieldSyncV1Vault.methods.yieldSyncV1Vault_transferRequestId_transferRequestProcess(
 					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]

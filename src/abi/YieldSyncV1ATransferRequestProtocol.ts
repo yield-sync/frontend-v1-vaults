@@ -16,7 +16,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -35,7 +35,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -54,7 +54,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -85,7 +85,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -104,7 +104,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -160,7 +160,7 @@ export default [
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -213,11 +213,11 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_openTransferRequestIds",
+		"name": "yieldSyncV1Vault_openTransferRequestIds",
 		"outputs": [
 			{
 				"internalType": "uint256[]",
@@ -232,7 +232,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -241,7 +241,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequest",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequest",
 		"outputs": [
 			{
 				"components": [
@@ -293,7 +293,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -327,7 +327,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestCreate",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestCreate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -337,7 +337,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -346,7 +346,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestDelete",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestDelete",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -356,7 +356,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -365,7 +365,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestPoll",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPoll",
 		"outputs": [
 			{
 				"components": [
@@ -402,7 +402,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -438,7 +438,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestPollUpdate",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -448,7 +448,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -462,7 +462,7 @@ export default [
 				"type": "bool"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestPollVote",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollVote",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -472,7 +472,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -481,7 +481,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestProcess",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestProcess",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -491,7 +491,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -500,7 +500,7 @@ export default [
 				"type": "uint256"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestStatus",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestStatus",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -525,7 +525,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -576,7 +576,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_transferRequestId_transferRequestUpdate",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestUpdate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -586,11 +586,11 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_yieldSyncV1VaultProperty",
+		"name": "yieldSyncV1Vault_yieldSyncV1VaultProperty",
 		"outputs": [
 			{
 				"components": [
@@ -622,7 +622,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 			{
@@ -648,7 +648,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "yieldSyncV1VaultAddress_yieldSyncV1VaultPropertyUpdate",
+		"name": "yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -663,7 +663,7 @@ export default [
 			},
 			{
 				"internalType": "address",
-				"name": "yieldSyncV1VaultAddress",
+				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
 		],

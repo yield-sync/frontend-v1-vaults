@@ -116,13 +116,13 @@
 			);
 
 			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
-				.member_yieldSyncV1VaultAddresses(this.$store.state.wallet.accounts[0]).call()
+				.member_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call()
 			;
 
 			for (let i = 0; i < v1Vaults.length; i++)
 			{
 				const vaultProperties = await transferRequestProtocol.methods
-					.yieldSyncV1VaultAddress_yieldSyncV1VaultProperty(
+					.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.$store.state.wallet.accounts[0]
 					).call()
 				;
