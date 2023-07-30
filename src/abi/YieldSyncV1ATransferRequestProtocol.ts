@@ -126,13 +126,13 @@ export default [
 					},
 					{
 						"internalType": "address",
-						"name": "token",
+						"name": "to",
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
 					},
 					{
 						"internalType": "uint256",
@@ -140,9 +140,14 @@ export default [
 						"type": "uint256"
 					},
 					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "created",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
 					},
 				],
 				"indexed": false,
@@ -213,6 +218,25 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "initiator",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1Vault",
+				"type": "address"
+			},
+		],
+		"name": "yieldSyncV1VaultInitialize",
+		"outputs": [
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
@@ -262,13 +286,13 @@ export default [
 					},
 					{
 						"internalType": "address",
-						"name": "token",
+						"name": "to",
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
 					},
 					{
 						"internalType": "uint256",
@@ -276,9 +300,14 @@ export default [
 						"type": "uint256"
 					},
 					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "created",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
 					},
 				],
 				"internalType": "struct TransferRequest",
@@ -313,7 +342,7 @@ export default [
 			},
 			{
 				"internalType": "address",
-				"name": "tokenAddress",
+				"name": "token",
 				"type": "address"
 			},
 			{
@@ -552,13 +581,13 @@ export default [
 					},
 					{
 						"internalType": "address",
-						"name": "token",
+						"name": "to",
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
 					},
 					{
 						"internalType": "uint256",
@@ -566,9 +595,14 @@ export default [
 						"type": "uint256"
 					},
 					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "created",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
 					},
 				],
 				"internalType": "struct TransferRequest",
@@ -649,25 +683,6 @@ export default [
 			},
 		],
 		"name": "yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate",
-		"outputs": [
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "initiator",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "yieldSyncV1Vault",
-				"type": "address"
-			},
-		],
-		"name": "yieldSyncV1VaultInitialize",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
