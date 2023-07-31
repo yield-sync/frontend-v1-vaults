@@ -401,7 +401,7 @@
 
 				try
 				{
-					await this.yieldSyncV1Vault.methods.renounceMembership().send({
+					this.yieldSyncV1Vault.methods.renounceMembership().send({
 						from: this.$store.state.wallet.accounts[0]
 					}).on("sent", async () =>
 					{
