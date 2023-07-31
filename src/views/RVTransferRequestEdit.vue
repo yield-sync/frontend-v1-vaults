@@ -356,41 +356,54 @@
 					return;
 				}
 
+				const updatedTransferRequest: UpdateTransferRequest = [
+					this.transferRequest.for == "ERC 20" ? true : false,
+					this.transferRequest.for == "ERC 721" ? true : false,
+					this.transferRequest.creator,
+					this.transferRequest.to,
+					this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
+					BigInt(this.transferRequest.amount * 10 ** 18),
+					this.transferRequest.created,
+					this.transferRequest.tokenId,
+				];
+
 				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestUpdate(
 					this.$route.params.vaultaddress,
 					this.$route.params.transferrequestid,
-					[
-						this.transferRequest.for == "ERC 20" ? true : false,
-						this.transferRequest.for == "ERC 721" ? true : false,
-						this.transferRequest.creator,
-						this.transferRequest.to,
-						this.transferRequest.for !== "Ether" ? this.transferRequest.token : this.ZeroAddress,
-						BigInt(this.transferRequest.amount * 10 ** 18),
-						this.transferRequest.created,
-						this.transferRequest.tokenId,
-					] as UpdateTransferRequest
-				).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updatingTR = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+					updatedTransferRequest
+				).send(
 					{
-						this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-						this.$store.state.pages.RVV1Vault.transferRequests.key++;
+						from: this.$store.state.wallet.accounts[0]
 					}
+				).on(
+					"sent",
+					async () =>
+					{
+						this.updatingTR = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					this.updatingTR = false;
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
+						if (confirmationNumber == 0)
+						{
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
+						}
 
-					this.updatingTR = false;
-				});
+						this.updatingTR = false;
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.updatingTR = false;
+					}
+				);
 			},
 
 			async updateTransferRequestPoll()
@@ -406,37 +419,50 @@
 					return;
 				}
 
+				const updateTransferRequestPoll: UpdateTransferRequestPoll = [
+					this.transferRequest.againstVoteCount,
+					this.transferRequest.forVoteCount,
+					this.transferRequest.latestForVoteTime,
+					this.transferRequest.votedMembers,
+				];
+
 				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate(
 					this.$route.params.vaultaddress,
 					this.$route.params.transferrequestid,
-					[
-						this.transferRequest.againstVoteCount,
-						this.transferRequest.forVoteCount,
-						this.transferRequest.latestForVoteTime,
-						this.transferRequest.votedMembers,
-					] as UpdateTransferRequestPoll
-				).send({
-					from: this.$store.state.wallet.accounts[0]
-				}).on("sent", async () =>
-				{
-					this.updatingTRP = true;
-				}).on("confirmation", async (confirmationNumber: number, receipt: TransactionReceipt) =>
-				{
-					console.log(`Confirmation #${confirmationNumber}`, receipt);
-
-					if (confirmationNumber == 0)
+					updateTransferRequestPoll
+				).send(
 					{
-						this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-						this.$store.state.pages.RVV1Vault.transferRequests.key++;
+						from: this.$store.state.wallet.accounts[0]
 					}
+				).on(
+					"sent",
+					async () =>
+					{
+						this.updatingTR = true;
+					}
+				).on(
+					"confirmation",
+						async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-					this.updatingTRP = false;
-				}).on("error", async (error: Error) =>
-				{
-					this.error = String(error);
+						if (confirmationNumber == 0)
+						{
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
+						}
 
-					this.updatingTRP = false;
-				});
+						this.updatingTRP = false;
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.updatingTRP = false;
+					}
+				);
 			},
 		},
 
