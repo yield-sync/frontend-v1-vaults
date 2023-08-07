@@ -195,7 +195,7 @@
 										variant="tonal"
 										color="danger"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="removeVotedMember(i)"
+										@click="removeVoteForMember(i)"
 									>
 										✕
 									</VBtn>
@@ -205,7 +205,7 @@
 							<VRow>
 								<VCol md="10">
 									<VTextField
-										v-model="addVotedMemberField"
+										v-model="addVoteForMemberField"
 										label="Add Voted Member Address"
 										variant="outlined"
 									/>
@@ -216,7 +216,50 @@
 										variant="tonal"
 										color="success"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="addVotedMember()"
+										@click="addVoteForMember()"
+									>
+										Add
+									</VBtn>
+								</VCol>
+							</VRow>
+						</VCol>
+
+						<VCol cols="12">
+							<h3 class="mb-6 text-primary">Voted Against Members</h3>
+							<VRow
+								v-for="(m, i) in transferRequest.voteAgainstMembers" :key="i"
+								class="mb-3"
+							>
+								<VCol md="10">
+									<h3 class="member-or-admin my-2">{{ m }}</h3>
+								</VCol>
+								<VCol md="2">
+									<VBtn
+										variant="tonal"
+										color="danger"
+										class="w-100 rounded-xl elevation-0 border"
+										@click="removeVoteAgainstMember(i)"
+									>
+										✕
+									</VBtn>
+								</VCol>
+							</VRow>
+
+							<VRow>
+								<VCol md="10">
+									<VTextField
+										v-model="addVoteForMemberField"
+										label="Add Voted Member Address"
+										variant="outlined"
+									/>
+								</VCol>
+
+								<VCol md="2">
+									<VBtn
+										variant="tonal"
+										color="success"
+										class="w-100 rounded-xl elevation-0 border"
+										@click="addVoteAgainstMember()"
 									>
 										Add
 									</VBtn>
@@ -309,7 +352,8 @@
 					] as string[],
 				},
 				error: "",
-				addVotedMemberField: "",
+				addVoteAgainstMemberField: "",
+				addVoteForMemberField: "",
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
@@ -317,22 +361,50 @@
 		},
 
 		methods: {
-			addVotedMember()
+			addVoteAgainstMember()
 			{
-				if (this.$store.state.web3.utils.isAddress(this.addVotedMemberField))
+				if (this.$store.state.web3.utils.isAddress(this.addVoteAgainstMemberField))
+				{
+					// Add member
+					this.transferRequest.voteAgainstMembers = [
+						...this.transferRequest.voteAgainstMembers,
+						this.addVoteAgainstMemberField,
+					];
+
+					// Clear field
+					this.addVoteAgainstMemberField = "";
+				}
+			},
+
+			removeVoteAgainstMember(i: number)
+			{
+				if (i > -1)
+				{
+					this.transferRequest.voteAgainstMembers = this.transferRequest.voteAgainstMembers.filter(
+						(m) =>
+						{
+							return m !== this.transferRequest.voteAgainstMembers[i];
+						}
+					);
+				}
+			},
+
+			addVoteForMember()
+			{
+				if (this.$store.state.web3.utils.isAddress(this.addVoteForMemberField))
 				{
 					// Add member
 					this.transferRequest.voteForMembers = [
 						...this.transferRequest.voteForMembers,
-						this.addVotedMemberField,
+						this.addVoteForMemberField,
 					];
 
 					// Clear field
-					this.addVotedMemberField = "";
+					this.addVoteForMemberField = "";
 				}
 			},
 
-			removeVotedMember(i: number)
+			removeVoteForMember(i: number)
 			{
 				if (i > -1)
 				{

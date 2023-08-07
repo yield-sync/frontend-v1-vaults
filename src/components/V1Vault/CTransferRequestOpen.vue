@@ -396,13 +396,16 @@
 								<h6 class="text-center text-dark">You have voted already</h6>
 							</VCol>
 
-							<VCol v-if="true" cols="12">
-								<h4 class="mb-3 text-primary">Voted Voter</h4>
-								<h4 v-for="(v, i) in w.voteAgainstMembers" :key="i">
+							<VCol cols="6" class="text-center">
+								<h4 class="mb-3 text-primary">Voted For Members</h4>
+								<h4 v-for="(v, i) in w.voteForMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
+							</VCol>
 
-								<h4 v-for="(v, i) in w.voteForMembers" :key="i">
+							<VCol cols="6" class="text-center">
+								<h4 class="mb-3 text-primary">Voted Against Member</h4>
+								<h4 v-for="(v, i) in w.voteAgainstMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
 							</VCol>
