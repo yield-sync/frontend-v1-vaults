@@ -12,7 +12,7 @@
 				<!-- Against -->
 				<VCol cols="12" md="4">
 					<VTextField
-						v-model="vaultProperties.againstVoteCountRequired"
+						v-model="vaultProperties.voteAgainstRequired"
 						type="number"
 						label="Against Vote Count"
 						variant="outlined"
@@ -24,7 +24,7 @@
 				<!-- For -->
 				<VCol cols="12" md="4">
 					<VTextField
-						v-model="vaultProperties.forVoteCountRequired"
+						v-model="vaultProperties.voteForRequired"
 						type="number"
 						label="For Vote Count"
 						variant="outlined"
@@ -52,8 +52,8 @@
 						@click="updateWalletProperties()"
 						:disabled="
 							vaultProperties.updating || (
-								vaultProperties.againstVoteCountRequired == vaultDeploy.againstVoteCountRequired &&
-								vaultProperties.forVoteCountRequired == vaultDeploy.forVoteCountRequired &&
+								vaultProperties.voteAgainstRequired == vaultDeploy.voteAgainstRequired &&
+								vaultProperties.voteForRequired == vaultDeploy.voteForRequired &&
 								vaultProperties.transferDelaySeconds == vaultDeploy.transferDelaySeconds
 							)
 						"
@@ -70,8 +70,8 @@
 
 				<VCol
 					v-if="
-						vaultProperties.againstVoteCountRequired != vaultDeploy.againstVoteCountRequired ||
-							vaultProperties.forVoteCountRequired != vaultDeploy.forVoteCountRequired ||
+						vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
+							vaultProperties.voteForRequired != vaultDeploy.voteForRequired ||
 							vaultProperties.transferDelaySeconds != vaultDeploy.transferDelaySeconds
 					"
 					cols="12"
@@ -90,7 +90,7 @@
 	</VCard>
 
 	<VCard
-		v-if="vaultDeploy.againstVoteCountRequired > 0 && vaultDeploy.forVoteCountRequired > 0"
+		v-if="vaultDeploy.voteAgainstRequired > 0 && vaultDeploy.voteForRequired > 0"
 		class="mb-4 rounded-xl bg-light-frost elevation-0"
 	>
 		<VCardText class="px-6 py-6">
@@ -112,7 +112,15 @@
 						class="mb-3"
 					>
 						<VCol md="10">
-							<h5 class="member-or-admin my-2">{{ m }}</h5>
+							<a
+								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">
+									{{ m }}
+								</VBtn>
+							</a>
 						</VCol>
 						<VCol md="2">
 							<VBtn
@@ -153,7 +161,15 @@
 						class="mb-3"
 					>
 						<VCol md="10">
-							<h5 class="member-or-admin my-2">{{ m }}</h5>
+							<a
+								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">
+									{{ m }}
+								</VBtn>
+							</a>
 						</VCol>
 						<VCol md="2">
 							<VBtn
@@ -197,7 +213,7 @@
 			/>
 
 			<VCard
-				v-if="vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired"
+				v-if="vaultDeploy.members.length < vaultDeploy.voteAgainstRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -208,7 +224,7 @@
 			</VCard>
 
 			<VCard
-				v-if="vaultDeploy.members.length < vaultDeploy.forVoteCountRequired"
+				v-if="vaultDeploy.members.length < vaultDeploy.voteForRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -225,13 +241,13 @@
 					vaultProperties.updating ||
 						vaultDeploy.deploying || (
 							(
-								vaultDeploy.members.length < vaultDeploy.forVoteCountRequired ||
-								vaultDeploy.members.length < vaultDeploy.againstVoteCountRequired
+								vaultDeploy.members.length < vaultDeploy.voteForRequired ||
+								vaultDeploy.members.length < vaultDeploy.voteAgainstRequired
 							) &&
 							vaultDeploy.admins.length == 0
 						) || (
-							vaultProperties.againstVoteCountRequired != vaultDeploy.againstVoteCountRequired ||
-							vaultProperties.forVoteCountRequired != vaultDeploy.forVoteCountRequired ||
+							vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
+							vaultProperties.voteForRequired != vaultDeploy.voteForRequired ||
 							vaultProperties.transferDelaySeconds != vaultDeploy.transferDelaySeconds
 						)
 				"
@@ -278,8 +294,8 @@
 				deploymentFee: 0 as number,
 
 				vaultProperties: {
-					againstVoteCountRequired: 0 as number,
-					forVoteCountRequired: 0 as number,
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
 					transferDelaySeconds: 0 as number,
 					updating: false,
 				},
@@ -297,8 +313,8 @@
 					signatureManager: ethers.ZeroAddress as string,
 					useDefaultSignatureManager: false as boolean,
 
-					againstVoteCountRequired: 0 as number,
-					forVoteCountRequired: 0 as number,
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
 					transferDelaySeconds: 0 as number,
 					deploying: false as boolean,
 				},
@@ -373,8 +389,8 @@
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.$store.state.wallet.accounts[0],
 					[
-						this.vaultProperties.againstVoteCountRequired,
-						this.vaultProperties.forVoteCountRequired,
+						this.vaultProperties.voteAgainstRequired,
+						this.vaultProperties.voteForRequired,
 						this.vaultProperties.transferDelaySeconds,
 					]
 				).send({
@@ -396,8 +412,8 @@
 							return;
 						}
 
-						this.vaultDeploy.againstVoteCountRequired = this.vaultProperties.againstVoteCountRequired;
-						this.vaultDeploy.forVoteCountRequired = this.vaultProperties.forVoteCountRequired;
+						this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
+						this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
 						this.vaultDeploy.transferDelaySeconds = this.vaultProperties.transferDelaySeconds;
 
 						this.vaultProperties.updating = false;
@@ -475,12 +491,12 @@
 				).call()
 			;
 
-			this.vaultProperties.againstVoteCountRequired = connectedWalletsVaultProperties[0];
-			this.vaultProperties.forVoteCountRequired = connectedWalletsVaultProperties[1];
+			this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties[0];
+			this.vaultProperties.voteForRequired = connectedWalletsVaultProperties[1];
 			this.vaultProperties.transferDelaySeconds = connectedWalletsVaultProperties[2];
 
-			this.vaultDeploy.againstVoteCountRequired = this.vaultProperties.againstVoteCountRequired;
-			this.vaultDeploy.forVoteCountRequired = this.vaultProperties.forVoteCountRequired;
+			this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
+			this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
 			this.vaultDeploy.transferDelaySeconds = this.vaultProperties.transferDelaySeconds;
 		},
 	});

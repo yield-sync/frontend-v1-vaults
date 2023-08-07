@@ -94,10 +94,10 @@
 						<h4 class="mt-2 text-center">
 							{{
 								(
-									parseInt(w.forVoteCount) < forVoteCountRequired &&
-									parseInt(w.againstVoteCount) < againstVoteCountRequired
+									w.voteForMembers.length < voteForRequired &&
+									w.voteAgainstMembers.length < voteAgainstRequired
 								) ? '🗳️' : (
-									parseInt(w.againstVoteCount) >= againstVoteCountRequired
+									w.voteAgainstMembers.length >= voteAgainstRequired
 								) ? '❌' : (
 									currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
 								) ?  '✅' : '⏳'
@@ -140,8 +140,8 @@
 
 					<VCol v-if="!opened[i]" cols="2">
 						<h3 class="mt-2 text-center">
-							<span class="text-success">{{ w.forVoteCount }}</span> :
-							<span class="text-danger">{{ w.againstVoteCount }}</span>
+							<span class="text-success">{{ w.voteForMembers.length }}</span> :
+							<span class="text-danger">{{ w.voteAgainstMembers.length }}</span>
 						</h3>
 					</VCol>
 
@@ -162,10 +162,10 @@
 								<h4 class="mt-2 text-center">
 									{{
 										(
-											parseInt(w.forVoteCount) < forVoteCountRequired &&
-											parseInt(w.againstVoteCount) < againstVoteCountRequired
+											w.voteForMembers.length < voteForRequired &&
+											w.voteAgainstMembers.length < voteAgainstRequired
 										) ? '🗳️' : (
-											parseInt(w.againstVoteCount) >= againstVoteCountRequired
+											w.voteAgainstMembers.length >= voteAgainstRequired
 										) ? '❌' : (
 											(
 												currentTimestamp - w.latestRelevantForVoteBlockTimestamp
@@ -302,22 +302,25 @@
 
 								<VProgressLinear
 									color="success"
-									:model-value="(parseInt(w.forVoteCount) / forVoteCountRequired * 100)"
+									:model-value="(w.voteForMembers.length / voteForRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ w.forVoteCount }}/{{ forVoteCountRequired }}</strong>
+									<strong>{{ w.voteForMembers.length }}/{{ voteForRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										parseInt(w.forVoteCount) < forVoteCountRequired &&
-										parseInt(w.againstVoteCount) < againstVoteCountRequired
+										w.voteForMembers.length < voteForRequired &&
+										w.voteAgainstMembers.length < voteAgainstRequired
 									)"
 									:disabled="
 										voting[w.id] ||
-											w.votedMembers.some(
+											w.voteAgainstMembers.some(
+												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+											) ||
+											w.voteForMembers.some(
 												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 											)
 									"
@@ -342,22 +345,25 @@
 
 								<VProgressLinear
 									color="danger"
-									:model-value="(parseInt(w.againstVoteCount) / againstVoteCountRequired * 100)"
+									:model-value="(w.voteAgainstMembers.length / voteAgainstRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ w.againstVoteCount }}/{{ againstVoteCountRequired }}</strong>
+									<strong>{{ w.voteAgainstMembers.length }}/{{ voteAgainstRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										parseInt(w.forVoteCount) < forVoteCountRequired &&
-										parseInt(w.againstVoteCount) < againstVoteCountRequired
+										w.voteForMembers.length < voteForRequired &&
+										w.voteAgainstMembers.length < voteAgainstRequired
 									)"
 									:disabled="
 										voting[w.id] ||
-											w.votedMembers.some(
+											w.voteAgainstMembers.some(
+												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+											) ||
+											w.voteForMembers.some(
 												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 											)
 									"
@@ -379,7 +385,9 @@
 
 							<VCol
 								v-if="
-									w.votedMembers.some(
+									w.voteAgainstMembers.some(
+										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+									) || w.voteForMembers.some(
 										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 									)
 								"
@@ -388,18 +396,22 @@
 								<h6 class="text-center text-dark">You have voted already</h6>
 							</VCol>
 
-							<VCol v-if="false" cols="12">
+							<VCol v-if="true" cols="12">
 								<h4 class="mb-3 text-primary">Voted Voter</h4>
-								<h4 v-for="(v, i) in w.votedMembers" :key="i">
+								<h4 v-for="(v, i) in w.voteAgainstMembers" :key="i">
+									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
+								</h4>
+
+								<h4 v-for="(v, i) in w.voteForMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
 							</VCol>
 
 							<!-- Time passed -->
 							<VCol
-								v-if="w.votedMembers.length > 0 || asAdmin"
+								v-if="w.voteForMembers.length > 0 || asAdmin"
 								cols="12"
-								:sm="parseInt(w.forVoteCount) >= forVoteCountRequired || asAdmin ? 6: 12"
+								:sm="w.voteForMembers.length >= voteForRequired || asAdmin ? 6: 12"
 							>
 								<h4 class="mb-3 text-center text-primary">
 									Latest Relevant For Vote Time
@@ -410,7 +422,7 @@
 							</VCol>
 
 							<!-- Time passed -->
-							<VCol v-if="parseInt(w.forVoteCount) >= forVoteCountRequired || asAdmin" cols="12" sm="6">
+							<VCol v-if="w.voteForMembers.length >= voteForRequired || asAdmin" cols="12" sm="6">
 								<h4 class="mb-3 text-center text-primary">
 									Time Passed / Transfer Delay (s)
 								</h4>
@@ -423,8 +435,8 @@
 							<!-- Proccess TransferRequest Button -->
 							<VCol
 								v-if="
-									parseInt(w.againstVoteCount) >= againstVoteCountRequired || (
-										parseInt(w.forVoteCount) >= forVoteCountRequired && (
+									w.voteAgainstMembers.length >= voteAgainstRequired || (
+										w.voteForMembers.length >= voteForRequired && (
 											currentTimestamp - w.latestRelevantForVoteBlockTimestamp
 										) >= transferDelaySeconds
 									)
@@ -471,7 +483,7 @@
 	import abiER20 from "../../abi/erc20";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
-import { ethers } from "ethers";
+	import { ethers } from "ethers";
 
 	export default defineComponent({
 		name: "CTransferRequest",
@@ -494,33 +506,40 @@ import { ethers } from "ethers";
 				loading: true as boolean,
 
 				currentTimestamp: 99999999999999 as number,
+
 				voting: {
 				} as {
 					[key: string]: boolean,
 				},
+
 				processing: {
 				} as {
 					[key: string]: boolean,
 				},
+
 				yieldSyncV1Vault: undefined as undefined | Contract,
-				againstVoteCountRequired: 0 as number,
-				forVoteCountRequired: 0 as number,
+
+				voteAgainstRequired: 0 as number,
+
+				voteForRequired: 0 as number,
+
 				transferDelaySeconds: 0 as number,
+
 				opened: {
 				} as {
 					[key: string]: boolean,
 				},
+
 				idsOfOpenTransferRequests: [
 				],
+
 				detailedTransferRequests: [
 				] as {
 					id: number,
-					againstVoteCount: string,
 					amount: number,
 					creator: string,
 					forERC20: boolean,
 					forERC721: boolean,
-					forVoteCount: string,
 					latestForVoteTime: string,
 					latestRelevantForVoteBlockTimestamp: number,
 					to: string,
@@ -528,7 +547,8 @@ import { ethers } from "ethers";
 					tokenSymbol: string,
 					tokenAddress: string,
 					tokenId: string,
-					votedMembers: string[],
+					voteAgainstMembers: string[],
+					voteForMembers: string[],
 				}[],
 
 				error: "" as string,
@@ -611,13 +631,13 @@ import { ethers } from "ethers";
 				this.detailedTransferRequests = [
 				];
 
-				this.againstVoteCountRequired = (
+				this.voteAgainstRequired = (
 					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.vaultAddress
 					).call()
 				)[0];
 
-				this.forVoteCountRequired = (
+				this.voteForRequired = (
 					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 						this.vaultAddress
 					).call()
@@ -686,12 +706,10 @@ import { ethers } from "ethers";
 
 					this.detailedTransferRequests.push({
 						id: this.idsOfOpenTransferRequests[i],
-						againstVoteCount: tRP.againstVoteCount,
 						amount: tR.amount,
 						creator: tR.creator,
 						forERC20: tR.forERC20,
 						forERC721: tR.forERC721,
-						forVoteCount: tRP.forVoteCount,
 						latestForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
 						latestRelevantForVoteBlockTimestamp: tRP.latestForVoteTime,
 						to: tR.to,
@@ -699,7 +717,8 @@ import { ethers } from "ethers";
 						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
 						tokenAddress: tR.token,
 						tokenId: tR.tokenId,
-						votedMembers: tRP.votedMembers,
+						voteAgainstMembers: tRP.voteAgainstMembers,
+						voteForMembers: tRP.voteForMembers,
 					});
 				}
 

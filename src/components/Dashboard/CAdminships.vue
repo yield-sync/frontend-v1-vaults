@@ -50,7 +50,7 @@
 
 							<VCol cols="12" md="4" class="d-none d-md-block">
 								<h3 class="text-center text-primary" style="word-wrap: break-word;">
-									{{ v.forVoteCountRequired }} : {{ v.againstVoteCountRequired }}
+									{{ v.voteForRequired }} : {{ v.voteAgainstRequired }}
 								</h3>
 							</VCol>
 
@@ -98,8 +98,8 @@
 				adminshipYieldSyncV1VaultVaults: [
 				] as {
 					address: string;
-					againstVoteCountRequired: number;
-					forVoteCountRequired: number;
+					voteAgainstRequired: number;
+					voteForRequired: number;
 					transferDelaySeconds: number;
 				}[],
 			};
@@ -131,8 +131,8 @@
 
 				this.adminshipYieldSyncV1VaultVaults.push({
 					address: v1Vaults[i],
-					againstVoteCountRequired: vaultProperties[0],
-					forVoteCountRequired: vaultProperties[1],
+					voteAgainstRequired: vaultProperties[0],
+					voteForRequired: vaultProperties[1],
 					transferDelaySeconds: vaultProperties[2],
 				});
 			}

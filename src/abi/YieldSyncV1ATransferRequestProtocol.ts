@@ -64,7 +64,7 @@ export default [
 				"type": "uint256"
 			},
 			{
-				"indexed": true,
+				"indexed": false,
 				"internalType": "address",
 				"name": "member",
 				"type": "address"
@@ -156,7 +156,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "UpdatedTransferRequest",
+		"name": "UpdateTransferRequest",
 		"type": "event"
 	},
 	{
@@ -172,22 +172,17 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
 						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{
 						"internalType": "address[]",
-						"name": "votedMembers",
+						"name": "voteAgainstMembers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "voteForMembers",
 						"type": "address[]"
 					},
 				],
@@ -197,7 +192,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "UpdatedTransferRequestPoll",
+		"name": "UpdateTransferRequestPoll",
 		"type": "event"
 	},
 	{
@@ -400,22 +395,17 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
 						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{
 						"internalType": "address[]",
-						"name": "votedMembers",
+						"name": "voteAgainstMembers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "voteForMembers",
 						"type": "address[]"
 					},
 				],
@@ -443,22 +433,17 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "againstVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "forVoteCount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
 						"name": "latestForVoteTime",
 						"type": "uint256"
 					},
 					{
 						"internalType": "address[]",
-						"name": "votedMembers",
+						"name": "voteAgainstMembers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "voteForMembers",
 						"type": "address[]"
 					},
 				],
@@ -630,12 +615,12 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "againstVoteRequired",
+						"name": "voteAgainstRequired",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "forVoteRequired",
+						"name": "voteForRequired",
 						"type": "uint256"
 					},
 					{
@@ -663,12 +648,12 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "againstVoteRequired",
+						"name": "voteAgainstRequired",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "forVoteRequired",
+						"name": "voteForRequired",
 						"type": "uint256"
 					},
 					{

@@ -188,13 +188,12 @@
 
 						this.removing = false;
 					}
-				})
-					.on("error", async (error: Error) =>
-					{
-						this.error = String(error);
+				}).on("error", async (error: Error) =>
+				{
+					this.error = String(error);
 
-						this.removing = false;
-					});
+					this.removing = false;
+				});
 			},
 		},
 

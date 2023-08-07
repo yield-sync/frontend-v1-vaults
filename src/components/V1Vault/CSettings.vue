@@ -10,13 +10,13 @@
 					<VCol :cols="asAdmin ? 8 : 12" class="text-center">
 						<h3 class="mb-3 text-uppercase text-primary">✅ For Vote Count Required</h3>
 
-						<h3 v-if="!asAdmin || !edit.forVoteCountRequired" class="m-0">
-							{{ vault.forVoteCountRequired }}
+						<h3 v-if="!asAdmin || !edit.voteForRequired" class="m-0">
+							{{ vault.voteForRequired }}
 						</h3>
 
 						<VTextField
-							v-if="asAdmin && edit.forVoteCountRequired"
-							v-model="update.forVoteCountRequired"
+							v-if="asAdmin && edit.voteForRequired"
+							v-model="update.voteForRequired"
 							size="sm"
 							type="number"
 							label="New For Vote Count"
@@ -26,22 +26,22 @@
 
 					<VCol v-if="asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="updating.forVoteCountRequired"
+							:disabled="updating.voteForRequired"
 							variant="flat"
-							:color="edit.forVoteCountRequired ? 'danger' : 'admin'"
+							:color="edit.voteForRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="edit.forVoteCountRequired = !edit.forVoteCountRequired"
+							@click="edit.voteForRequired = !edit.voteForRequired"
 						>
-							{{ edit.forVoteCountRequired ? 'Cancel' : 'Edit' }}
+							{{ edit.voteForRequired ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="edit.forVoteCountRequired"
-							:disabled="updating.forVoteCountRequired"
+							v-if="edit.voteForRequired"
+							:disabled="updating.voteForRequired"
 							variant="tonal"
 							color="success"
 							class="w-100 mb-3 rounded-xl"
-							@click="updateForVoteCountRequired()"
+							@click="updatevoteForRequired()"
 						>
 							Update
 						</VBtn>
@@ -54,13 +54,13 @@
 					<VCol :cols="asAdmin ? 8 : 12" class="text-center">
 						<h3 class="mb-3 text-uppercase text-primary">❌ Against Vote Count Required</h3>
 
-						<h3 v-if="!asAdmin || !edit.againstVoteCountRequired" class="m-0">
-							{{ vault.againstVoteCountRequired }}
+						<h3 v-if="!asAdmin || !edit.voteAgainstRequired" class="m-0">
+							{{ vault.voteAgainstRequired }}
 						</h3>
 
 						<VTextField
-							v-if="asAdmin && edit.againstVoteCountRequired"
-							v-model="update.againstVoteCountRequired"
+							v-if="asAdmin && edit.voteAgainstRequired"
+							v-model="update.voteAgainstRequired"
 							size="sm"
 							type="number"
 							label="New Against Vote Count"
@@ -71,22 +71,22 @@
 
 					<VCol v-if="asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="updating.againstVoteCountRequired"
+							:disabled="updating.voteAgainstRequired"
 							variant="flat"
-							:color="edit.againstVoteCountRequired ? 'danger' : 'admin'"
+							:color="edit.voteAgainstRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="edit.againstVoteCountRequired = !edit.againstVoteCountRequired"
+							@click="edit.voteAgainstRequired = !edit.voteAgainstRequired"
 						>
-							{{ edit.againstVoteCountRequired ? 'Cancel' : 'Edit' }}
+							{{ edit.voteAgainstRequired ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="edit.againstVoteCountRequired"
-							:disabled="updating.againstVoteCountRequired"
+							v-if="edit.voteAgainstRequired"
+							:disabled="updating.voteAgainstRequired"
 							variant="tonal"
 							color="success"
 							class="mb-3 w-100 rounded-xl"
-							@click="updateAgainstVoteCountRequired()"
+							@click="updatevoteAgainstRequired()"
 						>
 							Update
 						</VBtn>
@@ -192,23 +192,23 @@
 				yieldSyncV1Vault: undefined as undefined | Contract,
 
 				vault: {
-					againstVoteCountRequired: 0 as number,
-					forVoteCountRequired: 0 as number,
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
 					transferDelaySeconds: 0 as number,
 				},
 				update: {
-					againstVoteCountRequired: 0 as number,
-					forVoteCountRequired: 0 as number,
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
 					transferDelaySeconds: 0 as number,
 				},
 				edit: {
-					againstVoteCountRequired: false as boolean,
-					forVoteCountRequired: false as boolean,
+					voteAgainstRequired: false as boolean,
+					voteForRequired: false as boolean,
 					transferDelaySeconds: false as boolean,
 				},
 				updating: {
-					againstVoteCountRequired: false as boolean,
-					forVoteCountRequired: false as boolean,
+					voteAgainstRequired: false as boolean,
+					voteForRequired: false as boolean,
 					transferDelaySeconds: false as boolean,
 				},
 
@@ -221,7 +221,7 @@
 		},
 
 		methods: {
-			updateAgainstVoteCountRequired()
+			updatevoteAgainstRequired()
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.vaultAddress))
 				{
@@ -236,8 +236,8 @@
 				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
-						this.update.againstVoteCountRequired,
-						this.vault.forVoteCountRequired,
+						this.update.voteAgainstRequired,
+						this.vault.voteForRequired,
 						this.vault.transferDelaySeconds,
 					]
 				).send({
@@ -246,7 +246,7 @@
 					"sent",
 					async () =>
 					{
-						this.updating.againstVoteCountRequired = true;
+						this.updating.voteAgainstRequired = true;
 					}
 				).on(
 					"confirmation",
@@ -256,15 +256,15 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.edit.againstVoteCountRequired = false;
+							this.edit.voteAgainstRequired = false;
 
-							this.vault.againstVoteCountRequired = (
+							this.vault.voteAgainstRequired = (
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[0];
 
-							this.updating.againstVoteCountRequired = false;
+							this.updating.voteAgainstRequired = false;
 						}
 					}
 				).on(
@@ -273,12 +273,12 @@
 					{
 						this.error = String(error);
 
-						this.updating.againstVoteCountRequired = false;
+						this.updating.voteAgainstRequired = false;
 					}
 				);
 			},
 
-			updateForVoteCountRequired()
+			updatevoteForRequired()
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.vaultAddress))
 				{
@@ -293,8 +293,8 @@
 				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
-						this.vault.againstVoteCountRequired,
-						this.update.forVoteCountRequired,
+						this.vault.voteAgainstRequired,
+						this.update.voteForRequired,
 						this.vault.transferDelaySeconds,
 					]
 				).send({
@@ -303,7 +303,7 @@
 					"sent",
 					async () =>
 					{
-						this.updating.forVoteCountRequired = true;
+						this.updating.voteForRequired = true;
 					}
 				).on(
 					"confirmation",
@@ -313,15 +313,15 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.edit.forVoteCountRequired = false;
+							this.edit.voteForRequired = false;
 
-							this.vault.forVoteCountRequired = (
+							this.vault.voteForRequired = (
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[1];
 
-							this.updating.forVoteCountRequired = false;
+							this.updating.voteForRequired = false;
 						}
 					}
 				).on(
@@ -330,7 +330,7 @@
 					{
 						this.error = String(error);
 
-						this.updating.forVoteCountRequired = false;
+						this.updating.voteForRequired = false;
 					}
 				);
 			},
@@ -350,8 +350,8 @@
 				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.vaultAddress,
 					[
-						this.vault.againstVoteCountRequired,
-						this.vault.forVoteCountRequired,
+						this.vault.voteAgainstRequired,
+						this.vault.voteForRequired,
 						this.update.transferDelaySeconds,
 					]
 				).send({
@@ -445,13 +445,13 @@
 				this.transferRequestProtocol
 			);
 
-			this.vault.againstVoteCountRequired = (
+			this.vault.voteAgainstRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
 			)[0];
 
-			this.vault.forVoteCountRequired = (
+			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
@@ -463,8 +463,8 @@
 				).call()
 			)[2];
 
-			this.update.againstVoteCountRequired = this.vault.againstVoteCountRequired;
-			this.update.forVoteCountRequired = this.vault.forVoteCountRequired;
+			this.update.voteAgainstRequired = this.vault.voteAgainstRequired;
+			this.update.voteForRequired = this.vault.voteForRequired;
 			this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
 		}
 	});

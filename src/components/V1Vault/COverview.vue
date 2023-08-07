@@ -30,13 +30,13 @@
 						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
 						<VProgressCircular
-							v-if="vault.forVoteCountRequired == 0"
+							v-if="vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.forVoteCountRequired }}</h2>
+						<h2 v-else class="m-0">{{ vault.voteForRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -45,13 +45,13 @@
 						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
 						<VProgressCircular
-							v-if="vault.forVoteCountRequired == 0"
+							v-if="vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.againstVoteCountRequired }}</h2>
+						<h2 v-else class="m-0">{{ vault.voteAgainstRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -60,7 +60,7 @@
 						<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
 						<VProgressCircular
-							v-if="vault.forVoteCountRequired == 0"
+							v-if="vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
@@ -278,8 +278,8 @@
 					tokenId: number | string
 				}[],
 				vault: {
-					againstVoteCountRequired: 0 as number,
-					forVoteCountRequired: 0 as number,
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
 					transferDelaySeconds: 0 as number,
 				},
 				error: "" as string,
@@ -462,12 +462,12 @@
 				this.transferRequestProtocol
 			);
 
-			this.vault.againstVoteCountRequired = (
+			this.vault.voteAgainstRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
 			)[0];
-			this.vault.forVoteCountRequired = (
+			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()

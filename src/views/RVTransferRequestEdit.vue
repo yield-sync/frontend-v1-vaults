@@ -145,7 +145,7 @@
 						<VCol sm="6">
 							<!-- For Vote Count -->
 							<VTextField
-								v-model="transferRequest.forVoteCount"
+								v-model="transferRequest.voteForMembers.length"
 								type="number"
 								label="For Vote Count"
 								variant="outlined"
@@ -158,7 +158,7 @@
 						<VCol sm="6">
 							<!-- Against Vote Count -->
 							<VTextField
-								v-model="transferRequest.againstVoteCount"
+								v-model="transferRequest.voteAgainstMembers.length"
 								type="number"
 								label="Against Vote Count"
 								variant="outlined"
@@ -182,9 +182,9 @@
 						</VCol>
 
 						<VCol cols="12">
-							<h3 class="mb-6 text-primary">Voted Members</h3>
+							<h3 class="mb-6 text-primary">Voted For Members</h3>
 							<VRow
-								v-for="(m, i) in transferRequest.votedMembers" :key="i"
+								v-for="(m, i) in transferRequest.voteForMembers" :key="i"
 								class="mb-3"
 							>
 								<VCol md="10">
@@ -272,13 +272,15 @@
 	]
 
 	type UpdateTransferRequestPoll = [
-		// againstVoteCount
+		// voteAgainstMembers.length
 		number,
-		// forVoteCount
+		// voteForMembers.length
 		number,
 		// latestForVoteTime
 		number,
-		// votedMembers
+		// votedAgainstMembers
+		string[],
+		// votedForMembers
 		string[],
 	]
 
@@ -300,10 +302,10 @@
 					amount: 0 as number,
 					to: "" as string,
 					created: 0 as number,
-					forVoteCount: 0 as number,
-					againstVoteCount: 0 as number,
 					latestForVoteTime: 0 as number,
-					votedMembers: [
+					voteForMembers: [
+					] as string[],
+					voteAgainstMembers: [
 					] as string[],
 				},
 				error: "",
@@ -320,8 +322,8 @@
 				if (this.$store.state.web3.utils.isAddress(this.addVotedMemberField))
 				{
 					// Add member
-					this.transferRequest.votedMembers = [
-						...this.transferRequest.votedMembers,
+					this.transferRequest.voteForMembers = [
+						...this.transferRequest.voteForMembers,
 						this.addVotedMemberField,
 					];
 
@@ -334,10 +336,10 @@
 			{
 				if (i > -1)
 				{
-					this.transferRequest.votedMembers = this.transferRequest.votedMembers.filter(
+					this.transferRequest.voteForMembers = this.transferRequest.voteForMembers.filter(
 						(m) =>
 						{
-							return m !== this.transferRequest.votedMembers[i];
+							return m !== this.transferRequest.voteForMembers[i];
 						}
 					);
 				}
@@ -420,10 +422,11 @@
 				}
 
 				const updateTransferRequestPoll: UpdateTransferRequestPoll = [
-					this.transferRequest.againstVoteCount,
-					this.transferRequest.forVoteCount,
+					this.transferRequest.voteAgainstMembers.length,
+					this.transferRequest.voteForMembers.length,
 					this.transferRequest.latestForVoteTime,
-					this.transferRequest.votedMembers,
+					this.transferRequest.voteAgainstMembers,
+					this.transferRequest.voteForMembers,
 				];
 
 				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate(
@@ -442,7 +445,7 @@
 					}
 				).on(
 					"confirmation",
-						async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
 					{
 						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
@@ -512,10 +515,11 @@
 				this.transferRequest.amount = parseInt(tR.amount) * 10 ** -18;
 				this.transferRequest.to = String(tR.to);
 				this.transferRequest.created = tR.created;
-				this.transferRequest.forVoteCount =  parseInt(tRP.forVoteCount);
-				this.transferRequest.againstVoteCount =  parseInt(tRP.againstVoteCount);
+				this.transferRequest.voteForMembers.length =  parseInt(tRP.voteForMembers.length);
+				this.transferRequest.voteAgainstMembers.length =  parseInt(tRP.voteAgainstMembers.length);
 				this.transferRequest.latestForVoteTime = parseInt(tRP.latestForVoteTime);
-				this.transferRequest.votedMembers = tRP.votedMembers;
+				this.transferRequest.voteForMembers = tRP.voteForMembers;
+				this.transferRequest.voteAgainstMembers = tRP.voteAgainstMembers;
 			}
 		},
 	});
