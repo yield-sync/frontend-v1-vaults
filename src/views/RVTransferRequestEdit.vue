@@ -142,32 +142,6 @@
 
 				<VCardText class="mt-4">
 					<VRow>
-						<VCol sm="6">
-							<!-- For Vote Count -->
-							<VTextField
-								v-model="transferRequest.voteForMembers.length"
-								type="number"
-								label="For Vote Count"
-								variant="outlined"
-								hide-details
-								class="mb-3"
-								size="small"
-							/>
-						</VCol>
-
-						<VCol sm="6">
-							<!-- Against Vote Count -->
-							<VTextField
-								v-model="transferRequest.voteAgainstMembers.length"
-								type="number"
-								label="Against Vote Count"
-								variant="outlined"
-								hide-details
-								class="mb-3"
-								size="small"
-							/>
-						</VCol>
-
 						<VCol sm="12">
 							<!-- Latest Relevant For Vote Time -->
 							<VTextField
@@ -248,7 +222,7 @@
 							<VRow>
 								<VCol md="10">
 									<VTextField
-										v-model="addVoteForMemberField"
+										v-model="addVoteAgainstMemberField"
 										label="Add Voted Member Address"
 										variant="outlined"
 									/>
@@ -276,7 +250,12 @@
 								class="w-100 rounded-xl"
 								@click="updateTransferRequestPoll()"
 							>
-								Update
+								<VProgressCircular
+									v-if="updatingTRP"
+									indeterminate
+									color="light"
+								/>
+								<h2 v-else>Update</h2>
 							</VBtn>
 						</VCol>
 					</VRow>
@@ -315,10 +294,6 @@
 	]
 
 	type UpdateTransferRequestPoll = [
-		// voteAgainstMembers.length
-		number,
-		// voteForMembers.length
-		number,
 		// latestForVoteTime
 		number,
 		// votedAgainstMembers
@@ -337,6 +312,7 @@
 				updatingTR: false,
 				updatingTRP: false,
 				yieldSyncV1Vault: undefined as undefined | Contract,
+
 				transferRequest: {
 					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
 					creator: "" as string,
@@ -351,9 +327,11 @@
 					voteAgainstMembers: [
 					] as string[],
 				},
+
 				error: "",
 				addVoteAgainstMemberField: "",
 				addVoteForMemberField: "",
+
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
@@ -494,8 +472,6 @@
 				}
 
 				const updateTransferRequestPoll: UpdateTransferRequestPoll = [
-					this.transferRequest.voteAgainstMembers.length,
-					this.transferRequest.voteForMembers.length,
 					this.transferRequest.latestForVoteTime,
 					this.transferRequest.voteAgainstMembers,
 					this.transferRequest.voteForMembers,
@@ -513,7 +489,7 @@
 					"sent",
 					async () =>
 					{
-						this.updatingTR = true;
+						this.updatingTRP = true;
 					}
 				).on(
 					"confirmation",

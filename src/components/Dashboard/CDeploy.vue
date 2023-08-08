@@ -431,48 +431,41 @@
 
 			async deployYieldSyncV1Vault()
 			{
-				try
-				{
-					await this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
-						this.vaultDeploy.signatureManager,
-						this.transferRequestProtocol,
-						this.vaultDeploy.admins,
-						this.vaultDeploy.members
-					).send({
-						from: this.$store.state.wallet.accounts[0]
-					}).on(
-						"sent",
-						async () =>
-						{
-							this.vaultDeploy.deploying = true;
-						}
-					).on(
-						"confirmation",
-						async (confirmationNumber: number, receipt: TransactionReceipt) =>
-						{
-							console.log(`Confirmation #${confirmationNumber}`, receipt);
+				this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
+					this.vaultDeploy.signatureManager,
+					this.transferRequestProtocol,
+					this.vaultDeploy.admins,
+					this.vaultDeploy.members
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.vaultDeploy.deploying = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
 
-							if (confirmationNumber == 0)
-							{
-								this.vaultDeploy.deploying = false;
-
-								this.$store.state.pages.RVDashboard.tab = "m";
-							}
-						}
-					).on(
-						"error",
-						async (error: Error) =>
+						if (confirmationNumber == 0)
 						{
-							this.error = String(error);
-
 							this.vaultDeploy.deploying = false;
+
+							this.$store.state.pages.RVDashboard.tab = "m";
 						}
-					);
-				}
-				catch (e)
-				{
-					console.error(e);
-				}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.vaultDeploy.deploying = false;
+					}
+				);
 			},
 		},
 
