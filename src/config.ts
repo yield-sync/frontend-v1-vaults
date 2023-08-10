@@ -1,3 +1,20 @@
+type NetworkChain = {
+	chainId: string,
+	chainName: string,
+	nativeCurrency: {
+		name: string,
+		symbol: string,
+		decimals: number,
+	},
+	rpcUrls: string[],
+	blockExplorerUrls: string[]
+	icon: string,
+	yieldSyncGovernance: string,
+	yieldSyncV1VaultFactory: string,
+	yieldSyncV1VaultAccessControl: string,
+	yieldSyncV1ATransferRequestProtocol: string,
+}
+
 export default {
 	networkChain: {
 		// Mainnet
@@ -19,6 +36,7 @@ export default {
 			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
 			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
 			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1BTransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 		},
 
 		// Seploia
@@ -40,6 +58,7 @@ export default {
 			yieldSyncV1VaultFactory: "0xC4c97B6DB2137aed8317aF5C8aa6d2d928492Fb1",
 			yieldSyncV1VaultAccessControl: "0xC2bF4371BA8Aff7A1670461665Db89859C3bC347",
 			yieldSyncV1ATransferRequestProtocol: "0x81c79988963eb10cD9880B22DbC687062b6C4f51",
+			yieldSyncV1BTransferRequestProtocol: "0x7ccE56374c28225d3183a2F30b5567Bff1e83ea0",
 
 		},
 
@@ -62,22 +81,12 @@ export default {
 			yieldSyncV1VaultFactory: "0x0000000000000000000000000000000000000000",
 			yieldSyncV1VaultAccessControl: "0x0000000000000000000000000000000000000000",
 			yieldSyncV1ATransferRequestProtocol: "0x0000000000000000000000000000000000000000",
+			yieldSyncV1BTransferRequestProtocol: "0x0000000000000000000000000000000000000000",
 
 		},
 	},
 } as {
 	networkChain: {
-		[key: string]: {
-			chainId: string,
-			chainName: string,
-			nativeCurrency: {
-				name: string,
-				symbol: string,
-				decimals: number,
-			},
-			rpcUrls: string[],
-			blockExplorerUrls: string[]
-			icon: string,
-		}
+		[key: string]: NetworkChain
 	},
 };
