@@ -57,8 +57,8 @@
 	import { AbiItem } from "web3-utils";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
-	import CTransferRequestCreate from "./CTransferRequestCreate.vue";
-	import CTransferRequestOpen from "./CTransferRequestOpen.vue";
+	import CTransferRequestCreate from "./CTransferRequestProtocolA/Create.vue";
+	import CTransferRequestOpen from "./CTransferRequestProtocolA/Open.vue";
 
 	export default defineComponent({
 		name: "CTransferRequest",

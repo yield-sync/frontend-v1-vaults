@@ -123,8 +123,8 @@
 	import { TransactionReceipt } from "web3-core";
 	import { Contract } from "web3-eth-contract";
 
-	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
-	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
+	import YieldSyncV1Vault from "../../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "CTransferRequestCreate",

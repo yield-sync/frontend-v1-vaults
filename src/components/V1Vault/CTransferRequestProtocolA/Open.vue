@@ -483,10 +483,9 @@
 	import { Contract } from "web3-eth-contract";
 	import { AbiItem } from "web3-utils";
 
-	import abiER20 from "../../abi/erc20";
-	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
-	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
-	import { ethers } from "ethers";
+	import abiER20 from "../../../abi/erc20";
+	import YieldSyncV1Vault from "../../../abi/YieldSyncV1Vault";
+	import YieldSyncV1ATransferRequestProtocol from "../../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
 		name: "CTransferRequest",
