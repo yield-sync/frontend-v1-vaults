@@ -386,7 +386,7 @@
 					this.transferRequestProtocol
 				);
 
-				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
 					this.$store.state.wallet.accounts[0],
 					[
 						this.vaultProperties.voteAgainstRequired,

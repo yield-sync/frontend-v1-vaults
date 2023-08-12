@@ -21,13 +21,27 @@
 			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestOpen
+						v-if="
+							trp == $store.state.config.networkChain[
+								$store.state.currentChain.name
+							].yieldSyncV1ATransferRequestProtocol
+						"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
+
+					<div v-else>
+						<h5 class="text-center">Unsupported Transfer Request Protocol</h5>
+					</div>
 				</VWindowItem>
 
 				<VWindowItem value="c">
 					<CTransferRequestCreate
+						v-if="
+							trp == $store.state.config.networkChain[
+								$store.state.currentChain.name
+							].yieldSyncV1ATransferRequestProtocol
+						"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -39,7 +53,10 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
 
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import CTransferRequestCreate from "./CTransferRequestCreate.vue";
 	import CTransferRequestOpen from "./CTransferRequestOpen.vue";
 
@@ -56,6 +73,27 @@
 		components: {
 			CTransferRequestCreate,
 			CTransferRequestOpen
+		},
+
+		data() {
+			return {
+				vault: undefined as Contract | undefined,
+				trp: ""
+			}
+		},
+
+		async created() {
+			this.vault = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1Vault as AbiItem[],
+				this.vaultAddress
+			);
+
+			if (!this.vault)
+			{
+				return;
+			}
+
+			this.trp = await this.vault.methods.transferRequestProtocol().call();
 		},
 	});
 </script>
