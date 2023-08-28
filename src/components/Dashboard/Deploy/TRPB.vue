@@ -1,0 +1,307 @@
+<template>
+	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
+		<VCardText class="px-6 py-6">
+			<VRow>
+				<VCol cols="12">
+					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties (1/2)</h2>
+					<h6 class="mb-6 text-center text-uppercase text-dark">
+						Must be set first before deploying a vault
+					</h6>
+				</VCol>
+
+				<!-- Against -->
+				<VCol cols="12" md="6">
+					<VTextField
+						v-model="vaultProperties.voteAgainstRequired"
+						type="number"
+						label="Against Vote Count"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<!-- For -->
+				<VCol cols="12" md="6">
+					<VTextField
+						v-model="vaultProperties.voteForRequired"
+						type="number"
+						label="For Vote Count"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<VCol cols="12">
+					<VBtn
+						variant="flat"
+						color="primary"
+						class="w-100 rounded-xl elevation-0"
+						@click="updateWalletProperties()"
+						:disabled="
+							vaultProperties.updating || (
+								vaultProperties.voteAgainstRequired == vaultDeploy.voteAgainstRequired &&
+								vaultProperties.voteForRequired == vaultDeploy.voteForRequired
+							)
+						"
+					>
+						<VProgressCircular
+							v-if="vaultProperties.updating"
+							indeterminate
+							color="light"
+							class=""
+						/>
+						<h2 v-else>Update</h2>
+					</VBtn>
+				</VCol>
+
+				<VCol
+					v-if="
+						vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
+							vaultProperties.voteForRequired != vaultDeploy.voteForRequired
+					"
+					cols="12"
+				>
+					<VCard color="warning" class="text-center text-dark elevation-0 rounded-xl">
+						<VCardText>
+							<h4 class="mb-3 text-uppercase font-weight-bold">Warning!</h4>
+							<h6 class="m-0 text-uppercase">
+								Please update before deploying, otherwise changes will not apply.
+							</h6>
+						</VCardText>
+					</VCard>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
+</template>
+
+<script lang="ts">
+	import { ethers } from "ethers";
+	import { defineComponent } from "vue";
+	import { TransactionReceipt } from "web3-core";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
+
+	import YieldSyncV1BTransferRequestProtocol from "../../../abi/YieldSyncV1BTransferRequestProtocol";
+
+	export default defineComponent({
+		name: "TRPA",
+
+		data()
+		{
+			return {
+				factory: this.$store.state.config.networkChain[
+					this.$store.state.currentChain.name
+				].yieldSyncV1VaultFactory as string,
+
+				transferRequestProtocol: this.$store.state.config.networkChain[
+					this.$store.state.currentChain.name
+				].yieldSyncV1BTransferRequestProtocol as string,
+
+				d: this.$store.state.etherscanDomainStart as string,
+
+				deploymentFee: 0 as number,
+
+				vaultProperties: {
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
+					updating: false,
+				},
+
+				adminAddField: "" as string,
+				memberAddField: "" as string,
+
+				vaultDeploy: {
+					admins: [
+						this.$store.state.wallet.accounts[0],
+					] as string[],
+					members: [
+						this.$store.state.wallet.accounts[0],
+					] as string[],
+					signatureManager: ethers.ZeroAddress as string,
+					useDefaultSignatureManager: false as boolean,
+
+					voteAgainstRequired: 0 as number,
+					voteForRequired: 0 as number,
+					deploying: false as boolean,
+				},
+
+				error: "" as string
+			};
+		},
+
+		methods: {
+			adminAdd()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.adminAddField))
+				{
+					return;
+				}
+
+				for (let i = 0; i < this.vaultDeploy.admins.length; i++)
+				{
+					if (this.vaultDeploy.admins[i] == this.adminAddField)
+					{
+						return;
+					}
+				}
+
+				this.vaultDeploy.admins.push(this.adminAddField);
+				this.adminAddField = "";
+			},
+
+			adminRemove(i: number)
+			{
+				if (i > -1)
+				{
+					this.vaultDeploy.admins.splice(i, 1);
+				}
+			},
+
+			memberAdd()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.memberAddField))
+				{
+					return;
+				}
+
+				for (let i = 0; i < this.vaultDeploy.members.length; i++)
+				{
+					if (this.vaultDeploy.members[i] == this.memberAddField)
+					{
+						return;
+					}
+				}
+
+				this.vaultDeploy.members.push(this.memberAddField);
+				this.memberAddField = "";
+
+			},
+
+			memberRemove(i: number)
+			{
+				if (i > -1)
+				{
+					this.vaultDeploy.members.splice(i, 1);
+				}
+			},
+
+			async updateWalletProperties()
+			{
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+					this.$store.state.wallet.accounts[0],
+					[
+						this.vaultProperties.voteAgainstRequired,
+						this.vaultProperties.voteForRequired,
+					]
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.vaultProperties.updating = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber != 0)
+						{
+							return;
+						}
+
+						this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
+						this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
+
+						this.vaultProperties.updating = false;
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.vaultProperties.updating = false;
+					}
+				);
+			},
+
+			async deployYieldSyncV1Vault()
+			{
+				this.$store.state.contract.yieldSyncV1VaultFactory.methods.deployYieldSyncV1Vault(
+					this.vaultDeploy.signatureManager,
+					this.transferRequestProtocol,
+					this.vaultDeploy.admins,
+					this.vaultDeploy.members
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.vaultDeploy.deploying = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.vaultDeploy.deploying = false;
+
+							this.$store.state.pages.RVDashboard.tab = "m";
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.vaultDeploy.deploying = false;
+					}
+				);
+			},
+		},
+
+		async created()
+		{
+			this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
+
+			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1BTransferRequestProtocol as AbiItem[],
+				this.transferRequestProtocol
+			);
+
+			const connectedWalletsVaultProperties = await transferRequestProtocol.methods
+				.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					this.$store.state.wallet.accounts[0]
+				).call()
+			;
+
+			this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties[0];
+			this.vaultProperties.voteForRequired = connectedWalletsVaultProperties[1];
+
+			this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
+			this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
+		},
+	});
+</script>
+
+<style lang="scss" scoped>
+	.member-or-admin {
+		word-wrap: break-word;
+	}
+</style>

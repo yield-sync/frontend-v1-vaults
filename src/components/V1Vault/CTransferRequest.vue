@@ -75,14 +75,16 @@
 			CTransferRequestOpen
 		},
 
-		data() {
+		data() 
+		{
 			return {
 				vault: undefined as Contract | undefined,
 				trp: ""
-			}
+			};
 		},
 
-		async created() {
+		async created() 
+		{
 			this.vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],
 				this.vaultAddress

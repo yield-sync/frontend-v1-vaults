@@ -34,24 +34,28 @@
 	</VRow>
 
 	<TRPA v-if="trp == 'a'" />
+	<TRPB v-if="trp == 'b'" />
 </template>
 
 <script lang="ts">
 	import { defineComponent } from "vue";
 
 	import TRPA from "./Deploy/TRPA.vue";
+	import TRPB from "./Deploy/TRPB.vue";
 
 	export default defineComponent({
 		name: "RVGovernance",
 
 		components: {
-			TRPA
+			TRPA,
+			TRPB
 		},
 
-		data() {
+		data() 
+		{
 			return {
 				trp: "a" as "a" | "b"
-			}
+			};
 		},
 	});
 </script>

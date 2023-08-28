@@ -33,7 +33,7 @@
 							color="light"
 							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
 						>
-							🔗 Yield Sync V1 Vault Factory
+							🔗 Vault Factory
 						</VBtn>
 					</a>
 
@@ -47,7 +47,7 @@
 							color="light"
 							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
 						>
-							🔗 Registry Contract
+							🔗 Registry
 						</VBtn>
 					</a>
 
