@@ -208,7 +208,7 @@ export default createStore({
 					state.config.networkChain[state.currentChain.name].yieldSyncV1VaultFactory
 				)
 			);
-			// Access Control
+			// Registry
 			commit(
 				"setYieldSyncV1VaultRegistry",
 				new state.web3.eth.Contract(

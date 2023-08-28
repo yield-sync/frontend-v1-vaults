@@ -47,7 +47,7 @@
 							color="light"
 							class="w-100 mb-4 rounded-xl elevation-0 text-primary font-weight-bold"
 						>
-							🔗 Access Control Contract
+							🔗 Registry Contract
 						</VBtn>
 					</a>
 
