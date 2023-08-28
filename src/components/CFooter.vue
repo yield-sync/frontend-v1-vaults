@@ -38,7 +38,7 @@
 					</a>
 
 					<a
-						:href="`https://${etherscan}.etherscan.io/address/${accessControl}`"
+						:href="`https://${etherscan}.etherscan.io/address/${registry}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -85,9 +85,9 @@
 					this.$store.state.currentChain.name
 				].yieldSyncV1VaultFactory,
 
-				accessControl: this.$store.state.config.networkChain[
+				registry: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
-				].yieldSyncV1VaultAccessControl,
+				].yieldSyncV1VaultRegistry,
 
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name

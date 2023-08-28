@@ -85,9 +85,9 @@
 		{
 			return {
 				loading: true as boolean,
-				accessControl: this.$store.state.config.networkChain[
+				registry: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
-				].yieldSyncV1VaultAccessControl,
+				].yieldSyncV1VaultRegistry,
 
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
@@ -117,7 +117,7 @@
 				this.transferRequestProtocol
 			);
 
-			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultAccessControl.methods
+			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultRegistry.methods
 				.admin_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call()
 			;
 

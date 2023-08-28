@@ -3,7 +3,7 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_YieldSyncV1VaultAccessControl",
+				"name": "_YieldSyncV1VaultRegistry",
 				"type": "address"
 			},
 		],
@@ -198,10 +198,10 @@ export default [
 	{
 		"inputs": [
 		],
-		"name": "YieldSyncV1VaultAccessControl",
+		"name": "YieldSyncV1VaultRegistry",
 		"outputs": [
 			{
-				"internalType": "contract IYieldSyncV1VaultAccessControl",
+				"internalType": "contract IYieldSyncV1VaultRegistry",
 				"name": "",
 				"type": "address"
 			},

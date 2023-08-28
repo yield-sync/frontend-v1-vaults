@@ -10,7 +10,7 @@ import alchemyGetGetNFTBalances from "../alchemy/getNFTBalances";
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
-import YieldSyncV1VaultAccessControl from "../abi/YieldSyncV1VaultAccessControl";
+import YieldSyncV1VaultRegistry from "../abi/YieldSyncV1VaultRegistry";
 
 
 export default createStore({
@@ -49,11 +49,11 @@ export default createStore({
 		contract: {
 			yieldSyncGovernance: undefined,
 			yieldSyncV1VaultFactory: undefined,
-			yieldSyncV1VaultAccessControl: undefined,
+			yieldSyncV1VaultRegistry: undefined,
 		} as {
 			yieldSyncGovernance: undefined | Contract
 			yieldSyncV1VaultFactory: undefined | Contract
-			yieldSyncV1VaultAccessControl: undefined | Contract
+			yieldSyncV1VaultRegistry: undefined | Contract
 		},
 
 		pages: {
@@ -149,9 +149,9 @@ export default createStore({
 			state.contract.yieldSyncV1VaultFactory = contract;
 		},
 
-		setYieldSyncV1VaultAccessControl(state, contract: Contract)
+		setYieldSyncV1VaultRegistry(state, contract: Contract)
 		{
-			state.contract.yieldSyncV1VaultAccessControl = contract;
+			state.contract.yieldSyncV1VaultRegistry = contract;
 		},
 
 		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
@@ -210,10 +210,10 @@ export default createStore({
 			);
 			// Access Control
 			commit(
-				"setYieldSyncV1VaultAccessControl",
+				"setYieldSyncV1VaultRegistry",
 				new state.web3.eth.Contract(
-					YieldSyncV1VaultAccessControl as AbiItem[],
-					state.config.networkChain[state.currentChain.name].yieldSyncV1VaultAccessControl
+					YieldSyncV1VaultRegistry as AbiItem[],
+					state.config.networkChain[state.currentChain.name].yieldSyncV1VaultRegistry
 				)
 			);
 		},
