@@ -166,7 +166,7 @@
 					this.transferRequestProtocol
 				);
 
-				await transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestCreate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestCreate(
 					this.vaultAddress,
 					this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 20" ? true : false,
 					this.$store.state.pages.RVV1Vault.transferRequest.for == "ERC 721" ? true : false,
