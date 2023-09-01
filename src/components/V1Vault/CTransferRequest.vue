@@ -20,11 +20,21 @@
 		<VCardText variant="light">
 			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
-					<CTransferRequestOpen
+					<CTransferRequestAOpen
 						v-if="
 							trp == $store.state.config.networkChain[
 								$store.state.currentChain.name
 							].yieldSyncV1ATransferRequestProtocol
+						"
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+
+					<CTransferRequestBOpen
+						v-else-if="
+							trp == $store.state.config.networkChain[
+								$store.state.currentChain.name
+							].yieldSyncV1BTransferRequestProtocol
 						"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
@@ -36,7 +46,7 @@
 				</VWindowItem>
 
 				<VWindowItem value="c">
-					<CTransferRequestCreate
+					<CTransferRequestACreate
 						v-if="
 							trp == $store.state.config.networkChain[
 								$store.state.currentChain.name
@@ -45,6 +55,20 @@
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
+
+					<CTransferRequestBCreate
+						v-else-if="
+							trp == $store.state.config.networkChain[
+								$store.state.currentChain.name
+							].yieldSyncV1BTransferRequestProtocol
+						"
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+
+					<div v-else>
+						<h5 class="text-center">Unsupported Transfer Request Protocol</h5>
+					</div>
 				</VWindowItem>
 			</VWindow>
 		</VCardText>
@@ -57,8 +81,10 @@
 	import { AbiItem } from "web3-utils";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
-	import CTransferRequestCreate from "./CTransferRequestProtocolA/Create.vue";
-	import CTransferRequestOpen from "./CTransferRequestProtocolA/Open.vue";
+	import CTransferRequestACreate from "./CTransferRequestProtocolA/CCreate.vue";
+	import CTransferRequestAOpen from "./CTransferRequestProtocolA/COpen.vue";
+	import CTransferRequestBCreate from "./CTransferRequestProtocolB/CCreate.vue";
+	import CTransferRequestBOpen from "./CTransferRequestProtocolB/COpen.vue";
 
 	export default defineComponent({
 		name: "CTransferRequest",
@@ -71,11 +97,13 @@
 		},
 
 		components: {
-			CTransferRequestCreate,
-			CTransferRequestOpen
+			CTransferRequestACreate,
+			CTransferRequestAOpen,
+			CTransferRequestBCreate,
+			CTransferRequestBOpen,
 		},
 
-		data() 
+		data()
 		{
 			return {
 				vault: undefined as Contract | undefined,
@@ -83,7 +111,7 @@
 			};
 		},
 
-		async created() 
+		async created()
 		{
 			this.vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

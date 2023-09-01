@@ -127,7 +127,7 @@
 	import YieldSyncV1ATransferRequestProtocol from "../../../abi/YieldSyncV1ATransferRequestProtocol";
 
 	export default defineComponent({
-		name: "CTransferRequestCreate",
+		name: "CCreate",
 
 		props: {
 			vaultAddress: {

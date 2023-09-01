@@ -1,4 +1,5 @@
 <template>
+	<!-- Preset -->
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
 			<VRow>
@@ -89,6 +90,7 @@
 		</VCardText>
 	</VCard>
 
+	<!-- TRPA Parameters -->
 	<VCard
 		v-if="vaultDeploy.voteAgainstRequired > 0 && vaultDeploy.voteForRequired > 0"
 		class="mb-4 rounded-xl bg-light-frost elevation-0"
