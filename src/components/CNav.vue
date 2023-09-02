@@ -161,7 +161,7 @@
 		},
 
 		methods: {
-			async connectWallet()
+			async connectWallet(): Promise<void>
 			{
 				console.log("Connecting wallet..");
 
@@ -169,23 +169,20 @@
 				{
 					window.ethereum.request({
 						method: "eth_requestAccounts"
-					})
-						.then(
-							(accounts: Array<string>) =>
-							{
-								this.$store.state.wallet.connected = true;
-								this.$store.state.wallet.accounts = accounts;
+					}).then(
+						(accounts: Array<string>) =>
+						{
+							this.$store.state.wallet.connected = true;
+							this.$store.state.wallet.accounts = accounts;
 
-								console.log("Connected!");
-							}
-						)
-						.catch(
-							(e: string) =>
-							{
-								this.$store.state.error = e;
-							}
-						)
-					;
+							console.log("Connected!");
+						}
+					).catch(
+						(e: string) =>
+						{
+							this.$store.state.error = e;
+						}
+					);
 				}
 				else
 				{
@@ -193,20 +190,20 @@
 				}
 			},
 
-			async disconnectWallet()
+			disconnectWallet(): void
 			{
 				this.$store.state.wallet.connected = false;
 				this.$store.state.wallet.accounts = [
 				];
 			},
 
-			updateLocalStorage()
+			updateLocalStorage(): void
 			{
 				localStorage.alchemyApiKey = this.$store.state.alchemyApiKey;
 				localStorage.alchemyOpApiKey = this.$store.state.alchemyOpApiKey;
 			},
 
-			async switchNetwork(i: number)
+			async switchNetwork(i: number): Promise<void>
 			{
 				try
 				{
