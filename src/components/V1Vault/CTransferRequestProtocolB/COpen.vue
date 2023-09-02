@@ -396,7 +396,7 @@
 								</h3>
 							</VCol>
 
-							<!-- Proccess TransferRequest Button -->
+							<!-- Process TransferRequest Button -->
 							<VCol
 								v-if="getTransferRequestStatus(dTR) == '✅' || getTransferRequestStatus(dTR) == '❌'"
 								cols="12"
@@ -413,7 +413,7 @@
 										color="light"
 										class=""
 									/>
-									<span v-else>Proccess Request</span>
+									<span v-else>Process Request</span>
 								</VBtn>
 							</VCol>
 

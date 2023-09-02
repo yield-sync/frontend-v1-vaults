@@ -85,13 +85,23 @@ export default createStore({
 					key: 0 as number,
 				},
 
-				transferRequest: {
+				transferRequestA: {
 					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
 					to: "" as string,
 					token: "" as string,
 					amount: 0 as number,
 					tokenId: 0 as number,
+				},
+
+				transferRequestB: {
+					for: "Ether" as "Ether" | "ERC 20" | "ERC 721",
+					to: "" as string,
+					token: "" as string,
+					amount: 0 as number,
+					tokenId: 0 as number,
+					voteCloseTime: 86400 as number
 				}
+
 			}
 		},
 	},

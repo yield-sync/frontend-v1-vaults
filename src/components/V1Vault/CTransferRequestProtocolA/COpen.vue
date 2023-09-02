@@ -412,12 +412,12 @@
 									Time Passed / Transfer Delay (s)
 								</h4>
 								<h3 class="mb-3 text-center text-dark">
-									{{ currentTimestamp - dTR.latestRelevantForVoteBlockTimestamp }} /
+									{{ currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp }} /
 									{{ transferDelaySeconds }}
 								</h3>
 							</VCol>
 
-							<!-- Proccess TransferRequest Button -->
+							<!-- Process TransferRequest Button -->
 							<VCol
 								v-if="getTransferRequestStatus(dTR) == '✅' || getTransferRequestStatus(dTR) == '❌'"
 								cols="12"
@@ -434,7 +434,7 @@
 										color="light"
 										class=""
 									/>
-									<span v-else>Proccess Request</span>
+									<span v-else>Process Request</span>
 								</VBtn>
 							</VCol>
 
@@ -524,7 +524,7 @@
 			return {
 				loading: true as boolean,
 
-				currentTimestamp: 99999999999999 as number,
+				currentBlockTimestamp: 0 as number,
 
 				voting: {
 				} as {
@@ -569,7 +569,7 @@
 		},
 
 		methods: {
-			async setCurrentBlockTimestamp(): Promise<void>
+			setCurrentBlockTimestamp(): void
 			{
 				// Get the current block number
 				this.$store.state.web3.eth.getBlockNumber((error: string, blockNumber: number) =>
@@ -592,9 +592,9 @@
 						}
 
 						// Retrieve the timestamp of the current block
-						this.currentTimestamp = block.timestamp;
+						this.currentBlockTimestamp = block.timestamp;
 
-						console.log("Current block timestamp:", this.currentTimestamp);
+						console.log("Current block timestamp:", this.currentBlockTimestamp);
 					});
 				});
 			},
@@ -713,7 +713,7 @@
 				) ? "🗳️" : (
 					dTR.voteAgainstMembers.length >= this.voteAgainstRequired
 				) ? "❌" : (
-					this.currentTimestamp - dTR.latestRelevantForVoteBlockTimestamp >= this.transferDelaySeconds
+					this.currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp >= this.transferDelaySeconds
 				) ?  "✅" : "⏳";
 			},
 
@@ -820,7 +820,7 @@
 
 		async created(): Promise<void>
 		{
-			await this.setCurrentBlockTimestamp();
+			this.setCurrentBlockTimestamp();
 			await this.getTransferRequestData();
 		}
 	});
