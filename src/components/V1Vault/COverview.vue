@@ -5,6 +5,12 @@
 		:asAdmin="asAdmin"
 	/>
 
+	<CTRPBOverview
+		v-if="trp == yieldSyncV1BTransferRequestProtocol"
+		:address="address"
+		:asAdmin="asAdmin"
+	/>
+
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="bg-primary text-light">
 			<VRow>
@@ -197,6 +203,7 @@
 
 	import abiER20 from "../../abi/erc20";
 	import CTRPAOverview from "../../components/V1Vault/COverview/CTRPAOverview.vue";
+	import CTRPBOverview from "../../components/V1Vault/COverview/CTRPBOverview.vue";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
@@ -207,6 +214,7 @@
 
 		components: {
 			CTRPAOverview,
+			CTRPBOverview,
 		},
 
 		props: {
