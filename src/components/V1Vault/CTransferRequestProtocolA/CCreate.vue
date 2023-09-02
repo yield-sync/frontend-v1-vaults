@@ -212,7 +212,7 @@
 			}
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			if (this.yieldSyncV1Vault)
 			{

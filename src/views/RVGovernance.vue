@@ -67,7 +67,7 @@
 		methods: {
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			this.adminRole = await this.$store.state.contract.yieldSyncGovernance.methods.DEFAULT_ADMIN_ROLE().call();
 

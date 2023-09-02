@@ -111,7 +111,7 @@
 			};
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			this.vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

@@ -159,7 +159,7 @@
 		},
 
 		methods: {
-			async createWR()
+			async createWR(): Promise<void>
 			{
 				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
 					YieldSyncV1ATransferRequestProtocol as AbiItem[],
@@ -212,7 +212,7 @@
 			}
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			if (this.yieldSyncV1Vault)
 			{

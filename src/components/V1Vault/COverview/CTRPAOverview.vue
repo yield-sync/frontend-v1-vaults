@@ -98,7 +98,7 @@
 			};
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],

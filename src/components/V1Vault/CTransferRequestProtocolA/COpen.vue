@@ -818,7 +818,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			await this.setCurrentBlockTimestamp();
 			await this.getTransferRequestData();

@@ -469,7 +469,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
 
