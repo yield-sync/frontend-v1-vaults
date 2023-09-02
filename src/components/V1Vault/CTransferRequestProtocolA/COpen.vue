@@ -705,16 +705,16 @@
 				this.loading = false;
 			},
 
-			getTransferRequestStatus(dTR: DetailedTransferRequest): '🗳️' | '❌' | '✅' | '⏳'
+			getTransferRequestStatus(dTR: DetailedTransferRequest): "🗳️" | "❌" | "✅" | "⏳"
 			{
 				return (
 					dTR.voteForMembers.length < this.voteForRequired &&
 					dTR.voteAgainstMembers.length < this.voteAgainstRequired
-				) ? '🗳️' : (
+				) ? "🗳️" : (
 					dTR.voteAgainstMembers.length >= this.voteAgainstRequired
-				) ? '❌' : (
+				) ? "❌" : (
 					this.currentTimestamp - dTR.latestRelevantForVoteBlockTimestamp >= this.transferDelaySeconds
-				) ?  '✅' : '⏳'
+				) ?  "✅" : "⏳";
 			},
 
 			async voteOnTransferRequest(tRId: number, vote: boolean): Promise<void>

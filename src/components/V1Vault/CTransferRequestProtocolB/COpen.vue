@@ -688,7 +688,7 @@
 			{
 				if (dTR.voteCloseTime < this.currentTimestamp)
 				{
-					return '🗳️';
+					return "🗳️";
 				}
 
 				if (
@@ -696,20 +696,20 @@
 					dTR.voteAgainstMembers.length < this.voteAgainstRequired
 				)
 				{
-					return '❌';
+					return "❌";
 				}
 
 				if (dTR.voteAgainstMembers.length >= this.voteAgainstRequired)
 				{
-					return '❌';
+					return "❌";
 				}
 
 				if (dTR.voteForMembers.length >= this.voteForRequired)
 				{
-					return '✅';
+					return "✅";
 				}
 
-				return '❌';
+				return "❌";
 			},
 
 			async voteOnTransferRequest(tRId: number, vote: boolean): Promise<void>

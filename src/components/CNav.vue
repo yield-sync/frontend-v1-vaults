@@ -236,7 +236,7 @@
 			}
 		},
 
-		created()
+		created(): void
 		{
 			console.log("nav loaded");
 
