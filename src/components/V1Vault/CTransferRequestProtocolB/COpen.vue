@@ -2,25 +2,19 @@
 	<VCard class="mb-3 rounded-xl elevation-0 bg-transparent border border-dark">
 		<VCardText>
 			<VRow>
-				<VCol cols="12" sm="3">
+				<VCol cols="12" sm="4">
 					<h6 class="text-center text-uppercase text-dark">
 						🗳️ Voting in Progress
 					</h6>
 				</VCol>
 
-				<VCol cols="12" sm="3">
-					<h6 class="text-center text-uppercase text-dark">
-						⏳ Waiting Delay
-					</h6>
-				</VCol>
-
-				<VCol cols="12" sm="3">
+				<VCol cols="12" sm="4">
 					<h6 class="text-center text-uppercase text-dark">
 						✅ Approved
 					</h6>
 				</VCol>
 
-				<VCol cols="12" sm="3">
+				<VCol cols="12" sm="4">
 					<h6 class="text-center text-uppercase text-dark">
 						❌ Denied
 					</h6>
@@ -84,7 +78,7 @@
 		</VCard>
 
 		<VCard
-			v-for="(w, i) in detailedTransferRequests"
+			v-for="(dTR, i) in detailedTransferRequests"
 			:key="i"
 			class="my-3 rounded-xl elevation-0 bg-light-frost"
 		>
@@ -92,56 +86,47 @@
 				<VRow>
 					<VCol v-if="!opened[i]" cols="1">
 						<h4 class="mt-2 text-center">
-							{{
-								(
-									w.voteForMembers.length < voteForRequired &&
-									w.voteAgainstMembers.length < voteAgainstRequired
-								) ? '🗳️' : (
-									w.voteAgainstMembers.length >= voteAgainstRequired
-								) ? '❌' : (
-									currentTimestamp - w.latestRelevantForVoteBlockTimestamp >= transferDelaySeconds
-								) ?  '✅' : '⏳'
-							}}
+							{{ getTransferRequestStatus(dTR) }}
 						</h4>
 					</VCol>
 
 					<VCol v-if="!opened[i]" cols="3">
-						<h4 v-if="w.forERC20" class="mt-2 text-center text-primary">
-							ERC 20 | {{ w.tokenSymbol }}
+						<h4 v-if="dTR.forERC20" class="mt-2 text-center text-primary">
+							ERC 20 | {{ dTR.tokenSymbol }}
 						</h4>
 
-						<h4 v-else-if="w.forERC721" class="mt-2 text-center text-primary">
-							ERC 721 | {{ w.tokenSymbol }}
+						<h4 v-else-if="dTR.forERC721" class="mt-2 text-center text-primary">
+							ERC 721 | {{ dTR.tokenSymbol }}
 						</h4>
 
 						<h4 v-else class="mt-2 text-center text-primary">
-							Ether | {{ w.tokenSymbol }}
+							Ether | {{ dTR.tokenSymbol }}
 						</h4>
 					</VCol>
 
 					<VCol v-if="!opened[i]" cols="2">
-						<h4 v-if="!w.forERC721" class="mt-2 text-center">{{ w.amount * 10 ** -18 }}</h4>
-						<h4 v-if="w.forERC721" class="mt-2 text-center">#{{ w.tokenId }}</h4>
+						<h4 v-if="!dTR.forERC721" class="mt-2 text-center">{{ dTR.amount * 10 ** -18 }}</h4>
+						<h4 v-if="dTR.forERC721" class="mt-2 text-center">#{{ dTR.tokenId }}</h4>
 					</VCol>
 
 					<VCol v-if="!opened[i]" cols="2">
 						<a
-							:href="`https://etherscan.io/address/${w.to}`"
+							:href="`https://etherscan.io/address/${dTR.to}`"
 							target="_blank"
 							rel="noopener noreferrer"
-							:title="w.to"
+							:title="dTR.to"
 							class="text-center text-dark"
 						>
 							<VBtn variant="plain" class="w-100 rounded-xl">
-								🔗 {{ w.to.substring(0, 4) + "..." + w.to.substring(w.to.length - 4) }}
+								🔗 {{ dTR.to.substring(0, 4) + "..." + dTR.to.substring(dTR.to.length - 4) }}
 							</VBtn>
 						</a>
 					</VCol>
 
 					<VCol v-if="!opened[i]" cols="2">
 						<h3 class="mt-2 text-center">
-							<span class="text-success">{{ w.voteForMembers.length }}</span> :
-							<span class="text-danger">{{ w.voteAgainstMembers.length }}</span>
+							<span class="text-success">{{ dTR.voteForMembers.length }}</span> :
+							<span class="text-danger">{{ dTR.voteAgainstMembers.length }}</span>
 						</h3>
 					</VCol>
 
@@ -160,25 +145,14 @@
 						<VRow>
 							<VCol cols="1">
 								<h4 class="mt-2 text-center">
-									{{
-										(
-											w.voteForMembers.length < voteForRequired &&
-											w.voteAgainstMembers.length < voteAgainstRequired
-										) ? '🗳️' : (
-											w.voteAgainstMembers.length >= voteAgainstRequired
-										) ? '❌' : (
-											(
-												currentTimestamp - w.latestRelevantForVoteBlockTimestamp
-											) >= transferDelaySeconds
-										) ?  '✅' : '⏳'
-									}}
+									{{ getTransferRequestStatus(dTR) }}
 								</h4>
 							</VCol>
 
 							<VCol cols="1">
 								<RouterLink
 									v-if="$route.query.admin == 'true'"
-									:to="`/transfer-request-edit/${vaultAddress}/${w.id}`"
+									:to="`/transfer-request-edit/${vaultAddress}/${dTR.id}`"
 								>
 									<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
 										Edit
@@ -188,7 +162,7 @@
 
 							<VCol cols="8">
 								<h3 class="mt-2 text-center text-uppercase text-primary">
-									Transfer Request {{ w.id }}
+									Transfer Request {{ dTR.id }}
 								</h3>
 							</VCol>
 
@@ -204,11 +178,11 @@
 							</VCol>
 
 							<VCol cols="4" class="text-left">
-								<h4 v-if="w.forERC20" class="mb-3 text-center text-uppercase text-primary">
+								<h4 v-if="dTR.forERC20" class="mb-3 text-center text-uppercase text-primary">
 									ERC 20
 								</h4>
 
-								<h4 v-else-if="w.forERC721" class="mb-3 text-center text-uppercase text-primary">
+								<h4 v-else-if="dTR.forERC721" class="mb-3 text-center text-uppercase text-primary">
 									ERC 721
 								</h4>
 
@@ -217,26 +191,26 @@
 								</h4>
 
 								<a
-									v-if="w.forERC20"
-									:href="`https://etherscan.io/address/${w.tokenAddress}`"
+									v-if="dTR.forERC20"
+									:href="`https://etherscan.io/address/${dTR.tokenAddress}`"
 									target="_blank"
 									rel="noopener noreferrer"
-									:title="w.tokenAddress"
+									:title="dTR.tokenAddress"
 								>
 									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
-										🔗 {{ w.tokenSymbol }}
+										🔗 {{ dTR.tokenSymbol }}
 									</VBtn>
 								</a>
 
 								<a
-									v-else-if="w.forERC721"
-									:href="`https://etherscan.io/address/${w.tokenAddress}`"
+									v-else-if="dTR.forERC721"
+									:href="`https://etherscan.io/address/${dTR.tokenAddress}`"
 									target="_blank"
 									rel="noopener noreferrer"
-									:title="w.tokenAddress"
+									:title="dTR.tokenAddress"
 								>
 									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
-										🔗 {{ w.tokenSymbol }}
+										🔗 {{ dTR.tokenSymbol }}
 									</VBtn>
 								</a>
 
@@ -246,7 +220,7 @@
 									target="_blank"
 									rel="noopener noreferrer"
 									class="text-decoration-none"
-									:title="w.tokenAddress"
+									:title="dTR.tokenAddress"
 								>
 									<VBtn color="primary" variant="tonal" class="w-100 rounded-xl">
 										🔗 ETH
@@ -254,30 +228,30 @@
 								</a>
 							</VCol>
 
-							<VCol v-if="!w.forERC721" cols="4" class="text-center">
+							<VCol v-if="!dTR.forERC721" cols="4" class="text-center">
 								<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
-								<h3 class="text-dark">{{ w.amount * 10 ** -18 }}</h3>
+								<h3 class="text-dark">{{ dTR.amount * 10 ** -18 }}</h3>
 							</VCol>
 
-							<VCol v-if="w.forERC721" cols="4" class="text-center">
+							<VCol v-if="dTR.forERC721" cols="4" class="text-center">
 								<h4 class="mb-3 text-uppercase text-primary">Token Id</h4>
-								<h3 class="text-dark">{{ w.tokenId }}</h3>
+								<h3 class="text-dark">{{ dTR.tokenId }}</h3>
 							</VCol>
 
 							<VCol cols="4" class="text-center">
 								<h4 class="mb-3 text-uppercase text-primary">Created By</h4>
 
 								<a
-									:href="`https://etherscan.io/address/${w.creator}`"
+									:href="`https://etherscan.io/address/${dTR.creator}`"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="text-decoration-none"
-									:title="w.tokenAddress"
+									:title="dTR.tokenAddress"
 								>
-									<h3 class="text-center text-uppercase text-dark" :title="w.creator">
+									<h3 class="text-center text-uppercase text-dark" :title="dTR.creator">
 										{{
-											w.creator.substring(0, 4) + "..." + w.creator.substring(
-												w.creator.length - 4
+											dTR.creator.substring(0, 4) + "..." + dTR.creator.substring(
+												dTR.creator.length - 4
 											)
 										}}
 									</h3>
@@ -287,13 +261,13 @@
 							<VCol cols="12" class="text-center">
 								<h4 class="mb-3 text-center text-uppercase text-primary">Transfer To</h4>
 								<a
-									:href="`https://etherscan.io/address/${w.to}`"
+									:href="`https://etherscan.io/address/${dTR.to}`"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="text-decoration-none"
-									:title="w.tokenAddress"
+									:title="dTR.tokenAddress"
 								>
-									<h3 class="text-center text-uppercase text-dark">{{ w.to }}</h3>
+									<h3 class="text-center text-uppercase text-dark">{{ dTR.to }}</h3>
 								</a>
 							</VCol>
 
@@ -302,25 +276,25 @@
 
 								<VProgressLinear
 									color="success"
-									:model-value="(w.voteForMembers.length / voteForRequired * 100)"
+									:model-value="(dTR.voteForMembers.length / voteForRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ w.voteForMembers.length }}/{{ voteForRequired }}</strong>
+									<strong>{{ dTR.voteForMembers.length }}/{{ voteForRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										w.voteForMembers.length < voteForRequired &&
-										w.voteAgainstMembers.length < voteAgainstRequired
+										dTR.voteForMembers.length < voteForRequired &&
+										dTR.voteAgainstMembers.length < voteAgainstRequired
 									)"
 									:disabled="
-										voting[w.id] ||
-											w.voteAgainstMembers.some(
+										voting[dTR.id] ||
+											dTR.voteAgainstMembers.some(
 												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 											) ||
-											w.voteForMembers.some(
+											dTR.voteForMembers.some(
 												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 											)
 									"
@@ -328,10 +302,10 @@
 									color="success"
 									class="w-100 px-6 rounded-xl elevation-0"
 									style="max-width: 200px;"
-									@click="voteOnTransferRequest(w.id, true)"
+									@click="voteOnTransferRequest(dTR.id, true)"
 								>
 									<VProgressCircular
-										v-if="voting[w.id]"
+										v-if="voting[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -345,36 +319,34 @@
 
 								<VProgressLinear
 									color="danger"
-									:model-value="(w.voteAgainstMembers.length / voteAgainstRequired * 100)"
+									:model-value="(dTR.voteAgainstMembers.length / voteAgainstRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ w.voteAgainstMembers.length }}/{{ voteAgainstRequired }}</strong>
+									<strong>{{ dTR.voteAgainstMembers.length }}/{{ voteAgainstRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										w.voteForMembers.length < voteForRequired &&
-										w.voteAgainstMembers.length < voteAgainstRequired
+										dTR.voteForMembers.length < voteForRequired &&
+										dTR.voteAgainstMembers.length < voteAgainstRequired
 									)"
 									:disabled="
-										voting[w.id] ||
-											w.voteAgainstMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
-											) ||
-											w.voteForMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
-											)
+										voting[dTR.id] || dTR.voteAgainstMembers.some(
+											a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+										) || dTR.voteForMembers.some(
+											a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+										)
 									"
 									variant="flat"
 									color="danger"
 									class="w-100 px-6 rounded-xl elevation-0"
 									style="max-width: 200px;"
-									@click="voteOnTransferRequest(w.id, false)"
+									@click="voteOnTransferRequest(dTR.id, false)"
 								>
 									<VProgressCircular
-										v-if="voting[w.id]"
+										v-if="voting[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -385,9 +357,9 @@
 
 							<VCol
 								v-if="
-									w.voteAgainstMembers.some(
+									dTR.voteAgainstMembers.some(
 										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
-									) || w.voteForMembers.some(
+									) || dTR.voteForMembers.some(
 										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
 									)
 								"
@@ -398,62 +370,45 @@
 
 							<VCol cols="6" class="text-center">
 								<h4 class="mb-3 text-primary">Voted For Members</h4>
-								<h4 v-for="(v, i) in w.voteForMembers" :key="i">
+								<h4 v-for="(v, i) in dTR.voteForMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
 							</VCol>
 
 							<VCol cols="6" class="text-center">
 								<h4 class="mb-3 text-primary">Voted Against Member</h4>
-								<h4 v-for="(v, i) in w.voteAgainstMembers" :key="i">
+								<h4 v-for="(v, i) in dTR.voteAgainstMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
 							</VCol>
 
 							<!-- Time passed -->
 							<VCol
-								v-if="w.voteForMembers.length > 0 || asAdmin"
+								v-if="dTR.voteForMembers.length > 0 || asAdmin"
 								cols="12"
-								:sm="w.voteForMembers.length >= voteForRequired || asAdmin ? 6: 12"
+								:sm="dTR.voteForMembers.length >= voteForRequired || asAdmin ? 6: 12"
 							>
 								<h4 class="mb-3 text-center text-primary">
 									Latest Relevant For Vote Time
 								</h4>
 								<h3 class="mb-3 text-center text-dark">
-									{{ w.latestForVoteTime }}
-								</h3>
-							</VCol>
-
-							<!-- Time passed -->
-							<VCol v-if="w.voteForMembers.length >= voteForRequired || asAdmin" cols="12" sm="6">
-								<h4 class="mb-3 text-center text-primary">
-									Time Passed / Transfer Delay (s)
-								</h4>
-								<h3 class="mb-3 text-center text-dark">
-									{{ currentTimestamp - w.latestRelevantForVoteBlockTimestamp }} /
-									{{ transferDelaySeconds }}
+									{{ dTR.latestForVoteTime }}
 								</h3>
 							</VCol>
 
 							<!-- Proccess TransferRequest Button -->
 							<VCol
-								v-if="
-									w.voteAgainstMembers.length >= voteAgainstRequired || (
-										w.voteForMembers.length >= voteForRequired && (
-											currentTimestamp - w.latestRelevantForVoteBlockTimestamp
-										) >= transferDelaySeconds
-									)
-								"
+								v-if="getTransferRequestStatus(dTR) == '✅' || getTransferRequestStatus(dTR) == '❌'"
 								cols="12"
 							>
 								<VBtn
-									:disabled="processing[w.id]"
+									:disabled="processing[dTR.id]"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
-									@click="processTransferRequest(w.id)"
+									@click="processTransferRequest(dTR.id)"
 								>
 									<VProgressCircular
-										v-if="processing[w.id]"
+										v-if="processing[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -462,8 +417,8 @@
 								</VBtn>
 							</VCol>
 
-							<VCol v-if="transactionError[w.id]" cols="12">
-								<h6 class="text-danger">{{ transactionError[w.id] }}</h6>
+							<VCol v-if="transactionError[dTR.id]" cols="12">
+								<h6 class="text-danger">{{ transactionError[dTR.id] }}</h6>
 							</VCol>
 						</VRow>
 					</VCol>
@@ -485,7 +440,49 @@
 
 	import abiER20 from "../../../abi/erc20";
 	import YieldSyncV1Vault from "../../../abi/YieldSyncV1Vault";
-	import YieldSyncV1ATransferRequestProtocol from "../../../abi/YieldSyncV1ATransferRequestProtocol";
+	import YieldSyncV1BTransferRequestProtocol from "../../../abi/YieldSyncV1BTransferRequestProtocol";
+
+	type Block = {
+		number: number;
+		hash: string;
+		parentHash: string;
+		nonce: string;
+		sha3Uncles: string;
+		logsBloom: string;
+		transactionsRoot: string;
+		stateRoot: string;
+		miner: string;
+		difficulty: string;
+		totalDifficulty: string;
+		extraData: string;
+		size: number;
+		gasLimit: number;
+		gasUsed: number;
+		timestamp: number;
+		transactions: string[];
+		uncles: string[];
+	};
+
+	type DetailedTransferRequest = {
+		// Standard Transfer Request
+		forERC20: boolean,
+		forERC721: boolean,
+		creator: string,
+		to: string,
+		token: string,
+		amount: number,
+		created: number,
+		tokenId: string,
+		// TRP Specific
+		voteAgainstMembers: string[],
+		voteForMembers: string[],
+		voteCloseTime: number,
+		// Meta
+		id: number,
+		tokenSymbol: string,
+		tokenAddress: string,
+		latestForVoteTime: string,
+	}
 
 	export default defineComponent({
 		name: "COpen",
@@ -525,8 +522,6 @@
 
 				voteForRequired: 0 as number,
 
-				transferDelaySeconds: 0 as number,
-
 				opened: {
 				} as {
 					[key: string]: boolean,
@@ -536,22 +531,7 @@
 				],
 
 				detailedTransferRequests: [
-				] as {
-					id: number,
-					amount: number,
-					creator: string,
-					forERC20: boolean,
-					forERC721: boolean,
-					latestForVoteTime: string,
-					latestRelevantForVoteBlockTimestamp: number,
-					to: string,
-					token: string,
-					tokenSymbol: string,
-					tokenAddress: string,
-					tokenId: string,
-					voteAgainstMembers: string[],
-					voteForMembers: string[],
-				}[],
+				] as DetailedTransferRequest[],
 
 				error: "" as string,
 
@@ -562,12 +542,12 @@
 
 				transferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
-				].yieldSyncV1ATransferRequestProtocol,
+				].yieldSyncV1BTransferRequestProtocol,
 			};
 		},
 
 		methods: {
-			async setCurrentBlockTimestamp()
+			async setCurrentBlockTimestamp(): Promise<void>
 			{
 				// Get the current block number
 				this.$store.state.web3.eth.getBlockNumber((error: string, blockNumber: number) =>
@@ -580,55 +560,34 @@
 					}
 
 					// Get the block details
-					this.$store.state.web3.eth.getBlock(blockNumber, (
-						error: string,
-						block: {
-							number: number;
-							hash: string;
-							parentHash: string;
-							nonce: string;
-							sha3Uncles: string;
-							logsBloom: string;
-							transactionsRoot: string;
-							stateRoot: string;
-							miner: string;
-							difficulty: string;
-							totalDifficulty: string;
-							extraData: string;
-							size: number;
-							gasLimit: number;
-							gasUsed: number;
-							timestamp: number;
-							transactions: string[];
-							uncles: string[];
-						}
-					) =>
-					{
-						if (error)
+					this.$store.state.web3.eth.getBlock(
+						blockNumber,
+						(error: string, block: Block) =>
 						{
-							this.error = "Caught: " + String(error);
+							if (error)
+							{
+								this.error = "Caught: " + String(error);
 
-							return;
+								return;
+							}
+
+							// Retrieve the timestamp of the current block
+							this.currentTimestamp = block.timestamp;
+
+							console.log("Current block timestamp:", this.currentTimestamp);
 						}
-
-						// Retrieve the timestamp of the current block
-						this.currentTimestamp = block.timestamp;
-
-						console.log("Current block timestamp:", this.currentTimestamp);
-					});
+					);
 				});
 			},
 
-			async getTransferRequestData()
+			async getTransferRequestData(): Promise<void>
 			{
 				this.loading = true;
 
 				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
 					this.transferRequestProtocol
 				);
-
-				await this.setCurrentBlockTimestamp();
 
 				this.detailedTransferRequests = [
 				];
@@ -644,12 +603,6 @@
 						this.vaultAddress
 					).call()
 				)[1];
-
-				this.transferDelaySeconds = (
-					await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
-						this.vaultAddress
-					).call()
-				)[2];
 
 				this.idsOfOpenTransferRequests = (
 					await transferRequestProtocol.methods.yieldSyncV1Vault_openTransferRequestIds(
@@ -707,27 +660,59 @@
 					const seconds = date.getSeconds();
 
 					this.detailedTransferRequests.push({
-						id: this.idsOfOpenTransferRequests[i],
-						amount: tR.amount,
-						creator: tR.creator,
+						// Standard Transfer Request
 						forERC20: tR.forERC20,
 						forERC721: tR.forERC721,
-						latestForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-						latestRelevantForVoteBlockTimestamp: tRP.latestForVoteTime,
+						creator: tR.creator,
 						to: tR.to,
 						token: !tR.forERC20 && !tR.forERC721 ? "Ether" : name,
-						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
-						tokenAddress: tR.token,
+						amount: tR.amount,
+						created: 1,
 						tokenId: tR.tokenId,
+						// TRP Specific
 						voteAgainstMembers: tRP.voteAgainstMembers,
 						voteForMembers: tRP.voteForMembers,
+						voteCloseTime: 0,
+						// Meta
+						id: this.idsOfOpenTransferRequests[i],
+						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
+						tokenAddress: tR.token,
+						latestForVoteTime: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
 					});
 				}
 
 				this.loading = false;
 			},
 
-			async voteOnTransferRequest(tRId: number, vote: boolean)
+			getTransferRequestStatus(dTR: DetailedTransferRequest): "🗳️" | "❌" | "✅"
+			{
+				if (dTR.voteCloseTime < this.currentTimestamp)
+				{
+					return '🗳️';
+				}
+
+				if (
+					dTR.voteForMembers.length < this.voteForRequired &&
+					dTR.voteAgainstMembers.length < this.voteAgainstRequired
+				)
+				{
+					return '❌';
+				}
+
+				if (dTR.voteAgainstMembers.length >= this.voteAgainstRequired)
+				{
+					return '❌';
+				}
+
+				if (dTR.voteForMembers.length >= this.voteForRequired)
+				{
+					return '✅';
+				}
+
+				return '❌';
+			},
+
+			async voteOnTransferRequest(tRId: number, vote: boolean): Promise<void>
 			{
 				if (!this.vaultAddress || !this.transferRequestProtocol)
 				{
@@ -735,7 +720,7 @@
 				}
 
 				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
-					YieldSyncV1ATransferRequestProtocol as AbiItem[],
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
 					this.transferRequestProtocol
 				);
 
@@ -775,7 +760,7 @@
 				);
 			},
 
-			async processTransferRequest(tRId: number)
+			async processTransferRequest(tRId: number): Promise<void>
 			{
 				if (!this.vaultAddress)
 				{
@@ -830,6 +815,8 @@
 
 		async created()
 		{
+			await this.setCurrentBlockTimestamp();
+
 			await this.getTransferRequestData();
 		}
 	});
