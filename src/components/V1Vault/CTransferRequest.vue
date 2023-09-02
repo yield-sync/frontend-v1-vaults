@@ -4,7 +4,7 @@
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
-			<h4 class="text-center text-uppercase">↗️ Transfer Requests</h4>
+			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ trpType(trp) }})</h4>
 		</VCardTitle>
 
 		<VTabs
@@ -21,21 +21,13 @@
 			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestAOpen
-						v-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1ATransferRequestProtocol
-						"
+						v-if="trpType(trp) == 'a'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
 
 					<CTransferRequestBOpen
-						v-else-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1BTransferRequestProtocol
-						"
+						v-else-if="trpType(trp) == 'b'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -47,21 +39,13 @@
 
 				<VWindowItem value="c">
 					<CTransferRequestACreate
-						v-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1ATransferRequestProtocol
-						"
+						v-if="trpType(trp) == 'a'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
 
 					<CTransferRequestBCreate
-						v-else-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1BTransferRequestProtocol
-						"
+						v-else-if="trpType(trp) == 'b'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -109,6 +93,24 @@
 				vault: undefined as Contract | undefined,
 				trp: ""
 			};
+		},
+
+		methods: {
+			trpType(trp: string): "a" | "b" | "?"
+			{
+				let chainName = this.$store.state.currentChain.name;
+
+				switch (trp) {
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
+						return "a";
+
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
+						return "b";
+
+					default:
+						return "?";
+				}
+			}
 		},
 
 		async created(): Promise<void>
