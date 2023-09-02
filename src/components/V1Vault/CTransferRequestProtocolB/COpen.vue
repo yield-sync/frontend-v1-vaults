@@ -383,16 +383,18 @@
 							</VCol>
 
 							<!-- Time passed -->
-							<VCol
-								v-if="dTR.voteForMembers.length > 0 || asAdmin"
-								cols="12"
-								:sm="dTR.voteForMembers.length >= voteForRequired || asAdmin ? 6: 12"
-							>
+							<VCol cols="12">
 								<h4 class="mb-3 text-center text-primary">
-									Latest Relevant For Vote Time
+									Vote Close Time / Current Block Timestamp
 								</h4>
 								<h3 class="mb-3 text-center text-dark">
-									{{ dTR.latestForVoteTime }}
+									{{ dTR.voteCloseTime }} / {{ currentBlockTimestamp }}
+								</h3>
+								<h4 class="mb-3 text-center text-primary">
+									Seconds Left
+								</h4>
+								<h3 class="mb-3 text-center text-dark">
+									{{ dTR.voteCloseTime - currentBlockTimestamp }}
 								</h3>
 							</VCol>
 
@@ -484,6 +486,12 @@
 		latestForVoteTime: string,
 	}
 
+	type TransferRequestStatus = {
+		readyToBeProcessed: boolean,
+		approved: boolean,
+		message: string,
+	};
+
 	export default defineComponent({
 		name: "COpen",
 
@@ -504,7 +512,7 @@
 			return {
 				loading: true as boolean,
 
-				currentTimestamp: 99999999999999 as number,
+				currentBlockTimestamp: 99999999999999 as number,
 
 				voting: {
 				} as {
@@ -572,9 +580,9 @@
 							}
 
 							// Retrieve the timestamp of the current block
-							this.currentTimestamp = block.timestamp;
+							this.currentBlockTimestamp = block.timestamp;
 
-							console.log("Current block timestamp:", this.currentTimestamp);
+							console.log("Current block timestamp:", this.currentBlockTimestamp);
 						}
 					);
 				});
@@ -672,7 +680,7 @@
 						// TRP Specific
 						voteAgainstMembers: tRP.voteAgainstMembers,
 						voteForMembers: tRP.voteForMembers,
-						voteCloseTime: 0,
+						voteCloseTime: tRP.voteCloseTime,
 						// Meta
 						id: this.idsOfOpenTransferRequests[i],
 						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
@@ -686,30 +694,45 @@
 
 			getTransferRequestStatus(dTR: DetailedTransferRequest): "🗳️" | "❌" | "✅"
 			{
-				if (dTR.voteCloseTime < this.currentTimestamp)
+				if (!this.vaultAddress || !this.transferRequestProtocol)
+				{
+					return "❌";
+				}
+
+				let status: TransferRequestStatus = {
+					readyToBeProcessed: false,
+					approved: false,
+					message:"",
+				};
+
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+
+				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestStatus(
+					this.vaultAddress,
+					dTR.id,
+				).call().then(
+					(result: TransferRequestStatus) => {
+						status = result;
+					}
+				);
+
+				if (status.readyToBeProcessed == false)
 				{
 					return "🗳️";
 				}
 
-				if (
-					dTR.voteForMembers.length < this.voteForRequired &&
-					dTR.voteAgainstMembers.length < this.voteAgainstRequired
-				)
-				{
-					return "❌";
-				}
-
-				if (dTR.voteAgainstMembers.length >= this.voteAgainstRequired)
-				{
-					return "❌";
-				}
-
-				if (dTR.voteForMembers.length >= this.voteForRequired)
+				if (status.approved)
 				{
 					return "✅";
 				}
-
-				return "❌";
+				else
+				{
+					return "❌";
+				}
 			},
 
 			async voteOnTransferRequest(tRId: number, vote: boolean): Promise<void>

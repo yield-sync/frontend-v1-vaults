@@ -118,7 +118,7 @@
 				Current Block Timestamp + Vote Close Time = Submittable Block Timestamp
 				<br/>
 				{{ currentBlockTimestamp }} + {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTime }} =
-				{{ currentBlockTimestamp + $store.state.pages.RVV1Vault.transferRequestB.voteCloseTime }}
+				{{ currentBlockTimestamp + parseInt($store.state.pages.RVV1Vault.transferRequestB.voteCloseTime) }}
 			</h5>
 		</VCol>
 
@@ -250,7 +250,10 @@
 					(
 						this.$store.state.pages.RVV1Vault.transferRequestB.for == "ERC 721"
 					) ? BigInt(10 ** 18) : BigInt(this.$store.state.pages.RVV1Vault.transferRequestB.amount * 10 ** 18),
-					this.currentBlockTimestamp + this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTime
+					this.$store.state.pages.RVV1Vault.transferRequestB.tokenId,
+					this.currentBlockTimestamp + parseInt(
+						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTime
+					)
 				).send({
 					from: this.$store.state.wallet.accounts[0]
 				}).on(
@@ -267,8 +270,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.transferRequestBs.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequestBs.key++;
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
 						}
 
 						this.creating = false;

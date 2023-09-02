@@ -188,8 +188,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.transferRequestAs.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequestAs.key++;
+							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
+							this.$store.state.pages.RVV1Vault.transferRequests.key++;
 						}
 
 						this.creating = false;
