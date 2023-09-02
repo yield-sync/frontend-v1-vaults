@@ -4,7 +4,7 @@
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
-			<h4 class="text-center text-uppercase">↗️ Transfer Requests</h4>
+			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ trpType(trp) }})</h4>
 		</VCardTitle>
 
 		<VTabs
@@ -20,12 +20,14 @@
 		<VCardText variant="light">
 			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
-					<CTransferRequestOpen
-						v-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1ATransferRequestProtocol
-						"
+					<CTransferRequestAOpen
+						v-if="trpType(trp) == 'a'"
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+
+					<CTransferRequestBOpen
+						v-else-if="trpType(trp) == 'b'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
@@ -36,15 +38,21 @@
 				</VWindowItem>
 
 				<VWindowItem value="c">
-					<CTransferRequestCreate
-						v-if="
-							trp == $store.state.config.networkChain[
-								$store.state.currentChain.name
-							].yieldSyncV1ATransferRequestProtocol
-						"
+					<CTransferRequestACreate
+						v-if="trpType(trp) == 'a'"
 						:vaultAddress="vaultAddress"
 						:asAdmin="$route.query.admin == 'true'"
 					/>
+
+					<CTransferRequestBCreate
+						v-else-if="trpType(trp) == 'b'"
+						:vaultAddress="vaultAddress"
+						:asAdmin="$route.query.admin == 'true'"
+					/>
+
+					<div v-else>
+						<h5 class="text-center">Unsupported Transfer Request Protocol</h5>
+					</div>
 				</VWindowItem>
 			</VWindow>
 		</VCardText>
@@ -57,8 +65,10 @@
 	import { AbiItem } from "web3-utils";
 
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
-	import CTransferRequestCreate from "./CTransferRequestProtocolA/Create.vue";
-	import CTransferRequestOpen from "./CTransferRequestProtocolA/Open.vue";
+	import CTransferRequestACreate from "./CTransferRequestProtocolA/CCreate.vue";
+	import CTransferRequestAOpen from "./CTransferRequestProtocolA/COpen.vue";
+	import CTransferRequestBCreate from "./CTransferRequestProtocolB/CCreate.vue";
+	import CTransferRequestBOpen from "./CTransferRequestProtocolB/COpen.vue";
 
 	export default defineComponent({
 		name: "CTransferRequest",
@@ -71,11 +81,13 @@
 		},
 
 		components: {
-			CTransferRequestCreate,
-			CTransferRequestOpen
+			CTransferRequestACreate,
+			CTransferRequestAOpen,
+			CTransferRequestBCreate,
+			CTransferRequestBOpen,
 		},
 
-		data() 
+		data()
 		{
 			return {
 				vault: undefined as Contract | undefined,
@@ -83,7 +95,25 @@
 			};
 		},
 
-		async created() 
+		methods: {
+			trpType(trp: string): "a" | "b" | "?"
+			{
+				let chainName = this.$store.state.currentChain.name;
+
+				switch (trp) {
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
+						return "a";
+
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
+						return "b";
+
+					default:
+						return "?";
+				}
+			}
+		},
+
+		async created(): Promise<void>
 		{
 			this.vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],

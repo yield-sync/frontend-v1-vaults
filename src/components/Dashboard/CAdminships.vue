@@ -108,7 +108,7 @@
 		components: {
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			this.loading = true;
 

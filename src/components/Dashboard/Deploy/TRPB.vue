@@ -75,6 +75,179 @@
 			</VRow>
 		</VCardText>
 	</VCard>
+
+	<VCard
+		v-if="vaultDeploy.voteAgainstRequired > 0 && vaultDeploy.voteForRequired > 0"
+		class="mb-4 rounded-xl bg-light-frost elevation-0"
+	>
+		<VCardText class="px-6 py-6">
+			<VRow>
+				<VCol cols="12">
+					<h2 class="mb-3 text-center text-uppercase text-primary"> 🚀 Deploy Vault (2/2)</h2>
+					<h6 class="mb-6 text-center text-uppercase text-dark">
+						Deployment Fee: Ξ {{ deploymentFee }}
+					</h6>
+				</VCol>
+			</VRow>
+
+			<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
+				<VCardText class="px-6 py-6">
+					<h2 class="mb-6 text-center text-uppercase text-primary">👤 Members</h2>
+
+					<VRow
+						v-for="(m, i) in vaultDeploy.members" :key="i"
+						class="mb-3"
+					>
+						<VCol md="10">
+							<a
+								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">
+									{{ m }}
+								</VBtn>
+							</a>
+						</VCol>
+						<VCol md="2">
+							<VBtn
+								variant="flat"
+								color="danger"
+								class="w-100 rounded-xl elevation-0"
+								@click="memberRemove(i)"
+							>
+								✕
+							</VBtn>
+						</VCol>
+					</VRow>
+
+					<VRow>
+						<VCol md="10">
+							<VTextField v-model="memberAddField" label="Address" variant="outlined" />
+						</VCol>
+						<VCol md="2">
+							<VBtn
+								variant="tonal"
+								color="success"
+								class="mt-3 w-100 rounded-xl elevation-0"
+								@click="memberAdd()"
+							>
+								Add
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCardText>
+			</VCard>
+
+			<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
+				<VCardText class="px-6 py-6">
+					<h2 class="mb-6 text-center text-uppercase text-primary">🔑 Admins</h2>
+
+					<VRow
+						v-for="(m, i) in vaultDeploy.admins" :key="i"
+						class="mb-3"
+					>
+						<VCol md="10">
+							<a
+								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<VBtn variant="tonal" color="dark" class="word-wrap rounded-xl">
+									{{ m }}
+								</VBtn>
+							</a>
+						</VCol>
+						<VCol md="2">
+							<VBtn
+								variant="flat"
+								color="danger"
+								class="w-100 rounded-xl elevation-0"
+								@click="adminRemove(i)"
+							>
+								✕
+							</VBtn>
+						</VCol>
+					</VRow>
+
+					<VRow>
+						<VCol md="10">
+							<VTextField v-model="adminAddField" label="Address" variant="outlined" />
+						</VCol>
+						<VCol md="2">
+							<VBtn
+								variant="tonal"
+								color="success"
+								class="w-100 mt-3 rounded-xl elevation-0"
+								@click="adminAdd()"
+							>
+								Add
+							</VBtn>
+						</VCol>
+					</VRow>
+				</VCardText>
+			</VCard>
+
+			<VTextField
+				v-if="false"
+				v-model="vaultDeploy.signatureManager"
+				type="text"
+				label="Signature Manager"
+				variant="outlined"
+				hide-details
+				class="mb-3"
+				size="small"
+			/>
+
+			<VCard
+				v-if="vaultDeploy.members.length < vaultDeploy.voteAgainstRequired"
+				color="danger"
+				class="mb-6 text-center text-light elevation-0 rounded-xl"
+			>
+				<VCardText>
+					<h3 class="mb-3 text-uppercase">Invalid params!</h3>
+					<h4>Against Votes cannot be less than member count.</h4>
+				</VCardText>
+			</VCard>
+
+			<VCard
+				v-if="vaultDeploy.members.length < vaultDeploy.voteForRequired"
+				color="danger"
+				class="mb-6 text-center text-light elevation-0 rounded-xl"
+			>
+				<VCardText>
+					<h3 class="mb-3 text-uppercase">Invalid params!</h3>
+					<h4>For Votes cannot be less than member count.</h4>
+				</VCardText>
+			</VCard>
+
+			<VBtn
+				color="primary"
+				class="w-100 rounded-xl elevation-0"
+				:disabled="
+					vaultProperties.updating ||
+						vaultDeploy.deploying || (
+							(
+								vaultDeploy.members.length < vaultDeploy.voteForRequired ||
+								vaultDeploy.members.length < vaultDeploy.voteAgainstRequired
+							) &&
+							vaultDeploy.admins.length == 0
+						) || (
+							vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
+							vaultProperties.voteForRequired != vaultDeploy.voteForRequired
+						)
+				"
+				@click="deployYieldSyncV1Vault()"
+			>
+				<VProgressCircular
+					v-if="vaultDeploy.deploying"
+					indeterminate
+					color="light"
+				/>
+				<h2 v-else>Deploy</h2>
+			</VBtn>
+		</VCardText>
+	</VCard>
 </template>
 
 <script lang="ts">
@@ -276,7 +449,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
 

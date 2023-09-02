@@ -1,4 +1,16 @@
 <template>
+	<CTRPAOverview
+		v-if="trp == yieldSyncV1ATransferRequestProtocol"
+		:address="address"
+		:asAdmin="asAdmin"
+	/>
+
+	<CTRPBOverview
+		v-if="trp == yieldSyncV1BTransferRequestProtocol"
+		:address="address"
+		:asAdmin="asAdmin"
+	/>
+
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="bg-primary text-light">
 			<VRow>
@@ -21,55 +33,8 @@
 				</VCol>
 			</VRow>
 		</VCardTitle>
-
 		<VCardText class="mt-4">
 			<VRow>
-				<!-- For Vote -->
-				<VCol cols="12" sm="4" class="text-center">
-					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
-
-						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
-							indeterminate
-							color="light"
-							class=""
-						/>
-
-						<h2 v-else class="m-0">{{ vault.voteForRequired }}</h2>
-					</VCard>
-				</VCol>
-
-				<VCol cols="12" sm="4" class="text-center">
-					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
-
-						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
-							indeterminate
-							color="light"
-							class=""
-						/>
-
-						<h2 v-else class="m-0">{{ vault.voteAgainstRequired }}</h2>
-					</VCard>
-				</VCol>
-
-				<VCol cols="12" sm="4" class="text-center">
-					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-						<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
-
-						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
-							indeterminate
-							color="light"
-							class=""
-						/>
-
-						<h2 v-else class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
-					</VCard>
-				</VCol>
-
 				<VCol cols="12">
 					<VCard class="rounded-xl elevation-0 bg-light-frost">
 						<VCardText>
@@ -237,13 +202,20 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
-	import YieldSyncV1ATransferRequestProtocol from "../../abi/YieldSyncV1ATransferRequestProtocol";
+	import CTRPAOverview from "../../components/V1Vault/COverview/CTRPAOverview.vue";
+	import CTRPBOverview from "../../components/V1Vault/COverview/CTRPBOverview.vue";
+	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
 	import router from "../../router";
 
 	export default defineComponent({
 		name: "COverview",
+
+		components: {
+			CTRPAOverview,
+			CTRPBOverview,
+		},
 
 		props: {
 			address: {
@@ -260,6 +232,8 @@
 		data()
 		{
 			return {
+				vault: undefined as Contract | undefined,
+				trp: "",
 				ZeroAddress: "0x0000000000000000000000000000000000000000",
 				ethBalance: 0,
 				erc20Balances: [
@@ -277,16 +251,16 @@
 					contract: number | string,
 					tokenId: number | string
 				}[],
-				vault: {
-					voteAgainstRequired: 0 as number,
-					voteForRequired: 0 as number,
-					transferDelaySeconds: 0 as number,
-				},
+
 				error: "" as string,
 
-				transferRequestProtocol: this.$store.state.config.networkChain[
+				yieldSyncV1ATransferRequestProtocol: this.$store.state.config.networkChain[
 					this.$store.state.currentChain.name
 				].yieldSyncV1ATransferRequestProtocol,
+
+				yieldSyncV1BTransferRequestProtocol: this.$store.state.config.networkChain[
+					this.$store.state.currentChain.name
+				].yieldSyncV1BTransferRequestProtocol,
 
 				dialog: false,
 			};
@@ -453,30 +427,21 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
-			await this.getBalances();
-
-			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1ATransferRequestProtocol as AbiItem[],
-				this.transferRequestProtocol
+			this.vault = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1Vault as AbiItem[],
+				this.address
 			);
 
-			this.vault.voteAgainstRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
-					this.address
-				).call()
-			)[0];
-			this.vault.voteForRequired = (
-				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
-					this.address
-				).call()
-			)[1];
-			this.vault.transferDelaySeconds = (
-				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
-					this.address
-				).call()
-			)[2];
+			if (!this.vault)
+			{
+				return;
+			}
+
+			this.trp = await this.vault.methods.transferRequestProtocol().call();
+
+			await this.getBalances();
 		},
 	});
 </script>

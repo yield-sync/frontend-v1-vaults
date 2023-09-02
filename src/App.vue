@@ -55,7 +55,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			try
 			{

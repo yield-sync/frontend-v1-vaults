@@ -200,7 +200,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			await this.getMembers();
 

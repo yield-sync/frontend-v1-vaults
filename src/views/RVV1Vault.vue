@@ -177,7 +177,7 @@
 			},
 		},
 
-		async created()
+		async created(): Promise<void>
 		{
 			if (this.$route.query.admin == "true")
 			{
