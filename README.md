@@ -1,4 +1,4 @@
-# frontend
+# Yield Sync Frontend
 
 ## Project setup
 ```
