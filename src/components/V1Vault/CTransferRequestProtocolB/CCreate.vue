@@ -3,7 +3,7 @@
 		<VCol cols="12" md="8">
 			<fieldset class="border-0">
 				<input
-					v-model="$store.state.pages.RVV1Vault.transferRequestB.for"
+					v-model="this.$store.state.pages.RVV1Vault.transferRequestB.for"
 					type="radio"
 					value="Ether"
 					id="Ether"
@@ -12,7 +12,7 @@
 				<label for="Ether">Ether</label>
 
 				<input
-					v-model="$store.state.pages.RVV1Vault.transferRequestB.for"
+					v-model="this.$store.state.pages.RVV1Vault.transferRequestB.for"
 					type="radio"
 					value="ERC 20"
 					id="ERC 20"
@@ -21,7 +21,7 @@
 				<label for="ERC 20">ERC 20</label>
 
 				<input
-					v-model="$store.state.pages.RVV1Vault.transferRequestB.for"
+					v-model="this.$store.state.pages.RVV1Vault.transferRequestB.for"
 					type="radio"
 					value="ERC 721"
 					id="ERC 721"
@@ -33,14 +33,14 @@
 
 		<VCol cols="12" md="4">
 			<select
-				v-if="$store.state.pages.RVV1Vault.transferRequestB.for != 'Ether'"
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.token"
+				v-if="this.$store.state.pages.RVV1Vault.transferRequestB.for != 'Ether'"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.token"
 				class="w-100 px-4 py-2 bg-light border rounded"
-				@change="$store.state.pages.RVV1Vault.transferRequestB.for = 'ERC 20'"
+				@change="this.$store.state.pages.RVV1Vault.transferRequestB.for = 'ERC 20'"
 			>
 				<option value="">Select ERC 20 Token</option>
 
-				<option v-for="(t, i) in $store.state.pages.RVV1Vault.erc20s" :key="i" :value="t.contract">
+				<option v-for="(t, i) in this.$store.state.pages.RVV1Vault.erc20s" :key="i" :value="t.contract">
 					{{ t.name }}
 				</option>
 			</select>
@@ -49,7 +49,7 @@
 		<VCol cols="12">
 			<!-- TO -->
 			<VTextField
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.to"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.to"
 				type="text"
 				label="To Address"
 				variant="outlined"
@@ -62,8 +62,8 @@
 		<VCol cols="6">
 			<!-- TOKEN ADDRESS -->
 			<VTextField
-				:disabled="$store.state.pages.RVV1Vault.transferRequestB.for == 'Ether'"
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.token"
+				:disabled="this.$store.state.pages.RVV1Vault.transferRequestB.for == 'Ether'"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.token"
 				type="text"
 				label="Token Address"
 				variant="outlined"
@@ -76,8 +76,8 @@
 		<VCol cols="2">
 			<!-- TOKEN ID -->
 			<VTextField
-				:disabled="$store.state.pages.RVV1Vault.transferRequestB.for != 'ERC 721'"
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.tokenId"
+				:disabled="this.$store.state.pages.RVV1Vault.transferRequestB.for != 'ERC 721'"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.tokenId"
 				type="number"
 				label="Token Id"
 				variant="outlined"
@@ -90,8 +90,8 @@
 		<VCol cols="4">
 			<!-- AMOUNT -->
 			<VTextField
-				:disabled="$store.state.pages.RVV1Vault.transferRequestB.for == 'ERC 721'"
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.amount"
+				:disabled="this.$store.state.pages.RVV1Vault.transferRequestB.for == 'ERC 721'"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.amount"
 				type="number"
 				label="Amount"
 				variant="outlined"
@@ -104,7 +104,7 @@
 		<VCol cols="4">
 			<!-- Vote Close Time -->
 			<VTextField
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp"
+				v-model="this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp"
 				type="number"
 				label="Vote Close Time (Seconds From Now)"
 				variant="outlined"
@@ -116,25 +116,25 @@
 
 		<VCol cols="8">
 			<h5 class="text-dark">
-				Minutes: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / 60 }} -
-				Hours: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / (60 * 60) }}
+				Minutes: {{ this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / 60 }} -
+				Hours: {{ this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / (60 * 60) }}
 				<br/>
 				Current Block Timestamp + Vote Close Time = Submittable Block Timestamp
 				<br/>
-				{{ currentBlockTimestamp }} + {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp }} =
-				{{ currentBlockTimestamp + parseInt($store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp) }}
+				{{ this.currentBlockTimestamp }} + {{ this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp }} =
+				{{ this.currentBlockTimestamp + this.parseInt(this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp) }}
 			</h5>
 		</VCol>
 
 		<VCol cols="12">
 			<VBtn
-				:disabled="creating"
+				:disabled="this.creating"
 				color="primary"
 				class="w-100 rounded-xl elevation-0"
-				@click="createWR()"
+				@click="this.createWR()"
 			>
 				<VProgressCircular
-					v-if="creating"
+					v-if="this.creating"
 					indeterminate
 					color="light"
 					class=""
@@ -143,7 +143,7 @@
 				<span v-else>Create Request</span>
 			</VBtn>
 
-			<h6 v-if="error" class="text-danger">{{ error }}</h6>
+			<h6 v-if="this.error" class="text-danger">{{ this.error }}</h6>
 		</VCol>
 	</VRow>
 </template>

@@ -11,7 +11,7 @@
 
 						<VCol cols="12" class="text-center">
 							<a
-								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${govA}`"
+								:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.govA}`"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
@@ -22,23 +22,23 @@
 						<VCol cols="12">
 							<h4 class="mb-3 text-center text-primary">DEFAULT_ADMIN_ROLE</h4>
 
-							<h5 class="mb-3 text-center">{{ adminRole }}</h5>
+							<h5 class="mb-3 text-center">{{ this.adminRole }}</h5>
 
 							<h4 class="mb-3 text-center text-primary">DEFAULT_ADMIN_ROLE Admin</h4>
 
-							<h5 class="mb-3 text-center">{{ roleAdmin }}</h5>
+							<h5 class="mb-3 text-center">{{ this.roleAdmin }}</h5>
 
 							<h4 class="mb-3 text-center text-primary">Role Member Count</h4>
 
-							<h5 class="mb-3 text-center">{{ roleMemberCount }}</h5>
+							<h5 class="mb-3 text-center">{{ this.roleMemberCount }}</h5>
 
 							<h4 class="mb-3 text-center text-primary">Wallet is Admin</h4>
 
-							<h5 class="mb-3 text-center">{{ isAdmin }}</h5>
+							<h5 class="mb-3 text-center">{{ this.isAdmin }}</h5>
 
 							<h4 class="mb-3 text-center text-primary">Members</h4>
 
-							<h5 v-for="(m, i) in members" :key="i" class="text-decoration-none">
+							<h5 v-for="(m, i) in this.members" :key="i" class="text-decoration-none">
 								<h5 class="mb-3 text-center">{{ m }}</h5>
 							</h5>
 						</VCol>

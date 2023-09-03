@@ -16,13 +16,13 @@
 						<h4 class="mb-3 text-primary">✅ For Vote Req.</h4>
 
 						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
+							v-if="this.vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.voteForRequired }}</h2>
+						<h2 v-else class="m-0">{{ this.vault.voteForRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -31,13 +31,13 @@
 						<h4 class="mb-3 text-primary">❌ Against Req.</h4>
 
 						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
+							v-if="this.vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.voteAgainstRequired }}</h2>
+						<h2 v-else class="m-0">{{ this.vault.voteAgainstRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -47,13 +47,13 @@
 						<h4 class="mb-3 text-primary">⏳ Min Vote Period</h4>
 
 						<VProgressCircular
-							v-if="vault.minVotePeriodSeconds == -1"
+							v-if="this.vault.minVotePeriodSeconds == -1"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.minVotePeriodSeconds }} Sec.</h2>
+						<h2 v-else class="m-0">{{ this.vault.minVotePeriodSeconds }} Sec.</h2>
 					</VCard>
 				</VCol>
 
@@ -62,13 +62,13 @@
 						<h4 class="mb-3 text-primary">⌛ Max Vote Period</h4>
 
 						<VProgressCircular
-							v-if="vault.maxVotePeriodSeconds == -1"
+							v-if="this.vault.maxVotePeriodSeconds == -1"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.maxVotePeriodSeconds }} Sec.</h2>
+						<h2 v-else class="m-0">{{ this.vault.maxVotePeriodSeconds }} Sec.</h2>
 					</VCard>
 				</VCol>
 			</VRow>

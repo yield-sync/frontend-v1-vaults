@@ -7,14 +7,14 @@
 				</VCol>
 			</VRow>
 
-			<VRow v-for="(a, i) in admins" :key="i">
+			<VRow v-for="(a, i) in this.admins" :key="i">
 				<VCol md="1" lg="1">
-					<VBtn class="w-100 rounded-xl" variant="tonal" @click="copy(a)">📋</VBtn>
+					<VBtn class="w-100 rounded-xl" variant="tonal" @click="this.copy(a)">📋</VBtn>
 				</VCol>
 
 				<VCol md="9" lg="9">
 					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
+						:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${a}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -22,23 +22,23 @@
 					</a>
 				</VCol>
 
-				<VCol v-if="asAdmin" md="2" lg="2">
+				<VCol v-if="this.asAdmin" md="2" lg="2">
 					<VBtn
-						:disabled="removing"
+						:disabled="this.removing"
 						variant="tonal"
 						color="danger"
 						class="w-100 rounded-xl elevation-0"
-						@click="adminRemove(a)"
+						@click="this.adminRemove(a)"
 					>
 						Remove
 					</VBtn>
 				</VCol>
 			</VRow>
 
-			<VRow v-if="asAdmin">
+			<VRow v-if="this.asAdmin">
 				<VCol md="10" lg="10">
 					<VTextField
-						v-model="tobeAdded"
+						v-model="this.tobeAdded"
 						label="Address to be added as an Admin"
 						variant="outlined"
 						hide-details
@@ -47,18 +47,18 @@
 
 				<VCol md="2" lg="2">
 					<VBtn
-						:disabled="adding"
+						:disabled="this.adding"
 						variant="tonal"
 						color="success"
 						class="w-100 rounded-xl elevation-0"
-						@click="adminAdd()"
+						@click="this.adminAdd()"
 					>
 						Add
 					</VBtn>
 				</VCol>
 
 				<VCol cols="12">
-					<h6 class="text-danger">{{ error }}</h6>
+					<h6 class="text-danger">{{ this.error }}</h6>
 				</VCol>
 			</VRow>
 		</VCardText>

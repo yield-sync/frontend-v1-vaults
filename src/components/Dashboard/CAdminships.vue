@@ -19,7 +19,7 @@
 				</VCol>
 			</VRow>
 
-			<div v-if="loading" class="text-center">
+			<div v-if="this.loading" class="text-center">
 				<VProgressCircular
 					class=""
 					indeterminate
@@ -27,9 +27,9 @@
 				/>
 			</div>
 
-			<div v-if="!loading">
+			<div v-if="!this.loading">
 				<RouterLink
-					v-for="(v, i) in adminshipYieldSyncV1VaultVaults"
+					v-for="(v, i) in this.adminshipYieldSyncV1VaultVaults"
 					:key="i"
 					:to="`/v1-vault/${v.address}?admin=true`"
 					class="text-decoration-none"
@@ -42,7 +42,7 @@
 										v.address ?
 											v.address.substring(0, 4) +
 											"..." +
-											v.address.substring($store.state.wallet.accounts[0].length - 4)
+											v.address.substring(this.$store.state.wallet.accounts[0].length - 4)
 											: ""
 									}}
 								</h3>
@@ -64,7 +64,7 @@
 				</RouterLink>
 			</div>
 
-			<div v-if="!loading && adminshipYieldSyncV1VaultVaults.length == 0" class="text-center">
+			<div v-if="!this.loading && this.adminshipYieldSyncV1VaultVaults.length == 0" class="text-center">
 				<h5>No adminships found</h5>
 			</div>
 		</VCardText>

@@ -6,14 +6,14 @@
 
 		<VCardText class="mt-4">
 			<CMembers
-				:v1VaultAddress="vaultAddress"
-				:asAdmin="asAdmin"
+				:v1VaultAddress="this.vaultAddress"
+				:asAdmin="this.asAdmin"
 				class="mb-6"
 			/>
 
 			<CAdmins
-				:v1VaultAddress="vaultAddress"
-				:asAdmin="asAdmin"
+				:v1VaultAddress="this.vaultAddress"
+				:asAdmin="this.asAdmin"
 			/>
 		</VCardText>
 	</VCard>

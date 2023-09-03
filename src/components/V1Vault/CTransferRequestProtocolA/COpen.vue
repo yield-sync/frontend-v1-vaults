@@ -59,7 +59,7 @@
 		</VCardText>
 	</VCard>
 
-	<div v-if="loading" class="text-center">
+	<div v-if="this.loading" class="text-center">
 		<VProgressCircular
 			class=""
 			indeterminate
@@ -67,8 +67,8 @@
 		/>
 	</div>
 
-	<div v-if="!loading">
-		<VCard v-if="detailedTransferRequests.length == 0" class="my-3 rounded-xl elevation-0 bg-transparent">
+	<div v-if="!this.loading">
+		<VCard v-if="this.detailedTransferRequests.length == 0" class="my-3 rounded-xl elevation-0 bg-transparent">
 			<VCardText class="text-center">
 				<h3 class="mb-6 text-uppercase text-primary">No Open Transfer Requests</h3>
 
@@ -76,7 +76,7 @@
 					variant="tonal"
 					color="success"
 					class="rounded-xl"
-					@click="$store.state.pages.RVV1Vault.transferRequests.tab = 'c'"
+					@click="this.$store.state.pages.RVV1Vault.transferRequests.tab = 'c'"
 				>
 					Create
 				</VBtn>
@@ -84,21 +84,21 @@
 		</VCard>
 
 		<VCard
-			v-for="(dTR, i) in detailedTransferRequests"
+			v-for="(dTR, i) in this.detailedTransferRequests"
 			:key="i"
 			class="my-3 rounded-xl elevation-0 bg-light-frost"
 		>
 			<VCardText>
 				<VRow>
-					<VCol v-if="!opened[i]" cols="1">
+					<VCol v-if="!this.opened[i]" cols="1">
 						<h4 class="mt-2 text-center">
 							{{
-								getTransferRequestStatus(dTR)
+								this.getTransferRequestStatus(dTR)
 							}}
 						</h4>
 					</VCol>
 
-					<VCol v-if="!opened[i]" cols="3">
+					<VCol v-if="!this.opened[i]" cols="3">
 						<h4 v-if="dTR.forERC20" class="mt-2 text-center text-primary">
 							ERC 20 | {{ dTR.tokenSymbol }}
 						</h4>
@@ -112,13 +112,13 @@
 						</h4>
 					</VCol>
 
-					<VCol v-if="!opened[i]" cols="2">
+					<VCol v-if="!this.opened[i]" cols="2">
 						<h4 v-if="!dTR.forERC721" class="mt-2 text-center">{{ dTR.amount * 10 ** -18 }}</h4>
 
 						<h4 v-if="dTR.forERC721" class="mt-2 text-center">#{{ dTR.tokenId }}</h4>
 					</VCol>
 
-					<VCol v-if="!opened[i]" cols="2">
+					<VCol v-if="!this.opened[i]" cols="2">
 						<a
 							:href="`https://etherscan.io/address/${dTR.to}`"
 							target="_blank"
@@ -132,7 +132,7 @@
 						</a>
 					</VCol>
 
-					<VCol v-if="!opened[i]" cols="2">
+					<VCol v-if="!this.opened[i]" cols="2">
 						<h3 class="mt-2 text-center">
 							<span class="text-success">{{ dTR.voteForMembers.length }}</span>
 							:
@@ -140,29 +140,29 @@
 						</h3>
 					</VCol>
 
-					<VCol v-if="!opened[i]" cols="2">
+					<VCol v-if="!this.opened[i]" cols="2">
 						<VBtn
 							variant="flat"
 							color="primary"
 							class="w-100 rounded-xl elevation-0"
-							@click="opened[i] = true"
+							@click="this.opened[i] = true"
 						>
 							<h1 class="m-0">+</h1>
 						</VBtn>
 					</VCol>
 
-					<VCol v-if="opened[i]" cols="12">
+					<VCol v-if="this.opened[i]" cols="12">
 						<VRow>
 							<VCol cols="1">
 								<h4 class="mt-2 text-center">
-									{{ getTransferRequestStatus(dTR) }}
+									{{ this.getTransferRequestStatus(dTR) }}
 								</h4>
 							</VCol>
 
 							<VCol cols="1">
 								<RouterLink
-									v-if="$route.query.admin == 'true'"
-									:to="`/transfer-request-edit/${vaultAddress}/${dTR.id}`"
+									v-if="this.$route.query.admin == 'true'"
+									:to="`/transfer-request-edit/${this.vaultAddress}/${dTR.id}`"
 								>
 									<VBtn color="admin" variant="flat" class="w-100 rounded-xl">
 										Edit
@@ -181,7 +181,7 @@
 									variant="flat"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
-									@click="opened[i] = false"
+									@click="this.opened[i] = false"
 								>
 									<h1 class="m-0">-</h1>
 								</VBtn>
@@ -289,36 +289,36 @@
 
 								<VProgressLinear
 									color="success"
-									:model-value="(dTR.voteForMembers.length / voteForRequired * 100)"
+									:model-value="(dTR.voteForMembers.length / this.voteForRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ dTR.voteForMembers.length }}/{{ voteForRequired }}</strong>
+									<strong>{{ dTR.voteForMembers.length }}/{{ this.voteForRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										dTR.voteForMembers.length < voteForRequired &&
-										dTR.voteAgainstMembers.length < voteAgainstRequired
+										dTR.voteForMembers.length < this.voteForRequired &&
+										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
 									:disabled="
-										voting[dTR.id] ||
+										this.voting[dTR.id] ||
 											dTR.voteAgainstMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 											) ||
 											dTR.voteForMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 											)
 									"
 									variant="flat"
 									color="success"
 									class="w-100 px-6 rounded-xl elevation-0"
 									style="max-width: 200px;"
-									@click="voteOnTransferRequest(dTR.id, true)"
+									@click="this.voteOnTransferRequest(dTR.id, true)"
 								>
 									<VProgressCircular
-										v-if="voting[dTR.id]"
+										v-if="this.voting[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -333,36 +333,36 @@
 
 								<VProgressLinear
 									color="danger"
-									:model-value="(dTR.voteAgainstMembers.length / voteAgainstRequired * 100)"
+									:model-value="(dTR.voteAgainstMembers.length / this.voteAgainstRequired * 100)"
 									:height="36"
 									striped
 									class="mb-3 rounded-xl"
 								>
-									<strong>{{ dTR.voteAgainstMembers.length }}/{{ voteAgainstRequired }}</strong>
+									<strong>{{ dTR.voteAgainstMembers.length }}/{{ this.voteAgainstRequired }}</strong>
 								</VProgressLinear>
 
 								<VBtn
 									v-if="(
-										dTR.voteForMembers.length < voteForRequired &&
-										dTR.voteAgainstMembers.length < voteAgainstRequired
+										dTR.voteForMembers.length < this.voteForRequired &&
+										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
 									:disabled="
-										voting[dTR.id] ||
+										this.voting[dTR.id] ||
 											dTR.voteAgainstMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 											) ||
 											dTR.voteForMembers.some(
-												a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 											)
 									"
 									variant="flat"
 									color="danger"
 									class="w-100 px-6 rounded-xl elevation-0"
 									style="max-width: 200px;"
-									@click="voteOnTransferRequest(dTR.id, false)"
+									@click="this.voteOnTransferRequest(dTR.id, false)"
 								>
 									<VProgressCircular
-										v-if="voting[dTR.id]"
+										v-if="this.voting[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -375,9 +375,9 @@
 							<VCol
 								v-if="
 									dTR.voteAgainstMembers.some(
-										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 									) || dTR.voteForMembers.some(
-										a => a.toLowerCase() == $store.state.wallet.accounts[0].toLowerCase()
+										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
 									)
 								"
 								cols="12"
@@ -403,9 +403,9 @@
 
 							<!-- Time passed -->
 							<VCol
-								v-if="dTR.voteForMembers.length > 0 || asAdmin"
+								v-if="dTR.voteForMembers.length > 0 || this.asAdmin"
 								cols="12"
-								:sm="dTR.voteForMembers.length >= voteForRequired || asAdmin ? 6: 12"
+								:sm="dTR.voteForMembers.length >= this.voteForRequired || this.asAdmin ? 6: 12"
 							>
 								<h4 class="mb-3 text-center text-primary">
 									Latest Relevant For Vote Time
@@ -417,30 +417,30 @@
 							</VCol>
 
 							<!-- Time passed -->
-							<VCol v-if="dTR.voteForMembers.length >= voteForRequired || asAdmin" cols="12" sm="6">
+							<VCol v-if="dTR.voteForMembers.length >= this.voteForRequired || this.asAdmin" cols="12" sm="6">
 								<h4 class="mb-3 text-center text-primary">
 									Time Passed / Transfer Delay (s)
 								</h4>
 
 								<h3 class="mb-3 text-center text-dark">
-									{{ currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp }} /
-									{{ transferDelaySeconds }}
+									{{ this.currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp }} /
+									{{ this.transferDelaySeconds }}
 								</h3>
 							</VCol>
 
 							<!-- Process TransferRequest Button -->
 							<VCol
-								v-if="getTransferRequestStatus(dTR) == '✅' || getTransferRequestStatus(dTR) == '❌'"
+								v-if="this.getTransferRequestStatus(dTR) == '✅' || this.getTransferRequestStatus(dTR) == '❌'"
 								cols="12"
 							>
 								<VBtn
-									:disabled="processing[dTR.id]"
+									:disabled="this.processing[dTR.id]"
 									color="primary"
 									class="w-100 rounded-xl elevation-0"
-									@click="processTransferRequest(dTR.id)"
+									@click="this.processTransferRequest(dTR.id)"
 								>
 									<VProgressCircular
-										v-if="processing[dTR.id]"
+										v-if="this.processing[dTR.id]"
 										indeterminate
 										color="light"
 										class=""
@@ -450,8 +450,8 @@
 								</VBtn>
 							</VCol>
 
-							<VCol v-if="transactionError[dTR.id]" cols="12">
-								<h6 class="text-danger">{{ transactionError[dTR.id] }}</h6>
+							<VCol v-if="this.transactionError[dTR.id]" cols="12">
+								<h6 class="text-danger">{{ this.transactionError[dTR.id] }}</h6>
 							</VCol>
 						</VRow>
 					</VCol>
@@ -460,8 +460,8 @@
 		</VCard>
 	</div>
 
-	<div v-if="error" cols="12">
-		<h6 class="text-danger">{{ error }}</h6>
+	<div v-if="this.error" cols="12">
+		<h6 class="text-danger">{{ this.error }}</h6>
 	</div>
 </template>
 

@@ -16,13 +16,13 @@
 						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
 
 						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
+							v-if="this.vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.voteForRequired }}</h2>
+						<h2 v-else class="m-0">{{ this.vault.voteForRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -31,13 +31,13 @@
 						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
 
 						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
+							v-if="this.vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.voteAgainstRequired }}</h2>
+						<h2 v-else class="m-0">{{ this.vault.voteAgainstRequired }}</h2>
 					</VCard>
 				</VCol>
 
@@ -46,13 +46,13 @@
 						<h3 class="mb-3 text-primary">⏳ Transfer Delay</h3>
 
 						<VProgressCircular
-							v-if="vault.voteForRequired == 0"
+							v-if="this.vault.voteForRequired == 0"
 							indeterminate
 							color="light"
 							class=""
 						/>
 
-						<h2 v-else class="m-0">{{ vault.transferDelaySeconds }} Seconds</h2>
+						<h2 v-else class="m-0">{{ this.vault.transferDelaySeconds }} Seconds</h2>
 					</VCard>
 				</VCol>
 			</VRow>

@@ -24,7 +24,7 @@
 					class="text-center"
 				>
 					<a
-						:href="`https://${etherscan}.etherscan.io/address/${factory}`"
+						:href="`https://${this.etherscan}.etherscan.io/address/${this.factory}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -38,7 +38,7 @@
 					</a>
 
 					<a
-						:href="`https://${etherscan}.etherscan.io/address/${registry}`"
+						:href="`https://${this.etherscan}.etherscan.io/address/${this.registry}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -52,7 +52,7 @@
 					</a>
 
 					<a
-						:href="`https://${etherscan}.etherscan.io/address/${transferRequestProtocol}`"
+						:href="`https://${this.etherscan}.etherscan.io/address/${this.transferRequestProtocol}`"
 						target="_blank"
 						rel="noopener noreferrer"
 					>

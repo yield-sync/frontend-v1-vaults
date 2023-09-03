@@ -14,7 +14,7 @@
 				<!-- Against -->
 				<VCol cols="12" md="3">
 					<VTextField
-						v-model="vaultProperties.voteAgainstRequired"
+						v-model="this.vaultProperties.voteAgainstRequired"
 						type="number"
 						label="Against Vote Count"
 						variant="outlined"
@@ -26,7 +26,7 @@
 				<!-- For -->
 				<VCol cols="12" md="3">
 					<VTextField
-						v-model="vaultProperties.voteForRequired"
+						v-model="this.vaultProperties.voteForRequired"
 						type="number"
 						label="For Vote Count"
 						variant="outlined"
@@ -38,7 +38,7 @@
 				<!-- Min -->
 				<VCol cols="12" md="3">
 					<VTextField
-						v-model="vaultProperties.minVotePeriodSeconds"
+						v-model="this.vaultProperties.minVotePeriodSeconds"
 						type="number"
 						label="Min Vote Period Seconds"
 						variant="outlined"
@@ -50,7 +50,7 @@
 				<!-- Max -->
 				<VCol cols="12" md="3">
 					<VTextField
-						v-model="vaultProperties.maxVotePeriodSeconds"
+						v-model="this.vaultProperties.maxVotePeriodSeconds"
 						type="number"
 						label="Max Vote Period Seconds"
 						variant="outlined"
@@ -64,18 +64,18 @@
 						variant="flat"
 						color="primary"
 						class="w-100 rounded-xl elevation-0"
-						@click="updateWalletProperties()"
+						@click="this.updateWalletProperties()"
 						:disabled="
-							vaultProperties.updating || (
-								vaultProperties.voteAgainstRequired == vaultDeploy.voteAgainstRequired &&
-								vaultProperties.voteForRequired == vaultDeploy.voteForRequired &&
-								vaultProperties.maxVotePeriodSeconds == vaultDeploy.maxVotePeriodSeconds &&
-								vaultProperties.minVotePeriodSeconds == vaultDeploy.minVotePeriodSeconds
+							this.vaultProperties.updating || (
+								this.vaultProperties.voteAgainstRequired == this.vaultDeploy.voteAgainstRequired &&
+								this.vaultProperties.voteForRequired == this.vaultDeploy.voteForRequired &&
+								this.vaultProperties.maxVotePeriodSeconds == this.vaultDeploy.maxVotePeriodSeconds &&
+								this.vaultProperties.minVotePeriodSeconds == this.vaultDeploy.minVotePeriodSeconds
 							)
 						"
 					>
 						<VProgressCircular
-							v-if="vaultProperties.updating"
+							v-if="this.vaultProperties.updating"
 							indeterminate
 							color="light"
 							class=""
@@ -87,8 +87,8 @@
 
 				<VCol
 					v-if="
-						vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
-							vaultProperties.voteForRequired != vaultDeploy.voteForRequired
+						this.vaultProperties.voteAgainstRequired != this.vaultDeploy.voteAgainstRequired ||
+							this.vaultProperties.voteForRequired != this.vaultDeploy.voteForRequired
 					"
 					cols="12"
 				>
@@ -107,7 +107,7 @@
 	</VCard>
 
 	<VCard
-		v-if="vaultDeploy.voteAgainstRequired > 0 && vaultDeploy.voteForRequired > 0"
+		v-if="this.vaultDeploy.voteAgainstRequired > 0 && this.vaultDeploy.voteForRequired > 0"
 		class="mb-4 rounded-xl bg-light-frost elevation-0"
 	>
 		<VCardText class="px-6 py-6">
@@ -116,7 +116,7 @@
 					<h2 class="mb-3 text-center text-uppercase text-primary"> 🚀 Deploy Vault (2/2)</h2>
 
 					<h6 class="mb-6 text-center text-uppercase text-dark">
-						Deployment Fee: Ξ {{ deploymentFee }}
+						Deployment Fee: Ξ {{ this.deploymentFee }}
 					</h6>
 				</VCol>
 			</VRow>
@@ -126,12 +126,12 @@
 					<h2 class="mb-6 text-center text-uppercase text-primary">👤 Members</h2>
 
 					<VRow
-						v-for="(m, i) in vaultDeploy.members" :key="i"
+						v-for="(m, i) in this.vaultDeploy.members" :key="i"
 						class="mb-3"
 					>
 						<VCol md="10">
 							<a
-								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
@@ -146,7 +146,7 @@
 								variant="flat"
 								color="danger"
 								class="w-100 rounded-xl elevation-0"
-								@click="memberRemove(i)"
+								@click="this.memberRemove(i)"
 							>
 								✕
 							</VBtn>
@@ -155,7 +155,7 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="memberAddField" label="Address" variant="outlined"/>
+							<VTextField v-model="this.memberAddField" label="Address" variant="outlined"/>
 						</VCol>
 
 						<VCol md="2">
@@ -163,7 +163,7 @@
 								variant="tonal"
 								color="success"
 								class="mt-3 w-100 rounded-xl elevation-0"
-								@click="memberAdd()"
+								@click="this.memberAdd()"
 							>
 								Add
 							</VBtn>
@@ -177,12 +177,12 @@
 					<h2 class="mb-6 text-center text-uppercase text-primary">🔑 Admins</h2>
 
 					<VRow
-						v-for="(m, i) in vaultDeploy.admins" :key="i"
+						v-for="(m, i) in this.vaultDeploy.admins" :key="i"
 						class="mb-3"
 					>
 						<VCol md="10">
 							<a
-								:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
+								:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${m}`"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
@@ -197,7 +197,7 @@
 								variant="flat"
 								color="danger"
 								class="w-100 rounded-xl elevation-0"
-								@click="adminRemove(i)"
+								@click="this.adminRemove(i)"
 							>
 								✕
 							</VBtn>
@@ -206,7 +206,7 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="adminAddField" label="Address" variant="outlined"/>
+							<VTextField v-model="this.adminAddField" label="Address" variant="outlined"/>
 						</VCol>
 
 						<VCol md="2">
@@ -214,7 +214,7 @@
 								variant="tonal"
 								color="success"
 								class="w-100 mt-3 rounded-xl elevation-0"
-								@click="adminAdd()"
+								@click="this.adminAdd()"
 							>
 								Add
 							</VBtn>
@@ -225,7 +225,7 @@
 
 			<VTextField
 				v-if="false"
-				v-model="vaultDeploy.signatureManager"
+				v-model="this.vaultDeploy.signatureManager"
 				type="text"
 				label="Signature Manager"
 				variant="outlined"
@@ -235,7 +235,7 @@
 			/>
 
 			<VCard
-				v-if="vaultDeploy.members.length < vaultDeploy.voteAgainstRequired"
+				v-if="this.vaultDeploy.members.length < this.vaultDeploy.voteAgainstRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -247,7 +247,7 @@
 			</VCard>
 
 			<VCard
-				v-if="vaultDeploy.members.length < vaultDeploy.voteForRequired"
+				v-if="this.vaultDeploy.members.length < this.vaultDeploy.voteForRequired"
 				color="danger"
 				class="mb-6 text-center text-light elevation-0 rounded-xl"
 			>
@@ -262,22 +262,22 @@
 				color="primary"
 				class="w-100 rounded-xl elevation-0"
 				:disabled="
-					vaultProperties.updating ||
-						vaultDeploy.deploying || (
+					this.vaultProperties.updating ||
+						this.vaultDeploy.deploying || (
 							(
-								vaultDeploy.members.length < vaultDeploy.voteForRequired ||
-								vaultDeploy.members.length < vaultDeploy.voteAgainstRequired
+								this.vaultDeploy.members.length < this.vaultDeploy.voteForRequired ||
+								this.vaultDeploy.members.length < this.vaultDeploy.voteAgainstRequired
 							) &&
-							vaultDeploy.admins.length == 0
+							this.vaultDeploy.admins.length == 0
 						) || (
-							vaultProperties.voteAgainstRequired != vaultDeploy.voteAgainstRequired ||
-							vaultProperties.voteForRequired != vaultDeploy.voteForRequired
+							this.vaultProperties.voteAgainstRequired != this.vaultDeploy.voteAgainstRequired ||
+							this.vaultProperties.voteForRequired != this.vaultDeploy.voteForRequired
 						)
 				"
-				@click="deployYieldSyncV1Vault()"
+				@click="this.deployYieldSyncV1Vault()"
 			>
 				<VProgressCircular
-					v-if="vaultDeploy.deploying"
+					v-if="this.vaultDeploy.deploying"
 					indeterminate
 					color="light"
 				/>

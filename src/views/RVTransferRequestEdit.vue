@@ -1,13 +1,13 @@
 <template>
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
-			<RouterLink :to="`/v1-vault/${$route.params.vaultaddress}`">
+			<RouterLink :to="`/v1-vault/${this.$route.params.vaultaddress}`">
 				<VBtn
 					class="mb-3 rounded-xl elevation-0 bg-light-frost text-primary"
 					@click="
-						$store.state.pages.RVV1Vault.tab = 'tr';
-						$store.state.pages.RVV1Vault.transferRequests.tab = 'o';
-						$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+						this.$store.state.pages.RVV1Vault.tab = 'tr';
+						this.$store.state.pages.RVV1Vault.transferRequests.tab = 'o';
+						this.$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
 					"
 				>
 					⬅️ Return to Vault
@@ -24,7 +24,7 @@
 						<VCol sm="12">
 							<!-- CREATOR -->
 							<VTextField
-								v-model="transferRequest.creator"
+								v-model="this.transferRequest.creator"
 								type="text"
 								label="Creator"
 								variant="outlined"
@@ -37,7 +37,7 @@
 						<VCol cols="12">
 							<fieldset class="border-0">
 								<input
-									v-model="transferRequest.for"
+									v-model="this.transferRequest.for"
 									type="radio"
 									value="Ether"
 									id="Ether"
@@ -47,7 +47,7 @@
 								<label for="Ether">Ether</label>
 
 								<input
-									v-model="transferRequest.for"
+									v-model="this.transferRequest.for"
 									type="radio"
 									value="ERC 20"
 									id="ERC 20"
@@ -56,7 +56,7 @@
 								<label for="ERC 20">ERC 20</label>
 
 								<input
-									v-model="transferRequest.for"
+									v-model="this.transferRequest.for"
 									type="radio"
 									value="ERC 721"
 									id="ERC 721"
@@ -69,7 +69,7 @@
 						<VCol sm="12">
 							<!-- TO -->
 							<VTextField
-								v-model="transferRequest.to"
+								v-model="this.transferRequest.to"
 								type="text"
 								label="To"
 								variant="outlined"
@@ -83,8 +83,8 @@
 						<VCol sm="6">
 							<!-- TOKEN -->
 							<VTextField
-								v-model="transferRequest.token"
-								:disabled="transferRequest.for == 'Ether'"
+								v-model="this.transferRequest.token"
+								:disabled="this.transferRequest.for == 'Ether'"
 								type="text"
 								label="Token"
 								variant="outlined"
@@ -98,8 +98,8 @@
 						<VCol sm="2">
 							<!-- TOKEN ID -->
 							<VTextField
-								v-model="transferRequest.tokenId"
-								:disabled="transferRequest.for != 'ERC 721'"
+								v-model="this.transferRequest.tokenId"
+								:disabled="this.transferRequest.for != 'ERC 721'"
 								type="number"
 								label="Token Id"
 								variant="outlined"
@@ -112,7 +112,7 @@
 						<VCol sm="4">
 							<!-- AMOUNT -->
 							<VTextField
-								v-model="transferRequest.amount"
+								v-model="this.transferRequest.amount"
 								type="number"
 								label="Amount"
 								variant="outlined"
@@ -124,12 +124,12 @@
 
 						<VCol cols="12">
 							<VBtn
-								:disabled="updatingTR"
+								:disabled="this.updatingTR"
 								variant="flat"
 								color="primary"
 								border-primary="primary"
 								class="w-100 rounded-xl"
-								@click="updateTransferRequest()"
+								@click="this.updateTransferRequest()"
 							>
 								Update
 							</VBtn>
@@ -150,7 +150,7 @@
 						<VCol sm="12">
 							<!-- Latest Relevant For Vote Time -->
 							<VTextField
-								v-model="transferRequest.latestForVoteTime"
+								v-model="this.transferRequest.latestForVoteTime"
 								type="number"
 								label="Latest Relevant For Vote Time"
 								variant="outlined"
@@ -164,7 +164,7 @@
 							<h3 class="mb-6 text-primary">Voted For Members</h3>
 
 							<VRow
-								v-for="(m, i) in transferRequest.voteForMembers" :key="i"
+								v-for="(m, i) in this.transferRequest.voteForMembers" :key="i"
 								class="mb-3"
 							>
 								<VCol md="10">
@@ -176,7 +176,7 @@
 										variant="tonal"
 										color="danger"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="removeVoteForMember(i)"
+										@click="this.removeVoteForMember(i)"
 									>
 										✕
 									</VBtn>
@@ -186,7 +186,7 @@
 							<VRow>
 								<VCol md="10">
 									<VTextField
-										v-model="addVoteForMemberField"
+										v-model="this.addVoteForMemberField"
 										label="Add Voted Member Address"
 										variant="outlined"
 									/>
@@ -197,7 +197,7 @@
 										variant="tonal"
 										color="success"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="addVoteForMember()"
+										@click="this.addVoteForMember()"
 									>
 										Add
 									</VBtn>
@@ -209,7 +209,7 @@
 							<h3 class="mb-6 text-primary">Voted Against Members</h3>
 
 							<VRow
-								v-for="(m, i) in transferRequest.voteAgainstMembers" :key="i"
+								v-for="(m, i) in this.transferRequest.voteAgainstMembers" :key="i"
 								class="mb-3"
 							>
 								<VCol md="10">
@@ -221,7 +221,7 @@
 										variant="tonal"
 										color="danger"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="removeVoteAgainstMember(i)"
+										@click="this.removeVoteAgainstMember(i)"
 									>
 										✕
 									</VBtn>
@@ -231,7 +231,7 @@
 							<VRow>
 								<VCol md="10">
 									<VTextField
-										v-model="addVoteAgainstMemberField"
+										v-model="this.addVoteAgainstMemberField"
 										label="Add Voted Member Address"
 										variant="outlined"
 									/>
@@ -242,7 +242,7 @@
 										variant="tonal"
 										color="success"
 										class="w-100 rounded-xl elevation-0 border"
-										@click="addVoteAgainstMember()"
+										@click="this.addVoteAgainstMember()"
 									>
 										Add
 									</VBtn>
@@ -252,15 +252,15 @@
 
 						<VCol sm="12">
 							<VBtn
-								:disabled="updatingTRP"
+								:disabled="this.updatingTRP"
 								variant="flat"
 								color="primary"
 								border-primary="primary"
 								class="w-100 rounded-xl"
-								@click="updateTransferRequestPoll()"
+								@click="this.updateTransferRequestPoll()"
 							>
 								<VProgressCircular
-									v-if="updatingTRP"
+									v-if="this.updatingTRP"
 									indeterminate
 									color="light"
 								/>

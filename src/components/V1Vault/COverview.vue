@@ -1,14 +1,14 @@
 <template>
 	<CTRPAOverview
-		v-if="trp == yieldSyncV1ATransferRequestProtocol"
-		:address="address"
-		:asAdmin="asAdmin"
+		v-if="this.trp == this.yieldSyncV1ATransferRequestProtocol"
+		:address="this.address"
+		:asAdmin="this.asAdmin"
 	/>
 
 	<CTRPBOverview
-		v-if="trp == yieldSyncV1BTransferRequestProtocol"
-		:address="address"
-		:asAdmin="asAdmin"
+		v-if="this.trp == this.yieldSyncV1BTransferRequestProtocol"
+		:address="this.address"
+		:asAdmin="this.asAdmin"
 	/>
 
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
@@ -26,7 +26,7 @@
 						color="warning"
 						class="m-0 elevation-0 rounded-xl font-weight-bold"
 						size="sm"
-						@click="dialog = true"
+						@click="this.dialog = true"
 					>
 						ⓘ
 					</VBtn>
@@ -45,19 +45,19 @@
 								</VCol>
 
 								<VCol cols="12">
-									<h1 class="text-center">Ξ {{ ethBalance * 10 ** -18 }}</h1>
+									<h1 class="text-center">Ξ {{ this.ethBalance * 10 ** -18 }}</h1>
 								</VCol>
 
-								<VCol v-if="!asAdmin" cols="12">
-									<RouterLink :to="`/v1-vault/${address}`">
+								<VCol v-if="!this.asAdmin" cols="12">
+									<RouterLink :to="`/v1-vault/${this.address}`">
 										<VBtn
 											class="w-100 rounded-xl"
 											color="primary"
 											variant="flat"
 											@click="
-												$store.state.pages.RVV1Vault.tab = 'tr';
-												$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
-												$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+												this.$store.state.pages.RVV1Vault.tab = 'tr';
+												this.$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
+												this.$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
 											"
 										>
 											↗️ Transfer Out
@@ -81,16 +81,16 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol :cols="asAdmin ? 9 : 6">
+								<VCol :cols="this.asAdmin ? 9 : 6">
 									<h4 class="text-center text-primary">Balance</h4>
 								</VCol>
 
-								<VCol v-if="!asAdmin" cols="3">
+								<VCol v-if="!this.asAdmin" cols="3">
 									<h4 class="text-center text-primary">Transfer Request</h4>
 								</VCol>
 							</VRow>
 
-							<VRow v-for="(erc20, i) in erc20Balances" :key="i">
+							<VRow v-for="(erc20, i) in this.erc20Balances" :key="i">
 								<VCol cols="3">
 									<a
 										:href="`https://etherscan.io/address/${erc20.contract}`"
@@ -103,16 +103,16 @@
 									</a>
 								</VCol>
 
-								<VCol :cols="asAdmin ? 9 : 6">
+								<VCol :cols="this.asAdmin ? 9 : 6">
 									<h4 class="text-center">{{ erc20.balance }}</h4>
 								</VCol>
 
-								<VCol v-if="!asAdmin" cols="3">
+								<VCol v-if="!this.asAdmin" cols="3">
 									<VBtn
 										color="primary"
 										variant="flat"
 										class="w-100 rounded-xl"
-										@click="forwardToERC20Create(address, erc20)"
+										@click="this.forwardToERC20Create(this.address, erc20)"
 									>
 										↗️ Transfer Out
 									</VBtn>
@@ -136,16 +136,16 @@
 									<h4 class="text-center text-primary">Name</h4>
 								</VCol>
 
-								<VCol :cols="asAdmin ? 9 : 6">
+								<VCol :cols="this.asAdmin ? 9 : 6">
 									<h4 class="text-center text-primary">Token Id</h4>
 								</VCol>
 
-								<VCol v-if="!asAdmin" cols="3">
+								<VCol v-if="!this.asAdmin" cols="3">
 									<h4 class="text-center text-primary">Transfer Request</h4>
 								</VCol>
 							</VRow>
 
-							<VRow v-for="(erc721, i) in erc721Balances" :key="i" class="px-3 pb-3">
+							<VRow v-for="(erc721, i) in this.erc721Balances" :key="i" class="px-3 pb-3">
 								<VCol cols="3">
 									<a
 										:href="`https://etherscan.io/address/${erc721.contract}`"
@@ -158,16 +158,16 @@
 									</a>
 								</VCol>
 
-								<VCol :cols="asAdmin ? 9 : 6">
+								<VCol :cols="this.asAdmin ? 9 : 6">
 									<h4 class="text-center">{{ erc721.tokenId }}</h4>
 								</VCol>
 
-								<VCol v-if="!asAdmin" cols="3">
+								<VCol v-if="!this.asAdmin" cols="3">
 									<VBtn
 										color="primary"
 										variant="flat"
 										class="w-100 rounded-xl"
-										@click="forwardToERC721Create(address, erc721)"
+										@click="this.forwardToERC721Create(this.address, erc721)"
 									>
 										↗️ Transfer Out
 									</VBtn>
@@ -180,7 +180,7 @@
 		</VCardText>
 	</VCard>
 
-	<VDialog v-model="dialog" max-width="500px">
+	<VDialog v-model="this.dialog" max-width="500px">
 		<VCard>
 			<VCardTitle>
 				<span class="text-h5">Disclaimer</span>
@@ -193,7 +193,7 @@
 			<VCardActions>
 				<VSpacer/>
 
-				<VBtn color="green darken-1" @click="dialog = false">Close</VBtn>
+				<VBtn color="green darken-1" @click="this.dialog = false">Close</VBtn>
 			</VCardActions>
 		</VCard>
 	</VDialog>

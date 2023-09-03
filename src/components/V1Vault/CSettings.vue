@@ -7,16 +7,16 @@
 		<VCardText class="mt-4">
 			<VCard class="mb-6 px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 				<VRow>
-					<VCol :cols="asAdmin ? 8 : 12" class="text-center">
+					<VCol :cols="this.asAdmin ? 8 : 12" class="text-center">
 						<h3 class="mb-3 text-uppercase text-primary">✅ For Vote Count Required</h3>
 
-						<h3 v-if="!asAdmin || !edit.voteForRequired" class="m-0">
-							{{ vault.voteForRequired }}
+						<h3 v-if="!this.asAdmin || !this.edit.voteForRequired" class="m-0">
+							{{ this.vault.voteForRequired }}
 						</h3>
 
 						<VTextField
-							v-if="asAdmin && edit.voteForRequired"
-							v-model="update.voteForRequired"
+							v-if="this.asAdmin && this.edit.voteForRequired"
+							v-model="this.update.voteForRequired"
 							size="sm"
 							type="number"
 							label="New For Vote Count"
@@ -24,24 +24,24 @@
 						/>
 					</VCol>
 
-					<VCol v-if="asAdmin" cols="4" class="text-right">
+					<VCol v-if="this.asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="updating.voteForRequired"
+							:disabled="this.updating.voteForRequired"
 							variant="flat"
-							:color="edit.voteForRequired ? 'danger' : 'admin'"
+							:color="this.edit.voteForRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="edit.voteForRequired = !edit.voteForRequired"
+							@click="this.edit.voteForRequired = !this.edit.voteForRequired"
 						>
-							{{ edit.voteForRequired ? 'Cancel' : 'Edit' }}
+							{{ this.edit.voteForRequired ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="edit.voteForRequired"
-							:disabled="updating.voteForRequired"
+							v-if="this.edit.voteForRequired"
+							:disabled="this.updating.voteForRequired"
 							variant="tonal"
 							color="success"
 							class="w-100 mb-3 rounded-xl"
-							@click="updatevoteForRequired()"
+							@click="this.updatevoteForRequired()"
 						>
 							Update
 						</VBtn>
@@ -51,16 +51,16 @@
 
 			<VCard class="mb-6 px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 				<VRow>
-					<VCol :cols="asAdmin ? 8 : 12" class="text-center">
+					<VCol :cols="this.asAdmin ? 8 : 12" class="text-center">
 						<h3 class="mb-3 text-uppercase text-primary">❌ Against Vote Count Required</h3>
 
-						<h3 v-if="!asAdmin || !edit.voteAgainstRequired" class="m-0">
-							{{ vault.voteAgainstRequired }}
+						<h3 v-if="!this.asAdmin || !this.edit.voteAgainstRequired" class="m-0">
+							{{ this.vault.voteAgainstRequired }}
 						</h3>
 
 						<VTextField
-							v-if="asAdmin && edit.voteAgainstRequired"
-							v-model="update.voteAgainstRequired"
+							v-if="this.asAdmin && this.edit.voteAgainstRequired"
+							v-model="this.update.voteAgainstRequired"
 							size="sm"
 							type="number"
 							label="New Against Vote Count"
@@ -69,24 +69,24 @@
 						/>
 					</VCol>
 
-					<VCol v-if="asAdmin" cols="4" class="text-right">
+					<VCol v-if="this.asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="updating.voteAgainstRequired"
+							:disabled="this.updating.voteAgainstRequired"
 							variant="flat"
-							:color="edit.voteAgainstRequired ? 'danger' : 'admin'"
+							:color="this.edit.voteAgainstRequired ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="edit.voteAgainstRequired = !edit.voteAgainstRequired"
+							@click="this.edit.voteAgainstRequired = !this.edit.voteAgainstRequired"
 						>
-							{{ edit.voteAgainstRequired ? 'Cancel' : 'Edit' }}
+							{{ this.edit.voteAgainstRequired ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="edit.voteAgainstRequired"
-							:disabled="updating.voteAgainstRequired"
+							v-if="this.edit.voteAgainstRequired"
+							:disabled="this.updating.voteAgainstRequired"
 							variant="tonal"
 							color="success"
 							class="mb-3 w-100 rounded-xl"
-							@click="updatevoteAgainstRequired()"
+							@click="this.updatevoteAgainstRequired()"
 						>
 							Update
 						</VBtn>
@@ -96,16 +96,16 @@
 
 			<VCard class="mb-6 px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 				<VRow>
-					<VCol :cols="asAdmin ? 8 : 12" class="text-center">
+					<VCol :cols="this.asAdmin ? 8 : 12" class="text-center">
 						<h3 class="mb-3 text-uppercase text-primary">⏳ Transfer Delay Seconds</h3>
 
-						<h3 v-if="!asAdmin || !edit.transferDelaySeconds" class="m-0">
-							{{ vault.transferDelaySeconds }}
+						<h3 v-if="!this.asAdmin || !this.edit.transferDelaySeconds" class="m-0">
+							{{ this.vault.transferDelaySeconds }}
 						</h3>
 
 						<VTextField
-							v-if="asAdmin && edit.transferDelaySeconds"
-							v-model="update.transferDelaySeconds"
+							v-if="this.asAdmin && this.edit.transferDelaySeconds"
+							v-model="this.update.transferDelaySeconds"
 							size="sm"
 							type="number"
 							label="Transfer Delay Seconds"
@@ -113,24 +113,24 @@
 						/>
 					</VCol>
 
-					<VCol v-if="asAdmin" cols="4" class="text-right">
+					<VCol v-if="this.asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="updating.transferDelaySeconds"
+							:disabled="this.updating.transferDelaySeconds"
 							variant="flat"
-							:color="edit.transferDelaySeconds ? 'danger' : 'admin'"
+							:color="this.edit.transferDelaySeconds ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="edit.transferDelaySeconds = !edit.transferDelaySeconds"
+							@click="this.edit.transferDelaySeconds = !this.edit.transferDelaySeconds"
 						>
-							{{ edit.transferDelaySeconds ? 'Cancel' : 'Edit' }}
+							{{ this.edit.transferDelaySeconds ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="edit.transferDelaySeconds"
-							:disabled="updating.transferDelaySeconds"
+							v-if="this.edit.transferDelaySeconds"
+							:disabled="this.updating.transferDelaySeconds"
 							variant="tonal"
 							color="success"
 							class="w-100 mb-3 rounded-xl"
-							@click="updateTransferDelaySecondsRequired()"
+							@click="this.updateTransferDelaySecondsRequired()"
 						>
 							Update
 						</VBtn>
@@ -140,23 +140,23 @@
 		</VCardText>
 	</VCard>
 
-	<VCard v-if="!asAdmin" class="mb-6 rounded-xl elevation-0 bg-light-frost">
+	<VCard v-if="!this.asAdmin" class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="bg-primary text-light">
 			<h4 class="m-0 text-center text-uppercase">⚙️ Membership Settings</h4>
 		</VCardTitle>
 
 		<VCardText class="mt-4 text-center">
 			<VBtn
-				:disabled="processing"
+				:disabled="this.processing"
 				variant="outlined"
 				color="danger"
 				class="rounded-xl elevation-0"
-				@click="renounceMembership()"
+				@click="this.renounceMembership()"
 			>
 				Renounce Membership
 			</VBtn>
 
-			<h6 v-if="error">{{ error }}</h6>
+			<h6 v-if="this.error">{{ this.error }}</h6>
 		</VCardText>
 	</VCard>
 </template>

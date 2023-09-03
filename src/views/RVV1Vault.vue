@@ -4,7 +4,7 @@
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
 				<VCol cols="12" sm="3">
 					<a
-						:href="`https://${$store.state.etherscanDomainStart}.etherscan.io/address/${vaultAddress}`"
+						:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.vaultAddress}`"
 						target="_blank" rel="noopener noreferrer"
 					>
 						<VBtn class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary">
@@ -16,12 +16,12 @@
 				<VCol cols="12" sm="6">
 					<VRow style="margin: 0; padding: 0;">
 						<VCol cols="6" style="margin: 0; padding: 0;">
-							<RouterLink :to="`/v1-vault/${vaultAddress}`">
+							<RouterLink :to="`/v1-vault/${this.vaultAddress}`">
 								<VBtn
-									:variant="$route.query.admin == 'true' ? 'outlined' : 'flat'"
+									:variant="this.$route.query.admin == 'true' ? 'outlined' : 'flat'"
 									color="primary"
 									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary font-weight-bold"
-									:class="$route.query.admin == 'true' ? 'bg-light-frost' : ''"
+									:class="this.$route.query.admin == 'true' ? 'bg-light-frost' : ''"
 									style="
 										border-top-right-radius: 0px !important;
 										border-bottom-right-radius: 0px !important;
@@ -33,12 +33,12 @@
 						</VCol>
 
 						<VCol cols="6" style="margin: 0; padding: 0;">
-							<RouterLink :to="`/v1-vault/${vaultAddress}?admin=true`">
+							<RouterLink :to="`/v1-vault/${this.vaultAddress}?admin=true`">
 								<VBtn
-									:variant="$route.query.admin !== 'true' ? 'outlined' : 'flat'"
+									:variant="this.$route.query.admin !== 'true' ? 'outlined' : 'flat'"
 									color="primary"
 									class="w-100 mb-3 rounded-e-xl elevation-0 border-primary  font-weight-bold"
-									:class="$route.query.admin == 'true' ? '' : 'bg-light-frost'"
+									:class="this.$route.query.admin == 'true' ? '' : 'bg-light-frost'"
 									style="
 										border-top-left-radius: 0px !important;
 										border-bottom-left-radius: 0px !important;
@@ -54,7 +54,7 @@
 				<VCol cols="12" sm="3" class="text-right">
 					<VBtn
 						class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary"
-						@click="copy(vaultAddress)"
+						@click="this.copy(this.vaultAddress)"
 					>
 						📋 Address
 					</VBtn>
@@ -63,11 +63,11 @@
 				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
-							$store.state.pages.RVV1Vault.tab == 'overview' ?
+							this.$store.state.pages.RVV1Vault.tab == 'overview' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
-						@click="$store.state.pages.RVV1Vault.tab = 'overview'"
+						@click="this.$store.state.pages.RVV1Vault.tab = 'overview'"
 					>
 						📊 Overview
 					</VBtn>
@@ -76,11 +76,11 @@
 				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
-							$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
+							this.$store.state.pages.RVV1Vault.tab == 'admins-and-members' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
-						@click="$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
+						@click="this.$store.state.pages.RVV1Vault.tab = 'admins-and-members'"
 					>
 						🏛️ Admins & Members
 					</VBtn>
@@ -89,11 +89,11 @@
 				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
-							$store.state.pages.RVV1Vault.tab == 'tr' ?
+							this.$store.state.pages.RVV1Vault.tab == 'tr' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
-						@click="$store.state.pages.RVV1Vault.tab = 'tr'"
+						@click="this.$store.state.pages.RVV1Vault.tab = 'tr'"
 					>
 						↗️ Transfer Req.
 					</VBtn>
@@ -102,41 +102,41 @@
 				<VCol cols="12" sm="6" md="3">
 					<VBtn
 						:class="
-							$store.state.pages.RVV1Vault.tab == 'settings' ?
+							this.$store.state.pages.RVV1Vault.tab == 'settings' ?
 								'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-xl elevation-0 font-weight-bold"
-						@click="$store.state.pages.RVV1Vault.tab = 'settings'"
+						@click="this.$store.state.pages.RVV1Vault.tab = 'settings'"
 					>
 						⚙️ Settings
 					</VBtn>
 				</VCol>
 
-				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'overview'" cols="12">
+				<VCol v-if="this.$store.state.pages.RVV1Vault.tab == 'overview'" cols="12">
 					<COverview
-						:address="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						:address="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 				</VCol>
 
-				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
+				<VCol v-if="this.$store.state.pages.RVV1Vault.tab == 'admins-and-members'" cols="12">
 					<CMembersAndAdmins
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 				</VCol>
 
-				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'tr'" cols="12">
+				<VCol v-if="this.$store.state.pages.RVV1Vault.tab == 'tr'" cols="12">
 					<CTransferRequest
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 				</VCol>
 
-				<VCol v-if="$store.state.pages.RVV1Vault.tab == 'settings'" cols="12">
+				<VCol v-if="this.$store.state.pages.RVV1Vault.tab == 'settings'" cols="12">
 					<CSettings
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 				</VCol>
 			</VRow>

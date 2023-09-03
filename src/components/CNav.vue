@@ -26,21 +26,21 @@
 						class="w-100 rounded-xl container1 elevation-0"
 					>
 						<img
-							:src="$store.state.config.networkChain[$store.state.currentChain.name].icon"
+							:src="this.$store.state.config.networkChain[this.$store.state.currentChain.name].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
 
 						<h5 class="mx-auto text-center text-light">
-							{{ $store.state.config.networkChain[$store.state.currentChain.name].chainName }}
+							{{ this.$store.state.config.networkChain[this.$store.state.currentChain.name].chainName }}
 						</h5>
 
 						<VMenu activator="parent">
 							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-								<VListItem v-for="(n, i) in $store.state.config.networkChain" :key="i">
+								<VListItem v-for="(n, i) in this.$store.state.config.networkChain" :key="i">
 									<VListItemTitle
-										@click="switchNetwork(i)"
+										@click="this.switchNetwork(i)"
 									>
 										{{ n.chainName }}
 									</VListItemTitle>
@@ -55,8 +55,8 @@
 					lg="4"
 				>
 					<VBtn
-						v-if="!$store.state.wallet.connected"
-						@click="connectWallet()"
+						v-if="!this.$store.state.wallet.connected"
+						@click="this.connectWallet()"
 						color="dark"
 						variant="tonal"
 						class="w-100 rounded-pill"
@@ -65,17 +65,17 @@
 					</VBtn>
 
 					<VBtn
-						v-if="$store.state.wallet.connected"
-						@click="disconnectWallet()"
+						v-if="this.$store.state.wallet.connected"
+						@click="this.disconnectWallet()"
 						color="white"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
 						Disconnect ⦁ {{
-							$store.state.wallet.accounts[0] ?
-								$store.state.wallet.accounts[0].substring(0, 4) +
+							this.$store.state.wallet.accounts[0] ?
+								this.$store.state.wallet.accounts[0].substring(0, 4) +
 								"..." +
-								$store.state.wallet.accounts[0].substring($store.state.wallet.accounts[0].length - 4)
+								this.$store.state.wallet.accounts[0].substring(this.$store.state.wallet.accounts[0].length - 4)
 								:
 								""
 						}}
@@ -94,7 +94,7 @@
 							variant="plain"
 							color="primary"
 							class="rounded-xl"
-							@click="$store.state.pages.RVDashboard.tab = 'm'"
+							@click="this.$store.state.pages.RVDashboard.tab = 'm'"
 						>
 							<h3>Dashboard</h3>
 						</VBtn>
@@ -106,7 +106,7 @@
 							variant="plain"
 							color="primary"
 							class="rounded-xl"
-							@click="$store.state.pages.RVDashboard.tab = 'd'"
+							@click="this.$store.state.pages.RVDashboard.tab = 'd'"
 						>
 							<h3>Deploy V1-Vault</h3>
 						</VBtn>
@@ -122,24 +122,24 @@
 				>
 					<VTextField
 						v-if="
-							$store.state.currentChain.id == 1 ||
-								$store.state.currentChain.id == 5 ||
-								$store.state.currentChain.id == 11155111
+							this.$store.state.currentChain.id == 1 ||
+								this.$store.state.currentChain.id == 5 ||
+								this.$store.state.currentChain.id == 11155111
 						"
-						v-model="$store.state.alchemyApiKey"
+						v-model="this.$store.state.alchemyApiKey"
 						label="Insert Alchemy API Key Here"
 						variant="outlined"
 						hide-details
-						@change="updateLocalStorage()"
+						@change="this.updateLocalStorage()"
 					/>
 
 					<VTextField
-						v-if="$store.state.currentChain.id == 420"
-						v-model="$store.state.alchemyOpApiKey"
+						v-if="this.$store.state.currentChain.id == 420"
+						v-model="this.$store.state.alchemyOpApiKey"
 						label="Insert Alchemy Op API Key Here"
 						variant="outlined"
 						hide-details
-						@change="updateLocalStorage()"
+						@change="this.updateLocalStorage()"
 					/>
 				</VCol>
 			</VRow>

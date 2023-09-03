@@ -1,36 +1,36 @@
 <template>
 	<VCard
-		:key="$store.state.pages.RVV1Vault.transferRequests.key"
+		:key="this.$store.state.pages.RVV1Vault.transferRequests.key"
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
-			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ trpType(trp) }})</h4>
+			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ this.trpType(this.trp) }})</h4>
 		</VCardTitle>
 
 		<VTabs
-			v-model="$store.state.pages.RVV1Vault.transferRequests.tab"
+			v-model="this.$store.state.pages.RVV1Vault.transferRequests.tab"
 			bg-color="primary"
 			color="light-green-lighten-5"
 			fixed-tabs
 		>
 			<VTab value="o">Open Transfer Requests</VTab>
 
-			<VTab v-if="$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
+			<VTab v-if="this.$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
 		</VTabs>
 
 		<VCardText variant="light">
-			<VWindow v-model="$store.state.pages.RVV1Vault.transferRequests.tab">
+			<VWindow v-model="this.$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestAOpen
-						v-if="trpType(trp) == 'a'"
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						v-if="this.trpType(this.trp) == 'a'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 
 					<CTransferRequestBOpen
-						v-else-if="trpType(trp) == 'b'"
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						v-else-if="this.trpType(this.trp) == 'b'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 
 					<div v-else>
@@ -40,15 +40,15 @@
 
 				<VWindowItem value="c">
 					<CTransferRequestACreate
-						v-if="trpType(trp) == 'a'"
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						v-if="this.trpType(this.trp) == 'a'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 
 					<CTransferRequestBCreate
-						v-else-if="trpType(trp) == 'b'"
-						:vaultAddress="vaultAddress"
-						:asAdmin="$route.query.admin == 'true'"
+						v-else-if="this.trpType(this.trp) == 'b'"
+						:vaultAddress="this.vaultAddress"
+						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 
 					<div v-else>

@@ -308,6 +308,10 @@ module.exports = {
 				]
 			},
 		],
+		"vue/this-in-template": [
+			"error",
+			"always"
+		],
 		"vue/v-for-delimiter-style": [
 			"warn",
 			"in",

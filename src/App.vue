@@ -4,25 +4,25 @@
 		<CNav/>
 
 		<!-- Loading -->
-		<VContainer v-if="$store.state.loading" class="py-12">
+		<VContainer v-if="this.$store.state.loading" class="py-12">
 			<h2  class="text-center">Loading..</h2>
 		</VContainer>
 
 		<!-- !Connected -->
-		<VContainer v-if="!$store.state.wallet.connected && $store.state.error === ''" class="py-12">
+		<VContainer v-if="!this.$store.state.wallet.connected && this.$store.state.error === ''" class="py-12">
 			<h2 class="text-center">Wallet not connected</h2>
 		</VContainer>
 
 		<!-- Error -->
-		<VContainer v-if="$store.state.error" class="py-12">
-			<h2 class="text-center">{{ $store.state.error }}</h2>
+		<VContainer v-if="this.$store.state.error" class="py-12">
+			<h2 class="text-center">{{ this.$store.state.error }}</h2>
 		</VContainer>
 
 		<!-- Router -->
-		<RouterView v-if="!$store.state.loading && $store.state.wallet.connected && $store.state.error === ''"/>
+		<RouterView v-if="!this.$store.state.loading && this.$store.state.wallet.connected && this.$store.state.error === ''"/>
 
 		<!-- Bottom Navigation -->
-		<CFooter v-if="!$store.state.loading"/>
+		<CFooter v-if="!this.$store.state.loading"/>
 	</div>
 </template>
 
