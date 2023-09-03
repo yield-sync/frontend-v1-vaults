@@ -369,7 +369,7 @@
 								<h4 class="mb-3 text-center text-primary">
 									Vote Close Time / Current Block Timestamp
 								</h4>
-								{{ dTR }}
+
 								<h3 class="mb-3 text-center text-dark">
 									{{ dTR.voteCloseTimestamp }} / {{ this.currentBlockTimestamp }}
 								</h3>
