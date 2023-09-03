@@ -109,17 +109,17 @@
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
-			)[0];
+			).voteAgainstRequired;
 			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
-			)[1];
+			).voteForRequired;
 			this.vault.transferDelaySeconds = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
-			)[2];
+			).transferDelaySeconds;
 		},
 	});
 </script>

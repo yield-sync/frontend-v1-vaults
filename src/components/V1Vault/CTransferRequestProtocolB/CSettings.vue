@@ -97,15 +97,16 @@
 			<VCard class="mb-6 px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 				<VRow>
 					<VCol :cols="this.asAdmin ? 8 : 12" class="text-center">
-						<h3 class="mb-3 text-uppercase text-primary">✅ For Vote Count Required</h3>
+						<h3 class="mb-3 text-uppercase text-primary">⏳ Min Vote Period</h3>
 
-						<h3 v-if="!this.asAdmin || !this.edit.voteForRequired" class="m-0">
-							{{ this.vault.voteForRequired }}
+						<!-- Member Only -->
+						<h3 v-if="!this.asAdmin || !this.edit.minVotePeriodSeconds" class="m-0">
+							{{ this.vault.minVotePeriodSeconds }} Sec.
 						</h3>
 
 						<VTextField
-							v-if="this.asAdmin && this.edit.voteForRequired"
-							v-model="this.update.voteForRequired"
+							v-if="this.asAdmin && this.edit.minVotePeriodSeconds"
+							v-model="this.update.minVotePeriodSeconds"
 							size="sm"
 							type="number"
 							label="New For Vote Count"
@@ -115,22 +116,22 @@
 
 					<VCol v-if="this.asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="this.updating.voteForRequired"
+							:disabled="this.updating.minVotePeriodSeconds"
 							variant="flat"
-							:color="this.edit.voteForRequired ? 'danger' : 'admin'"
+							:color="this.edit.minVotePeriodSeconds ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="this.edit.voteForRequired = !this.edit.voteForRequired"
+							@click="this.edit.minVotePeriodSeconds = !this.edit.minVotePeriodSeconds"
 						>
-							{{ this.edit.voteForRequired ? 'Cancel' : 'Edit' }}
+							{{ this.edit.minVotePeriodSeconds ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="this.edit.voteForRequired"
-							:disabled="this.updating.voteForRequired"
+							v-if="this.edit.minVotePeriodSeconds"
+							:disabled="this.updating.minVotePeriodSeconds"
 							variant="tonal"
 							color="success"
 							class="w-100 mb-3 rounded-xl"
-							@click="this.updatevoteForRequired()"
+							@click="this.updateMinVotePeriodSeconds()"
 						>
 							Update
 						</VBtn>
@@ -141,15 +142,16 @@
 			<VCard class="mb-6 px-3 py-3 rounded-xl elevation-0 bg-light-frost">
 				<VRow>
 					<VCol :cols="this.asAdmin ? 8 : 12" class="text-center">
-						<h3 class="mb-3 text-uppercase text-primary">✅ For Vote Count Required</h3>
+						<h3 class="mb-3 text-uppercase text-primary">⌛ Max Vote Period</h3>
 
-						<h3 v-if="!this.asAdmin || !this.edit.voteForRequired" class="m-0">
-							{{ this.vault.voteForRequired }}
+						<!-- Member Only -->
+						<h3 v-if="!this.asAdmin || !this.edit.maxVotePeriodSeconds" class="m-0">
+							{{ this.vault.maxVotePeriodSeconds }} Sec.
 						</h3>
 
 						<VTextField
-							v-if="this.asAdmin && this.edit.voteForRequired"
-							v-model="this.update.voteForRequired"
+							v-if="this.asAdmin && this.edit.maxVotePeriodSeconds"
+							v-model="this.update.maxVotePeriodSeconds"
 							size="sm"
 							type="number"
 							label="New For Vote Count"
@@ -159,22 +161,22 @@
 
 					<VCol v-if="this.asAdmin" cols="4" class="text-right">
 						<VBtn
-							:disabled="this.updating.voteForRequired"
+							:disabled="this.updating.maxVotePeriodSeconds"
 							variant="flat"
-							:color="this.edit.voteForRequired ? 'danger' : 'admin'"
+							:color="this.edit.maxVotePeriodSeconds ? 'danger' : 'admin'"
 							class="w-100 mb-3 rounded-xl"
-							@click="this.edit.voteForRequired = !this.edit.voteForRequired"
+							@click="this.edit.maxVotePeriodSeconds = !this.edit.maxVotePeriodSeconds"
 						>
-							{{ this.edit.voteForRequired ? 'Cancel' : 'Edit' }}
+							{{ this.edit.maxVotePeriodSeconds ? 'Cancel' : 'Edit' }}
 						</VBtn>
 
 						<VBtn
-							v-if="this.edit.voteForRequired"
-							:disabled="this.updating.voteForRequired"
+							v-if="this.edit.maxVotePeriodSeconds"
+							:disabled="this.updating.maxVotePeriodSeconds"
 							variant="tonal"
 							color="success"
 							class="w-100 mb-3 rounded-xl"
-							@click="this.updatevoteForRequired()"
+							@click="this.updateMaxVotePeriodSeconds()"
 						>
 							Update
 						</VBtn>
@@ -238,22 +240,26 @@
 				vault: {
 					voteAgainstRequired: 0 as number,
 					voteForRequired: 0 as number,
-					transferDelaySeconds: 0 as number,
+					maxVotePeriodSeconds: 0 as number,
+					minVotePeriodSeconds: 0 as number,
 				},
 				update: {
 					voteAgainstRequired: 0 as number,
 					voteForRequired: 0 as number,
-					transferDelaySeconds: 0 as number,
+					maxVotePeriodSeconds: 0 as number,
+					minVotePeriodSeconds: 0 as number,
 				},
 				edit: {
 					voteAgainstRequired: false as boolean,
 					voteForRequired: false as boolean,
-					transferDelaySeconds: false as boolean,
+					maxVotePeriodSeconds: false as boolean,
+					minVotePeriodSeconds: false as boolean,
 				},
 				updating: {
 					voteAgainstRequired: false as boolean,
 					voteForRequired: false as boolean,
-					transferDelaySeconds: false as boolean,
+					maxVotePeriodSeconds: false as boolean,
+					minVotePeriodSeconds: false as boolean,
 				},
 
 				error: "" as string,
@@ -379,7 +385,7 @@
 				);
 			},
 
-			updateTransferDelaySecondsRequired()
+			updateMaxVotePeriodSeconds()
 			{
 				if (!this.$store.state.web3.utils.isAddress(this.vaultAddress))
 				{
@@ -396,7 +402,8 @@
 					[
 						this.vault.voteAgainstRequired,
 						this.vault.voteForRequired,
-						this.update.transferDelaySeconds,
+						this.update.maxVotePeriodSeconds,
+						this.update.minVotePeriodSeconds,
 					]
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -404,7 +411,7 @@
 					"sent",
 					async () =>
 					{
-						this.updating.transferDelaySeconds = true;
+						this.updating.maxVotePeriodSeconds = true;
 					}
 				).on(
 					"confirmation",
@@ -414,15 +421,15 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.edit.transferDelaySeconds = false;
+							this.edit.maxVotePeriodSeconds = false;
 
-							this.vault.transferDelaySeconds = (
+							this.vault.maxVotePeriodSeconds = (
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
 							)[2];
 
-							this.updating.transferDelaySeconds = false;
+							this.updating.maxVotePeriodSeconds = false;
 						}
 					}
 				).on(
@@ -431,7 +438,65 @@
 					{
 						this.error = String(error);
 
-						this.updating.transferDelaySeconds = false;
+						this.updating.maxVotePeriodSeconds = false;
+					}
+				);
+			},
+
+			updateMinVotePeriodSeconds()
+			{
+				if (!this.$store.state.web3.utils.isAddress(this.vaultAddress))
+				{
+					return;
+				}
+
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+					this.vaultAddress,
+					[
+						this.vault.voteAgainstRequired,
+						this.vault.voteForRequired,
+						this.update.maxVotePeriodSeconds,
+						this.update.minVotePeriodSeconds,
+					]
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.updating.minVotePeriodSeconds = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.edit.minVotePeriodSeconds = false;
+
+							this.vault.minVotePeriodSeconds = (
+								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+									this.vaultAddress
+								).call()
+							)[2];
+
+							this.updating.minVotePeriodSeconds = false;
+						}
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.error = String(error);
+
+						this.updating.minVotePeriodSeconds = false;
 					}
 				);
 			},
@@ -493,23 +558,30 @@
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[0];
+			).voteAgainstRequired;
 
 			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[1];
+			).voteForRequired;
 
-			this.vault.transferDelaySeconds = (
+			this.vault.maxVotePeriodSeconds = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[2];
+			).maxVotePeriodSeconds;
+
+			this.vault.minVotePeriodSeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					this.vaultAddress
+				).call()
+			).minVotePeriodSeconds;
 
 			this.update.voteAgainstRequired = this.vault.voteAgainstRequired;
 			this.update.voteForRequired = this.vault.voteForRequired;
-			this.update.transferDelaySeconds = this.vault.transferDelaySeconds;
+			this.update.maxVotePeriodSeconds = this.vault.maxVotePeriodSeconds;
+			this.update.minVotePeriodSeconds = this.vault.minVotePeriodSeconds;
 		}
 	});
 </script>

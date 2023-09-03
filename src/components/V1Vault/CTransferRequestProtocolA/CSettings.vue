@@ -241,7 +241,7 @@
 						this.vault.transferDelaySeconds,
 					]
 				).send({
-					from: this.$store.state.wallet.accounts[0]
+					from: this.$store.state.wallet.accounts.voteAgainstRequired
 				}).on(
 					"sent",
 					async () =>
@@ -262,7 +262,7 @@
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
-							)[0];
+							).voteAgainstRequired;
 
 							this.updating.voteAgainstRequired = false;
 						}
@@ -298,7 +298,7 @@
 						this.vault.transferDelaySeconds,
 					]
 				).send({
-					from: this.$store.state.wallet.accounts[0]
+					from: this.$store.state.wallet.accounts.voteAgainstRequired
 				}).on(
 					"sent",
 					async () =>
@@ -319,7 +319,7 @@
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
-							)[1];
+							).voteForRequired;
 
 							this.updating.voteForRequired = false;
 						}
@@ -355,7 +355,7 @@
 						this.update.transferDelaySeconds,
 					]
 				).send({
-					from: this.$store.state.wallet.accounts[0]
+					from: this.$store.state.wallet.accounts.voteAgainstRequired
 				}).on(
 					"sent",
 					async () =>
@@ -376,7 +376,7 @@
 								await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 									this.vaultAddress
 								).call()
-							)[2];
+							).transferDelaySeconds;
 
 							this.updating.transferDelaySeconds = false;
 						}
@@ -402,7 +402,7 @@
 				try
 				{
 					this.yieldSyncV1Vault.methods.renounceMembership().send({
-						from: this.$store.state.wallet.accounts[0]
+						from: this.$store.state.wallet.accounts.voteAgainstRequired
 					}).on("sent", async () =>
 					{
 						this.processing = true;
@@ -449,19 +449,19 @@
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[0];
+			).voteAgainstRequired;
 
 			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[1];
+			).voteForRequired;
 
 			this.vault.transferDelaySeconds = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.vaultAddress
 				).call()
-			)[2];
+			).transferDelaySeconds;
 
 			this.update.voteAgainstRequired = this.vault.voteAgainstRequired;
 			this.update.voteForRequired = this.vault.voteForRequired;
