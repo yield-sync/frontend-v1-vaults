@@ -4,7 +4,7 @@
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
 		<VCardTitle class="bg-primary text-light">
-			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ this.trpType(this.trp) }})</h4>
+			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ this.trpType }})</h4>
 		</VCardTitle>
 
 		<VTabs
@@ -15,22 +15,22 @@
 		>
 			<VTab value="o">Open Transfer Requests</VTab>
 
-			<VTab v-if="this.$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
+			<VTab v-if="!this.asAdmin" value="c">Create Transfer Request</VTab>
 		</VTabs>
 
 		<VCardText variant="light">
 			<VWindow v-model="this.$store.state.pages.RVV1Vault.transferRequests.tab">
 				<VWindowItem value="o">
 					<CTransferRequestAOpen
-						v-if="this.trpType(this.trp) == 'a'"
+						v-if="this.trpType == 'a'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.$route.query.admin == 'true'"
+						:asAdmin="this.asAdmin"
 					/>
 
 					<CTransferRequestBOpen
-						v-else-if="this.trpType(this.trp) == 'b'"
+						v-else-if="this.trpType == 'b'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.$route.query.admin == 'true'"
+						:asAdmin="this.asAdmin"
 					/>
 
 					<div v-else>
@@ -40,15 +40,15 @@
 
 				<VWindowItem value="c">
 					<CTransferRequestACreate
-						v-if="this.trpType(this.trp) == 'a'"
+						v-if="this.trpType == 'a'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.$route.query.admin == 'true'"
+						:asAdmin="this.asAdmin"
 					/>
 
 					<CTransferRequestBCreate
-						v-else-if="this.trpType(this.trp) == 'b'"
+						v-else-if="this.trpType == 'b'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.$route.query.admin == 'true'"
+						:asAdmin="this.asAdmin"
 					/>
 
 					<div v-else>
@@ -62,10 +62,7 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
-	import { Contract } from "web3-eth-contract";
-	import { AbiItem } from "web3-utils";
 
-	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import CTransferRequestACreate from "./CTransferRequestProtocolA/CCreate.vue";
 	import CTransferRequestAOpen from "./CTransferRequestProtocolA/COpen.vue";
 	import CTransferRequestBCreate from "./CTransferRequestProtocolB/CCreate.vue";
@@ -75,10 +72,19 @@
 		name: "CTransferRequest",
 
 		props: {
-			vaultAddress: {
+			asAdmin: {
+				type: Boolean,
 				required: true,
-				type: String
-			}
+			},
+
+			vaultAddress: {
+				type: String,
+				required: true,
+			},
+
+			trpType: {
+				type: String,
+			},
 		},
 
 		components: {
@@ -86,48 +92,6 @@
 			CTransferRequestAOpen,
 			CTransferRequestBCreate,
 			CTransferRequestBOpen,
-		},
-
-		data()
-		{
-			return {
-				vault: undefined as Contract | undefined,
-				trp: ""
-			};
-		},
-
-		methods: {
-			trpType(trp: string): "a" | "b" | "?"
-			{
-				let chainName = this.$store.state.currentChain.name;
-
-				switch (trp) 
-				{
-					case this.$store.state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
-						return "a";
-
-					case this.$store.state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
-						return "b";
-
-					default:
-						return "?";
-				}
-			}
-		},
-
-		async created(): Promise<void>
-		{
-			this.vault = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1Vault as AbiItem[],
-				this.vaultAddress
-			);
-
-			if (!this.vault)
-			{
-				return;
-			}
-
-			this.trp = await this.vault.methods.transferRequestProtocol().call();
 		},
 	});
 </script>
