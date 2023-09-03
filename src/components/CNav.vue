@@ -75,7 +75,9 @@
 							this.$store.state.wallet.accounts[0] ?
 								this.$store.state.wallet.accounts[0].substring(0, 4) +
 								"..." +
-								this.$store.state.wallet.accounts[0].substring(this.$store.state.wallet.accounts[0].length - 4)
+								this.$store.state.wallet.accounts[0].substring(
+									this.$store.state.wallet.accounts[0].length - 4
+								)
 								:
 								""
 						}}

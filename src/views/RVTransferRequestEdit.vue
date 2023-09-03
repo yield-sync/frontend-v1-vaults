@@ -369,7 +369,7 @@
 				if (i > -1)
 				{
 					this.transferRequest.voteAgainstMembers = this.transferRequest.voteAgainstMembers.filter(
-						(m) =>
+						(m: string) =>
 						{
 							return m !== this.transferRequest.voteAgainstMembers[i];
 						}
@@ -397,7 +397,7 @@
 				if (i > -1)
 				{
 					this.transferRequest.voteForMembers = this.transferRequest.voteForMembers.filter(
-						(m) =>
+						(m: string) =>
 						{
 							return m !== this.transferRequest.voteForMembers[i];
 						}

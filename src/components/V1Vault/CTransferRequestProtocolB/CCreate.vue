@@ -121,8 +121,13 @@
 				<br/>
 				Current Block Timestamp + Vote Close Time = Submittable Block Timestamp
 				<br/>
-				{{ this.currentBlockTimestamp }} + {{ this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp }} =
-				{{ this.currentBlockTimestamp + this.parseInt(this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp) }}
+				{{ this.currentBlockTimestamp }} + {{
+					this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
+				}} = {{
+					this.currentBlockTimestamp + this.parseInt(
+						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
+					)
+				}}
 			</h5>
 		</VCol>
 

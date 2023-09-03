@@ -1,34 +1,35 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
-    "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-    ],
-    "typeRoots": [
-      "./types"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
     "lib": [
       "esnext",
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitThis": false,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "types": [
+    ],
+    "typeRoots": [
+      "./types"
+    ],
+    "useDefineForClassFields": true,
   },
   "include": [
     "src/**/*.ts",

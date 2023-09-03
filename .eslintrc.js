@@ -222,9 +222,9 @@ module.exports = {
 		"vue/max-len": [
 			"warn",
 			{
-				"code": 120,
-				"comments": 120,
-				"template": 120,
+				"code": 124,
+				"comments": 124,
+				"template": 124,
 				"tabWidth": 4,
 				"ignoreComments": false,
 				"ignoreHTMLAttributeValues": false,

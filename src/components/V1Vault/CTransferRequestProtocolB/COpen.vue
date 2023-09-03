@@ -294,15 +294,7 @@
 										dTR.voteForMembers.length < this.voteForRequired &&
 										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
-									:disabled="
-										this.voting[dTR.id] ||
-											dTR.voteAgainstMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											) ||
-											dTR.voteForMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											)
-									"
+									:disabled="this.voting[dTR.id]"
 									variant="flat"
 									color="success"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -338,13 +330,7 @@
 										dTR.voteForMembers.length < this.voteForRequired &&
 										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
-									:disabled="
-										this.voting[dTR.id] || dTR.voteAgainstMembers.some(
-											a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-										) || dTR.voteForMembers.some(
-											a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-										)
-									"
+									:disabled="this.voting[dTR.id]"
 									variant="flat"
 									color="danger"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -360,19 +346,6 @@
 
 									<span v-else>Vote Against</span>
 								</VBtn>
-							</VCol>
-
-							<VCol
-								v-if="
-									dTR.voteAgainstMembers.some(
-										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-									) || dTR.voteForMembers.some(
-										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-									)
-								"
-								cols="12"
-							>
-								<h6 class="text-center text-dark">You have voted already</h6>
 							</VCol>
 
 							<VCol cols="6" class="text-center">
@@ -412,7 +385,10 @@
 
 							<!-- Process TransferRequest Button -->
 							<VCol
-								v-if="this.getTransferRequestStatus(dTR) == '✅' || this.getTransferRequestStatus(dTR) == '❌'"
+								v-if="
+									this.getTransferRequestStatus(dTR) == '✅' ||
+										this.getTransferRequestStatus(dTR) == '❌'
+								"
 								cols="12"
 							>
 								<VBtn

@@ -19,7 +19,9 @@
 		</VContainer>
 
 		<!-- Router -->
-		<RouterView v-if="!this.$store.state.loading && this.$store.state.wallet.connected && this.$store.state.error === ''"/>
+		<RouterView
+			v-if="!this.$store.state.loading && this.$store.state.wallet.connected && this.$store.state.error === ''"
+		/>
 
 		<!-- Bottom Navigation -->
 		<CFooter v-if="!this.$store.state.loading"/>

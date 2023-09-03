@@ -302,15 +302,7 @@
 										dTR.voteForMembers.length < this.voteForRequired &&
 										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
-									:disabled="
-										this.voting[dTR.id] ||
-											dTR.voteAgainstMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											) ||
-											dTR.voteForMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											)
-									"
+									:disabled="this.voting[dTR.id] || this.hasVoted(dTR)"
 									variant="flat"
 									color="success"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -346,15 +338,7 @@
 										dTR.voteForMembers.length < this.voteForRequired &&
 										dTR.voteAgainstMembers.length < this.voteAgainstRequired
 									)"
-									:disabled="
-										this.voting[dTR.id] ||
-											dTR.voteAgainstMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											) ||
-											dTR.voteForMembers.some(
-												a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-											)
-									"
+									:disabled="this.voting[dTR.id] || this.hasVoted(dTR)"
 									variant="flat"
 									color="danger"
 									class="w-100 px-6 rounded-xl elevation-0"
@@ -372,16 +356,7 @@
 								</VBtn>
 							</VCol>
 
-							<VCol
-								v-if="
-									dTR.voteAgainstMembers.some(
-										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-									) || dTR.voteForMembers.some(
-										a => a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase()
-									)
-								"
-								cols="12"
-							>
+							<VCol v-if="this.hasVoted(dTR)" cols="12">
 								<h6 class="text-center text-dark">You have voted already</h6>
 							</VCol>
 
@@ -430,7 +405,10 @@
 
 							<!-- Process TransferRequest Button -->
 							<VCol
-								v-if="this.getTransferRequestStatus(dTR) == '✅' || this.getTransferRequestStatus(dTR) == '❌'"
+								v-if="
+									this.getTransferRequestStatus(dTR) == '✅' ||
+										this.getTransferRequestStatus(dTR) == '❌'
+								"
 								cols="12"
 							>
 								<VBtn
@@ -581,6 +559,21 @@
 		},
 
 		methods: {
+			hasVoted(dTR: DetailedTransferRequest): boolean
+			{
+				return dTR.voteAgainstMembers.some(
+					(a: string) =>
+					{
+						return a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase();
+					}
+				) || dTR.voteForMembers.some(
+					(a: string) =>
+					{
+						return a.toLowerCase() == this.$store.state.wallet.accounts[0].toLowerCase();
+					}
+				);
+			},
+
 			setCurrentBlockTimestamp(): void
 			{
 				// Get the current block number
@@ -609,6 +602,18 @@
 						console.log("Current block timestamp:", this.currentBlockTimestamp);
 					});
 				});
+			},
+
+			getTransferRequestStatus(dTR: DetailedTransferRequest): "🗳️" | "❌" | "✅" | "⏳"
+			{
+				return (
+					dTR.voteForMembers.length < this.voteForRequired &&
+					dTR.voteAgainstMembers.length < this.voteAgainstRequired
+				) ? "🗳️" : (
+					dTR.voteAgainstMembers.length >= this.voteAgainstRequired
+				) ? "❌" : (
+					this.currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp >= this.transferDelaySeconds
+				) ?  "✅" : "⏳";
 			},
 
 			async getTransferRequestData(): Promise<void>
@@ -715,18 +720,6 @@
 				}
 
 				this.loading = false;
-			},
-
-			getTransferRequestStatus(dTR: DetailedTransferRequest): "🗳️" | "❌" | "✅" | "⏳"
-			{
-				return (
-					dTR.voteForMembers.length < this.voteForRequired &&
-					dTR.voteAgainstMembers.length < this.voteAgainstRequired
-				) ? "🗳️" : (
-					dTR.voteAgainstMembers.length >= this.voteAgainstRequired
-				) ? "❌" : (
-					this.currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp >= this.transferDelaySeconds
-				) ?  "✅" : "⏳";
 			},
 
 			async voteOnTransferRequest(tRId: number, vote: boolean): Promise<void>

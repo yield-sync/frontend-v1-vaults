@@ -11,7 +11,9 @@
 
 						<VCol cols="12" class="text-center">
 							<a
-								:href="`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.govA}`"
+								:href="
+									`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.govA}`
+								"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
