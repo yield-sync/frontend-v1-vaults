@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-gradient" style="background-attachment: fixed; background-size: cover;">
 		<!-- Top Navigation -->
-		<CNav />
+		<CNav/>
 
 		<!-- Loading -->
 		<VContainer v-if="$store.state.loading" class="py-12">
@@ -19,10 +19,10 @@
 		</VContainer>
 
 		<!-- Router -->
-		<RouterView v-if="!$store.state.loading && $store.state.wallet.connected && $store.state.error === ''" />
+		<RouterView v-if="!$store.state.loading && $store.state.wallet.connected && $store.state.error === ''"/>
 
 		<!-- Bottom Navigation -->
-		<CFooter v-if="!$store.state.loading" />
+		<CFooter v-if="!$store.state.loading"/>
 	</div>
 </template>
 

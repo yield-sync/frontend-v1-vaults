@@ -155,7 +155,7 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="memberAddField" label="Address" variant="outlined" />
+							<VTextField v-model="memberAddField" label="Address" variant="outlined"/>
 						</VCol>
 
 						<VCol md="2">
@@ -206,7 +206,7 @@
 
 					<VRow>
 						<VCol md="10">
-							<VTextField v-model="adminAddField" label="Address" variant="outlined" />
+							<VTextField v-model="adminAddField" label="Address" variant="outlined"/>
 						</VCol>
 
 						<VCol md="2">

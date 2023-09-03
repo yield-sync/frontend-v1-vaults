@@ -14,7 +14,7 @@
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="bg-primary text-light">
 			<VRow>
-				<VCol cols="2" class="text-center" />
+				<VCol cols="2" class="text-center"/>
 
 				<VCol cols="8" class="text-center">
 					<h4 class="text-center text-uppercase">🏦 Overview</h4>

@@ -33,9 +33,9 @@
 		</VCol>
 	</VRow>
 
-	<TRPA v-if="trp == 'a'" />
+	<TRPA v-if="trp == 'a'"/>
 
-	<TRPB v-if="trp == 'b'" />
+	<TRPB v-if="trp == 'b'"/>
 </template>
 
 <script lang="ts">
