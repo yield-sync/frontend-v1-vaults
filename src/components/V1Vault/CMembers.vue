@@ -44,6 +44,7 @@
 						hide-details
 					/>
 				</VCol>
+
 				<VCol md="2" lg="2">
 					<VBtn
 						:disabled="adding"

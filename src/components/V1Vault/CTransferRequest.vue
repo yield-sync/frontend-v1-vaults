@@ -14,6 +14,7 @@
 			fixed-tabs
 		>
 			<VTab value="o">Open Transfer Requests</VTab>
+
 			<VTab v-if="$route.query.admin !== 'true'" value="c">Create Transfer Request</VTab>
 		</VTabs>
 

@@ -33,6 +33,7 @@
 				</VCol>
 			</VRow>
 		</VCardTitle>
+
 		<VCardText class="mt-4">
 			<VRow>
 				<VCol cols="12">
@@ -184,12 +185,14 @@
 			<VCardTitle>
 				<span class="text-h5">Disclaimer</span>
 			</VCardTitle>
+
 			<VCardText>
 				Please only send tokens to the network in which this vault has been deployed on.
 			</VCardText>
 
 			<VCardActions>
 				<VSpacer/>
+
 				<VBtn color="green darken-1" @click="dialog = false">Close</VBtn>
 			</VCardActions>
 		</VCard>

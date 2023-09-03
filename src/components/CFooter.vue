@@ -76,6 +76,7 @@
 
 	export default defineComponent({
 		name: "CFooter",
+
 		data()
 		{
 			return {

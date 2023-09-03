@@ -114,6 +114,7 @@
 
 					<VCol v-if="!opened[i]" cols="2">
 						<h4 v-if="!dTR.forERC721" class="mt-2 text-center">{{ dTR.amount * 10 ** -18 }}</h4>
+
 						<h4 v-if="dTR.forERC721" class="mt-2 text-center">#{{ dTR.tokenId }}</h4>
 					</VCol>
 
@@ -133,7 +134,8 @@
 
 					<VCol v-if="!opened[i]" cols="2">
 						<h3 class="mt-2 text-center">
-							<span class="text-success">{{ dTR.voteForMembers.length }}</span> :
+							<span class="text-success">{{ dTR.voteForMembers.length }}</span>
+							:
 							<span class="text-danger">{{ dTR.voteAgainstMembers.length }}</span>
 						</h3>
 					</VCol>
@@ -238,11 +240,13 @@
 
 							<VCol v-if="!dTR.forERC721" cols="4" class="text-center">
 								<h4 class="mb-3 text-uppercase text-primary">Amount</h4>
+
 								<h3 class="text-dark">{{ dTR.amount * 10 ** -18 }}</h3>
 							</VCol>
 
 							<VCol v-if="dTR.forERC721" cols="4" class="text-center">
 								<h4 class="mb-3 text-uppercase text-primary">Token Id</h4>
+
 								<h3 class="text-dark">{{ dTR.tokenId }}</h3>
 							</VCol>
 
@@ -268,6 +272,7 @@
 
 							<VCol cols="12" class="text-center">
 								<h4 class="mb-3 text-center text-uppercase text-primary">Transfer To</h4>
+
 								<a
 									:href="`https://etherscan.io/address/${dTR.to}`"
 									target="_blank"
@@ -318,6 +323,7 @@
 										color="light"
 										class=""
 									/>
+
 									<span v-else>Vote For</span>
 								</VBtn>
 							</VCol>
@@ -361,6 +367,7 @@
 										color="light"
 										class=""
 									/>
+
 									<span v-else>Vote Against</span>
 								</VBtn>
 							</VCol>
@@ -380,6 +387,7 @@
 
 							<VCol cols="6" class="text-center">
 								<h4 class="mb-3 text-primary">Voted For Members</h4>
+
 								<h4 v-for="(v, i) in dTR.voteForMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
@@ -387,6 +395,7 @@
 
 							<VCol cols="6" class="text-center">
 								<h4 class="mb-3 text-primary">Voted Against Member</h4>
+
 								<h4 v-for="(v, i) in dTR.voteAgainstMembers" :key="i">
 									{{ i + 1 }}. {{ v.substring(0, 4) + "..." + v.substring(v.length - 4) }}
 								</h4>
@@ -401,6 +410,7 @@
 								<h4 class="mb-3 text-center text-primary">
 									Latest Relevant For Vote Time
 								</h4>
+
 								<h3 class="mb-3 text-center text-dark">
 									{{ dTR.latestForVoteTime }}
 								</h3>
@@ -411,6 +421,7 @@
 								<h4 class="mb-3 text-center text-primary">
 									Time Passed / Transfer Delay (s)
 								</h4>
+
 								<h3 class="mb-3 text-center text-dark">
 									{{ currentBlockTimestamp - dTR.latestRelevantForVoteBlockTimestamp }} /
 									{{ transferDelaySeconds }}
@@ -434,6 +445,7 @@
 										color="light"
 										class=""
 									/>
+
 									<span v-else>Process Request</span>
 								</VBtn>
 							</VCol>

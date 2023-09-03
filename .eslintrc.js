@@ -267,24 +267,22 @@ module.exports = {
 			"warn",
 			"always",
 		],
-		/**
-		 * @dev Cannot uncomment until eslint-plugin-vue v9.9+
-		* "vue/padding-line-between-tags": [
-		* 	"warn",
-		* 	
-		* 	{
-		* 		"blankLine": "always",
-		* 		"prev": "*",
-		* 		"next": "*" 
-		* 	},
-		* ],
-		* "vue/padding-lines-in-component-definition": [
-		* 	"warn",
-		* 	{
-		* 		"betweenOptions": "always"			
-		* 	},
-		* ],
-		*/
+		"vue/padding-line-between-tags": [
+			"warn",
+			[
+				{
+					"blankLine": "always",
+					"prev": "*",
+					"next": "*" 
+				},
+			]
+		],
+		"vue/padding-lines-in-component-definition": [
+			"warn",
+			{
+				"betweenOptions": "always"			
+			},
+		],
 		"vue/require-direct-export": [
 			"warn",
 			{

@@ -34,6 +34,7 @@
 	</VRow>
 
 	<TRPA v-if="trp == 'a'" />
+
 	<TRPB v-if="trp == 'b'" />
 </template>
 

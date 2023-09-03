@@ -31,6 +31,7 @@
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
+
 						<h5 class="mx-auto text-center text-light">
 							{{ $store.state.config.networkChain[$store.state.currentChain.name].chainName }}
 						</h5>
@@ -62,6 +63,7 @@
 					>
 						Connect Wallet
 					</VBtn>
+
 					<VBtn
 						v-if="$store.state.wallet.connected"
 						@click="disconnectWallet()"

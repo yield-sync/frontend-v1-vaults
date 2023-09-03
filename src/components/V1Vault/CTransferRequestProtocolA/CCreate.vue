@@ -8,6 +8,7 @@
 					value="Ether"
 					id="Ether"
 				/>
+
 				<label for="Ether">Ether</label>
 
 				<input
@@ -16,6 +17,7 @@
 					value="ERC 20"
 					id="ERC 20"
 				/>
+
 				<label for="ERC 20">ERC 20</label>
 
 				<input
@@ -24,6 +26,7 @@
 					value="ERC 721"
 					id="ERC 721"
 				/>
+
 				<label for="ERC 721">ERC 721</label>
 			</fieldset>
 		</VCol>
@@ -36,6 +39,7 @@
 				@change="$store.state.pages.RVV1Vault.transferRequestA.for = 'ERC 20'"
 			>
 				<option value="">Select ERC 20 Token</option>
+
 				<option v-for="(t, i) in $store.state.pages.RVV1Vault.erc20s" :key="i" :value="t.contract">
 					{{ t.name }}
 				</option>
@@ -110,8 +114,10 @@
 					color="light"
 					class=""
 				/>
+
 				<span v-else>Create Request</span>
 			</VBtn>
+
 			<h6 v-if="error" class="text-danger">{{ error }}</h6>
 		</VCol>
 	</VRow>

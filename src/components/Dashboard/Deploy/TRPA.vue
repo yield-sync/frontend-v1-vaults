@@ -5,6 +5,7 @@
 			<VRow>
 				<VCol cols="12">
 					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties (1/2)</h2>
+
 					<h6 class="mb-6 text-center text-uppercase text-dark">
 						Must be set first before deploying a vault
 					</h6>
@@ -45,6 +46,7 @@
 						class="mb-3"
 					/>
 				</VCol>
+
 				<VCol cols="12">
 					<VBtn
 						variant="flat"
@@ -65,6 +67,7 @@
 							color="light"
 							class=""
 						/>
+
 						<h2 v-else>Update</h2>
 					</VBtn>
 				</VCol>
@@ -80,6 +83,7 @@
 					<VCard color="warning" class="text-center text-dark elevation-0 rounded-xl">
 						<VCardText>
 							<h4 class="mb-3 text-uppercase font-weight-bold">Warning!</h4>
+
 							<h6 class="m-0 text-uppercase">
 								Please update before deploying, otherwise changes will not apply.
 							</h6>
@@ -99,6 +103,7 @@
 			<VRow>
 				<VCol cols="12">
 					<h2 class="mb-3 text-center text-uppercase text-primary"> 🚀 Deploy Vault (2/2)</h2>
+
 					<h6 class="mb-6 text-center text-uppercase text-dark">
 						Deployment Fee: Ξ {{ deploymentFee }}
 					</h6>
@@ -124,6 +129,7 @@
 								</VBtn>
 							</a>
 						</VCol>
+
 						<VCol md="2">
 							<VBtn
 								variant="flat"
@@ -140,6 +146,7 @@
 						<VCol md="10">
 							<VTextField v-model="memberAddField" label="Address" variant="outlined" />
 						</VCol>
+
 						<VCol md="2">
 							<VBtn
 								variant="tonal"
@@ -173,6 +180,7 @@
 								</VBtn>
 							</a>
 						</VCol>
+
 						<VCol md="2">
 							<VBtn
 								variant="flat"
@@ -189,6 +197,7 @@
 						<VCol md="10">
 							<VTextField v-model="adminAddField" label="Address" variant="outlined" />
 						</VCol>
+
 						<VCol md="2">
 							<VBtn
 								variant="tonal"
@@ -221,6 +230,7 @@
 			>
 				<VCardText>
 					<h3 class="mb-3 text-uppercase">Invalid params!</h3>
+
 					<h4>Against Votes cannot be less than member count.</h4>
 				</VCardText>
 			</VCard>
@@ -232,6 +242,7 @@
 			>
 				<VCardText>
 					<h3 class="mb-3 text-uppercase">Invalid params!</h3>
+
 					<h4>For Votes cannot be less than member count.</h4>
 				</VCardText>
 			</VCard>
@@ -260,6 +271,7 @@
 					indeterminate
 					color="light"
 				/>
+
 				<h2 v-else>Deploy</h2>
 			</VBtn>
 		</VCardText>

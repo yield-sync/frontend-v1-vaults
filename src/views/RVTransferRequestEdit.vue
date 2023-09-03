@@ -13,6 +13,7 @@
 					⬅️ Return to Vault
 				</VBtn>
 			</RouterLink>
+
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 				<VCardTitle class="bg-primary text-light">
 					<h4 class="m-0 text-center text-uppercase">Edit Transfer Request</h4>
@@ -42,6 +43,7 @@
 									id="Ether"
 									checked
 								/>
+
 								<label for="Ether">Ether</label>
 
 								<input
@@ -50,6 +52,7 @@
 									value="ERC 20"
 									id="ERC 20"
 								/>
+
 								<label for="ERC 20">ERC 20</label>
 
 								<input
@@ -58,6 +61,7 @@
 									value="ERC 721"
 									id="ERC 721"
 								/>
+
 								<label for="ERC 721">ERC 721</label>
 							</fieldset>
 						</VCol>
@@ -75,6 +79,7 @@
 							/>
 
 						</VCol>
+
 						<VCol sm="6">
 							<!-- TOKEN -->
 							<VTextField
@@ -157,6 +162,7 @@
 
 						<VCol cols="12">
 							<h3 class="mb-6 text-primary">Voted For Members</h3>
+
 							<VRow
 								v-for="(m, i) in transferRequest.voteForMembers" :key="i"
 								class="mb-3"
@@ -164,6 +170,7 @@
 								<VCol md="10">
 									<h3 class="member-or-admin my-2">{{ m }}</h3>
 								</VCol>
+
 								<VCol md="2">
 									<VBtn
 										variant="tonal"
@@ -200,6 +207,7 @@
 
 						<VCol cols="12">
 							<h3 class="mb-6 text-primary">Voted Against Members</h3>
+
 							<VRow
 								v-for="(m, i) in transferRequest.voteAgainstMembers" :key="i"
 								class="mb-3"
@@ -207,6 +215,7 @@
 								<VCol md="10">
 									<h3 class="member-or-admin my-2">{{ m }}</h3>
 								</VCol>
+
 								<VCol md="2">
 									<VBtn
 										variant="tonal"
@@ -255,6 +264,7 @@
 									indeterminate
 									color="light"
 								/>
+
 								<h2 v-else>Update</h2>
 							</VBtn>
 						</VCol>
