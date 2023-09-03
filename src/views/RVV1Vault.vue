@@ -132,6 +132,7 @@
 					<CTransferRequest
 						:vaultAddress="this.vaultAddress"
 						:asAdmin="this.$route.query.admin == 'true'"
+						:trpType="this.trpType(this.trpAddress)"
 					/>
 				</VCol>
 
@@ -139,6 +140,7 @@
 					<CSettings
 						:vaultAddress="this.vaultAddress"
 						:asAdmin="this.$route.query.admin == 'true'"
+						:trpType="this.trpType(this.trpAddress)"
 					/>
 				</VCol>
 			</VRow>
@@ -148,7 +150,10 @@
 
 <script lang="ts">
 	import { defineComponent } from "vue";
+	import { Contract } from "web3-eth-contract";
+	import { AbiItem } from "web3-utils";
 
+	import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
 	import COverview from "../components/V1Vault/COverview.vue";
 	import CMembersAndAdmins from "../components/V1Vault/CMembersAndAdmins.vue";
 	import CTransferRequest from "../components/V1Vault/CTransferRequest.vue";
@@ -160,8 +165,13 @@
 		data()
 		{
 			return {
-				asAdmin: false as boolean,
 				vaultAddress: this.$route.params.address as string,
+
+				vault: undefined as Contract | undefined,
+
+				asAdmin: false as boolean,
+
+				trpAddress: "" as string,
 			};
 		},
 
@@ -177,6 +187,23 @@
 			{
 				navigator.clipboard.writeText(a);
 			},
+
+			trpType(trpAddress: string): "a" | "b" | "?"
+			{
+				let chainName = this.$store.state.currentChain.name;
+
+				switch (trpAddress)
+				{
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
+						return "a";
+
+					case this.$store.state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
+						return "b";
+
+					default:
+						return "?";
+				}
+			}
 		},
 
 		async created(): Promise<void>
@@ -189,6 +216,18 @@
 			await this.$store.commit("setPagesRVV1VaultVaultAddress", this.vaultAddress);
 			await this.$store.dispatch("getTokens");
 			await this.$store.dispatch("getERC721Tokens");
+
+			this.vault = new this.$store.state.web3.eth.Contract(
+				YieldSyncV1Vault as AbiItem[],
+				this.vaultAddress
+			);
+
+			if (!this.vault)
+			{
+				return;
+			}
+
+			this.trpAddress = await this.vault.methods.transferRequestProtocol().call();
 		}
 	});
 </script>
