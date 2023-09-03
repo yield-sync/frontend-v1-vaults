@@ -42,13 +42,11 @@
 					<CTransferRequestACreate
 						v-if="this.trpType == 'a'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.asAdmin"
 					/>
 
 					<CTransferRequestBCreate
 						v-else-if="this.trpType == 'b'"
 						:vaultAddress="this.vaultAddress"
-						:asAdmin="this.asAdmin"
 					/>
 
 					<div v-else>
