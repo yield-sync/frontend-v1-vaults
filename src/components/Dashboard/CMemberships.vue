@@ -2,21 +2,19 @@
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
 			<VRow class="mt-3 mb-6 ">
-				<VCol cols="12" md="4">
+				<VCol cols="12" md="6">
 					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">
 						Vault Address
 					</h3>
 				</VCol>
 
-				<VCol cols="12" md="4" class="d-none d-md-block">
+				<VCol cols="12" md="6" class="d-none d-md-block">
 					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">
 						For : Against
 					</h3>
 				</VCol>
 
-				<VCol cols="12" md="4" class="d-none d-md-block">
-					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">Delay</h3>
-				</VCol>
+
 			</VRow>
 
 			<div v-if="this.loading" class="text-center">
@@ -36,7 +34,7 @@
 				>
 					<div class="py-6 mb-6 rounded-xl vault">
 						<VRow>
-							<VCol cols="12" md="4">
+							<VCol cols="12" md="6">
 								<h3 class="text-decoration-none text-center text-primary">
 									{{
 										v.address ?
@@ -49,15 +47,9 @@
 								</h3>
 							</VCol>
 
-							<VCol cols="12" md="4" class="d-none d-md-block">
+							<VCol cols="12" md="6" class="d-none d-md-block">
 								<h3 class="text-center text-primary" style="word-wrap: break-word;">
 									{{ v.voteForRequired }} : {{ v.voteAgainstRequired }}
-								</h3>
-							</VCol>
-
-							<VCol cols="12" md="4" class="d-none d-md-block">
-								<h3 class="text-center text-primary" style="word-wrap: break-word;">
-									{{ v.transferDelaySeconds }}s
 								</h3>
 							</VCol>
 						</VRow>
@@ -101,7 +93,6 @@
 					address: string;
 					voteAgainstRequired: number;
 					voteForRequired: number;
-					transferDelaySeconds: number;
 				}[],
 			};
 		},
@@ -115,9 +106,9 @@
 				this.transferRequestProtocol
 			);
 
-			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultRegistry.methods
-				.member_yieldSyncV1Vaults(this.$store.state.wallet.accounts[0]).call()
-			;
+			const v1Vaults = await this.$store.state.contract.yieldSyncV1VaultRegistry.methods.admin_yieldSyncV1Vaults(
+				this.$store.state.wallet.accounts[0]
+			).call();
 
 			for (let i = 0; i < v1Vaults.length; i++)
 			{
@@ -129,9 +120,8 @@
 
 				this.membershipYieldSyncV1VaultVaults.push({
 					address: v1Vaults[i],
-					voteAgainstRequired: vaultProperties[0],
-					voteForRequired: vaultProperties[1],
-					transferDelaySeconds: vaultProperties[2],
+					voteAgainstRequired: vaultProperties.voteAgainstRequired,
+					voteForRequired: vaultProperties.voteForRequired,
 				});
 			}
 
