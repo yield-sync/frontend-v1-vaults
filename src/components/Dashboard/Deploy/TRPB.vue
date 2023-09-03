@@ -5,12 +5,13 @@
 				<VCol cols="12">
 					<h2 class="mb-3 text-center text-uppercase text-primary">🔧 Vault Properties (1/2)</h2>
 					<h6 class="mb-6 text-center text-uppercase text-dark">
-						Must be set first before deploying a vault
+						Must be set first before deploying a vault<br/>
+						(Max = 0 => No Max)
 					</h6>
 				</VCol>
 
 				<!-- Against -->
-				<VCol cols="12" md="6">
+				<VCol cols="12" md="3">
 					<VTextField
 						v-model="vaultProperties.voteAgainstRequired"
 						type="number"
@@ -22,11 +23,35 @@
 				</VCol>
 
 				<!-- For -->
-				<VCol cols="12" md="6">
+				<VCol cols="12" md="3">
 					<VTextField
 						v-model="vaultProperties.voteForRequired"
 						type="number"
 						label="For Vote Count"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<!-- Min -->
+				<VCol cols="12" md="3">
+					<VTextField
+						v-model="vaultProperties.minVotePeriodSeconds"
+						type="number"
+						label="Min Vote Period Seconds"
+						variant="outlined"
+						hide-details
+						class="mb-3"
+					/>
+				</VCol>
+
+				<!-- Max -->
+				<VCol cols="12" md="3">
+					<VTextField
+						v-model="vaultProperties.maxVotePeriodSeconds"
+						type="number"
+						label="Max Vote Period Seconds"
 						variant="outlined"
 						hide-details
 						class="mb-3"
@@ -42,7 +67,9 @@
 						:disabled="
 							vaultProperties.updating || (
 								vaultProperties.voteAgainstRequired == vaultDeploy.voteAgainstRequired &&
-								vaultProperties.voteForRequired == vaultDeploy.voteForRequired
+								vaultProperties.voteForRequired == vaultDeploy.voteForRequired &&
+								vaultProperties.maxVotePeriodSeconds == vaultDeploy.maxVotePeriodSeconds &&
+								vaultProperties.minVotePeriodSeconds == vaultDeploy.minVotePeriodSeconds
 							)
 						"
 					>
@@ -280,6 +307,8 @@
 				vaultProperties: {
 					voteAgainstRequired: 0 as number,
 					voteForRequired: 0 as number,
+					maxVotePeriodSeconds: 0 as number,
+					minVotePeriodSeconds: 0 as number,
 					updating: false,
 				},
 
@@ -298,6 +327,9 @@
 
 					voteAgainstRequired: 0 as number,
 					voteForRequired: 0 as number,
+					maxVotePeriodSeconds: 0 as number,
+					minVotePeriodSeconds: 0 as number,
+
 					deploying: false as boolean,
 				},
 
@@ -373,6 +405,8 @@
 					[
 						this.vaultProperties.voteAgainstRequired,
 						this.vaultProperties.voteForRequired,
+						this.vaultProperties.maxVotePeriodSeconds,
+						this.vaultProperties.minVotePeriodSeconds,
 					]
 				).send({
 					from: this.$store.state.wallet.accounts[0]
@@ -395,6 +429,8 @@
 
 						this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
 						this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
+						this.vaultDeploy.maxVotePeriodSeconds = this.vaultProperties.maxVotePeriodSeconds;
+						this.vaultDeploy.minVotePeriodSeconds = this.vaultProperties.minVotePeriodSeconds;
 
 						this.vaultProperties.updating = false;
 					}
@@ -464,11 +500,15 @@
 				).call()
 			;
 
-			this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties[0];
-			this.vaultProperties.voteForRequired = connectedWalletsVaultProperties[1];
+			this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties.voteAgainstRequired;
+			this.vaultProperties.voteForRequired = connectedWalletsVaultProperties.voteForRequired;
+			this.vaultProperties.maxVotePeriodSeconds = connectedWalletsVaultProperties.maxVotePeriodSeconds;
+			this.vaultProperties.minVotePeriodSeconds = connectedWalletsVaultProperties.minVotePeriodSeconds;
 
 			this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
 			this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
+			this.vaultDeploy.maxVotePeriodSeconds = this.vaultProperties.maxVotePeriodSeconds;
+			this.vaultDeploy.minVotePeriodSeconds = this.vaultProperties.minVotePeriodSeconds;
 		},
 	});
 </script>

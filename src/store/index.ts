@@ -99,7 +99,7 @@ export default createStore({
 					token: "" as string,
 					amount: 0 as number,
 					tokenId: 0 as number,
-					voteCloseTime: 86400 as number
+					voteCloseTimestamp: 86400 as number
 				}
 
 			}

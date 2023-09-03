@@ -11,9 +11,9 @@
 		<VCardText class="mt-4">
 			<VRow>
 				<!-- For Vote -->
-				<VCol cols="12" sm="6" class="text-center">
+				<VCol cols="12" sm="3" class="text-center">
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-						<h3 class="mb-3 text-primary">✅ For Vote Count</h3>
+						<h4 class="mb-3 text-primary">✅ For Vote Req.</h4>
 
 						<VProgressCircular
 							v-if="vault.voteForRequired == 0"
@@ -26,9 +26,9 @@
 					</VCard>
 				</VCol>
 
-				<VCol cols="12" sm="6" class="text-center">
+				<VCol cols="12" sm="3" class="text-center">
 					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
-						<h3 class="mb-3 text-primary">❌ Against Vote Count</h3>
+						<h4 class="mb-3 text-primary">❌ Against Req.</h4>
 
 						<VProgressCircular
 							v-if="vault.voteForRequired == 0"
@@ -38,6 +38,37 @@
 						/>
 
 						<h2 v-else class="m-0">{{ vault.voteAgainstRequired }}</h2>
+					</VCard>
+				</VCol>
+
+				<!-- For Vote -->
+				<VCol cols="12" sm="3" class="text-center">
+					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+						<h4 class="mb-3 text-primary">⏳ Min Vote Period</h4>
+
+						<VProgressCircular
+							v-if="vault.minVotePeriodSeconds == -1"
+							indeterminate
+							color="light"
+							class=""
+						/>
+
+						<h2 v-else class="m-0">{{ vault.minVotePeriodSeconds }} Sec.</h2>
+					</VCard>
+				</VCol>
+
+				<VCol cols="12" sm="3" class="text-center">
+					<VCard class="px-3 py-3 rounded-xl elevation-0 bg-light-frost">
+						<h4 class="mb-3 text-primary">⌛ Max Vote Period</h4>
+
+						<VProgressCircular
+							v-if="vault.maxVotePeriodSeconds == -1"
+							indeterminate
+							color="light"
+							class=""
+						/>
+
+						<h2 v-else class="m-0">{{ vault.maxVotePeriodSeconds }} Sec.</h2>
 					</VCard>
 				</VCol>
 			</VRow>
@@ -73,7 +104,8 @@
 				vault: {
 					voteAgainstRequired: 0 as number,
 					voteForRequired: 0 as number,
-					transferDelaySeconds: 0 as number,
+					minVotePeriodSeconds: -1 as number,
+					maxVotePeriodSeconds: -1 as number,
 				},
 				error: "" as string,
 
@@ -94,12 +126,25 @@
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
-			)[0];
+			).voteAgainstRequired;
+
 			this.vault.voteForRequired = (
 				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
 					this.address
 				).call()
-			)[1];
+			).voteForRequired;
+
+			this.vault.maxVotePeriodSeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					this.address
+				).call()
+			).maxVotePeriodSeconds;
+
+			this.vault.minVotePeriodSeconds = (
+				await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					this.address
+				).call()
+			).minVotePeriodSeconds;
 		},
 	});
 </script>

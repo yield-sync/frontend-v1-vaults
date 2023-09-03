@@ -100,7 +100,7 @@
 		<VCol cols="4">
 			<!-- Vote Close Time -->
 			<VTextField
-				v-model="$store.state.pages.RVV1Vault.transferRequestB.voteCloseTime"
+				v-model="$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp"
 				type="number"
 				label="Vote Close Time (Seconds From Now)"
 				variant="outlined"
@@ -112,13 +112,13 @@
 
 		<VCol cols="8">
 			<h5 class="text-dark">
-				Minutes: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTime / 60 }} -
-				Hours: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTime / (60 * 60) }}
+				Minutes: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / 60 }} -
+				Hours: {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp / (60 * 60) }}
 				<br/>
 				Current Block Timestamp + Vote Close Time = Submittable Block Timestamp
 				<br/>
-				{{ currentBlockTimestamp }} + {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTime }} =
-				{{ currentBlockTimestamp + parseInt($store.state.pages.RVV1Vault.transferRequestB.voteCloseTime) }}
+				{{ currentBlockTimestamp }} + {{ $store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp }} =
+				{{ currentBlockTimestamp + parseInt($store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp) }}
 			</h5>
 		</VCol>
 
@@ -252,7 +252,7 @@
 					) ? BigInt(10 ** 18) : BigInt(this.$store.state.pages.RVV1Vault.transferRequestB.amount * 10 ** 18),
 					this.$store.state.pages.RVV1Vault.transferRequestB.tokenId,
 					this.currentBlockTimestamp + parseInt(
-						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTime
+						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
 					)
 				).send({
 					from: this.$store.state.wallet.accounts[0]

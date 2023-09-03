@@ -387,14 +387,15 @@
 								<h4 class="mb-3 text-center text-primary">
 									Vote Close Time / Current Block Timestamp
 								</h4>
+								{{ dTR }}
 								<h3 class="mb-3 text-center text-dark">
-									{{ dTR.voteCloseTime }} / {{ currentBlockTimestamp }}
+									{{ dTR.voteCloseTimestamp }} / {{ currentBlockTimestamp }}
 								</h3>
 								<h4 class="mb-3 text-center text-primary">
 									Seconds Left
 								</h4>
 								<h3 class="mb-3 text-center text-dark">
-									{{ dTR.voteCloseTime - currentBlockTimestamp }}
+									{{ dTR.voteCloseTimestamp - currentBlockTimestamp }}
 								</h3>
 							</VCol>
 
@@ -478,7 +479,7 @@
 		// TRP Specific
 		voteAgainstMembers: string[],
 		voteForMembers: string[],
-		voteCloseTime: number,
+		voteCloseTimestamp: number,
 		// Meta
 		id: number,
 		tokenSymbol: string,
@@ -680,7 +681,7 @@
 						// TRP Specific
 						voteAgainstMembers: tRP.voteAgainstMembers,
 						voteForMembers: tRP.voteForMembers,
-						voteCloseTime: tRP.voteCloseTime,
+						voteCloseTimestamp: tRP.voteCloseTimestamp,
 						// Meta
 						id: this.idsOfOpenTransferRequests[i],
 						tokenSymbol: !tR.forERC20 && !tR.forERC721 ? "ETH" : symbol,
@@ -702,7 +703,7 @@
 				let status: TransferRequestStatus = {
 					readyToBeProcessed: false,
 					approved: false,
-					message:"",
+					message: "",
 				};
 
 				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
@@ -713,9 +714,10 @@
 
 				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestStatus(
 					this.vaultAddress,
-					dTR.id,
+					dTR.id
 				).call().then(
-					(result: TransferRequestStatus) => {
+					(result: TransferRequestStatus) =>
+					{
 						status = result;
 					}
 				);

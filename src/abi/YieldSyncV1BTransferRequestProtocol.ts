@@ -153,7 +153,7 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "voteCloseTime",
+						"name": "voteCloseTimestamp",
 						"type": "uint256"
 					},
 					{
@@ -178,7 +178,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "YieldSyncV1VaultRegistry",
 		"outputs": [
@@ -206,7 +205,6 @@ export default [
 		],
 		"name": "yieldSyncV1VaultInitialize",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -335,13 +333,12 @@ export default [
 			},
 			{
 				"internalType": "uint256",
-				"name": "voteCloseTime",
+				"name": "voteCloseTimestamp",
 				"type": "uint256"
 			},
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestCreate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -361,7 +358,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestDelete",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -385,7 +381,7 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "voteCloseTime",
+						"name": "voteCloseTimestamp",
 						"type": "uint256"
 					},
 					{
@@ -423,7 +419,7 @@ export default [
 				"components": [
 					{
 						"internalType": "uint256",
-						"name": "voteCloseTime",
+						"name": "voteCloseTimestamp",
 						"type": "uint256"
 					},
 					{
@@ -444,7 +440,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -469,7 +464,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollVote",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -489,7 +483,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestProcess",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -590,7 +583,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_transferRequestId_transferRequestUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -615,6 +607,16 @@ export default [
 					{
 						"internalType": "uint256",
 						"name": "voteForRequired",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "maxVotePeriodSeconds",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minVotePeriodSeconds",
 						"type": "uint256"
 					},
 				],
@@ -645,6 +647,16 @@ export default [
 						"name": "voteForRequired",
 						"type": "uint256"
 					},
+					{
+						"internalType": "uint256",
+						"name": "maxVotePeriodSeconds",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "minVotePeriodSeconds",
+						"type": "uint256"
+					},
 				],
 				"internalType": "struct YieldSyncV1VaultProperty",
 				"name": "yieldSyncV1VaultProperty",
@@ -653,7 +665,6 @@ export default [
 		],
 		"name": "yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"

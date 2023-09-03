@@ -100,7 +100,8 @@
 			{
 				let chainName = this.$store.state.currentChain.name;
 
-				switch (trp) {
+				switch (trp) 
+				{
 					case this.$store.state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
 						return "a";
 
