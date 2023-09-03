@@ -124,7 +124,7 @@
 				{{ this.currentBlockTimestamp }} + {{
 					this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
 				}} = {{
-					this.currentBlockTimestamp + this.parseInt(
+					this.currentBlockTimestamp + parseInt(
 						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
 					)
 				}}
