@@ -205,11 +205,11 @@
 	import { AbiItem } from "web3-utils";
 
 	import abiER20 from "../../abi/erc20";
-	import CTRPAOverview from "../../components/V1Vault/COverview/CTRPAOverview.vue";
-	import CTRPBOverview from "../../components/V1Vault/COverview/CTRPBOverview.vue";
 	import YieldSyncV1Vault from "../../abi/YieldSyncV1Vault";
 	import alchemyGetBalances from "../../alchemy/getBalances";
 	import alchemyGetGetNFTBalances from "../../alchemy/getNFTBalances";
+	import CTRPAOverview from "../../components/V1Vault/CTransferRequestProtocolA/COverview.vue";
+	import CTRPBOverview from "../../components/V1Vault/CTransferRequestProtocolB/COverview.vue";
 	import router from "../../router";
 
 	export default defineComponent({

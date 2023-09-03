@@ -1,5 +1,12 @@
 <template>
 	<CTRPASettings
+		v-if="trpType == 'a'"
+		:vaultAddress="this.vaultAddress"
+		:asAdmin="this.asAdmin"
+	/>
+
+	<CTRPBSettings
+		v-if="trpType == 'b'"
 		:vaultAddress="this.vaultAddress"
 		:asAdmin="this.asAdmin"
 	/>
@@ -9,6 +16,7 @@
 	import { defineComponent } from "vue";
 
 	import CTRPASettings from "./CTransferRequestProtocolA/CSettings.vue";
+	import CTRPBSettings from "./CTransferRequestProtocolB/CSettings.vue";
 
 	export default defineComponent({
 		name: "CSettings",
@@ -21,6 +29,10 @@
 			asAdmin: {
 				type: Boolean,
 				default: false
+			},
+
+			trpType: {
+				type: String,
 			},
 		},
 
@@ -38,7 +50,8 @@
 		},
 
 		components: {
-			CTRPASettings
+			CTRPASettings,
+			CTRPBSettings
 		},
 	});
 </script>
