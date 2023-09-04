@@ -394,6 +394,8 @@ export default createStore({
 				}
 			);
 
+			commit("setLoading", false);
+
 			// Handle network
 			window.ethereum.on("chainChanged", async (chainId: number) =>
 			{
