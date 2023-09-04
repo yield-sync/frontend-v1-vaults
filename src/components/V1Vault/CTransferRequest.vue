@@ -13,9 +13,9 @@
 			color="primary"
 			fixed-tabs
 		>
-			<VTab value="o">Open Transfer Requests</VTab>
+			<VTab value="o" class="font-weight-bold">Open Transfer Requests</VTab>
 
-			<VTab v-if="!this.asAdmin" value="c">Create Transfer Request</VTab>
+			<VTab v-if="!this.asAdmin" value="c" class="font-weight-bold">Create Transfer Request</VTab>
 		</VTabs>
 
 		<VCardText variant="light">
