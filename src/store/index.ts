@@ -363,11 +363,11 @@ export default createStore({
 				return;
 			}
 
-			// Yield Sync Contracts
-			await dispatch("generateYieldSyncContracts");
-
 			// Governance
 			await dispatch("generateChainRelatedData");
+
+			// Yield Sync Contracts
+			await dispatch("generateYieldSyncContracts");
 
 			// Connected account
 			window.ethereum.request({ method: "eth_requestAccounts" }).then(
@@ -395,17 +395,17 @@ export default createStore({
 			);
 
 			// Handle network
-			window.ethereum.on("chainChanged", (chainId: number) =>
+			window.ethereum.on("chainChanged", async (chainId: number) =>
 			{
 				commit("setLoading", true);
 
 				console.log("New chainId:", chainId);
 
 				// Governance
-				dispatch("generateChainRelatedData");
+				await dispatch("generateChainRelatedData");
 
 				// Yield Sync Contracts
-				dispatch("generateYieldSyncContracts");
+				await dispatch("generateYieldSyncContracts");
 
 				commit("setLoading", false);
 			});
