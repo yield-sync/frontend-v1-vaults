@@ -42,61 +42,11 @@
 			CFooter
 		},
 
-		methods: {
-			async handleNetworkChange()
-			{
-				this.$store.state.loading = true;
-
-				// Governance
-				await this.$store.dispatch("generateChainRelatedData");
-
-				// Yield Sync Contracts
-				await this.$store.dispatch("generateYieldSyncContracts");
-
-				this.$store.state.loading = false;
-			},
-		},
-
 		async created(): Promise<void>
 		{
 			try
 			{
-				if (!window.ethereum)
-				{
-					await this.$store.commit("setError", "No wallet found, please install one.");
-					await this.$store.commit("setLoading", false);
-					return;
-				}
-
-				// Governance
-				await this.$store.dispatch("generateChainRelatedData");
-
-				// Yield Sync Contracts
-				await this.$store.dispatch("generateYieldSyncContracts");
-
-				// Connected account
-				window.ethereum.request({
-					method: "eth_accounts"
-				})
-					.then(
-						(accounts: Array<string>) =>
-						{
-							if (accounts.length > 0)
-							{
-								console.log(`MetaMask is connected with account: ${accounts[0]}`);
-
-								this.$store.state.wallet.connected = true;
-								this.$store.state.wallet.accounts = accounts;
-							}
-						}
-					)
-					.catch(
-						(error: string) =>
-						{
-							this.$store.state.error = error;
-						}
-					)
-				;
+				await this.$store.dispatch("connectWallet");
 
 				if (localStorage.alchemyApiKey)
 				{
@@ -114,14 +64,6 @@
 			{
 				this.$store.state.error = e;
 			}
-
-			// Handle network
-			window.ethereum.on("chainChanged", (chainId: number) =>
-			{
-				console.log(chainId);
-
-				return this.handleNetworkChange();
-			});
 		},
 	});
 </script>

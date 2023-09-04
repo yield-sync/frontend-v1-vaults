@@ -33,6 +33,7 @@ export default createStore({
 		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
 		wallet: {
+			type: "",
 			connected: false,
 			accounts: [
 			],
@@ -107,16 +108,6 @@ export default createStore({
 	},
 
 	mutations: {
-		setError(state, e: string)
-		{
-			state.error = e;
-		},
-
-		setLoading(state, l: boolean)
-		{
-			state.loading = l;
-		},
-
 		setCurrentChainId(state, chainId: number)
 		{
 			state.currentChain.id = chainId;
@@ -144,24 +135,19 @@ export default createStore({
 			}
 		},
 
+		setError(state, e: string)
+		{
+			state.error = e;
+		},
+
 		setEtherscanDomainStart(state, etherscanDomainStart: string)
 		{
 			state.etherscanDomainStart = etherscanDomainStart;
 		},
 
-		setYieldSyncGovernance(state, contract: Contract)
+		setLoading(state, l: boolean)
 		{
-			state.contract.yieldSyncGovernance = contract;
-		},
-
-		setYieldSyncV1VaultFactory(state, contract: Contract)
-		{
-			state.contract.yieldSyncV1VaultFactory = contract;
-		},
-
-		setYieldSyncV1VaultRegistry(state, contract: Contract)
-		{
-			state.contract.yieldSyncV1VaultRegistry = contract;
+			state.loading = l;
 		},
 
 		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
@@ -177,6 +163,21 @@ export default createStore({
 		setPagesRVV1VaultErc721s(state, erc721s: { name: string, symbol: string, contract: string, }[])
 		{
 			state.pages.RVV1Vault.erc721s = erc721s;
+		},
+
+		setYieldSyncGovernance(state, contract: Contract)
+		{
+			state.contract.yieldSyncGovernance = contract;
+		},
+
+		setYieldSyncV1VaultFactory(state, contract: Contract)
+		{
+			state.contract.yieldSyncV1VaultFactory = contract;
+		},
+
+		setYieldSyncV1VaultRegistry(state, contract: Contract)
+		{
+			state.contract.yieldSyncV1VaultRegistry = contract;
 		},
 	},
 
@@ -195,7 +196,7 @@ export default createStore({
 		{
 			if (state.config.networkChain[state.currentChain.name].yieldSyncGovernance == state.ZERO_ADDRESS)
 			{
-				state.error = "Network not currently supported";
+				commit("setError", "Network not currently supported");
 
 				return;
 			}
@@ -348,7 +349,67 @@ export default createStore({
 			}
 
 			commit("setPagesRVV1VaultErc721s", erc721s);
-		}
+		},
+
+		connectWallet: async ({ commit, dispatch, state }) =>
+		{
+			console.log("Connecting wallet..");
+
+			if (typeof window.ethereum == 'undefined')
+			{
+				commit("setError", "No wallet found, please install one.");
+				commit("setLoading", false);
+
+				return;
+			}
+
+			// Yield Sync Contracts
+			await dispatch("generateYieldSyncContracts");
+
+			// Governance
+			await dispatch("generateChainRelatedData");
+
+			// Connected account
+			window.ethereum.request({ method: "eth_requestAccounts" }).then(
+				(accounts: string[]) =>
+				{
+					if (accounts.length > 0)
+					{
+						console.log(`MetaMask is connected with account: ${accounts[0]}`);
+
+						state.wallet.connected = true;
+						state.wallet.accounts = accounts;
+
+						console.log("Connected!");
+					}
+					else
+					{
+						commit("setError", "Accounts.length = 0");
+					}
+				}
+			).catch(
+				(e: string) =>
+				{
+					state.error = e;
+				}
+			);
+
+			// Handle network
+			window.ethereum.on("chainChanged", (chainId: number) =>
+			{
+				commit("setLoading", true);
+
+				console.log("New chainId:", chainId);
+
+				// Governance
+				dispatch("generateChainRelatedData");
+
+				// Yield Sync Contracts
+				dispatch("generateYieldSyncContracts");
+
+				commit("setLoading", false);
+			});
+		},
 	},
 
 	getters: {

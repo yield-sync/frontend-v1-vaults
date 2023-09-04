@@ -167,31 +167,7 @@
 		methods: {
 			async connectWallet(): Promise<void>
 			{
-				console.log("Connecting wallet..");
-
-				if (typeof window.ethereum !== "undefined")
-				{
-					window.ethereum.request({
-						method: "eth_requestAccounts"
-					}).then(
-						(accounts: Array<string>) =>
-						{
-							this.$store.state.wallet.connected = true;
-							this.$store.state.wallet.accounts = accounts;
-
-							console.log("Connected!");
-						}
-					).catch(
-						(e: string) =>
-						{
-							this.$store.state.error = e;
-						}
-					);
-				}
-				else
-				{
-					this.$store.state.error = "No window.ethereum detected!";
-				}
+				await this.$store.dispatch("connectWallet");
 			},
 
 			disconnectWallet(): void
@@ -235,12 +211,6 @@
 					}
 				}
 			}
-		},
-
-		created(): void
-		{
-			console.log("nav loaded");
-
 		},
 	});
 </script>
