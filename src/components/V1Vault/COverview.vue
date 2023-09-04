@@ -1,15 +1,43 @@
 <template>
-	<CTRPAOverview
-		v-if="this.trp == this.yieldSyncV1ATransferRequestProtocol"
-		:address="this.address"
-		:asAdmin="this.asAdmin"
-	/>
+	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
+		<VCardTitle class="text-primary">
+			<VRow>
+				<VCol cols="2" class="text-center"/>
 
-	<CTRPBOverview
-		v-if="this.trp == this.yieldSyncV1BTransferRequestProtocol"
-		:address="this.address"
-		:asAdmin="this.asAdmin"
-	/>
+				<VCol cols="8" class="text-center">
+					<h4 class="text-center text-uppercase">🏦 Vault Overview</h4>
+				</VCol>
+
+				<VCol cols="2" class="text-right"/>
+			</VRow>
+		</VCardTitle>
+
+		<VCardText class="mt-4">
+			<VRow>
+				<VCol cols="12" sm="6" class="text-right">
+					<a
+						:href="
+							`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.vaultAddress}`
+						"
+						target="_blank" rel="noopener noreferrer"
+					>
+						<VBtn class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary">
+							🔗 Etherscan
+						</VBtn>
+					</a>
+				</VCol>
+
+				<VCol cols="12" sm="6" class="text-right">
+					<VBtn
+						class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary"
+						@click="this.copy(this.address)"
+					>
+						📋 Address
+					</VBtn>
+				</VCol>
+			</VRow>
+		</VCardText>
+	</VCard>
 
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
 		<VCardTitle class="text-primary">
@@ -180,6 +208,18 @@
 		</VCardText>
 	</VCard>
 
+	<CTRPAOverview
+		v-if="this.trp == this.yieldSyncV1ATransferRequestProtocol"
+		:address="this.address"
+		:asAdmin="this.asAdmin"
+	/>
+
+	<CTRPBOverview
+		v-if="this.trp == this.yieldSyncV1BTransferRequestProtocol"
+		:address="this.address"
+		:asAdmin="this.asAdmin"
+	/>
+
 	<VDialog v-model="this.dialog" max-width="500px">
 		<VCard>
 			<VCardTitle>
@@ -270,6 +310,11 @@
 		},
 
 		methods: {
+			copy(a: string)
+			{
+				navigator.clipboard.writeText(a);
+			},
+
 			async getBalances()
 			{
 				if (this.$store.state.web3.utils.isAddress(this.address))

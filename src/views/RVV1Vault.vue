@@ -2,18 +2,7 @@
 	<VContainer class="py-16">
 		<div class="w-100 mx-auto" style="max-width: 900px;">
 			<VRow bg-color="primary" color="dark" fixed-tabs class="mb-3">
-				<VCol cols="12" sm="3">
-					<a
-						:href="
-							`https://${this.$store.state.etherscanDomainStart}.etherscan.io/address/${this.vaultAddress}`
-						"
-						target="_blank" rel="noopener noreferrer"
-					>
-						<VBtn class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary">
-							🔗 Etherscan
-						</VBtn>
-					</a>
-				</VCol>
+				<VCol cols="12" sm="3"/>
 
 				<VCol cols="12" sm="6">
 					<VRow style="margin: 0; padding: 0;">
@@ -53,14 +42,7 @@
 					</VRow>
 				</VCol>
 
-				<VCol cols="12" sm="3" class="text-right">
-					<VBtn
-						class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary"
-						@click="this.copy(this.vaultAddress)"
-					>
-						📋 Address
-					</VBtn>
-				</VCol>
+				<VCol cols="12" sm="3"/>
 
 				<VCol cols="12" sm="6" md="3">
 					<VBtn
