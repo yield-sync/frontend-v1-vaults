@@ -14,6 +14,10 @@
 
 		<VCardText class="mt-4">
 			<VRow>
+				<VCol cols="12">
+					<h3 class="text-center font-weight-bold">{{ this.vaultAddress }}</h3>
+				</VCol>
+
 				<VCol cols="12" sm="6" class="text-right">
 					<a
 						:href="
@@ -21,7 +25,7 @@
 						"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary">
+						<VBtn color="primary" class="w-100 rounded-xl font-weight-bold elevation-0">
 							🔗 Etherscan
 						</VBtn>
 					</a>
@@ -29,10 +33,11 @@
 
 				<VCol cols="12" sm="6" class="text-right">
 					<VBtn
-						class="w-100 rounded-xl font-weight-bold elevation-0 bg-light-frost text-primary"
-						@click="this.copy(this.address)"
+						color="primary"
+						class="w-100 rounded-xl font-weight-bold elevation-0"
+						@click="this.copy(this.vaultAddress)"
 					>
-						📋 Address
+						📋 Copy Address
 					</VBtn>
 				</VCol>
 			</VRow>
@@ -77,7 +82,7 @@
 								</VCol>
 
 								<VCol v-if="!this.asAdmin" cols="12">
-									<RouterLink :to="`/v1-vault/${this.address}`">
+									<RouterLink :to="`/v1-vault/${this.vaultAddress}`">
 										<VBtn
 											class="w-100 rounded-xl"
 											color="primary"
@@ -140,7 +145,7 @@
 										color="primary"
 										variant="flat"
 										class="w-100 rounded-xl"
-										@click="this.forwardToERC20Create(this.address, erc20)"
+										@click="this.forwardToERC20Create(this.vaultAddress, erc20)"
 									>
 										↗️ Transfer Out
 									</VBtn>
@@ -195,7 +200,7 @@
 										color="primary"
 										variant="flat"
 										class="w-100 rounded-xl"
-										@click="this.forwardToERC721Create(this.address, erc721)"
+										@click="this.forwardToERC721Create(this.vaultAddress, erc721)"
 									>
 										↗️ Transfer Out
 									</VBtn>
@@ -210,13 +215,13 @@
 
 	<CTRPAOverview
 		v-if="this.trp == this.yieldSyncV1ATransferRequestProtocol"
-		:address="this.address"
+		:address="this.vaultAddress"
 		:asAdmin="this.asAdmin"
 	/>
 
 	<CTRPBOverview
 		v-if="this.trp == this.yieldSyncV1BTransferRequestProtocol"
-		:address="this.address"
+		:address="this.vaultAddress"
 		:asAdmin="this.asAdmin"
 	/>
 
@@ -261,7 +266,7 @@
 		},
 
 		props: {
-			address: {
+			vaultAddress: {
 				type: String,
 				required: true
 			},
@@ -317,9 +322,9 @@
 
 			async getBalances()
 			{
-				if (this.$store.state.web3.utils.isAddress(this.address))
+				if (this.$store.state.web3.utils.isAddress(this.vaultAddress))
 				{
-					this.ethBalance = await this.$store.state.web3.eth.getBalance(this.address);
+					this.ethBalance = await this.$store.state.web3.eth.getBalance(this.vaultAddress);
 
 					this.erc20Balances = [
 					];
@@ -333,7 +338,7 @@
 					// eslint-disable-next-line
 					const alchemyERCData: any = await alchemyGetBalances(
 						apiKey,
-						this.address
+						this.vaultAddress
 					);
 
 					console.log(apiKey, alchemyERCData);
@@ -388,7 +393,7 @@
 					// eslint-disable-next-line
 					const alchemyNFTData: any = await alchemyGetGetNFTBalances(
 						apiKey,
-						this.address
+						this.vaultAddress
 					);
 
 					if (!alchemyNFTData)
@@ -479,7 +484,7 @@
 		{
 			this.vault = new this.$store.state.web3.eth.Contract(
 				YieldSyncV1Vault as AbiItem[],
-				this.address
+				this.vaultAddress
 			);
 
 			if (!this.vault)

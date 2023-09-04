@@ -98,7 +98,7 @@
 
 				<VCol v-if="this.$store.state.pages.RVV1Vault.tab == 'overview'" cols="12">
 					<COverview
-						:address="this.vaultAddress"
+						:vaultAddress="this.vaultAddress"
 						:asAdmin="this.$route.query.admin == 'true'"
 					/>
 				</VCol>
