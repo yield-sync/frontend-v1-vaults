@@ -353,8 +353,6 @@ export default createStore({
 
 		connectWallet: async ({ commit, dispatch, state }) =>
 		{
-			console.log("Connecting wallet..");
-
 			if (typeof window.ethereum == 'undefined')
 			{
 				commit("setError", "No wallet found, please install one.");
@@ -362,6 +360,8 @@ export default createStore({
 
 				return;
 			}
+
+			console.log("Connecting wallet..");
 
 			// Governance
 			await dispatch("generateChainRelatedData");
@@ -373,19 +373,19 @@ export default createStore({
 			window.ethereum.request({ method: "eth_requestAccounts" }).then(
 				(accounts: string[]) =>
 				{
-					if (accounts.length > 0)
-					{
-						console.log(`MetaMask is connected with account: ${accounts[0]}`);
-
-						state.wallet.connected = true;
-						state.wallet.accounts = accounts;
-
-						console.log("Connected!");
-					}
-					else
+					if (accounts.length == 0)
 					{
 						commit("setError", "Accounts.length = 0");
+
+						return;
 					}
+
+					console.log(`MetaMask is connected with account: ${accounts[0]}`);
+
+					state.wallet.connected = true;
+					state.wallet.accounts = accounts;
+
+					console.log("Connected!");
 				}
 			).catch(
 				(e: string) =>
@@ -416,5 +416,5 @@ export default createStore({
 	},
 
 	modules: {
-	}
+	},
 });
