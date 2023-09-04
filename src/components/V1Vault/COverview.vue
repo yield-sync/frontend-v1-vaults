@@ -25,7 +25,7 @@
 						"
 						target="_blank" rel="noopener noreferrer"
 					>
-						<VBtn color="primary" class="w-100 rounded-xl font-weight-bold elevation-0">
+						<VBtn color="primary" class="w-100 rounded-xl elevation-0">
 							🔗 Etherscan
 						</VBtn>
 					</a>
@@ -34,7 +34,7 @@
 				<VCol cols="12" sm="6" class="text-right">
 					<VBtn
 						color="primary"
-						class="w-100 rounded-xl font-weight-bold elevation-0"
+						class="w-100 rounded-xl elevation-0"
 						@click="this.copy(this.vaultAddress)"
 					>
 						📋 Copy Address
