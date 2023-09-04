@@ -17,7 +17,7 @@
 						class="w-100 rounded-pill elevation-0"
 						@click="this.$store.state.pages.RVDashboard.tab = 'm'"
 					>
-						<h3>👤 Vault Memberships</h3>
+						<h3>👤 Memberships</h3>
 					</VBtn>
 				</VCol>
 
@@ -31,7 +31,7 @@
 						class="w-100 rounded-pill elevation-0"
 						@click="this.$store.state.pages.RVDashboard.tab = 'a'"
 					>
-						<h3>🔑 Vault Adminships</h3>
+						<h3>🔑 Adminships</h3>
 					</VBtn>
 				</VCol>
 
@@ -45,7 +45,7 @@
 						class="w-100 rounded-pill elevation-0"
 						@click="this.$store.state.pages.RVDashboard.tab = 'd'"
 					>
-						<h3>🏦 Deploy a Vault</h3>
+						<h3>🏦 Deploy</h3>
 					</VBtn>
 				</VCol>
 			</VRow>

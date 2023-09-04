@@ -74,7 +74,7 @@
 						<VCardText>
 							<VRow>
 								<VCol cols="12" class="text-center">
-									<h2 class="mt-2 text-center text-uppercase text-primary">Ξ Ether Balance</h2>
+									<h2 class="text-center text-uppercase text-primary">Ξ Ether Balance</h2>
 								</VCol>
 
 								<VCol cols="12">
@@ -107,7 +107,7 @@
 						<VCardText>
 							<VRow>
 								<VCol cols="12" class="text-center">
-									<h2 class="mt-2 text-center text-uppercase text-primary">🪙 ERC 20 Tokens</h2>
+									<h2 class="text-center text-uppercase text-primary">🪙 ERC 20 Tokens</h2>
 								</VCol>
 
 								<VCol cols="3">
@@ -160,7 +160,7 @@
 						<VCardText>
 							<VRow>
 								<VCol cols="12" class="text-center">
-									<h2 class="mt-2 text-center text-uppercase text-primary">
+									<h2 class="text-center text-uppercase text-primary">
 										🖼️ ERC 721 Tokens (NFTs)
 									</h2>
 								</VCol>

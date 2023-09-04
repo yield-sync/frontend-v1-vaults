@@ -3,7 +3,7 @@
 		<VCardText>
 			<VRow>
 				<VCol>
-					<h2 class="mt-2 text-center text-uppercase text-primary">🔑 Admins</h2>
+					<h2 class="text-center text-uppercase text-primary">🔑 Admins</h2>
 				</VCol>
 			</VRow>
 
