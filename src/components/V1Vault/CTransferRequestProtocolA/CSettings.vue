@@ -1,6 +1,6 @@
 <template>
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-		<VCardTitle class="bg-primary text-light">
+		<VCardTitle class="text-primary">
 			<h4 class="m-0 text-center text-uppercase">🔧 Properties</h4>
 		</VCardTitle>
 
@@ -141,7 +141,7 @@
 	</VCard>
 
 	<VCard v-if="!this.asAdmin" class="mb-6 rounded-xl elevation-0 bg-light-frost">
-		<VCardTitle class="bg-primary text-light">
+		<VCardTitle class="text-primary">
 			<h4 class="m-0 text-center text-uppercase">⚙️ Membership Settings</h4>
 		</VCardTitle>
 

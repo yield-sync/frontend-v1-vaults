@@ -2,10 +2,10 @@
 	<VRow style="margin: 0; padding: 0;">
 		<VCol cols="6" style="margin: 0; padding: 0;">
 			<VBtn
-				:variant="this.trp == 'a' ? 'flat' : 'outlined'"
-				color="primary"
-				:class="this.trp == 'a' ? '' : 'bg-light-frost'"
+				variant="flat"
+				:color="this.trp == 'a' ? 'primary' : 'light-frost'"
 				class="w-100 mb-3 rounded-s-xl elevation-0 border-primary font-weight-bold"
+				:class="this.trp == 'a' ? 'text-white' : 'text-primary'"
 				style="
 					border-top-right-radius: 0px !important;
 					border-bottom-right-radius: 0px !important;
@@ -18,10 +18,10 @@
 
 		<VCol cols="6" style="margin: 0; padding: 0;">
 			<VBtn
-				:variant="this.trp == 'b' ? 'flat' : 'outlined'"
-				color="primary"
-				:class="this.trp == 'b' ? '' : 'bg-light-frost'"
-				class="w-100 mb-3 rounded-e-xl elevation-0 border-primary  font-weight-bold"
+				variant="flat"
+				:color="this.trp == 'b' ? 'primary' : 'light-frost'"
+				class="w-100 mb-3 rounded-e-xl elevation-0 border-primary font-weight-bold"
+				:class="this.trp == 'b' ? 'text-white' : 'text-primary'"
 				style="
 					border-top-left-radius: 0px !important;
 					border-bottom-left-radius: 0px !important;
@@ -52,7 +52,7 @@
 			TRPB
 		},
 
-		data() 
+		data()
 		{
 			return {
 				trp: "a" as "a" | "b"

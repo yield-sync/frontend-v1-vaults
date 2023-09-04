@@ -20,10 +20,10 @@
 						<VCol cols="6" style="margin: 0; padding: 0;">
 							<RouterLink :to="`/v1-vault/${this.vaultAddress}`">
 								<VBtn
-									:variant="this.$route.query.admin == 'true' ? 'outlined' : 'flat'"
-									color="primary"
+									variant="flat"
+									:color="this.$route.query.admin == 'true' ? 'light-frost' :'primary'"
 									class="w-100 mb-3 rounded-s-xl elevation-0 border-primary font-weight-bold"
-									:class="this.$route.query.admin == 'true' ? 'bg-light-frost' : ''"
+									:class="this.$route.query.admin == 'true' ? 'text-primary' : 'text-white'"
 									style="
 										border-top-right-radius: 0px !important;
 										border-bottom-right-radius: 0px !important;
@@ -37,10 +37,10 @@
 						<VCol cols="6" style="margin: 0; padding: 0;">
 							<RouterLink :to="`/v1-vault/${this.vaultAddress}?admin=true`">
 								<VBtn
-									:variant="this.$route.query.admin !== 'true' ? 'outlined' : 'flat'"
-									color="primary"
-									class="w-100 mb-3 rounded-e-xl elevation-0 border-primary  font-weight-bold"
-									:class="this.$route.query.admin == 'true' ? '' : 'bg-light-frost'"
+									variant="flat"
+									:color="this.$route.query.admin == 'true' ? 'primary' : 'light-frost'"
+									class="w-100 mb-3 rounded-e-xl elevation-0 border-primary font-weight-bold"
+									:class="this.$route.query.admin == 'true' ? 'text-white' : 'text-primary'"
 									style="
 										border-top-left-radius: 0px !important;
 										border-bottom-left-radius: 0px !important;

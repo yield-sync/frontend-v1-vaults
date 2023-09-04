@@ -26,11 +26,13 @@ const vuetify = createVuetify({
 					info: "#2196F3",
 					light: "#e6e6e6",
 					primary: "#7fad6f",
+					"primary-light": "#6e964e",
 					secondary: "#03DAC6",
 					success: "#00FF1D",
 					warning: "#ffd712",
 					danger: "#f0483a",
 					white: "#FFFFFF",
+					clear: "#ffffff00",
 				},
 			}
 		}

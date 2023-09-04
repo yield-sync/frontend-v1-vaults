@@ -12,12 +12,12 @@
 	/>
 
 	<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-		<VCardTitle class="bg-primary text-light">
+		<VCardTitle class="text-primary">
 			<VRow>
 				<VCol cols="2" class="text-center"/>
 
 				<VCol cols="8" class="text-center">
-					<h4 class="text-center text-uppercase">🏦 Overview</h4>
+					<h4 class="text-center text-uppercase">🏦 Vault Balances Overview</h4>
 				</VCol>
 
 				<VCol cols="2" class="text-right">

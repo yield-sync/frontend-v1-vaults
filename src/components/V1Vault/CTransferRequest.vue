@@ -3,14 +3,14 @@
 		:key="this.$store.state.pages.RVV1Vault.transferRequests.key"
 		class="mb-6 rounded-xl elevation-0 bg-light-frost"
 	>
-		<VCardTitle class="bg-primary text-light">
+		<VCardTitle class="text-primary">
 			<h4 class="text-center text-uppercase">↗️ Transfer Requests ({{ this.trpType }})</h4>
 		</VCardTitle>
 
 		<VTabs
 			v-model="this.$store.state.pages.RVV1Vault.transferRequests.tab"
-			bg-color="primary"
-			color="light-green-lighten-5"
+
+			color="primary"
 			fixed-tabs
 		>
 			<VTab value="o">Open Transfer Requests</VTab>

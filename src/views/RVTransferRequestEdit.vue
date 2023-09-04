@@ -15,7 +15,7 @@
 			</RouterLink>
 
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
+				<VCardTitle class="text-primary">
 					<h4 class="m-0 text-center text-uppercase">Edit Transfer Request</h4>
 				</VCardTitle>
 
@@ -141,7 +141,7 @@
 
 		<div class="w-100 mx-auto" style="max-width: 1000px;">
 			<VCard class="mb-6 rounded-xl elevation-0 bg-light-frost">
-				<VCardTitle class="bg-primary text-light">
+				<VCardTitle class="bg-light-frost text-primary">
 					<h4 class="m-0 text-center text-uppercase">Edit Transfer Request Poll</h4>
 				</VCardTitle>
 
