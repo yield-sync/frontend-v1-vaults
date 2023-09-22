@@ -192,11 +192,26 @@ export default createStore({
 	},
 
 	actions: {
-		generateVaultMemberships: async ({ getters, state }) =>
+		trpType: ({ state }, trpAddress: string): "a" | "b" | "?" =>
+		{
+			switch (trpAddress)
+			{
+				case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
+					return "a";
+
+				case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
+					return "b";
+
+				default:
+					return "?";
+			}
+		},
+
+		generateVaultMemberships: async ({ dispatch, state }) =>
 		{
 			state.membershipYieldSyncV1VaultVaults = [];
 
-			const transferRequestProtocolContract: Contract = new state.web3.eth.Contract(
+			const transferRequestProtocol: Contract = new state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],
 				state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol
 			);
@@ -212,20 +227,17 @@ export default createStore({
 
 			for (let i = 0; i < v1Vaults.length; i++)
 			{
-				const vault: Contract = new state.web3.eth.Contract(
-					YieldSyncV1Vault as AbiItem[],
-					v1Vaults[i]
-				);
+				const vault: Contract = new state.web3.eth.Contract(YieldSyncV1Vault as AbiItem[], v1Vaults[i]);
 
-				const vaultProperties = await transferRequestProtocolContract.methods
-					.yieldSyncV1Vault_yieldSyncV1VaultProperty(state.wallet.accounts[0]).call()
-				;
+				const vaultProperties = await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					state.wallet.accounts[0]
+				).call();
 
 				state.membershipYieldSyncV1VaultVaults.push({
 					address: v1Vaults[i],
 					voteAgainstRequired: vaultProperties.voteAgainstRequired,
 					voteForRequired: vaultProperties.voteForRequired,
-					trpType: getters.trpType(await vault.methods.transferRequestProtocol().call())
+					trpType: await dispatch("trpType", await vault.methods.transferRequestProtocol().call()),
 				});
 			}
 		},
@@ -465,20 +477,6 @@ export default createStore({
 	},
 
 	getters: {
-		trpType: (state, trpAddress: string): "a" | "b" | "?" =>
-		{
-			switch (trpAddress)
-			{
-				case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
-					return "a";
-
-				case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
-					return "b";
-
-				default:
-					return "?";
-			}
-		},
 	},
 
 	modules: {
