@@ -124,7 +124,7 @@
 				{{ this.currentBlockTimestamp }} + {{
 					this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
 				}} = {{
-					this.currentBlockTimestamp + parseInt(
+					this.currentBlockTimestamp + this.parseIntoInt(
 						this.$store.state.pages.RVV1Vault.transferRequestB.voteCloseTimestamp
 					)
 				}}
@@ -211,6 +211,11 @@
 		},
 
 		methods: {
+			parseIntoInt(s: string): number
+			{
+				return parseInt(s);
+			},
+
 			setCurrentBlockTimestamp(): void
 			{
 				// Get the current block number

@@ -1,12 +1,12 @@
 <template>
 	<CTRPASettings
-		v-if="trpType == 'a'"
+		v-if="this.trpType == 'a'"
 		:vaultAddress="this.vaultAddress"
 		:asAdmin="this.asAdmin"
 	/>
 
 	<CTRPBSettings
-		v-if="trpType == 'b'"
+		v-if="this.trpType == 'b'"
 		:vaultAddress="this.vaultAddress"
 		:asAdmin="this.asAdmin"
 	/>
