@@ -1,20 +1,24 @@
 <template>
 	<VCard class="mb-4 rounded-xl bg-light-frost elevation-0">
 		<VCardText class="px-6 py-6">
-			<VRow class="mt-3 mb-6 ">
-				<VCol cols="12" md="6">
+			<VRow class="mt-3 mb-6">
+				<VCol cols="12" md="4">
 					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">
 						Vault Address
 					</h3>
 				</VCol>
 
-				<VCol cols="12" md="6" class="d-none d-md-block">
+				<VCol cols="12" md="4" class="d-none d-md-block">
 					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">
 						For : Against
 					</h3>
 				</VCol>
 
-
+				<VCol cols="12" md="4" class="d-none d-md-block">
+					<h3 class="text-center text-primary text-uppercase" style="word-wrap: break-word;">
+						TRP Type
+					</h3>
+				</VCol>
 			</VRow>
 
 			<div v-if="this.loading" class="text-center">

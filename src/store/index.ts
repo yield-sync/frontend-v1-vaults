@@ -353,7 +353,7 @@ export default createStore({
 
 		connectWallet: async ({ commit, dispatch, state }) =>
 		{
-			if (typeof window.ethereum == 'undefined')
+			if (typeof window.ethereum == "undefined")
 			{
 				commit("setError", "No wallet found, please install one.");
 				commit("setLoading", false);
@@ -370,7 +370,9 @@ export default createStore({
 			await dispatch("generateYieldSyncContracts");
 
 			// Connected account
-			window.ethereum.request({ method: "eth_requestAccounts" }).then(
+			window.ethereum.request({
+				method: "eth_requestAccounts"
+			}).then(
 				(accounts: string[]) =>
 				{
 					if (accounts.length == 0)
