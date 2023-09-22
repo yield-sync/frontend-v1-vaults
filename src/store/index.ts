@@ -5,19 +5,20 @@ import { AbiItem } from "web3-utils";
 import { Contract } from "web3-eth-contract";
 
 import abiER20 from "../abi/erc20";
-import alchemyGetBalances from "../alchemy/getBalances";
-import alchemyGetGetNFTBalances from "../alchemy/getNFTBalances";
-import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
 import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
 import YieldSyncV1ATransferRequestProtocol from "../abi/YieldSyncV1ATransferRequestProtocol";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
 import YieldSyncV1VaultRegistry from "../abi/YieldSyncV1VaultRegistry";
+import alchemyGetBalances from "../alchemy/getBalances";
+import alchemyGetGetNFTBalances from "../alchemy/getNFTBalances";
+import config from "../config";
 
 
 export default createStore({
 	state: {
 		ZERO_ADDRESS: ethers.ZeroAddress as string,
+
 		loading: true as boolean,
 		error: "" as string,
 
@@ -35,13 +36,10 @@ export default createStore({
 		etherscanDomainStart: "www" as "www" | "sepolia" | string,
 
 		wallet: {
-			type: "",
-			connected: false,
+			type: "" as string,
+			connected: false as boolean,
 			accounts: [
-			],
-		} as {
-			connected: boolean,
-			accounts: string[]
+			] as string[],
 		},
 
 		alchemyApiKey: "" as string,
@@ -50,14 +48,18 @@ export default createStore({
 		isAdmin: false as boolean,
 
 		contract: {
-			yieldSyncGovernance: undefined,
-			yieldSyncV1VaultFactory: undefined,
-			yieldSyncV1VaultRegistry: undefined,
-		} as {
-			yieldSyncGovernance: undefined | Contract
-			yieldSyncV1VaultFactory: undefined | Contract
-			yieldSyncV1VaultRegistry: undefined | Contract
+			yieldSyncGovernance: undefined as undefined | Contract,
+			yieldSyncV1VaultFactory: undefined as undefined | Contract,
+			yieldSyncV1VaultRegistry: undefined as undefined | Contract,
 		},
+
+		adminshipYieldSyncV1VaultVaults: [
+		] as {
+			address: string,
+			voteAgainstRequired: number,
+			voteForRequired: number,
+			trpType: string,
+		}[],
 
 		membershipYieldSyncV1VaultVaults: [
 		] as {
@@ -112,7 +114,6 @@ export default createStore({
 					tokenId: 0 as number,
 					voteCloseTimestamp: 86400 as number
 				}
-
 			}
 		},
 	},
@@ -204,6 +205,41 @@ export default createStore({
 
 				default:
 					return "?";
+			}
+		},
+
+		generateVaultAdminships: async ({ dispatch, state }) =>
+		{
+			state.adminshipYieldSyncV1VaultVaults = [];
+
+			const transferRequestProtocol: Contract = new state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol
+			);
+
+			if (!state.contract.yieldSyncV1VaultRegistry)
+			{
+				return;
+			}
+
+			const v1Vaults: string[] = await state.contract.yieldSyncV1VaultRegistry.methods.admin_yieldSyncV1Vaults(
+				state.wallet.accounts[0]
+			).call();
+
+			for (let i = 0; i < v1Vaults.length; i++)
+			{
+				const vault: Contract = new state.web3.eth.Contract(YieldSyncV1Vault as AbiItem[], v1Vaults[i]);
+
+				const vaultProperties = await transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+					state.wallet.accounts[0]
+				).call();
+
+				state.adminshipYieldSyncV1VaultVaults.push({
+					address: v1Vaults[i],
+					voteAgainstRequired: vaultProperties.voteAgainstRequired,
+					voteForRequired: vaultProperties.voteForRequired,
+					trpType: await dispatch("trpType", await vault.methods.transferRequestProtocol().call()),
+				});
 			}
 		},
 
