@@ -87,9 +87,6 @@
 		{
 			return {
 				loading: true as boolean,
-				registry: this.$store.state.config.networkChain[
-					this.$store.state.currentChain.name
-				].yieldSyncV1VaultRegistry,
 
 				etherscanDomainStart: this.$store.state.etherscanDomainStart,
 			};

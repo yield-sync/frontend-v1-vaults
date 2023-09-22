@@ -156,9 +156,9 @@ export default createStore({
 			state.etherscanDomainStart = etherscanDomainStart;
 		},
 
-		setLoading(state, l: boolean)
+		setLoading(state, loading: boolean)
 		{
-			state.loading = l;
+			state.loading = loading;
 		},
 
 		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
