@@ -9,6 +9,8 @@ import alchemyGetBalances from "../alchemy/getBalances";
 import alchemyGetGetNFTBalances from "../alchemy/getNFTBalances";
 import config from "../config";
 import YieldSyncGovernance from "../abi/YieldSyncGovernance";
+import YieldSyncV1Vault from "../abi/YieldSyncV1Vault";
+import YieldSyncV1ATransferRequestProtocol from "../abi/YieldSyncV1ATransferRequestProtocol";
 import YieldSyncV1VaultFactory from "../abi/YieldSyncV1VaultFactory";
 import YieldSyncV1VaultRegistry from "../abi/YieldSyncV1VaultRegistry";
 
@@ -57,9 +59,17 @@ export default createStore({
 			yieldSyncV1VaultRegistry: undefined | Contract
 		},
 
+		membershipYieldSyncV1VaultVaults: [
+		] as {
+			address: string,
+			voteAgainstRequired: number,
+			voteForRequired: number,
+			trpType: string,
+		}[],
+
 		pages: {
 			RVDashboard: {
-				tab: "m" as "m" | "a" | "d"
+				tab: "m" as "m" | "a" | "d",
 			},
 
 			RVV1Vault: {
@@ -182,6 +192,59 @@ export default createStore({
 	},
 
 	actions: {
+		generateVaultMemberships: async ({ state }) =>
+		{
+			state.membershipYieldSyncV1VaultVaults = [];
+
+			const transferRequestProtocolContract: Contract = new state.web3.eth.Contract(
+				YieldSyncV1ATransferRequestProtocol as AbiItem[],
+				state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol
+			);
+
+			if (!state.contract.yieldSyncV1VaultRegistry)
+			{
+				return;
+			}
+
+			const v1Vaults: string[] = await state.contract.yieldSyncV1VaultRegistry.methods.member_yieldSyncV1Vaults(
+				state.wallet.accounts[0]
+			).call();
+
+			for (let i = 0; i < v1Vaults.length; i++)
+			{
+				const vault: Contract = new state.web3.eth.Contract(
+					YieldSyncV1Vault as AbiItem[],
+					v1Vaults[i]
+				);
+
+				const vaultProperties = await transferRequestProtocolContract.methods
+					.yieldSyncV1Vault_yieldSyncV1VaultProperty(state.wallet.accounts[0]).call()
+				;
+
+				const trpType = async function ()
+				{
+					switch (await vault.methods.transferRequestProtocol().call())
+					{
+						case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
+							return "a";
+
+						case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
+							return "b";
+
+						default:
+							return "?";
+					}
+				}
+
+				state.membershipYieldSyncV1VaultVaults.push({
+					address: v1Vaults[i],
+					voteAgainstRequired: vaultProperties.voteAgainstRequired,
+					voteForRequired: vaultProperties.voteForRequired,
+					trpType: await trpType()
+				});
+			}
+		},
+
 		generateChainRelatedData: async ({ commit, state }) =>
 		{
 			commit("setCurrentChainId", await state.web3.eth.net.getId());
@@ -417,6 +480,22 @@ export default createStore({
 	},
 
 	getters: {
+		trpType: (state, trpAddress: string): "a" | "b" | "?" =>
+		{
+			const chainName = state.currentChain.name;
+
+			switch (trpAddress)
+			{
+				case state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
+					return "a";
+
+				case state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
+					return "b";
+
+				default:
+					return "?";
+			}
+		},
 	},
 
 	modules: {
