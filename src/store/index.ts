@@ -192,7 +192,7 @@ export default createStore({
 	},
 
 	actions: {
-		generateVaultMemberships: async ({ state }) =>
+		generateVaultMemberships: async ({ getters, state }) =>
 		{
 			state.membershipYieldSyncV1VaultVaults = [];
 
@@ -221,26 +221,11 @@ export default createStore({
 					.yieldSyncV1Vault_yieldSyncV1VaultProperty(state.wallet.accounts[0]).call()
 				;
 
-				const trpType = async function ()
-				{
-					switch (await vault.methods.transferRequestProtocol().call())
-					{
-						case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
-							return "a";
-
-						case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
-							return "b";
-
-						default:
-							return "?";
-					}
-				}
-
 				state.membershipYieldSyncV1VaultVaults.push({
 					address: v1Vaults[i],
 					voteAgainstRequired: vaultProperties.voteAgainstRequired,
 					voteForRequired: vaultProperties.voteForRequired,
-					trpType: await trpType()
+					trpType: getters.trpType(await vault.methods.transferRequestProtocol().call())
 				});
 			}
 		},
@@ -482,14 +467,12 @@ export default createStore({
 	getters: {
 		trpType: (state, trpAddress: string): "a" | "b" | "?" =>
 		{
-			const chainName = state.currentChain.name;
-
 			switch (trpAddress)
 			{
-				case state.config.networkChain[chainName].yieldSyncV1ATransferRequestProtocol:
+				case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
 					return "a";
 
-				case state.config.networkChain[chainName].yieldSyncV1BTransferRequestProtocol:
+				case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
 					return "b";
 
 				default:
