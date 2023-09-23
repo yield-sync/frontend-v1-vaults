@@ -487,7 +487,7 @@ export default createStore({
 						return;
 					}
 
-					console.log("Wallet connected with account: " + accounts[0]);
+					console.log("Wallet connected with account:", accounts[0]);
 
 					state.wallet.connected = true;
 					state.wallet.accounts = accounts;
