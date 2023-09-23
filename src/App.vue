@@ -25,6 +25,13 @@
 
 		<!-- Bottom Navigation -->
 		<CFooter v-if="!this.$store.state.loading"/>
+
+		<div
+			v-if="this.$store.state.message"
+			class="popup-box px-3 py-5 text-center text-primary rounded-xl bg-light-frost"
+		>
+			{{ this.$store.state.message }}
+		</div>
 	</div>
 </template>
 
@@ -67,3 +74,15 @@
 		},
 	});
 </script>
+
+<style lang="scss" scoped>
+	.popup-box {
+		position: fixed;
+		z-index: 1000;
+		top: 90%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	}
+</style>

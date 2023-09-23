@@ -19,6 +19,7 @@ export default createStore({
 	state: {
 		ZERO_ADDRESS: ethers.ZeroAddress as string,
 
+		message: "" as string,
 		loading: true as boolean,
 		error: "" as string,
 
@@ -119,74 +120,79 @@ export default createStore({
 	},
 
 	mutations: {
-		setCurrentChainId(state, chainId: number)
+		setCurrentChainId(state, chainId: number): void
 		{
 			state.currentChain.id = chainId;
 		},
 
-		setCurrentChainName(state, chainId: number)
+		setCurrentChainName(state, chainId: number): void
 		{
 			switch (chainId)
 			{
-			case 1:
-				state.currentChain.name = "mainnet";
-				break;
+				case 1:
+					state.currentChain.name = "mainnet";
+					break;
 
-			case 11155111:
-				state.currentChain.name = "sepolia";
-				break;
+				case 11155111:
+					state.currentChain.name = "sepolia";
+					break;
 
-			case 420:
-				state.currentChain.name = "optimisticGoerli";
-				break;
+				case 420:
+					state.currentChain.name = "optimisticGoerli";
+					break;
 
-			default:
-				state.currentChain.name = "?";
-				break;
+				default:
+					state.currentChain.name = "?";
+					break;
 			}
 		},
 
-		setError(state, e: string)
+		setError(state, e: string): void
 		{
 			state.error = e;
 		},
 
-		setEtherscanDomainStart(state, etherscanDomainStart: string)
+		setEtherscanDomainStart(state, etherscanDomainStart: string): void
 		{
 			state.etherscanDomainStart = etherscanDomainStart;
 		},
 
-		setLoading(state, loading: boolean)
+		setLoading(state, loading: boolean): void
 		{
 			state.loading = loading;
 		},
 
-		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
+		setMessage(state, message: string): void
+		{
+			state.message = message;
+		},
+
+		setPagesRVV1VaultVaultAddress(state, vaultAddress: string): void
 		{
 			state.view.v1Vault.vaultAddress = vaultAddress;
 		},
 
-		setPagesRVV1VaultErc20s(state, erc20s: { name: string, symbol: string, contract: string, }[])
+		setPagesRVV1VaultErc20s(state, erc20s: { name: string, symbol: string, contract: string, }[]): void
 		{
 			state.view.v1Vault.erc20s = erc20s;
 		},
 
-		setPagesRVV1VaultErc721s(state, erc721s: { name: string, symbol: string, contract: string, }[])
+		setPagesRVV1VaultErc721s(state, erc721s: { name: string, symbol: string, contract: string, }[]): void
 		{
 			state.view.v1Vault.erc721s = erc721s;
 		},
 
-		setYieldSyncGovernance(state, contract: Contract)
+		setYieldSyncGovernance(state, contract: Contract): void
 		{
 			state.contract.yieldSyncGovernance = contract;
 		},
 
-		setYieldSyncV1VaultFactory(state, contract: Contract)
+		setYieldSyncV1VaultFactory(state, contract: Contract): void
 		{
 			state.contract.yieldSyncV1VaultFactory = contract;
 		},
 
-		setYieldSyncV1VaultRegistry(state, contract: Contract)
+		setYieldSyncV1VaultRegistry(state, contract: Contract): void
 		{
 			state.contract.yieldSyncV1VaultRegistry = contract;
 		},
@@ -208,7 +214,7 @@ export default createStore({
 			}
 		},
 
-		generateVaultAdminships: async ({ dispatch, state }) =>
+		generateVaultAdminships: async ({ dispatch, state }): Promise<void> =>
 		{
 			state.adminshipYieldSyncV1VaultVaults = [];
 
@@ -243,7 +249,7 @@ export default createStore({
 			}
 		},
 
-		generateVaultMemberships: async ({ dispatch, state }) =>
+		generateVaultMemberships: async ({ dispatch, state }): Promise<void> =>
 		{
 			state.membershipYieldSyncV1VaultVaults = [];
 
@@ -278,7 +284,7 @@ export default createStore({
 			}
 		},
 
-		generateChainRelatedData: async ({ commit, state }) =>
+		generateChainRelatedData: async ({ commit, state }): Promise<void> =>
 		{
 			commit("setCurrentChainId", await state.web3.eth.net.getId());
 			commit("setCurrentChainName", await state.web3.eth.net.getId());
@@ -288,7 +294,7 @@ export default createStore({
 			);
 		},
 
-		generateYieldSyncContracts: async ({ commit, state }) =>
+		generateYieldSyncContracts: async ({ commit, state }): Promise<void> =>
 		{
 			if (state.config.networkChain[state.currentChain.name].yieldSyncGovernance == state.ZERO_ADDRESS)
 			{
@@ -325,7 +331,7 @@ export default createStore({
 			);
 		},
 
-		getTokens: async ({ commit, state }) =>
+		getTokens: async ({ commit, state }): Promise<void> =>
 		{
 			const vaultAddress: string = String(state.view.v1Vault.vaultAddress);
 
@@ -389,7 +395,7 @@ export default createStore({
 			}
 		},
 
-		getERC721Tokens: async ({ commit, state }) =>
+		getERC721Tokens: async ({ commit, state }): Promise<void> =>
 		{
 			const vaultAddress: string = String(state.view.v1Vault.vaultAddress);
 
@@ -447,11 +453,12 @@ export default createStore({
 			commit("setPagesRVV1VaultErc721s", erc721s);
 		},
 
-		connectWallet: async ({ commit, dispatch, state }) =>
+		connectWallet: async ({ commit, dispatch, state }): Promise<void> =>
 		{
 			if (typeof window.ethereum == "undefined")
 			{
 				commit("setError", "No wallet found, please install one.");
+
 				commit("setLoading", false);
 
 				return;
@@ -498,8 +505,6 @@ export default createStore({
 			window.ethereum.on("chainChanged", async (chainId: number) =>
 			{
 				commit("setLoading", true);
-
-				console.log("New chainId:", chainId);
 
 				// Governance
 				await dispatch("generateChainRelatedData");
