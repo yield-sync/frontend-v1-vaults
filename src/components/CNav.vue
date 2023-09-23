@@ -170,11 +170,9 @@
 				await this.$store.dispatch("connectWallet");
 			},
 
-			disconnectWallet(): void
+			async disconnectWallet(): Promise<void>
 			{
-				this.$store.state.wallet.connected = false;
-				this.$store.state.wallet.accounts = [
-				];
+				await this.$store.dispatch("disconnectWallet");
 			},
 
 			updateLocalStorage(): void

@@ -472,6 +472,8 @@ export default createStore({
 			// Yield Sync Contracts
 			await dispatch("generateYieldSyncContracts");
 
+			console.log("window.ethereum", window.ethereum)
+
 			// Connected account
 			window.ethereum.request({
 				method: "eth_requestAccounts"
@@ -485,7 +487,7 @@ export default createStore({
 						return;
 					}
 
-					console.log(`MetaMask is connected with account: ${accounts[0]}`);
+					console.log("Wallet connected with account: " + accounts[0]);
 
 					state.wallet.connected = true;
 					state.wallet.accounts = accounts;
@@ -515,6 +517,14 @@ export default createStore({
 				commit("setLoading", false);
 			});
 		},
+
+		disconnectWallet: async ({ commit, dispatch, state }): Promise<void> =>
+		{
+			state.wallet.connected = false;
+
+			state.wallet.accounts = [
+			];
+		}
 	},
 
 	getters: {
