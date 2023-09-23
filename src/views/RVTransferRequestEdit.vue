@@ -5,9 +5,9 @@
 				<VBtn
 					class="mb-3 rounded-xl elevation-0 bg-light-frost text-primary"
 					@click="
-						this.$store.state.pages.RVV1Vault.tab = 'tr';
-						this.$store.state.pages.RVV1Vault.transferRequests.tab = 'o';
-						this.$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+						this.$store.state.view.v1Vault.tab = 'tr';
+						this.$store.state.view.v1Vault.transferRequests.tab = 'o';
+						this.$store.state.view.v1Vault.transferRequest.for = 'Ether';
 					"
 				>
 					⬅️ Return to Vault
@@ -451,8 +451,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequests.key++;
+							this.$store.state.view.v1Vault.transferRequests.tab = "o";
+							this.$store.state.view.v1Vault.transferRequests.key++;
 						}
 
 						this.updatingTR = false;
@@ -509,8 +509,8 @@
 
 						if (confirmationNumber == 0)
 						{
-							this.$store.state.pages.RVV1Vault.transferRequests.tab = "o";
-							this.$store.state.pages.RVV1Vault.transferRequests.key++;
+							this.$store.state.view.v1Vault.transferRequests.tab = "o";
+							this.$store.state.view.v1Vault.transferRequests.key++;
 						}
 
 						this.updatingTRP = false;

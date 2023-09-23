@@ -88,9 +88,9 @@
 											color="primary"
 											variant="flat"
 											@click="
-												this.$store.state.pages.RVV1Vault.tab = 'tr';
-												this.$store.state.pages.RVV1Vault.transferRequests.tab = 'c';
-												this.$store.state.pages.RVV1Vault.transferRequest.for = 'Ether';
+												this.$store.state.view.v1Vault.tab = 'tr';
+												this.$store.state.view.v1Vault.transferRequests.tab = 'c';
+												this.$store.state.view.v1Vault.transferRequest.for = 'Ether';
 											"
 										>
 											↗️ Transfer Out
@@ -449,11 +449,11 @@
 				}
 			)
 			{
-				this.$store.state.pages.RVV1Vault.tab = "tr";
-				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
+				this.$store.state.view.v1Vault.tab = "tr";
+				this.$store.state.view.v1Vault.transferRequests.tab = "c";
 
-				this.$store.state.pages.RVV1Vault.transferRequest.for = "ERC 20";
-				this.$store.state.pages.RVV1Vault.transferRequest.token = erc20.contract;
+				this.$store.state.view.v1Vault.transferRequest.for = "ERC 20";
+				this.$store.state.view.v1Vault.transferRequest.token = erc20.contract;
 
 				router.push(`/v1-vault/${address}`);
 			},
@@ -469,12 +469,12 @@
 				}
 			)
 			{
-				this.$store.state.pages.RVV1Vault.tab = "tr";
-				this.$store.state.pages.RVV1Vault.transferRequests.tab = "c";
+				this.$store.state.view.v1Vault.tab = "tr";
+				this.$store.state.view.v1Vault.transferRequests.tab = "c";
 
-				this.$store.state.pages.RVV1Vault.transferRequest.for = "ERC 721";
-				this.$store.state.pages.RVV1Vault.transferRequest.token = erc721.contract;
-				this.$store.state.pages.RVV1Vault.transferRequest.tokenId = erc721.tokenId;
+				this.$store.state.view.v1Vault.transferRequest.for = "ERC 721";
+				this.$store.state.view.v1Vault.transferRequest.token = erc721.contract;
+				this.$store.state.view.v1Vault.transferRequest.tokenId = erc721.tokenId;
 
 				router.push(`/v1-vault/${address}`);
 			},

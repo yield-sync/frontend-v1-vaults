@@ -96,7 +96,7 @@
 							variant="plain"
 							color="primary"
 							class="rounded-xl"
-							@click="this.$store.state.pages.RVDashboard.tab = 'm'"
+							@click="this.$store.state.view.dashboard.tab = 'm'"
 						>
 							<h3>Dashboard</h3>
 						</VBtn>
@@ -108,7 +108,7 @@
 							variant="plain"
 							color="primary"
 							class="rounded-xl"
-							@click="this.$store.state.pages.RVDashboard.tab = 'd'"
+							@click="this.$store.state.view.dashboard.tab = 'd'"
 						>
 							<h3>Deploy V1-Vault</h3>
 						</VBtn>

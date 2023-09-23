@@ -466,7 +466,7 @@
 						{
 							this.vaultDeploy.deploying = false;
 
-							this.$store.state.pages.RVDashboard.tab = "m";
+							this.$store.state.view.dashboard.tab = "m";
 						}
 					}
 				).on(

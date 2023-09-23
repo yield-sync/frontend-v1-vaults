@@ -69,12 +69,12 @@ export default createStore({
 			trpType: string,
 		}[],
 
-		pages: {
-			RVDashboard: {
+		view: {
+			dashboard: {
 				tab: "m" as "m" | "a" | "d",
 			},
 
-			RVV1Vault: {
+			v1Vault: {
 				vaultAddress: "" as string,
 
 				tab: "overview" as "tr" | "overview" | "admins-and-members" | "settings",
@@ -163,17 +163,17 @@ export default createStore({
 
 		setPagesRVV1VaultVaultAddress(state, vaultAddress: string)
 		{
-			state.pages.RVV1Vault.vaultAddress = vaultAddress;
+			state.view.v1Vault.vaultAddress = vaultAddress;
 		},
 
 		setPagesRVV1VaultErc20s(state, erc20s: { name: string, symbol: string, contract: string, }[])
 		{
-			state.pages.RVV1Vault.erc20s = erc20s;
+			state.view.v1Vault.erc20s = erc20s;
 		},
 
 		setPagesRVV1VaultErc721s(state, erc721s: { name: string, symbol: string, contract: string, }[])
 		{
-			state.pages.RVV1Vault.erc721s = erc721s;
+			state.view.v1Vault.erc721s = erc721s;
 		},
 
 		setYieldSyncGovernance(state, contract: Contract)
@@ -327,7 +327,7 @@ export default createStore({
 
 		getTokens: async ({ commit, state }) =>
 		{
-			const vaultAddress: string = String(state.pages.RVV1Vault.vaultAddress);
+			const vaultAddress: string = String(state.view.v1Vault.vaultAddress);
 
 			const erc20s: {
 				name: string,
@@ -391,7 +391,7 @@ export default createStore({
 
 		getERC721Tokens: async ({ commit, state }) =>
 		{
-			const vaultAddress: string = String(state.pages.RVV1Vault.vaultAddress);
+			const vaultAddress: string = String(state.view.v1Vault.vaultAddress);
 
 			const erc721s: {
 				name: string,

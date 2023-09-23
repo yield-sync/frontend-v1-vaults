@@ -11,11 +11,11 @@
 					<VBtn
 						:class="
 							(
-								this.$store.state.pages.RVDashboard.tab == 'm'
+								this.$store.state.view.dashboard.tab == 'm'
 							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-pill elevation-0"
-						@click="this.$store.state.pages.RVDashboard.tab = 'm'"
+						@click="this.$store.state.view.dashboard.tab = 'm'"
 					>
 						<h3>👤 Memberships</h3>
 					</VBtn>
@@ -25,11 +25,11 @@
 					<VBtn
 						:class="
 							(
-								this.$store.state.pages.RVDashboard.tab == 'a'
+								this.$store.state.view.dashboard.tab == 'a'
 							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-pill elevation-0"
-						@click="this.$store.state.pages.RVDashboard.tab = 'a'"
+						@click="this.$store.state.view.dashboard.tab = 'a'"
 					>
 						<h3>🔑 Adminships</h3>
 					</VBtn>
@@ -39,22 +39,22 @@
 					<VBtn
 						:class="
 							(
-								this.$store.state.pages.RVDashboard.tab == 'd'
+								this.$store.state.view.dashboard.tab == 'd'
 							) ? 'bg-primary text-white' : 'bg-light-frost text-primary'
 						"
 						class="w-100 rounded-pill elevation-0"
-						@click="this.$store.state.pages.RVDashboard.tab = 'd'"
+						@click="this.$store.state.view.dashboard.tab = 'd'"
 					>
 						<h3>🏦 Deploy</h3>
 					</VBtn>
 				</VCol>
 			</VRow>
 
-			<CMemberships v-if="this.$store.state.pages.RVDashboard.tab == 'm'"/>
+			<CMemberships v-if="this.$store.state.view.dashboard.tab == 'm'"/>
 
-			<CAdminships v-if="this.$store.state.pages.RVDashboard.tab == 'a'"/>
+			<CAdminships v-if="this.$store.state.view.dashboard.tab == 'a'"/>
 
-			<CDeploy v-if="this.$store.state.pages.RVDashboard.tab == 'd'"/>
+			<CDeploy v-if="this.$store.state.view.dashboard.tab == 'd'"/>
 		</div>
 	</VContainer>
 </template>

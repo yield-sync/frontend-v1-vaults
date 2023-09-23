@@ -76,7 +76,7 @@
 					variant="tonal"
 					color="success"
 					class="rounded-xl"
-					@click="this.$store.state.pages.RVV1Vault.transferRequests.tab = 'c'"
+					@click="this.$store.state.view.v1Vault.transferRequests.tab = 'c'"
 				>
 					Create
 				</VBtn>
