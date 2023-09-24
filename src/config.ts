@@ -57,8 +57,8 @@ export default {
 			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
 			yieldSyncV1VaultFactory: "0xE5fbf26920660f5a7048a9030E23A30b9BDA48bF",
 			yieldSyncV1VaultRegistry: "0xcEa06314a6627F1166375e03D70b9E80EA1Fe1eA",
-			yieldSyncV1ATransferRequestProtocol: "0xa31587Fa3031243fcb535B45a1bbB29420EA30EB",
-			yieldSyncV1BTransferRequestProtocol: "0xe8633fC32Dd4B46FCfa559aCDe88861B330f07a1",
+			yieldSyncV1ATransferRequestProtocol: "0x9C838626622517B911c654d7b0091F8635b099AD",
+			yieldSyncV1BTransferRequestProtocol: "0x07362d27c00586a56196FE51D8b51eb1b965A6e3",
 
 		},
 

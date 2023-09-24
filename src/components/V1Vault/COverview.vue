@@ -90,7 +90,8 @@
 											@click="
 												this.$store.state.view.v1Vault.tab = 'tr';
 												this.$store.state.view.v1Vault.transferRequests.tab = 'c';
-												this.$store.state.view.v1Vault.transferRequest.for = 'Ether';
+												this.$store.state.view.v1Vault.transferRequestA.for = 'Ether';
+												this.$store.state.view.v1Vault.transferRequestB.for = 'Ether';
 											"
 										>
 											↗️ Transfer Out
@@ -452,7 +453,9 @@
 				this.$store.state.view.v1Vault.tab = "tr";
 				this.$store.state.view.v1Vault.transferRequests.tab = "c";
 
-				this.$store.state.view.v1Vault.transferRequest.for = "ERC 20";
+				this.$store.state.view.v1Vault.transferRequestA.for = "ERC 20";
+				this.$store.state.view.v1Vault.transferRequestB.for = "ERC 20";
+
 				this.$store.state.view.v1Vault.transferRequest.token = erc20.contract;
 
 				router.push(`/v1-vault/${address}`);
@@ -472,7 +475,9 @@
 				this.$store.state.view.v1Vault.tab = "tr";
 				this.$store.state.view.v1Vault.transferRequests.tab = "c";
 
-				this.$store.state.view.v1Vault.transferRequest.for = "ERC 721";
+				this.$store.state.view.v1Vault.transferRequestA.for = "ERC 721";
+				this.$store.state.view.v1Vault.transferRequestB.for = "ERC 721";
+
 				this.$store.state.view.v1Vault.transferRequest.token = erc721.contract;
 				this.$store.state.view.v1Vault.transferRequest.tokenId = erc721.tokenId;
 

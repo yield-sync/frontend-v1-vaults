@@ -498,28 +498,41 @@
 
 		async created(): Promise<void>
 		{
-			this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
+			try {
+				this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
 
-			const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
-				YieldSyncV1BTransferRequestProtocol as AbiItem[],
-				this.transferRequestProtocol
-			);
+				console.log("here?");
 
-			const connectedWalletsVaultProperties = await transferRequestProtocol.methods
-				.yieldSyncV1Vault_yieldSyncV1VaultProperty(
-					this.$store.state.wallet.accounts[0]
-				).call()
-			;
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
 
-			this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties.voteAgainstRequired;
-			this.vaultProperties.voteForRequired = connectedWalletsVaultProperties.voteForRequired;
-			this.vaultProperties.maxVotePeriodSeconds = connectedWalletsVaultProperties.maxVotePeriodSeconds;
-			this.vaultProperties.minVotePeriodSeconds = connectedWalletsVaultProperties.minVotePeriodSeconds;
+				console.log("here?");
 
-			this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
-			this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
-			this.vaultDeploy.maxVotePeriodSeconds = this.vaultProperties.maxVotePeriodSeconds;
-			this.vaultDeploy.minVotePeriodSeconds = this.vaultProperties.minVotePeriodSeconds;
+				console.log(this.$store.state.wallet.accounts[0]);
+
+
+				const connectedWalletsVaultProperties = await transferRequestProtocol.methods
+					.yieldSyncV1Vault_yieldSyncV1VaultProperty(
+						this.$store.state.wallet.accounts[0]
+					).call()
+				;
+
+				console.log("heress?");
+
+				this.vaultProperties.voteAgainstRequired = connectedWalletsVaultProperties.voteAgainstRequired;
+				this.vaultProperties.voteForRequired = connectedWalletsVaultProperties.voteForRequired;
+				this.vaultProperties.maxVotePeriodSeconds = connectedWalletsVaultProperties.maxVotePeriodSeconds;
+				this.vaultProperties.minVotePeriodSeconds = connectedWalletsVaultProperties.minVotePeriodSeconds;
+
+				this.vaultDeploy.voteAgainstRequired = this.vaultProperties.voteAgainstRequired;
+				this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
+				this.vaultDeploy.maxVotePeriodSeconds = this.vaultProperties.maxVotePeriodSeconds;
+				this.vaultDeploy.minVotePeriodSeconds = this.vaultProperties.minVotePeriodSeconds;
+			} catch (error) {
+				console.log("error", error);
+			}
 		},
 	});
 </script>
