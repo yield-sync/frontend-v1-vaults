@@ -408,6 +408,29 @@
 								</VBtn>
 							</VCol>
 
+							<!-- Process TransferRequest Button -->
+							<VCol
+								v-if="dTR.creator.toUpperCase() == this.$store.state.wallet.accounts[0].toUpperCase()"
+								cols="12"
+							>
+								<VBtn
+									:disabled="this.processing[dTR.id]"
+									variant="outlined"
+									color="danger"
+									class="w-100 rounded-xl elevation-0"
+									@click="this.deleteTransferRequest(dTR.id)"
+								>
+									<VProgressCircular
+										v-if="this.processing[dTR.id]"
+										indeterminate
+										color="light"
+										class=""
+									/>
+
+									<span v-else>Delete Transfer Request</span>
+								</VBtn>
+							</VCol>
+
 							<VCol v-if="this.transactionError[dTR.id]" cols="12">
 								<h6 class="text-danger">{{ this.transactionError[dTR.id] }}</h6>
 							</VCol>
@@ -791,6 +814,59 @@
 				}
 
 				yieldSyncV1Vault.methods.yieldSyncV1Vault_transferRequestId_transferRequestProcess(
+					tRId
+				).send({
+					from: this.$store.state.wallet.accounts[0]
+				}).on(
+					"sent",
+					async () =>
+					{
+						this.processing[tRId] = true;
+					}
+				).on(
+					"confirmation",
+					async (confirmationNumber: number, receipt: TransactionReceipt) =>
+					{
+						console.log(`Confirmation #${confirmationNumber}`, receipt);
+
+						if (confirmationNumber == 0)
+						{
+							this.processing[tRId] = false;
+
+							await this.getTransferRequestData();
+						}
+
+					}
+				).on(
+					"error",
+					async (error: Error) =>
+					{
+						this.transactionError[tRId] = error.message ? error.message : "Something went wrong!";
+
+						this.processing[tRId] = false;
+					}
+				);
+			},
+
+			async deleteTransferRequest(tRId: number): Promise<void>
+			{
+				if (!this.vaultAddress)
+				{
+					return;
+				}
+
+				const transferRequestProtocol: Contract = new this.$store.state.web3.eth.Contract(
+					YieldSyncV1BTransferRequestProtocol as AbiItem[],
+					this.transferRequestProtocol
+				);
+
+				if (!transferRequestProtocol)
+				{
+					return;
+				}
+
+				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestDelete(
+					this.vaultAddress,
 					tRId
 				).send({
 					from: this.$store.state.wallet.accounts[0]
