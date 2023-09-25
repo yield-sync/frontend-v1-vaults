@@ -129,21 +129,21 @@ export default createStore({
 		{
 			switch (chainId)
 			{
-				case 1:
-					state.currentChain.name = "mainnet";
-					break;
+			case 1:
+				state.currentChain.name = "mainnet";
+				break;
 
-				case 11155111:
-					state.currentChain.name = "sepolia";
-					break;
+			case 11155111:
+				state.currentChain.name = "sepolia";
+				break;
 
-				case 420:
-					state.currentChain.name = "optimisticGoerli";
-					break;
+			case 420:
+				state.currentChain.name = "optimisticGoerli";
+				break;
 
-				default:
-					state.currentChain.name = "?";
-					break;
+			default:
+				state.currentChain.name = "?";
+				break;
 			}
 		},
 
@@ -203,20 +203,21 @@ export default createStore({
 		{
 			switch (trpAddress)
 			{
-				case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
-					return "a";
+			case state.config.networkChain[state.currentChain.name].yieldSyncV1ATransferRequestProtocol:
+				return "a";
 
-				case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
-					return "b";
+			case state.config.networkChain[state.currentChain.name].yieldSyncV1BTransferRequestProtocol:
+				return "b";
 
-				default:
-					return "?";
+			default:
+				return "?";
 			}
 		},
 
 		generateVaultAdminships: async ({ dispatch, state }): Promise<void> =>
 		{
-			state.adminshipYieldSyncV1VaultVaults = [];
+			state.adminshipYieldSyncV1VaultVaults = [
+			];
 
 			const transferRequestProtocol: Contract = new state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],
@@ -251,7 +252,8 @@ export default createStore({
 
 		generateVaultMemberships: async ({ dispatch, state }): Promise<void> =>
 		{
-			state.membershipYieldSyncV1VaultVaults = [];
+			state.membershipYieldSyncV1VaultVaults = [
+			];
 
 			const transferRequestProtocol: Contract = new state.web3.eth.Contract(
 				YieldSyncV1ATransferRequestProtocol as AbiItem[],
@@ -472,7 +474,7 @@ export default createStore({
 			// Yield Sync Contracts
 			await dispatch("generateYieldSyncContracts");
 
-			console.log("window.ethereum", window.ethereum)
+			console.log("window.ethereum", window.ethereum);
 
 			// Connected account
 			window.ethereum.request({

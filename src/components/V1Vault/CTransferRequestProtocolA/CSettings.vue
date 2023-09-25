@@ -233,7 +233,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyAdminUpdate(
 					this.vaultAddress,
 					[
 						this.update.voteAgainstRequired,
@@ -290,7 +290,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyAdminUpdate(
 					this.vaultAddress,
 					[
 						this.vault.voteAgainstRequired,
@@ -347,7 +347,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyAdminUpdate(
 					this.vaultAddress,
 					[
 						this.vault.voteAgainstRequired,

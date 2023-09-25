@@ -487,7 +487,7 @@
 					this.transferRequest.voteForMembers,
 				];
 
-				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_transferRequestId_transferRequestPollAdminUpdate(
 					this.$route.params.vaultaddress,
 					this.$route.params.transferrequestid,
 					updateTransferRequestPoll

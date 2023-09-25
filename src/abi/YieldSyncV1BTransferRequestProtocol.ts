@@ -302,6 +302,91 @@ export default [
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
+				"name": "transferRequestId",
+				"type": "uint256"
+			},
+		],
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestAdminDelete",
+		"outputs": [
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1Vault",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "transferRequestId",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "bool",
+						"name": "forERC20",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "forERC721",
+						"type": "bool"
+					},
+					{
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "created",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+				],
+				"internalType": "struct TransferRequest",
+				"name": "transferRequest",
+				"type": "tuple"
+			},
+		],
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestAdminUpdate",
+		"outputs": [
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "yieldSyncV1Vault",
+				"type": "address"
+			},
+			{
 				"internalType": "bool",
 				"name": "forERC20",
 				"type": "bool"
@@ -438,7 +523,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollUpdate",
+		"name": "yieldSyncV1Vault_transferRequestId_transferRequestPollAdminUpdate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",
@@ -528,72 +613,6 @@ export default [
 				"name": "yieldSyncV1Vault",
 				"type": "address"
 			},
-			{
-				"internalType": "uint256",
-				"name": "transferRequestId",
-				"type": "uint256"
-			},
-			{
-				"components": [
-					{
-						"internalType": "bool",
-						"name": "forERC20",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "forERC721",
-						"type": "bool"
-					},
-					{
-						"internalType": "address",
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "created",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenId",
-						"type": "uint256"
-					},
-				],
-				"internalType": "struct TransferRequest",
-				"name": "transferRequest",
-				"type": "tuple"
-			},
-		],
-		"name": "yieldSyncV1Vault_transferRequestId_transferRequestUpdate",
-		"outputs": [
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "yieldSyncV1Vault",
-				"type": "address"
-			},
 		],
 		"name": "yieldSyncV1Vault_yieldSyncV1VaultProperty",
 		"outputs": [
@@ -663,7 +682,7 @@ export default [
 				"type": "tuple"
 			},
 		],
-		"name": "yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate",
+		"name": "yieldSyncV1Vault_yieldSyncV1VaultPropertyAdminUpdate",
 		"outputs": [
 		],
 		"stateMutability": "nonpayable",

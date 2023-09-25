@@ -411,7 +411,7 @@
 					this.transferRequestProtocol
 				);
 
-				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyUpdate(
+				transferRequestProtocol.methods.yieldSyncV1Vault_yieldSyncV1VaultPropertyAdminUpdate(
 					this.$store.state.wallet.accounts[0],
 					[
 						this.vaultProperties.voteAgainstRequired,
@@ -498,7 +498,8 @@
 
 		async created(): Promise<void>
 		{
-			try {
+			try
+			{
 				this.deploymentFee = await this.$store.state.contract.yieldSyncV1VaultFactory.methods.fee().call();
 
 				console.log("here?");
@@ -530,7 +531,9 @@
 				this.vaultDeploy.voteForRequired = this.vaultProperties.voteForRequired;
 				this.vaultDeploy.maxVotePeriodSeconds = this.vaultProperties.maxVotePeriodSeconds;
 				this.vaultDeploy.minVotePeriodSeconds = this.vaultProperties.minVotePeriodSeconds;
-			} catch (error) {
+			}
+			catch (error)
+			{
 				console.log("error", error);
 			}
 		},
