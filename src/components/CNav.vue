@@ -98,19 +98,7 @@
 							class="rounded-xl"
 							@click="this.$store.state.view.dashboard.tab = 'm'"
 						>
-							<h3>Dashboard</h3>
-						</VBtn>
-					</RouterLink>
-
-
-					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
-						<VBtn
-							variant="plain"
-							color="primary"
-							class="rounded-xl"
-							@click="this.$store.state.view.dashboard.tab = 'd'"
-						>
-							<h3>Deploy V1-Vault</h3>
+							<h3>V1 Vaults</h3>
 						</VBtn>
 					</RouterLink>
 				</VCol>
