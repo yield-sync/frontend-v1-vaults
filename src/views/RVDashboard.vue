@@ -1,5 +1,5 @@
 <template>
-	<VContainer style="padding: 160px 0;">
+	<VContainer>
 		<div class="w-100 mx-auto" style="max-width: 800px;">
 			<VRow
 				bg-color="primary"
