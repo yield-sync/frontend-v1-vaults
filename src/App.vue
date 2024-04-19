@@ -2,7 +2,6 @@
 	<div class="bg-gradient" style="background-attachment: fixed; background-size: cover;">
 		<!-- Top Navigation -->
 		<CNav/>
-		<h1>TESTING</h1>
 
 		<!-- Loading -->
 		<VContainer v-if="this.$store.state.loading" class="py-12">
